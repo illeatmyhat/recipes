@@ -3,6 +3,7 @@
   import {
     selectedFruits,
     selectedToppings,
+    servingsFactor,
     locale,
     toggleId,
     initStore,
@@ -36,6 +37,8 @@
 
   const activeFruits = $derived(mounted ? $selectedFruits : defaultFruitIds);
   const activeToppings = $derived(mounted ? $selectedToppings : defaultToppingIds);
+  // Amounts scale live with the servings slider.
+  const factor = $derived(mounted ? $servingsFactor : 1);
 </script>
 
 {#snippet group(
@@ -64,7 +67,14 @@
             <span class="body">
               <span class="name">
                 {item.names[$locale]}
-                <span class="amount">{formatAmount(item.amount, item.unit, item.volumeMl, $locale)}</span>
+                <span class="amount"
+                  >{formatAmount(
+                    item.amount * factor,
+                    item.unit,
+                    item.volumeMl === null ? null : item.volumeMl * factor,
+                    $locale,
+                  )}</span
+                >
               </span>
               <span class="note">{item.notes[$locale]}</span>
             </span>
