@@ -29,6 +29,8 @@ export const UI = {
   amountPerServing: { en: 'Amount per serving', ja: '1食あたりの量' },
   calories: { en: 'Calories', ja: 'エネルギー' },
   dailyValue: { en: '% Daily Value*', ja: '1日の目安に対する割合*' },
+  /** Trailing label for a bare "%DV" figure, e.g. "59% of Daily Value". */
+  dvShort: { en: 'of Daily Value', ja: '1日の目安' },
   dvFootnote: {
     en: '* The % Daily Value tells you how much a nutrient in a serving contributes to a daily diet. 2,000 calories a day is used for general nutrition advice.',
     ja: '* ％1日の摂取目安量は、1食分の栄養素が1日の食事に占める割合を示します。一般的な栄養アドバイスには1日2,000kcalが用いられます。',
@@ -43,7 +45,7 @@ export const UI = {
   },
   highlights: { en: 'Highlights', ja: '栄養ハイライト' },
 
-  customizeTitle: { en: 'Customize your bowl', ja: 'ボウルをカスタマイズ' },
+  customizeTitle: { en: 'Customize this recipe', ja: 'このレシピをカスタマイズ' },
   customizeHint: {
     en: 'Toggle optional ingredients — nutrition updates live.',
     ja: 'お好みの材料を切り替え — 栄養成分はその場で更新されます。',

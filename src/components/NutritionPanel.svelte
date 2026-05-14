@@ -336,7 +336,7 @@
           <span class="hlabel">{NUTRIENT_LABELS[key][$locale]}</span>
           <span class="hvalue">{fmt(totals[key], key)}{NUTRIENT_UNITS[key]}</span>
           {#if p !== null}
-            <span class="hdv">{p}% {t('dailyValue', $locale).replace('*', '')}</span>
+            <span class="hdv">{p}% {t('dvShort', $locale)}</span>
           {/if}
         </div>
       {/each}

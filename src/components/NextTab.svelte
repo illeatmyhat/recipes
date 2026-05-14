@@ -17,6 +17,15 @@
   );
 
   onMount(() => initTabs());
+
+  // Switching tabs makes this button's own panel `display:none`, which would
+  // drop focus to <body>. Move focus onto the destination tab button instead,
+  // so keyboard users land somewhere sensible — the same target TabBar's
+  // arrow-key handler uses.
+  function go(): void {
+    activeTab.set(next);
+    document.getElementById(`tab-${next}`)?.focus();
+  }
 </script>
 
 <div class="next-tab">
@@ -24,7 +33,7 @@
     type="button"
     class="next-btn"
     aria-controls={`panel-${next}`}
-    onclick={() => activeTab.set(next)}
+    onclick={go}
   >
     {t(`${next}Tab`, $locale)}
     <span class="arrow" aria-hidden="true">→</span>
