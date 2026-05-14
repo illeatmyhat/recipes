@@ -405,7 +405,7 @@
     transition: color 0.18s ease;
   }
   .seg.active {
-    color: #fff;
+    color: var(--on-accent);
   }
   .mode-switch.disabled .seg {
     cursor: not-allowed;

@@ -59,6 +59,14 @@ export const UI = {
   alsoKnownAs: { en: 'Also known as', ja: '別名' },
   whereToBuy: { en: 'Where to buy', ja: '購入できる場所' },
   language: { en: 'Language', ja: '言語' },
+
+  theme: { en: 'Theme', ja: 'テーマ' },
+  light: { en: 'Light', ja: 'ライト' },
+  dark: { en: 'Dark', ja: 'ダーク' },
+  themeToggle: {
+    en: 'Switch between light and dark theme',
+    ja: 'ライト・ダークテーマを切り替え',
+  },
 } as const satisfies Record<string, Phrase>;
 
 /** Key of a known UI phrase. */

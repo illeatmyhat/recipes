@@ -2,14 +2,17 @@
    show/hide rules that let static (JS-disabled) content still localize. */
 
 :root {
+  color-scheme: light;
   --bg: #faf7f2;
   --surface: #ffffff;
   --ink: #2b2522;
   --ink-soft: #6f655d;
   --line: #e4ddd2;
   /* --accent / --good are darkened just enough to clear WCAG AA (4.5:1) for
-     small text on the white surface and the cream --bg — the tightest case. */
+     small text on the white surface and the cream --bg — the tightest case.
+     --on-accent is the text/icon colour that sits on an --accent fill. */
   --accent: #b25420;
+  --on-accent: #ffffff;
   --accent-soft: #f6e7dd;
   --good: #2b7548;
   --good-soft: #e3f1e7;
@@ -17,6 +20,51 @@
   --warn-soft: #f6e1de;
   --max: 1080px;
   --radius: 12px;
+}
+
+/* Dark theme. The same warm palette inverted; every value clears 4.5:1 on the
+   surface it sits on. In dark mode --accent is light enough to read as text on
+   the dark surfaces, so --on-accent flips to a dark colour for accent fills.
+
+   Two selectors carry the dark tokens:
+   - [data-theme='dark']  — an explicit choice, set before paint by the inline
+     script in RecipeLayout (and toggled by ThemeToggle).
+   - :not([data-theme])   — JS disabled, so no attribute was ever set; fall back
+     to the OS preference via the media query below.
+   The token list is duplicated because a media query cannot join a selector
+   list; keep the two blocks in sync. */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #1a1714;
+  --surface: #242019;
+  --ink: #f0e9e0;
+  --ink-soft: #b3a89c;
+  --line: #3a342c;
+  --accent: #e0915f;
+  --on-accent: #2b2017;
+  --accent-soft: #38291d;
+  --good: #6ecf91;
+  --good-soft: #1f3327;
+  --warn: #ef8e84;
+  --warn-soft: #382220;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --bg: #1a1714;
+    --surface: #242019;
+    --ink: #f0e9e0;
+    --ink-soft: #b3a89c;
+    --line: #3a342c;
+    --accent: #e0915f;
+    --on-accent: #2b2017;
+    --accent-soft: #38291d;
+    --good: #6ecf91;
+    --good-soft: #1f3327;
+    --warn: #ef8e84;
+    --warn-soft: #382220;
+  }
 }
 
 * {

@@ -28,6 +28,24 @@ const { title, description } = Astro.props;
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A5%A3%3C/text%3E%3C/svg%3E"
     />
+    <script is:inline>
+      // Resolve the colour theme before first paint to avoid a flash of the
+      // wrong colours. An explicit choice in localStorage wins; otherwise
+      // follow the OS. If this throws (storage blocked) no attribute is set
+      // and the CSS `prefers-color-scheme` fallback in global.css takes over.
+      (() => {
+        try {
+          const stored = localStorage.getItem('theme');
+          const theme =
+            stored === 'light' || stored === 'dark'
+              ? stored
+              : window.matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark'
+                : 'light';
+          document.documentElement.dataset.theme = theme;
+        } catch {}
+      })();
+    </script>
   </head>
   <body>
     <main class="shell">

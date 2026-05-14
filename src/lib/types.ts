@@ -6,6 +6,9 @@
 
 export type Locale = 'en' | 'ja';
 
+/** Colour theme. Resolved from a stored choice or the OS preference. */
+export type Theme = 'light' | 'dark';
+
 /** A string that exists in every supported locale. */
 export type Localized = Record<Locale, string>;
 

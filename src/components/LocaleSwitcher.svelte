@@ -67,7 +67,7 @@
   }
   .flag.active {
     background: var(--accent);
-    color: #fff;
+    color: var(--on-accent);
   }
   .emoji {
     font-size: 1.05rem;
