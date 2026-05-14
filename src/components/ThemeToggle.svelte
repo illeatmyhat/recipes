@@ -46,7 +46,20 @@
       }
     };
     mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
+
+    // Mirror a theme change made in another tab of this origin. `storage`
+    // fires only in the *other* tabs, so this never echoes our own write.
+    const onStorage = (e: StorageEvent): void => {
+      if (e.key === 'theme' && (e.newValue === 'light' || e.newValue === 'dark')) {
+        apply(e.newValue, false);
+      }
+    };
+    window.addEventListener('storage', onStorage);
+
+    return () => {
+      mq.removeEventListener('change', onChange);
+      window.removeEventListener('storage', onStorage);
+    };
   });
 
   // Before hydration SSR renders the light default; suppress the slide

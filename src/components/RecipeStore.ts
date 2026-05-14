@@ -62,6 +62,14 @@ export function initLocale(): void {
   // The CSS-driven (JS-optional) static content follows the store, so reflect
   // every change onto the document.
   locale.subscribe(applyLocaleToDocument);
+
+  // Mirror a language change made in another tab of this origin. `storage`
+  // fires only in the *other* tabs, so this never echoes our own write.
+  window.addEventListener('storage', (event) => {
+    if (event.key === 'locale' && (event.newValue === 'en' || event.newValue === 'ja')) {
+      locale.set(event.newValue);
+    }
+  });
 }
 
 /**
