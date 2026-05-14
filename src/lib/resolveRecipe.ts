@@ -11,7 +11,6 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { load } from 'js-yaml';
 import { scaleNutrition } from './nutrition';
-import { UNIT_ML } from './units';
 import type {
   IngredientData,
   IngredientRef,
@@ -55,21 +54,19 @@ function loadIngredient(id: string): IngredientData {
 }
 
 /**
- * Convert a recipe amount to grams. `g` is already weight; volume units
- * (`ml`, `tsp`, `tbsp`) are converted to millilitres and then weighed via the
- * ingredient's density, which therefore must be present.
+ * Convert a recipe amount to grams. `g` is already weight; `ml` is converted
+ * via the ingredient's density, which therefore must be present.
  */
 function toGrams(ref: IngredientRef, data: IngredientData): number {
   if (ref.unit === 'g') return ref.amount;
-  // Volume unit — needs a density to be weighed.
+  // ref.unit === 'ml'
   if (data.density_g_per_ml == null) {
     throw new Error(
-      `resolveRecipe: ingredient "${ref.id}" is used with unit "${ref.unit}" ` +
-        `but its YAML has density_g_per_ml: null. Volume units need a density.`,
+      `resolveRecipe: ingredient "${ref.id}" is used with unit "ml" but its ` +
+        `YAML has density_g_per_ml: null. A density is required to weigh liquids.`,
     );
   }
-  const millilitres = ref.amount * UNIT_ML[ref.unit];
-  return millilitres * data.density_g_per_ml;
+  return ref.amount * data.density_g_per_ml;
 }
 
 /** Merge one ingredient reference with its DB entry and scale its nutrition. */
@@ -79,6 +76,9 @@ function resolveIngredient(
 ): ResolvedIngredient {
   const data = loadIngredient(ref.id);
   const grams = toGrams(ref, data);
+  // Volume is only for the approximate tsp/tbsp display hint, never nutrition.
+  const volumeMl =
+    data.density_g_per_ml != null ? grams / data.density_g_per_ml : null;
   // (amount / 100) * per_100g_value, expressed as a single factor.
   const nutrition = scaleNutrition(data.nutrition.per_100g, grams / 100);
   const selectedByDefault =
@@ -93,6 +93,7 @@ function resolveIngredient(
     amount: ref.amount,
     unit: ref.unit,
     grams,
+    volumeMl,
     notes: ref.notes,
     warnings: ref.warnings ?? [],
     nutrition,

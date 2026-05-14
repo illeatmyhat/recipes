@@ -64,7 +64,7 @@
             <span class="body">
               <span class="name">
                 {item.names[$locale]}
-                <span class="amount">{formatAmount(item.amount, item.unit, $locale)}</span>
+                <span class="amount">{formatAmount(item.amount, item.unit, item.volumeMl, $locale)}</span>
               </span>
               <span class="note">{item.notes[$locale]}</span>
             </span>

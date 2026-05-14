@@ -10,10 +10,11 @@ export type Locale = 'en' | 'ja';
 export type Localized = Record<Locale, string>;
 
 /**
- * Units accepted in recipe frontmatter. Volume units (`ml`, `tsp`, `tbsp`)
- * need the ingredient's `density_g_per_ml` so they can be weighed for nutrition.
+ * Units accepted in recipe frontmatter — always metric. `ml` ingredients need
+ * the ingredient's `density_g_per_ml` so they can be weighed for nutrition.
+ * Kitchen units (tsp/tbsp) are a display-only rendering, never a source unit.
  */
-export type Unit = 'g' | 'ml' | 'tsp' | 'tbsp';
+export type Unit = 'g' | 'ml';
 
 /** Categories an optional ingredient can belong to. */
 export type OptionalCategory = 'fruits' | 'toppings';
@@ -122,6 +123,13 @@ export interface ResolvedIngredient {
   unit: Unit;
   /** The amount converted to grams (via density for `ml` ingredients). */
   grams: number;
+  /**
+   * The amount as a volume in millilitres, when a density is known (always for
+   * `ml` ingredients; for `g` ingredients only if the YAML sets a density).
+   * `null` when it cannot be measured by volume. Used only to render an
+   * approximate teaspoon/tablespoon hint — never for nutrition.
+   */
+  volumeMl: number | null;
   notes: Localized;
   warnings: IngredientWarning[];
   /** Nutrition scaled from per-100g to {@link grams}. */

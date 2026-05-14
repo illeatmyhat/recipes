@@ -72,7 +72,7 @@ const { recipe, heroImage } = Astro.props;
                     <Bilingual text={ing.names} />
                   </span>
                   <span class="ing-amount">
-                    <span class="lang-en">{formatAmount(ing.amount, ing.unit, 'en')}</span><span class="lang-ja">{formatAmount(ing.amount, ing.unit, 'ja')}</span>
+                    <span class="lang-en">{formatAmount(ing.amount, ing.unit, ing.volumeMl, 'en')}</span><span class="lang-ja">{formatAmount(ing.amount, ing.unit, ing.volumeMl, 'ja')}</span>
                   </span>
                 </div>
                 <p class="ing-note">
