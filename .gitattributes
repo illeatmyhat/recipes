@@ -1,0 +1,14 @@
+# Normalize all text files to LF in the repository AND the working tree, on
+# every OS. This overrides any local core.autocrlf setting, so Windows, macOS,
+# and Linux contributors all see identical line endings and git stops warning.
+* text=auto eol=lf
+
+# Binary assets — never normalize or diff as text.
+*.jpg   binary
+*.jpeg  binary
+*.png   binary
+*.webp  binary
+*.gif   binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
