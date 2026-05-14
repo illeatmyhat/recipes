@@ -16,13 +16,7 @@
   const count = $derived(mounted ? $servings : recipe.servingsDefault);
 
   onMount(() => {
-    initStore({
-      servingsDefault: recipe.servingsDefault,
-      defaultFruitIds: recipe.fruits.filter((f) => f.selectedByDefault).map((f) => f.id),
-      defaultToppingIds: recipe.toppings
-        .filter((tp) => tp.selectedByDefault)
-        .map((tp) => tp.id),
-    });
+    initStore(recipe);
     mounted = true;
   });
 

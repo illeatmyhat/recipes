@@ -45,120 +45,128 @@ base_ingredients:
       en: Don't skip — balances the kefir tang.
       ja: 省かないこと。ケフィアの酸味とのバランスに必要。
 optional_ingredients:
-  fruits:
-    - id: banana
-      amount: 60
-      unit: g
-      default: false
-      notes:
-        en: Browns overnight. Always add fresh.
-        ja: 前夜から入れると黒くなる。必ず朝に加えること。
-    - id: kiwi
-      amount: 70
-      unit: g
-      default: false
-      notes:
-        en: Enzymes turn the mixture bitter overnight. Always add fresh.
-        ja: 酵素がタンパク質を分解し苦みが出る。必ず朝に加えること。
-    - id: raspberries
-      amount: 60
-      unit: g
-      default: false
-      notes:
-        en: Disintegrate overnight. Always add fresh.
-        ja: 前夜に入れると崩れる。必ず朝に加えること。
-    - id: strawberries
-      amount: 80
-      unit: g
-      default: true
-      notes:
-        en: Go mushy overnight. Prefer fresh in the morning.
-        ja: 前夜から入れるとやわらかくなりすぎる。朝に加えるのがベスト。
-    - id: peach
-      amount: 80
-      unit: g
-      default: false
-      notes:
-        en: Fresh browns — add in the morning. Frozen is OK overnight.
-        ja: 生は変色するので朝に。冷凍は前夜からOK。
-    - id: blueberries
-      amount: 100
-      unit: g
-      default: true
-      notes:
-        en: Fresh or frozen both fine. Frozen can go in the night before.
-        ja: 生でも冷凍でもOK。冷凍は前夜から入れると朝に解凍されている。
-    - id: blackberries
-      amount: 60
-      unit: g
-      default: true
-      notes:
-        en: More intense flavor, so use a smaller amount. Frozen is OK overnight.
-        ja: 風味が強いので少なめ。冷凍OK。
-    - id: mango
-      amount: 80
-      unit: g
-      default: false
-      notes:
-        en: Frozen preferred — cheaper. Thaw overnight.
-        ja: 冷凍が便利でコスト安。前夜から冷蔵庫で解凍。
-  toppings:
-    - id: hemp_seeds
-      amount: 15
-      unit: g
-      default: true
-      notes:
-        en: Complete protein (all 9 amino acids). Best all-around topping.
-        ja: 必須アミノ酸9種含む完全タンパク質。混ぜても目立たない。
-    - id: pumpkin_seeds
-      amount: 12
-      unit: g
-      default: false
-      notes:
-        en: Best plant zinc source. Add just before eating — goes soft fast.
-        ja: 亜鉛が豊富。水分に触れるとすぐやわらかくなるので直前に加える。
-    - id: ground_flaxseed
-      amount: 10
-      unit: g
-      default: false
-      notes:
-        en: MUST be ground, not whole. Whole seeds pass through undigested.
-        ja: 必ず粉末タイプを。粒のままでは消化されない。
-    - id: granola
-      amount: 25
-      unit: g
-      default: false
-      notes:
-        en: Add right before eating or it goes soggy. Check the label for added sugar.
-        ja: 直前に加えないとやわらかくなる。砂糖量に注意。
-    - id: walnuts
-      amount: 15
-      unit: g
-      default: false
-      notes:
-        en: Highest omega-3 nut. Store in the fridge or freezer — goes rancid fast.
-        ja: オメガ3が最も豊富なナッツ。酸化しやすいので冷蔵・冷凍保存。
-    - id: almonds
-      amount: 12
-      unit: g
-      default: false
-      notes:
-        en: Sliced stays crisp longer than whole or chopped.
-        ja: スライスが食感長持ち。
-    - id: honey
-      amount: 14
-      unit: g
-      default: false
-      notes:
-        en: A small drizzle balances the kefir tang.
-        ja: 少量でケフィアの酸味を和らげる。
-    - id: cinnamon
-      amount: 1
-      unit: g
-      default: false
-      notes:
-        en: Ceylon is preferred over cassia for daily use (lower coumarin).
-        ja: セイロン推奨（カシアはクマリン含有量が高い）。
+  - id: fruits
+    label:
+      en: Fruits
+      ja: フルーツ
+    ingredients:
+      - id: banana
+        amount: 60
+        unit: g
+        default: false
+        notes:
+          en: Browns overnight. Always add fresh.
+          ja: 前夜から入れると黒くなる。必ず朝に加えること。
+      - id: kiwi
+        amount: 70
+        unit: g
+        default: false
+        notes:
+          en: Enzymes turn the mixture bitter overnight. Always add fresh.
+          ja: 酵素がタンパク質を分解し苦みが出る。必ず朝に加えること。
+      - id: raspberries
+        amount: 60
+        unit: g
+        default: false
+        notes:
+          en: Disintegrate overnight. Always add fresh.
+          ja: 前夜に入れると崩れる。必ず朝に加えること。
+      - id: strawberries
+        amount: 80
+        unit: g
+        default: true
+        notes:
+          en: Go mushy overnight. Prefer fresh in the morning.
+          ja: 前夜から入れるとやわらかくなりすぎる。朝に加えるのがベスト。
+      - id: peach
+        amount: 80
+        unit: g
+        default: false
+        notes:
+          en: Fresh browns — add in the morning. Frozen is OK overnight.
+          ja: 生は変色するので朝に。冷凍は前夜からOK。
+      - id: blueberries
+        amount: 100
+        unit: g
+        default: true
+        notes:
+          en: Fresh or frozen both fine. Frozen can go in the night before.
+          ja: 生でも冷凍でもOK。冷凍は前夜から入れると朝に解凍されている。
+      - id: blackberries
+        amount: 60
+        unit: g
+        default: true
+        notes:
+          en: More intense flavor, so use a smaller amount. Frozen is OK overnight.
+          ja: 風味が強いので少なめ。冷凍OK。
+      - id: mango
+        amount: 80
+        unit: g
+        default: false
+        notes:
+          en: Frozen preferred — cheaper. Thaw overnight.
+          ja: 冷凍が便利でコスト安。前夜から冷蔵庫で解凍。
+  - id: toppings
+    label:
+      en: Toppings
+      ja: トッピング
+    ingredients:
+      - id: hemp_seeds
+        amount: 15
+        unit: g
+        default: true
+        notes:
+          en: Complete protein (all 9 amino acids). Best all-around topping.
+          ja: 必須アミノ酸9種含む完全タンパク質。混ぜても目立たない。
+      - id: pumpkin_seeds
+        amount: 12
+        unit: g
+        default: false
+        notes:
+          en: Best plant zinc source. Add just before eating — goes soft fast.
+          ja: 亜鉛が豊富。水分に触れるとすぐやわらかくなるので直前に加える。
+      - id: ground_flaxseed
+        amount: 10
+        unit: g
+        default: false
+        notes:
+          en: MUST be ground, not whole. Whole seeds pass through undigested.
+          ja: 必ず粉末タイプを。粒のままでは消化されない。
+      - id: granola
+        amount: 25
+        unit: g
+        default: false
+        notes:
+          en: Add right before eating or it goes soggy. Check the label for added sugar.
+          ja: 直前に加えないとやわらかくなる。砂糖量に注意。
+      - id: walnuts
+        amount: 15
+        unit: g
+        default: false
+        notes:
+          en: Highest omega-3 nut. Store in the fridge or freezer — goes rancid fast.
+          ja: オメガ3が最も豊富なナッツ。酸化しやすいので冷蔵・冷凍保存。
+      - id: almonds
+        amount: 12
+        unit: g
+        default: false
+        notes:
+          en: Sliced stays crisp longer than whole or chopped.
+          ja: スライスが食感長持ち。
+      - id: honey
+        amount: 14
+        unit: g
+        default: false
+        notes:
+          en: A small drizzle balances the kefir tang.
+          ja: 少量でケフィアの酸味を和らげる。
+      - id: cinnamon
+        amount: 1
+        unit: g
+        default: false
+        notes:
+          en: Ceylon is preferred over cassia for daily use (lower coumarin).
+          ja: セイロン推奨（カシアはクマリン含有量が高い）。
 ---
 
 <div class="lang-en">

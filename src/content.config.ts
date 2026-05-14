@@ -33,6 +33,14 @@ const optionalIngredientRef = ingredientRef.extend({
   default: z.boolean().default(false),
 });
 
+// An optional-ingredient category is whatever the recipe author defines — its
+// id, a localized label, and the ingredients in it. No category set is baked in.
+const optionalCategory = z.object({
+  id: z.string(),
+  label: localized,
+  ingredients: z.array(optionalIngredientRef).nonempty(),
+});
+
 const recipes = defineCollection({
   loader: glob({ pattern: '**/*.mdx', base: './src/content/recipes' }),
   schema: ({ image }) =>
@@ -43,10 +51,7 @@ const recipes = defineCollection({
       locales: z.array(z.enum(['en', 'ja'])).nonempty(),
       servings_default: z.number().int().positive(),
       base_ingredients: z.array(ingredientRef).nonempty(),
-      optional_ingredients: z.object({
-        fruits: z.array(optionalIngredientRef),
-        toppings: z.array(optionalIngredientRef),
-      }),
+      optional_ingredients: z.array(optionalCategory),
     }),
 });
 

@@ -1,12 +1,12 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import {
-    selectedFruits,
-    selectedToppings,
+    selectedOptional,
     servingsFactor,
     locale,
-    toggleId,
+    toggleOptional,
     initStore,
+    defaultSelected,
   } from './RecipeStore';
   import { t } from '../lib/i18n';
   import { formatAmount } from '../lib/units';
@@ -15,12 +15,7 @@
 
   let { recipe }: { recipe: ResolvedRecipe } = $props();
 
-  const defaultFruitIds = recipe.fruits
-    .filter((f) => f.selectedByDefault)
-    .map((f) => f.id);
-  const defaultToppingIds = recipe.toppings
-    .filter((tp) => tp.selectedByDefault)
-    .map((tp) => tp.id);
+  const defaults = defaultSelected(recipe);
 
   // Before hydration the panel reflects the recipe's default selections so the
   // static HTML matches what NutritionPanel pre-renders. Every island calls
@@ -28,25 +23,20 @@
   // be the first to hydrate.
   let mounted = $state(false);
   onMount(() => {
-    initStore({
-      servingsDefault: recipe.servingsDefault,
-      defaultFruitIds,
-      defaultToppingIds,
-    });
+    initStore(recipe);
     mounted = true;
   });
 
-  const activeFruits = $derived(mounted ? $selectedFruits : defaultFruitIds);
-  const activeToppings = $derived(mounted ? $selectedToppings : defaultToppingIds);
+  const selected = $derived(mounted ? $selectedOptional : defaults);
   // Amounts scale live with the servings slider.
   const factor = $derived(mounted ? $servingsFactor : 1);
 </script>
 
 {#snippet group(
+  categoryId: string,
   title: string,
   items: ResolvedIngredient[],
   active: string[],
-  store: typeof selectedFruits,
 )}
   <fieldset class="group">
     <legend>
@@ -62,7 +52,7 @@
             class="toggle"
             class:on
             aria-pressed={on}
-            onclick={() => toggleId(store, item.id)}
+            onclick={() => toggleOptional(categoryId, item.id)}
           >
             <span class="check" aria-hidden="true">{on ? '✓' : ''}</span>
             <span class="body">
@@ -89,13 +79,14 @@
 <section class="customize" aria-labelledby="customize-heading">
   <h2 id="customize-heading">{t('customizeTitle', $locale)}</h2>
   <p class="hint">{t('customizeHint', $locale)}</p>
-  {@render group(t('fruits', $locale), recipe.fruits, activeFruits, selectedFruits)}
-  {@render group(
-    t('toppings', $locale),
-    recipe.toppings,
-    activeToppings,
-    selectedToppings,
-  )}
+  {#each recipe.optionalCategories as category (category.id)}
+    {@render group(
+      category.id,
+      category.label[$locale],
+      category.ingredients,
+      selected[category.id] ?? [],
+    )}
+  {/each}
   <NextTab from="customize" />
 </section>
 

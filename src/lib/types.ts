@@ -19,9 +19,6 @@ export type Localized = Record<Locale, string>;
  */
 export type Unit = 'g' | 'ml';
 
-/** Categories an optional ingredient can belong to. */
-export type OptionalCategory = 'fruits' | 'toppings';
-
 /** The twelve nutrients tracked per ingredient, USDA per-100g basis. */
 export interface NutritionFacts {
   /** kcal */
@@ -98,6 +95,18 @@ export interface OptionalIngredientRef extends IngredientRef {
   default: boolean;
 }
 
+/**
+ * A named group of optional ingredients, defined entirely by the recipe — e.g.
+ * "Fruits", "Toppings", "Sauces". The app hard-codes no particular set; a
+ * recipe declares whichever categories it wants.
+ */
+export interface OptionalCategoryRef {
+  /** Stable id, used as the key for the user's selection within the category. */
+  id: string;
+  label: Localized;
+  ingredients: OptionalIngredientRef[];
+}
+
 /** Raw recipe frontmatter as parsed from the MDX file. */
 export interface RecipeFrontmatter {
   title: Localized;
@@ -105,10 +114,7 @@ export interface RecipeFrontmatter {
   locales: Locale[];
   servings_default: number;
   base_ingredients: IngredientRef[];
-  optional_ingredients: {
-    fruits: OptionalIngredientRef[];
-    toppings: OptionalIngredientRef[];
-  };
+  optional_ingredients: OptionalCategoryRef[];
 }
 
 /**
@@ -137,10 +143,17 @@ export interface ResolvedIngredient {
   warnings: IngredientWarning[];
   /** Nutrition scaled from per-100g to {@link grams}. */
   nutrition: NutritionFacts;
-  /** Which optional bucket this belongs to, or `null` for base ingredients. */
-  category: OptionalCategory | null;
+  /** The id of the optional category this belongs to, or `null` for base. */
+  category: string | null;
   /** Whether the recipe selects this ingredient by default. Always true for base. */
   selectedByDefault: boolean;
+}
+
+/** An optional category after its ingredient refs have been resolved. */
+export interface ResolvedOptionalCategory {
+  id: string;
+  label: Localized;
+  ingredients: ResolvedIngredient[];
 }
 
 /**
@@ -153,8 +166,8 @@ export interface ResolvedRecipe {
   locales: Locale[];
   servingsDefault: number;
   baseIngredients: ResolvedIngredient[];
-  fruits: ResolvedIngredient[];
-  toppings: ResolvedIngredient[];
-  /** Every ingredient (base + fruits + toppings) in one list. */
+  /** The recipe's optional-ingredient categories, in author order. */
+  optionalCategories: ResolvedOptionalCategory[];
+  /** Every ingredient (base + all optional categories) in one list. */
   allIngredients: ResolvedIngredient[];
 }

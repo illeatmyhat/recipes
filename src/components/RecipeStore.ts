@@ -9,16 +9,17 @@
  * passed to islands as props — it never changes, so it does not belong here.
  */
 import { writable, derived, type Readable } from 'svelte/store';
-import type { Locale } from '../lib/types';
+import type { Locale, ResolvedRecipe } from '../lib/types';
 
 /** How many servings the user currently wants. Starts at 1; `initStore` resets it. */
 export const servings = writable<number>(1);
 
-/** IDs of the optional fruits the user has selected. */
-export const selectedFruits = writable<string[]>([]);
-
-/** IDs of the optional toppings the user has selected. */
-export const selectedToppings = writable<string[]>([]);
+/**
+ * The user's optional-ingredient selection: the chosen ingredient ids for each
+ * optional category, keyed by category id. The categories themselves are
+ * defined per-recipe, so this is a generic map rather than fixed fields.
+ */
+export const selectedOptional = writable<Record<string, string[]>>({});
 
 /** Active UI locale. SSR/static render uses `en`; hydration runs detection. */
 export const locale = writable<Locale>('en');
@@ -43,11 +44,20 @@ export const TABS: ReadonlyArray<Tab> = ['recipe', 'customize'];
  *  `<html data-tab>`, which the CSS in RecipePage uses to swap panels. */
 export const activeTab = writable<Tab>('recipe');
 
-/** Defaults pulled from a resolved recipe, handed to {@link initStore}. */
-export interface StoreDefaults {
-  servingsDefault: number;
-  defaultFruitIds: string[];
-  defaultToppingIds: string[];
+/**
+ * The ingredient ids selected by default in each optional category, keyed by
+ * category id — the seed for {@link selectedOptional}. Exported so islands can
+ * render the same selection before hydration that `initStore` will set after.
+ */
+export function defaultSelected(recipe: ResolvedRecipe): Record<string, string[]> {
+  return Object.fromEntries(
+    recipe.optionalCategories.map((category) => [
+      category.id,
+      category.ingredients
+        .filter((ingredient) => ingredient.selectedByDefault)
+        .map((ingredient) => ingredient.id),
+    ]),
+  );
 }
 
 let storeInitialized = false;
@@ -98,17 +108,16 @@ export function initLocale(): void {
 }
 
 /**
- * Seed the recipe stores from a recipe's defaults, and initialise the locale.
+ * Seed the recipe stores from a resolved recipe, and initialise the locale.
  * Idempotent: the first island to hydrate wins, later ones are no-ops, so
  * every island shares one consistent initial state.
  */
-export function initStore(defaults: StoreDefaults): void {
+export function initStore(recipe: ResolvedRecipe): void {
   if (!storeInitialized) {
     storeInitialized = true;
-    servingsDefault.set(defaults.servingsDefault);
-    servings.set(defaults.servingsDefault);
-    selectedFruits.set([...defaults.defaultFruitIds]);
-    selectedToppings.set([...defaults.defaultToppingIds]);
+    servingsDefault.set(recipe.servingsDefault);
+    servings.set(recipe.servingsDefault);
+    selectedOptional.set(defaultSelected(recipe));
   }
   initLocale();
 }
@@ -141,9 +150,13 @@ export function setLocale(value: Locale): void {
   }
 }
 
-/** Toggle an id within a `string[]` store (used by the customize toggles). */
-export function toggleId(store: typeof selectedFruits, id: string): void {
-  store.update((ids) =>
-    ids.includes(id) ? ids.filter((x) => x !== id) : [...ids, id],
-  );
+/** Toggle one optional ingredient's selection within its category. */
+export function toggleOptional(categoryId: string, ingredientId: string): void {
+  selectedOptional.update((selected) => {
+    const current = selected[categoryId] ?? [];
+    const next = current.includes(ingredientId)
+      ? current.filter((id) => id !== ingredientId)
+      : [...current, ingredientId];
+    return { ...selected, [categoryId]: next };
+  });
 }

@@ -45,11 +45,9 @@ export const UI = {
 
   customizeTitle: { en: 'Customize your bowl', ja: 'ボウルをカスタマイズ' },
   customizeHint: {
-    en: 'Toggle fruits and toppings — nutrition updates live.',
-    ja: 'フルーツとトッピングを切り替え — 栄養成分はその場で更新されます。',
+    en: 'Toggle optional ingredients — nutrition updates live.',
+    ja: 'お好みの材料を切り替え — 栄養成分はその場で更新されます。',
   },
-  fruits: { en: 'Fruits', ja: 'フルーツ' },
-  toppings: { en: 'Toppings', ja: 'トッピング' },
   selected: { en: 'selected', ja: '選択中' },
 
   recipeTab: { en: 'Recipe', ja: 'レシピ' },

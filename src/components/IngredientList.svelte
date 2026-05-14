@@ -6,10 +6,10 @@
   import { onMount } from 'svelte';
   import {
     servingsFactor,
-    selectedFruits,
-    selectedToppings,
+    selectedOptional,
     locale,
     initStore,
+    defaultSelected,
   } from './RecipeStore';
   import { t } from '../lib/i18n';
   import { formatAmount } from '../lib/units';
@@ -18,36 +18,31 @@
 
   let { recipe }: { recipe: ResolvedRecipe } = $props();
 
-  const defaultFruitIds = recipe.fruits
-    .filter((f) => f.selectedByDefault)
-    .map((f) => f.id);
-  const defaultToppingIds = recipe.toppings
-    .filter((tp) => tp.selectedByDefault)
-    .map((tp) => tp.id);
+  const defaults = defaultSelected(recipe);
 
   // SSR renders the recipe's defaults; after hydration the shared store drives
   // both the scale factor and which optional ingredients are selected.
   let mounted = $state(false);
   onMount(() => {
-    initStore({
-      servingsDefault: recipe.servingsDefault,
-      defaultFruitIds,
-      defaultToppingIds,
-    });
+    initStore(recipe);
     mounted = true;
   });
 
   const factor = $derived(mounted ? $servingsFactor : 1);
-  const activeFruitIds = $derived(mounted ? $selectedFruits : defaultFruitIds);
-  const activeToppingIds = $derived(mounted ? $selectedToppings : defaultToppingIds);
+  const selected = $derived(mounted ? $selectedOptional : defaults);
 
-  // Optional ingredients, filtered to the current selection but kept in recipe
-  // order. Base ingredients are always present.
-  const fruits = $derived(
-    recipe.fruits.filter((f) => activeFruitIds.includes(f.id)),
-  );
-  const toppings = $derived(
-    recipe.toppings.filter((tp) => activeToppingIds.includes(tp.id)),
+  // Each optional category narrowed to its currently-selected ingredients
+  // (kept in recipe order). Categories with nothing selected are dropped.
+  const activeCategories = $derived(
+    recipe.optionalCategories
+      .map((category) => ({
+        id: category.id,
+        label: category.label,
+        ingredients: category.ingredients.filter((ingredient) =>
+          (selected[category.id] ?? []).includes(ingredient.id),
+        ),
+      }))
+      .filter((category) => category.ingredients.length > 0),
   );
 </script>
 
@@ -90,12 +85,9 @@
   <h2 id="ingredients-heading">{t('ingredients', $locale)}</h2>
   <div class="groups">
     {@render group(t('base', $locale), recipe.baseIngredients)}
-    {#if fruits.length > 0}
-      {@render group(t('fruits', $locale), fruits)}
-    {/if}
-    {#if toppings.length > 0}
-      {@render group(t('toppings', $locale), toppings)}
-    {/if}
+    {#each activeCategories as category (category.id)}
+      {@render group(category.label[$locale], category.ingredients)}
+    {/each}
   </div>
   <NextTab from="recipe" />
 </section>

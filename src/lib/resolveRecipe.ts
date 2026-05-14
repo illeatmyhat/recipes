@@ -14,10 +14,10 @@ import { scaleNutrition } from './nutrition';
 import type {
   IngredientData,
   IngredientRef,
-  OptionalCategory,
   OptionalIngredientRef,
   RecipeFrontmatter,
   ResolvedIngredient,
+  ResolvedOptionalCategory,
   ResolvedRecipe,
 } from './types';
 
@@ -69,10 +69,14 @@ function toGrams(ref: IngredientRef, data: IngredientData): number {
   return ref.amount * data.density_g_per_ml;
 }
 
-/** Merge one ingredient reference with its DB entry and scale its nutrition. */
+/**
+ * Merge one ingredient reference with its DB entry and scale its nutrition.
+ * `category` is the id of the optional category it belongs to, or `null` for
+ * a base ingredient.
+ */
 function resolveIngredient(
   ref: IngredientRef | OptionalIngredientRef,
-  category: OptionalCategory | null,
+  category: string | null,
 ): ResolvedIngredient {
   const data = loadIngredient(ref.id);
   const grams = toGrams(ref, data);
@@ -110,12 +114,17 @@ export function resolveRecipe(frontmatter: RecipeFrontmatter): ResolvedRecipe {
   const baseIngredients = frontmatter.base_ingredients.map((ref) =>
     resolveIngredient(ref, null),
   );
-  const fruits = frontmatter.optional_ingredients.fruits.map((ref) =>
-    resolveIngredient(ref, 'fruits'),
-  );
-  const toppings = frontmatter.optional_ingredients.toppings.map((ref) =>
-    resolveIngredient(ref, 'toppings'),
-  );
+
+  // Every optional category the recipe declares — the set is the author's, not
+  // the app's. Each ingredient is tagged with its category id.
+  const optionalCategories: ResolvedOptionalCategory[] =
+    frontmatter.optional_ingredients.map((category) => ({
+      id: category.id,
+      label: category.label,
+      ingredients: category.ingredients.map((ref) =>
+        resolveIngredient(ref, category.id),
+      ),
+    }));
 
   return {
     title: frontmatter.title,
@@ -123,8 +132,10 @@ export function resolveRecipe(frontmatter: RecipeFrontmatter): ResolvedRecipe {
     locales: frontmatter.locales,
     servingsDefault: frontmatter.servings_default,
     baseIngredients,
-    fruits,
-    toppings,
-    allIngredients: [...baseIngredients, ...fruits, ...toppings],
+    optionalCategories,
+    allIngredients: [
+      ...baseIngredients,
+      ...optionalCategories.flatMap((category) => category.ingredients),
+    ],
   };
 }

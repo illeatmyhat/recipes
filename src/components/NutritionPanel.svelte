@@ -2,11 +2,11 @@
   import { onMount } from 'svelte';
   import {
     servingsFactor,
-    selectedFruits,
-    selectedToppings,
+    selectedOptional,
     servings,
     locale,
     initStore,
+    defaultSelected,
   } from './RecipeStore';
   import {
     NUTRIENT_UNITS,
@@ -29,20 +29,11 @@
   // --- hydration bridge -----------------------------------------------------
   // SSR renders this panel with the recipe's default servings and default
   // ingredient selections; after hydration the shared stores take over.
-  const defaultFruitIds = recipe.fruits
-    .filter((f) => f.selectedByDefault)
-    .map((f) => f.id);
-  const defaultToppingIds = recipe.toppings
-    .filter((tp) => tp.selectedByDefault)
-    .map((tp) => tp.id);
+  const defaults = defaultSelected(recipe);
 
   let mounted = $state(false);
   onMount(() => {
-    initStore({
-      servingsDefault: recipe.servingsDefault,
-      defaultFruitIds,
-      defaultToppingIds,
-    });
+    initStore(recipe);
     mounted = true;
   });
 
@@ -54,8 +45,7 @@
     if (!showTotal) return perServingFactor;
     return mounted ? $servingsFactor : 1;
   });
-  const activeFruitIds = $derived(mounted ? $selectedFruits : defaultFruitIds);
-  const activeToppingIds = $derived(mounted ? $selectedToppings : defaultToppingIds);
+  const selected = $derived(mounted ? $selectedOptional : defaults);
   const servingCount = $derived(mounted ? $servings : recipe.servingsDefault);
 
   // --- colour assignment ----------------------------------------------------
@@ -84,12 +74,12 @@
   }
 
   const activeIngredients = $derived.by<ActiveIngredient[]>(() => {
-    const fruitSet = new Set(activeFruitIds);
-    const toppingSet = new Set(activeToppingIds);
     const chosen = [
       ...recipe.baseIngredients,
-      ...recipe.fruits.filter((f) => fruitSet.has(f.id)),
-      ...recipe.toppings.filter((tp) => toppingSet.has(tp.id)),
+      ...recipe.optionalCategories.flatMap((category) => {
+        const ids = new Set(selected[category.id] ?? []);
+        return category.ingredients.filter((ingredient) => ids.has(ingredient.id));
+      }),
     ];
     return chosen.map((ing) => ({
       id: ing.id,
