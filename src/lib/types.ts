@@ -113,6 +113,8 @@ export interface RecipeFrontmatter {
   slug: string;
   locales: Locale[];
   servings_default: number;
+  /** Optional per-recipe heading for the Customize tab; falls back to i18n. */
+  customize_title?: Localized;
   base_ingredients: IngredientRef[];
   optional_ingredients: OptionalCategoryRef[];
 }
@@ -165,6 +167,8 @@ export interface ResolvedRecipe {
   slug: string;
   locales: Locale[];
   servingsDefault: number;
+  /** Per-recipe Customize-tab heading; `undefined` falls back to the i18n string. */
+  customizeTitle?: Localized;
   baseIngredients: ResolvedIngredient[];
   /** The recipe's optional-ingredient categories, in author order. */
   optionalCategories: ResolvedOptionalCategory[];

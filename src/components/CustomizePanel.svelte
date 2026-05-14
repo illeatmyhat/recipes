@@ -32,6 +32,14 @@
   const selected = $derived(mounted ? $selectedOptional : defaults);
   // Amounts scale live with the servings slider.
   const factor = $derived(mounted ? $servingsFactor : 1);
+
+  // The heading: a recipe may supply its own phrasing ("Customize your bowl"),
+  // otherwise fall back to the generic localized UI string.
+  const heading = $derived(
+    recipe.customizeTitle
+      ? recipe.customizeTitle[$locale]
+      : t('customizeTitle', $locale),
+  );
 </script>
 
 {#snippet group(
@@ -79,7 +87,7 @@
 {/snippet}
 
 <section class="customize" aria-labelledby="customize-heading">
-  <h2 id="customize-heading">{t('customizeTitle', $locale)}</h2>
+  <h2 id="customize-heading">{heading}</h2>
   <p class="hint">{t('customizeHint', $locale)}</p>
   {#each recipe.optionalCategories as category (category.id)}
     {@render group(

@@ -131,6 +131,7 @@ export function resolveRecipe(frontmatter: RecipeFrontmatter): ResolvedRecipe {
     slug: frontmatter.slug,
     locales: frontmatter.locales,
     servingsDefault: frontmatter.servings_default,
+    customizeTitle: frontmatter.customize_title,
     baseIngredients,
     optionalCategories,
     allIngredients: [

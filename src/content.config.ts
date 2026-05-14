@@ -48,6 +48,10 @@ const recipes = defineCollection({
       title: localized,
       slug: z.string(),
       hero_image: image(),
+      // Optional per-recipe heading for the Customize tab. When omitted the UI
+      // falls back to the generic `customizeTitle` string in i18n.ts — set this
+      // when a recipe-specific phrasing ("Customize your bowl") reads better.
+      customize_title: localized.optional(),
       locales: z.array(z.enum(['en', 'ja'])).nonempty(),
       servings_default: z.number().int().positive(),
       base_ingredients: z.array(ingredientRef).nonempty(),
