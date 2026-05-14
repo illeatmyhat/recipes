@@ -136,8 +136,13 @@ export function detectLocale(): Locale {
 /** Reflect the locale onto `<html data-locale>` so CSS can localize static content. */
 function applyLocaleToDocument(value: Locale): void {
   if (typeof document === 'undefined') return;
-  document.documentElement.dataset.locale = value;
-  document.documentElement.lang = value;
+  const de = document.documentElement;
+  de.dataset.locale = value;
+  de.lang = value;
+  // The page <title> lives in <head> with no .lang-* siblings, so swap it
+  // directly from the localized strings the layout stamped onto <html>.
+  const title = value === 'ja' ? de.dataset.titleJa : de.dataset.titleEn;
+  if (title) document.title = title;
 }
 
 /** Switch the UI locale and remember the choice in localStorage. */

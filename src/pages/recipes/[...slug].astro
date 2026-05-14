@@ -26,7 +26,10 @@ const { Content } = await render(entry);
 
 // Build-time merge: frontmatter + ingredient YAML, scaled to recipe amounts.
 const recipe = resolveRecipe(entry.data);
-const pageTitle = `${recipe.title.en} — Recipes`;
+const pageTitle = {
+  en: `${recipe.title.en} — Recipes`,
+  ja: `${recipe.title.ja} — レシピ`,
+};
 ---
 
 <RecipeLayout title={pageTitle} description={recipe.title.en}>

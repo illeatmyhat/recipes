@@ -7,9 +7,10 @@
  * English) with JavaScript disabled; the locale store flips it on hydration.
  */
 import '../styles/global.css';
+import type { Localized } from '../lib/types';
 
 interface Props {
-  title: string;
+  title: Localized;
   description?: string;
 }
 
@@ -17,12 +18,15 @@ const { title, description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" data-locale="en">
+<!-- The <title> can't carry .lang-* siblings the way body content can, so the
+     localized strings are stamped onto <html>; the inline script below and
+     RecipeStore's applyLocaleToDocument swap document.title to match. -->
+<html lang="en" data-locale="en" data-title-en={title.en} data-title-ja={title.ja}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <title>{title.en}</title>
     {description && <meta name="description" content={description} />}
     <link
       rel="icon"
@@ -62,8 +66,12 @@ const { title, description } = Astro.props;
             : (navigator.language || '').toLowerCase().startsWith('ja')
               ? 'ja'
               : 'en';
-        document.documentElement.dataset.locale = locale;
-        document.documentElement.lang = locale;
+        const de = document.documentElement;
+        de.dataset.locale = locale;
+        de.lang = locale;
+        // Swap the tab title before paint too, from the strings stamped on <html>.
+        const title = locale === 'ja' ? de.dataset.titleJa : de.dataset.titleEn;
+        if (title) document.title = title;
       })();
     </script>
   </head>

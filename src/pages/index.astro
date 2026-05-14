@@ -13,7 +13,10 @@ const recipes = (await getCollection('recipes')).sort((a, b) =>
 );
 ---
 
-<RecipeLayout title="Recipes" description="A small collection of recipes.">
+<RecipeLayout
+  title={{ en: 'Recipes', ja: 'レシピ' }}
+  description="A small collection of recipes."
+>
   <header class="head">
     <div class="head-bar">
       <h1><Bilingual text={{ en: 'Recipes', ja: 'レシピ' }} /></h1>
