@@ -3,6 +3,10 @@
   // because the amounts scale live with the servings slider, and the optional
   // groups reflect the fruit/topping choices made in the Customize tab — both
   // via the shared store.
+  //
+  // It also has a self-contained "shopping list" mode: a toggle turns every
+  // ingredient row into a tick-off card. That state is purely local — it is
+  // not shared with other islands and is not persisted.
   import { onMount } from 'svelte';
   import {
     servingsFactor,
@@ -46,30 +50,59 @@
       }))
       .filter((category) => category.ingredients.length > 0),
   );
+
+  // --- shopping-list mode ---------------------------------------------------
+  // `shopping` flips the list into tick-off mode; `checked` records which
+  // ingredient ids have been ticked. Both are local, in-memory state — a row
+  // stays ticked while you scale servings or change optional ingredients, and
+  // a reload clears it.
+  let shopping = $state(false);
+  let checked = $state<Record<string, boolean>>({});
+
+  function toggleChecked(id: string): void {
+    checked = { ...checked, [id]: !checked[id] };
+  }
 </script>
 
+{#snippet body(ing: ResolvedIngredient)}
+  <span class="ing-head">
+    <span class="ing-name">{ing.names[$locale]}</span>
+    <span class="ing-amount">
+      {formatAmount(
+        ing.amount * factor,
+        ing.unit,
+        ing.volumeMl === null ? null : ing.volumeMl * factor,
+        $locale,
+      )}
+    </span>
+  </span>
+  <span class="ing-note">{ing.notes[$locale]}</span>
+  {#if ing.warnings.length > 0}
+    <span class="warnings">
+      {#each ing.warnings as w (w.en)}
+        <span class="warning {w.type}">{w[$locale]}</span>
+      {/each}
+    </span>
+  {/if}
+{/snippet}
+
 {#snippet item(ing: ResolvedIngredient)}
-  <li class="ing">
-    <div class="ing-head">
-      <span class="ing-name">{ing.names[$locale]}</span>
-      <span class="ing-amount">
-        {formatAmount(
-          ing.amount * factor,
-          ing.unit,
-          ing.volumeMl === null ? null : ing.volumeMl * factor,
-          $locale,
-        )}
-      </span>
-    </div>
-    <p class="ing-note">{ing.notes[$locale]}</p>
-    {#if ing.warnings.length > 0}
-      <ul class="warnings">
-        {#each ing.warnings as w (w.en)}
-          <li class="warning {w.type}">{w[$locale]}</li>
-        {/each}
-      </ul>
-    {/if}
-  </li>
+  {#if shopping}
+    {@const on = checked[ing.id] === true}
+    <li class="ing shop" class:checked={on}>
+      <button
+        type="button"
+        class="ing-btn"
+        aria-pressed={on}
+        onclick={() => toggleChecked(ing.id)}
+      >
+        <span class="ing-check" aria-hidden="true">{on ? '✓' : ''}</span>
+        <span class="ing-main">{@render body(ing)}</span>
+      </button>
+    </li>
+  {:else}
+    <li class="ing">{@render body(ing)}</li>
+  {/if}
 {/snippet}
 
 {#snippet group(title: string, items: ResolvedIngredient[])}
@@ -84,7 +117,18 @@
 {/snippet}
 
 <section class="ingredients" aria-labelledby="ingredients-heading">
-  <h2 id="ingredients-heading">{t('ingredients', $locale)}</h2>
+  <div class="ing-top">
+    <h2 id="ingredients-heading">{t('ingredients', $locale)}</h2>
+    <button
+      type="button"
+      class="shop-toggle"
+      class:on={shopping}
+      aria-pressed={shopping}
+      onclick={() => (shopping = !shopping)}
+    >
+      {t('shoppingList', $locale)}
+    </button>
+  </div>
   <div class="groups">
     {@render group(t('base', $locale), recipe.baseIngredients)}
     {#each activeCategories as category (category.id)}
@@ -101,9 +145,39 @@
     padding: 1.25rem;
     background: var(--surface);
   }
+  .ing-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
   h2 {
-    margin: 0 0 0.75rem;
+    margin: 0;
     font-size: 1.15rem;
+  }
+  /* The shopping-mode toggle. Its "on" state borrows --pick — the same colour
+     that highlights a ticked row — so the control and its effect read as one. */
+  .shop-toggle {
+    flex: none;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--ink-soft);
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.35rem 0.8rem;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .shop-toggle:hover {
+    color: var(--ink);
+  }
+  .shop-toggle.on {
+    background: var(--pick);
+    color: var(--on-accent);
+    border-color: var(--pick);
   }
   .groups {
     display: grid;
@@ -131,6 +205,57 @@
     border-bottom: none;
     padding-bottom: 0;
   }
+  /* Shopping mode: the row's <li> stops being a divider and the inner <button>
+     becomes the tick-off card. */
+  .ing.shop {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .ing-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    width: 100%;
+    text-align: left;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--bg);
+    cursor: pointer;
+    font: inherit;
+    color: var(--ink);
+    user-select: none;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .ing-btn:hover {
+    border-color: var(--pick);
+  }
+  .ing.shop.checked .ing-btn {
+    border-color: var(--pick);
+    background: var(--pick-soft);
+  }
+  .ing-check {
+    flex: none;
+    width: 1.4rem;
+    height: 1.4rem;
+    margin-top: 0.1rem;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    display: grid;
+    place-items: center;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--on-accent);
+  }
+  .ing.shop.checked .ing-check {
+    background: var(--pick);
+    border-color: var(--pick);
+  }
+  .ing-main {
+    flex: 1;
+    min-width: 0;
+  }
   .ing-head {
     display: flex;
     justify-content: space-between;
@@ -147,16 +272,15 @@
     text-align: right;
   }
   .ing-note {
-    margin: 0.2rem 0 0;
+    display: block;
+    margin-top: 0.2rem;
     font-size: 0.9rem;
     color: var(--ink-soft);
   }
   .warnings {
-    list-style: none;
-    margin: 0.5rem 0 0;
-    padding: 0;
     display: grid;
     gap: 0.35rem;
+    margin-top: 0.5rem;
   }
   .warning {
     font-size: 0.85rem;

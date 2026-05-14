@@ -57,6 +57,7 @@ export const UI = {
   tabs: { en: 'Recipe sections', ja: 'レシピのセクション' },
 
   ingredients: { en: 'Ingredients', ja: '材料' },
+  shoppingList: { en: 'Shopping list', ja: '買い物リスト' },
   base: { en: 'Base', ja: 'ベース' },
   optional: { en: 'Optional', ja: 'お好みで' },
   method: { en: 'Method', ja: '作り方' },

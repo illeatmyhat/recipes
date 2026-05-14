@@ -23,6 +23,12 @@
   --good-soft: #e3f1e7;
   --warn: #b23b2e;
   --warn-soft: #f6e1de;
+  /* --pick highlights a checked-off shopping-list item. A cool cyan, kept
+     deliberately clear of the red/green warning colours and the orange accent
+     so a ticked item never reads as a warning. --pick-soft is the row fill;
+     text/✓ on a --pick fill uses --on-accent (it works on both). */
+  --pick: #0e7490;
+  --pick-soft: #dceef2;
   --max: 1080px;
   --radius: 12px;
 }
@@ -57,6 +63,8 @@
   --good-soft: #1f3327;
   --warn: #ef8e84;
   --warn-soft: #382220;
+  --pick: #5cc6d4;
+  --pick-soft: #17323a;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -75,6 +83,8 @@
     --good-soft: #1f3327;
     --warn: #ef8e84;
     --warn-soft: #382220;
+    --pick: #5cc6d4;
+    --pick-soft: #17323a;
   }
 }
 
