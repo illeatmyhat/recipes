@@ -27,7 +27,7 @@
   }
 </script>
 
-<div class="tabs" role="tablist" aria-label={t('tabs', $locale)} onkeydown={onKeydown}>
+<div class="tabs" role="tablist" aria-label={t('tabs', $locale)}>
   {#each TABS as tab (tab)}
     {@const selected = $activeTab === tab}
     <button
@@ -39,6 +39,7 @@
       aria-controls={`panel-${tab}`}
       tabindex={selected ? 0 : -1}
       onclick={() => activeTab.set(tab)}
+      onkeydown={onKeydown}
     >
       {t(`${tab}Tab`, $locale)}
     </button>

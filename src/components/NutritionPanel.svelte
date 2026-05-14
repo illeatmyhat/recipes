@@ -29,7 +29,9 @@
   // --- hydration bridge -----------------------------------------------------
   // SSR renders this panel with the recipe's default servings and default
   // ingredient selections; after hydration the shared stores take over.
-  const defaults = defaultSelected(recipe);
+  // `recipe` is a static prop, but deriving keeps Svelte from warning that a
+  // plain `const` would not track it.
+  const defaults = $derived(defaultSelected(recipe));
 
   let mounted = $state(false);
   onMount(() => {
@@ -40,7 +42,7 @@
   // The panel shows whole-recipe nutrition by default — scaled to the chosen
   // number of servings. The switch flips it to a single per-serving portion.
   let showTotal = $state(true);
-  const perServingFactor = 1 / recipe.servingsDefault;
+  const perServingFactor = $derived(1 / recipe.servingsDefault);
   const factor = $derived.by(() => {
     if (!showTotal) return perServingFactor;
     return mounted ? $servingsFactor : 1;
@@ -60,8 +62,13 @@
     '#ee6868',
     '#2f6497',
   ];
-  const colourOf = new Map<string, string>(
-    recipe.allIngredients.map((ing, i) => [ing.id, PALETTE[i % PALETTE.length] ?? '#888888']),
+  const colourOf = $derived(
+    new Map<string, string>(
+      recipe.allIngredients.map((ing, i) => [
+        ing.id,
+        PALETTE[i % PALETTE.length] ?? '#888888',
+      ]),
+    ),
   );
 
   // --- the live ingredient set ----------------------------------------------

@@ -15,7 +15,9 @@
 
   let { recipe }: { recipe: ResolvedRecipe } = $props();
 
-  const defaults = defaultSelected(recipe);
+  // `recipe` is a static prop; deriving keeps Svelte from warning that a plain
+  // `const` would not track it.
+  const defaults = $derived(defaultSelected(recipe));
 
   // Before hydration the panel reflects the recipe's default selections so the
   // static HTML matches what NutritionPanel pre-renders. Every island calls

@@ -18,7 +18,9 @@
 
   let { recipe }: { recipe: ResolvedRecipe } = $props();
 
-  const defaults = defaultSelected(recipe);
+  // `recipe` is a static prop; deriving keeps Svelte from warning that a plain
+  // `const` would not track it.
+  const defaults = $derived(defaultSelected(recipe));
 
   // SSR renders the recipe's defaults; after hydration the shared store drives
   // both the scale factor and which optional ingredients are selected.

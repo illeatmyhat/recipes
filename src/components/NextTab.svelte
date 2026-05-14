@@ -10,7 +10,11 @@
   // Which tab this button lives in; the destination is whatever follows it.
   let { from }: { from: Tab } = $props();
 
-  const next: Tab = TABS[(TABS.indexOf(from) + 1) % TABS.length] ?? from;
+  // `from` is a static prop; deriving keeps Svelte from warning that a plain
+  // `const` would not track it.
+  const next: Tab = $derived(
+    TABS[(TABS.indexOf(from) + 1) % TABS.length] ?? from,
+  );
 
   onMount(() => initTabs());
 </script>
