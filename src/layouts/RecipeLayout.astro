@@ -46,6 +46,26 @@ const { title, description } = Astro.props;
         } catch {}
       })();
     </script>
+    <script is:inline>
+      // Resolve the UI locale before first paint, the same way as the theme:
+      // a remembered choice in localStorage wins, then the browser language,
+      // then English. This sets <html data-locale> so the CSS-localized static
+      // content renders in the right language immediately.
+      (() => {
+        let stored = null;
+        try {
+          stored = localStorage.getItem('locale');
+        } catch {}
+        const locale =
+          stored === 'en' || stored === 'ja'
+            ? stored
+            : (navigator.language || '').toLowerCase().startsWith('ja')
+              ? 'ja'
+              : 'en';
+        document.documentElement.dataset.locale = locale;
+        document.documentElement.lang = locale;
+      })();
+    </script>
   </head>
   <body>
     <main class="shell">

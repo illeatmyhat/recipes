@@ -46,8 +46,9 @@ let storeInitialized = false;
 let localeInitialized = false;
 
 /**
- * Detect and apply the UI locale, then keep the `<html data-locale>` attribute
- * and the `?lang=` URL param in sync with the store. Idempotent.
+ * Initialise the UI locale from the value the inline script in RecipeLayout
+ * resolved before first paint, and keep `<html data-locale>` in sync with the
+ * store thereafter. Idempotent.
  *
  * Split out from {@link initStore} because the index page has locale-switching
  * but no recipe — its LocaleSwitcher calls this directly.
@@ -56,15 +57,11 @@ export function initLocale(): void {
   if (localeInitialized) return;
   localeInitialized = true;
 
-  const detected = detectLocale();
-  locale.set(detected);
-  applyLocaleToDocument(detected);
+  locale.set(detectLocale());
 
-  // CSS-driven (JS-optional) content and shareable links both follow the store.
-  locale.subscribe((value) => {
-    applyLocaleToDocument(value);
-    syncLocaleToUrl(value);
-  });
+  // The CSS-driven (JS-optional) static content follows the store, so reflect
+  // every change onto the document.
+  locale.subscribe(applyLocaleToDocument);
 }
 
 /**
@@ -84,15 +81,14 @@ export function initStore(defaults: StoreDefaults): void {
 }
 
 /**
- * Resolve the initial locale: an explicit `?lang=` query param wins, otherwise
- * fall back to the browser's `navigator.language`, otherwise English.
+ * The initial UI locale. The inline script in RecipeLayout has already
+ * resolved it (stored choice → browser language → English) and written it to
+ * `<html data-locale>` before first paint, so just trust that — exactly how
+ * ThemeToggle reads `data-theme`.
  */
 export function detectLocale(): Locale {
-  if (typeof window === 'undefined') return 'en';
-  const param = new URLSearchParams(window.location.search).get('lang');
-  if (param === 'ja' || param === 'en') return param;
-  const nav = (navigator.language || '').toLowerCase();
-  return nav.startsWith('ja') ? 'ja' : 'en';
+  if (typeof document === 'undefined') return 'en';
+  return document.documentElement.dataset.locale === 'ja' ? 'ja' : 'en';
 }
 
 /** Reflect the locale onto `<html data-locale>` so CSS can localize static content. */
@@ -102,13 +98,14 @@ function applyLocaleToDocument(value: Locale): void {
   document.documentElement.lang = value;
 }
 
-/** Reflect the locale into `?lang=` without adding history entries. */
-function syncLocaleToUrl(value: Locale): void {
-  if (typeof window === 'undefined') return;
-  const url = new URL(window.location.href);
-  if (url.searchParams.get('lang') === value) return;
-  url.searchParams.set('lang', value);
-  window.history.replaceState({}, '', url);
+/** Switch the UI locale and remember the choice in localStorage. */
+export function setLocale(value: Locale): void {
+  locale.set(value);
+  try {
+    localStorage.setItem('locale', value);
+  } catch {
+    // Storage blocked — the choice still applies for this page view.
+  }
 }
 
 /** Toggle an id within a `string[]` store (used by the customize toggles). */

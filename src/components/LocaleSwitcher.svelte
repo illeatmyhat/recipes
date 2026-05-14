@@ -1,9 +1,10 @@
 <script lang="ts">
-  // Small island: 🇺🇸 / 🇯🇵 flag buttons. Writes to the shared `locale` store,
-  // which in turn updates <html data-locale> and the ?lang= URL param, so both
-  // the Svelte islands and the CSS-localized static content react instantly.
+  // Small island: 🇺🇸 / 🇯🇵 flag buttons. setLocale writes the shared `locale`
+  // store and remembers the choice in localStorage (the same way the theme
+  // toggle does); the store update flips <html data-locale>, so both the
+  // Svelte islands and the CSS-localized static content react instantly.
   import { onMount } from 'svelte';
-  import { locale, initLocale } from './RecipeStore';
+  import { locale, initLocale, setLocale } from './RecipeStore';
   import { t } from '../lib/i18n';
   import type { Locale } from '../lib/types';
 
@@ -25,7 +26,7 @@
       class="flag"
       class:active={$locale === opt.code}
       aria-pressed={$locale === opt.code}
-      onclick={() => locale.set(opt.code)}
+      onclick={() => setLocale(opt.code)}
     >
       <span class="emoji" aria-hidden="true">{opt.flag}</span>
       <span class="text">{opt.label}</span>
