@@ -52,6 +52,10 @@ export const UI = {
   toppings: { en: 'Toppings', ja: 'トッピング' },
   selected: { en: 'selected', ja: '選択中' },
 
+  recipeTab: { en: 'Recipe', ja: 'レシピ' },
+  customizeTab: { en: 'Customize', ja: 'カスタマイズ' },
+  tabs: { en: 'Recipe sections', ja: 'レシピのセクション' },
+
   ingredients: { en: 'Ingredients', ja: '材料' },
   base: { en: 'Base', ja: 'ベース' },
   optional: { en: 'Optional', ja: 'お好みで' },

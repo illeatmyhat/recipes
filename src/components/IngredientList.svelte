@@ -1,11 +1,19 @@
 <script lang="ts">
-  // Base-ingredients panel. It is an island (not static markup) because the
-  // amounts scale live with the servings slider via the shared store.
+  // The shopping-list view of the recipe. It is an island (not static markup)
+  // because the amounts scale live with the servings slider, and the optional
+  // groups reflect the fruit/topping choices made in the Customize tab — both
+  // via the shared store.
   import { onMount } from 'svelte';
-  import { servingsFactor, locale, initStore } from './RecipeStore';
+  import {
+    servingsFactor,
+    selectedFruits,
+    selectedToppings,
+    locale,
+    initStore,
+  } from './RecipeStore';
   import { t } from '../lib/i18n';
   import { formatAmount } from '../lib/units';
-  import type { ResolvedRecipe } from '../lib/types';
+  import type { ResolvedIngredient, ResolvedRecipe } from '../lib/types';
 
   let { recipe }: { recipe: ResolvedRecipe } = $props();
 
@@ -16,7 +24,8 @@
     .filter((tp) => tp.selectedByDefault)
     .map((tp) => tp.id);
 
-  // SSR renders the recipe's default; after hydration the servings store scales it.
+  // SSR renders the recipe's defaults; after hydration the shared store drives
+  // both the scale factor and which optional ingredients are selected.
   let mounted = $state(false);
   onMount(() => {
     initStore({
@@ -28,36 +37,65 @@
   });
 
   const factor = $derived(mounted ? $servingsFactor : 1);
+  const activeFruitIds = $derived(mounted ? $selectedFruits : defaultFruitIds);
+  const activeToppingIds = $derived(mounted ? $selectedToppings : defaultToppingIds);
+
+  // Optional ingredients, filtered to the current selection but kept in recipe
+  // order. Base ingredients are always present.
+  const fruits = $derived(
+    recipe.fruits.filter((f) => activeFruitIds.includes(f.id)),
+  );
+  const toppings = $derived(
+    recipe.toppings.filter((tp) => activeToppingIds.includes(tp.id)),
+  );
 </script>
+
+{#snippet item(ing: ResolvedIngredient)}
+  <li class="ing">
+    <div class="ing-head">
+      <span class="ing-name">{ing.names[$locale]}</span>
+      <span class="ing-amount">
+        {formatAmount(
+          ing.amount * factor,
+          ing.unit,
+          ing.volumeMl === null ? null : ing.volumeMl * factor,
+          $locale,
+        )}
+      </span>
+    </div>
+    <p class="ing-note">{ing.notes[$locale]}</p>
+    {#if ing.warnings.length > 0}
+      <ul class="warnings">
+        {#each ing.warnings as w (w.en)}
+          <li class="warning {w.type}">{w[$locale]}</li>
+        {/each}
+      </ul>
+    {/if}
+  </li>
+{/snippet}
+
+{#snippet group(title: string, items: ResolvedIngredient[])}
+  <div class="ing-group">
+    <h3 class="subhead">{title}</h3>
+    <ul class="ing-list">
+      {#each items as ing (ing.id)}
+        {@render item(ing)}
+      {/each}
+    </ul>
+  </div>
+{/snippet}
 
 <section class="ingredients" aria-labelledby="ingredients-heading">
   <h2 id="ingredients-heading">{t('ingredients', $locale)}</h2>
-  <h3 class="subhead">{t('base', $locale)}</h3>
-  <ul class="ing-list">
-    {#each recipe.baseIngredients as ing (ing.id)}
-      <li class="ing">
-        <div class="ing-head">
-          <span class="ing-name">{ing.names[$locale]}</span>
-          <span class="ing-amount">
-            {formatAmount(
-              ing.amount * factor,
-              ing.unit,
-              ing.volumeMl === null ? null : ing.volumeMl * factor,
-              $locale,
-            )}
-          </span>
-        </div>
-        <p class="ing-note">{ing.notes[$locale]}</p>
-        {#if ing.warnings.length > 0}
-          <ul class="warnings">
-            {#each ing.warnings as w (w.en)}
-              <li class="warning {w.type}">{w[$locale]}</li>
-            {/each}
-          </ul>
-        {/if}
-      </li>
-    {/each}
-  </ul>
+  <div class="groups">
+    {@render group(t('base', $locale), recipe.baseIngredients)}
+    {#if fruits.length > 0}
+      {@render group(t('fruits', $locale), fruits)}
+    {/if}
+    {#if toppings.length > 0}
+      {@render group(t('toppings', $locale), toppings)}
+    {/if}
+  </div>
 </section>
 
 <style>
@@ -70,6 +108,10 @@
   h2 {
     margin: 0 0 0.75rem;
     font-size: 1.15rem;
+  }
+  .groups {
+    display: grid;
+    gap: 1.1rem;
   }
   .subhead {
     margin: 0 0 0.5rem;

@@ -23,6 +23,7 @@ import CustomizePanel from './CustomizePanel.svelte';
 import NutritionPanel from './NutritionPanel.svelte';
 import LocaleSwitcher from './LocaleSwitcher.svelte';
 import ThemeToggle from './ThemeToggle.svelte';
+import TabBar from './TabBar.svelte';
 import { UI } from '../lib/i18n';
 import type { ResolvedRecipe } from '../lib/types';
 
@@ -67,17 +68,38 @@ const { recipe, heroImage } = Astro.props;
     </div>
 
     <div class="main">
-      <IngredientList client:visible recipe={recipe} />
-      <CustomizePanel client:visible recipe={recipe} />
+      <TabBar client:visible />
 
-      <section class="method" aria-labelledby="method-heading">
-        <h2 id="method-heading">
-          <Bilingual text={UI.method} />
-        </h2>
-        <div class="method-body">
-          <slot />
-        </div>
-      </section>
+      <div
+        class="tab-panel"
+        data-tab-panel="recipe"
+        id="panel-recipe"
+        role="tabpanel"
+        aria-labelledby="tab-recipe"
+        tabindex="0"
+      >
+        <IngredientList client:visible recipe={recipe} />
+
+        <section class="method" aria-labelledby="method-heading">
+          <h2 id="method-heading">
+            <Bilingual text={UI.method} />
+          </h2>
+          <div class="method-body">
+            <slot />
+          </div>
+        </section>
+      </div>
+
+      <div
+        class="tab-panel"
+        data-tab-panel="customize"
+        id="panel-customize"
+        role="tabpanel"
+        aria-labelledby="tab-customize"
+        tabindex="0"
+      >
+        <CustomizePanel client:idle recipe={recipe} />
+      </div>
     </div>
 
     <aside class="nutrition-area">
@@ -145,6 +167,28 @@ const { recipe, heroImage } = Astro.props;
     display: grid;
     gap: 1.5rem;
     align-content: start;
+  }
+
+  /* Tab panels. The Recipe panel shows by default (no JS / pre-hydration);
+     TabBar flips <html data-tab="customize"> to swap them. A hidden panel is
+     display:none, so it leaves both the layout and the accessibility tree. */
+  .tab-panel {
+    display: none;
+  }
+  .tab-panel[data-tab-panel='recipe'] {
+    display: grid;
+    gap: 1.5rem;
+  }
+  :global([data-tab='customize']) .tab-panel[data-tab-panel='recipe'] {
+    display: none;
+  }
+  :global([data-tab='customize']) .tab-panel[data-tab-panel='customize'] {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .tab-panel:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
   }
   .nutrition-area {
     grid-area: nutrition;
