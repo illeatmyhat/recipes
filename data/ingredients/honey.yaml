@@ -1,0 +1,35 @@
+id: honey
+fdc_id: 169640
+names:
+  en: Honey
+  ja: はちみつ
+aliases:
+  en:
+    - Pure honey
+    - Raw honey
+  ja:
+    - 蜂蜜
+    - 純粋はちみつ
+availability:
+  us:
+    brands: ["Nature Nate's", "Local Hive", "365 Whole Foods"]
+    note_en: Sold raw or filtered; choose 100% pure honey.
+  ja:
+    brands: ["サクラ印はちみつ", "国産はちみつ"]
+    note_en: Widely sold at supermarkets; domestic and imported types available.
+    note_ja: スーパーで一般的に入手可能。
+nutrition:
+  per_100g:
+    calories: 304
+    fat: 0
+    saturated_fat: 0
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 4
+    carbohydrates: 82.4
+    fiber: 0.2
+    sugars: 82.12
+    protein: 0.3
+    calcium: 6
+    iron: 0.42
+density_g_per_ml: null

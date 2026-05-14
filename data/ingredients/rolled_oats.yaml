@@ -9,13 +9,14 @@ aliases:
     - Regular rolled oats
   ja:
     - オートミール
-    - 押し麦オーツ
+    - クラシックオーツ
+    - オールドファッションドオーツ
 availability:
   us:
     brands: ["Quaker", "Bob's Red Mill", "Kodiak"]
     note_en: Look for "old fashioned" or "classic" on the label.
   ja:
-    brands: ["日食オーツ", "Bob's Red Mill", "クエーカー"]
+    brands: ["日食オーツ", "Bob's Red Mill ロールドオーツ"]
     note_en: Available at Kaldi, Costco, and import food stores.
     note_ja: カルディ・コストコ・輸入食品店で入手可能。
 nutrition:

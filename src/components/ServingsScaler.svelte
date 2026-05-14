@@ -6,8 +6,9 @@
 
   let { recipe }: { recipe: ResolvedRecipe } = $props();
 
-  const MIN = 1;
-  const MAX = 12;
+  // Discrete serving sizes — picking one scales every amount, weight, and
+  // nutrient value across the page via the shared `servings` store.
+  const OPTIONS = [1, 2, 3, 5] as const;
 
   // SSR renders the recipe's default; after hydration the shared store drives it.
   let mounted = $state(false);
@@ -24,38 +25,29 @@
     mounted = true;
   });
 
-  function dec(): void {
-    servings.update((n) => Math.max(MIN, n - 1));
-  }
-  function inc(): void {
-    servings.update((n) => Math.min(MAX, n + 1));
+  function choose(n: number): void {
+    servings.set(n);
   }
 </script>
 
 <section class="scaler" aria-labelledby="scaler-heading">
   <h2 id="scaler-heading">{t('servings', $locale)}</h2>
-  <div class="control">
-    <button
-      type="button"
-      class="step"
-      onclick={dec}
-      disabled={count <= MIN}
-      aria-label={t('decrease', $locale)}>&minus;</button
-    >
-    <output class="value" aria-live="polite">
-      <span class="num">{count}</span>
-      <span class="label"
-        >{count === 1 ? t('serving', $locale) : t('servingsPlural', $locale)}</span
+  <div class="control" role="group" aria-label={t('servings', $locale)}>
+    {#each OPTIONS as n (n)}
+      <button
+        type="button"
+        class="opt"
+        class:on={count === n}
+        aria-pressed={count === n}
+        onclick={() => choose(n)}
       >
-    </output>
-    <button
-      type="button"
-      class="step"
-      onclick={inc}
-      disabled={count >= MAX}
-      aria-label={t('increase', $locale)}>+</button
-    >
+        {n}
+      </button>
+    {/each}
   </div>
+  <p class="caption" aria-live="polite">
+    {count === 1 ? t('serving', $locale) : t('servingsPlural', $locale)}
+  </p>
 </section>
 
 <style>
@@ -73,43 +65,34 @@
     color: var(--ink-soft);
   }
   .control {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.4rem;
   }
-  .step {
-    width: 2.75rem;
-    height: 2.75rem;
+  .opt {
+    padding: 0.7rem 0;
     border: 1px solid var(--line);
-    border-radius: 50%;
+    border-radius: 10px;
     background: var(--bg);
-    font-size: 1.4rem;
-    line-height: 1;
-    cursor: pointer;
-    color: var(--ink);
-    transition: background 0.15s ease, border-color 0.15s ease;
-  }
-  .step:hover:not(:disabled) {
-    background: var(--accent-soft);
-    border-color: var(--accent);
-  }
-  .step:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-  }
-  .value {
-    flex: 1;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    line-height: 1.1;
-  }
-  .num {
-    font-size: 2rem;
+    font-size: 1.25rem;
     font-weight: 700;
     font-variant-numeric: tabular-nums;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
   }
-  .label {
+  .opt:hover:not(.on) {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .opt.on {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .caption {
+    margin: 0.6rem 0 0;
+    text-align: center;
     font-size: 0.85rem;
     color: var(--ink-soft);
   }

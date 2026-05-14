@@ -1,0 +1,35 @@
+id: cinnamon
+fdc_id: 171320
+names:
+  en: Cinnamon, ground
+  ja: シナモン（パウダー）
+aliases:
+  en:
+    - Ground cinnamon
+    - Cinnamon powder
+  ja:
+    - シナモンパウダー
+    - 桂皮
+availability:
+  us:
+    brands: ["McCormick", "Simply Organic", "365 Whole Foods"]
+    note_en: Sold ground in the spice aisle; Ceylon and cassia types are both common.
+  ja:
+    brands: ["GABAN シナモンパウダー", "S&B シナモン"]
+    note_en: Sold ground at all supermarkets in the spice section.
+    note_ja: スーパーの香辛料売り場で入手可能。
+nutrition:
+  per_100g:
+    calories: 247
+    fat: 1.24
+    saturated_fat: 0.345
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 10
+    carbohydrates: 80.59
+    fiber: 53.1
+    sugars: 2.17
+    protein: 3.99
+    calcium: 1002
+    iron: 8.32
+density_g_per_ml: null

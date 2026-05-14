@@ -1,0 +1,35 @@
+id: ground_flaxseed
+fdc_id: 169414
+names:
+  en: Flaxseed, ground
+  ja: 亜麻仁（フラックスシード）粉末
+aliases:
+  en:
+    - Flaxseed meal
+    - Ground linseed
+  ja:
+    - フラックスシード
+    - 亜麻仁粉
+availability:
+  us:
+    brands: ["Bob's Red Mill", "Spectrum"]
+    note_en: Sold as whole seed or pre-ground meal; refrigerate ground flax.
+  ja:
+    brands: ["日本製粉 アマニ", "カルディ アマニ"]
+    note_en: Available at Kaldi and natural food stores as flaxseed powder.
+    note_ja: 亜麻仁（粉末）としてカルディ・自然食品店で入手可能。
+nutrition:
+  per_100g:
+    calories: 534
+    fat: 42.16
+    saturated_fat: 3.663
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 30
+    carbohydrates: 28.88
+    fiber: 27.3
+    sugars: 1.55
+    protein: 18.29
+    calcium: 255
+    iron: 5.73
+density_g_per_ml: null

@@ -1,0 +1,35 @@
+id: mango
+fdc_id: 169910
+names:
+  en: Mangos, raw
+  ja: マンゴー（生）
+aliases:
+  en:
+    - Fresh mango
+    - Mango fruit
+  ja:
+    - マンゴ
+    - 生マンゴー
+availability:
+  us:
+    brands: ["Champagne (Ataulfo)", "Tommy Atkins", "365 Whole Foods"]
+    note_en: Sold loose year-round; ripeness varies, choose slightly soft fruit.
+  ja:
+    brands: ["宮崎マンゴー", "アップルマンゴー", "フィリピン産マンゴー"]
+    note_en: Imported mangos year-round; premium domestic mangos in summer.
+    note_ja: 輸入品は通年、国産高級品は夏に入手可能。
+nutrition:
+  per_100g:
+    calories: 60
+    fat: 0.38
+    saturated_fat: 0.092
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 1
+    carbohydrates: 14.98
+    fiber: 1.6
+    sugars: 13.66
+    protein: 0.82
+    calcium: 11
+    iron: 0.16
+density_g_per_ml: null

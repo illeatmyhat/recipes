@@ -1,0 +1,35 @@
+id: pumpkin_seeds
+fdc_id: 170556
+names:
+  en: Pumpkin and squash seed kernels, dried
+  ja: かぼちゃの種（パンプキンシード）
+aliases:
+  en:
+    - Pepitas
+    - Pumpkin seed kernels
+  ja:
+    - パンプキンシード
+    - ペピータ
+availability:
+  us:
+    brands: ["Bob's Red Mill", "365 Whole Foods", "Go Raw"]
+    note_en: Sold raw or roasted, in bulk and bagged; "pepitas" are the hulled kernels.
+  ja:
+    brands: ["カルディ パンプキンシード", "素焼きかぼちゃの種"]
+    note_en: Available at import food stores and natural food shops.
+    note_ja: 輸入食品店・自然食品店で入手可能。
+nutrition:
+  per_100g:
+    calories: 559
+    fat: 49.05
+    saturated_fat: 8.66
+    trans_fat: 0.064
+    cholesterol: 0
+    sodium: 7
+    carbohydrates: 10.71
+    fiber: 6
+    sugars: 1.4
+    protein: 30.23
+    calcium: 46
+    iron: 8.82
+density_g_per_ml: null

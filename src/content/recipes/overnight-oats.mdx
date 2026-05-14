@@ -11,8 +11,8 @@ base_ingredients:
     amount: 35
     unit: g
     notes:
-      en: The base of the bowl — absorbs the kefir overnight.
-      ja: ボウルのベース。一晩でケフィアを吸収する。
+      en: Absorbs kefir overnight. Avoid quick, instant, steel cut.
+      ja: 一晩でケフィアを吸収する。クイック・インスタント・スチールカットは不可。
     warnings:
       - type: avoid
         en: "⚠️ Avoid quick, instant, or steel cut oats."
@@ -24,106 +24,191 @@ base_ingredients:
     amount: 15
     unit: g
     notes:
-      en: Thickens the bowl into a pudding and adds omega-3s and fiber.
-      ja: ボウルをプリン状にとろみづけし、オメガ3と食物繊維を加える。
-    warnings:
-      - type: good
-        en: "✓ Stir well so the seeds don't clump at the bottom."
-        ja: "✓ 種が底で固まらないようよく混ぜること。"
-  - id: kefir
+      en: Gels overnight, gives the bowl its body. Don't reduce the amount.
+      ja: 一晩でゲル状になり食感のベースになる。量を減らさないこと。
+  - id: kefir_plain
     amount: 180
     unit: ml
     notes:
-      en: Poured over the dry base — the live cultures and acidity soften everything by morning.
-      ja: 乾いたベースに注ぐ。生きた菌と酸味が朝までに全体を柔らかくする。
-    warnings:
-      - type: avoid
-        en: "⚠️ Don't substitute UHT shelf-stable milk — you lose the cultured tang."
-        ja: "⚠️ 常温保存のロングライフ牛乳で代用しないこと。発酵の風味が失われる。"
+      en: Use plain unflavored. Full-fat gives a creamier result. Shake before pouring.
+      ja: 無糖タイプを使用。全脂肪でよりクリーミーに。使う前によく振ること。
+  - id: vanilla_extract
+    amount: 2
+    unit: ml
+    notes:
+      en: Pure extract lasts indefinitely. Imitation degrades after 2–4 years.
+      ja: 純粋エクストラクトは無期限保存可。合成品は2〜4年で劣化。
+  - id: salt
+    amount: 0.5
+    unit: g
+    notes:
+      en: Don't skip — balances the kefir tang.
+      ja: 省かないこと。ケフィアの酸味とのバランスに必要。
 optional_ingredients:
   fruits:
-    - id: blueberries
-      amount: 100
-      unit: g
-      default: true
-      notes:
-        en: Fresh or frozen both work. Frozen thaw nicely overnight.
-        ja: 生でも冷凍でもOK。冷凍は前夜に入れると朝に解凍されている。
     - id: banana
       amount: 60
       unit: g
       default: false
       notes:
-        en: Half a small banana, sliced. Adds natural sweetness and potassium.
-        ja: 小さめのバナナ半分をスライス。自然な甘みとカリウムを加える。
+        en: Browns overnight. Always add fresh.
+        ja: 前夜から入れると黒くなる。必ず朝に加えること。
+    - id: kiwi
+      amount: 70
+      unit: g
+      default: false
+      notes:
+        en: Enzymes turn the mixture bitter overnight. Always add fresh.
+        ja: 酵素がタンパク質を分解し苦みが出る。必ず朝に加えること。
+    - id: raspberries
+      amount: 60
+      unit: g
+      default: false
+      notes:
+        en: Disintegrate overnight. Always add fresh.
+        ja: 前夜に入れると崩れる。必ず朝に加えること。
     - id: strawberries
+      amount: 80
+      unit: g
+      default: true
+      notes:
+        en: Go mushy overnight. Prefer fresh in the morning.
+        ja: 前夜から入れるとやわらかくなりすぎる。朝に加えるのがベスト。
+    - id: peach
       amount: 80
       unit: g
       default: false
       notes:
-        en: Hulled and quartered. Bright and tart against the creamy base.
-        ja: ヘタを取って4等分。クリーミーなベースに爽やかな酸味を添える。
+        en: Fresh browns — add in the morning. Frozen is OK overnight.
+        ja: 生は変色するので朝に。冷凍は前夜からOK。
+    - id: blueberries
+      amount: 100
+      unit: g
+      default: true
+      notes:
+        en: Fresh or frozen both fine. Frozen can go in the night before.
+        ja: 生でも冷凍でもOK。冷凍は前夜から入れると朝に解凍されている。
+    - id: blackberries
+      amount: 60
+      unit: g
+      default: true
+      notes:
+        en: More intense flavor, so use a smaller amount. Frozen is OK overnight.
+        ja: 風味が強いので少なめ。冷凍OK。
+    - id: mango
+      amount: 80
+      unit: g
+      default: false
+      notes:
+        en: Frozen preferred — cheaper. Thaw overnight.
+        ja: 冷凍が便利でコスト安。前夜から冷蔵庫で解凍。
   toppings:
     - id: hemp_seeds
       amount: 15
       unit: g
       default: true
       notes:
-        en: Complete protein, blends in invisibly.
-        ja: 完全タンパク質。混ぜると目立たない。
-    - id: almond_butter
-      amount: 16
+        en: Complete protein (all 9 amino acids). Best all-around topping.
+        ja: 必須アミノ酸9種含む完全タンパク質。混ぜても目立たない。
+    - id: pumpkin_seeds
+      amount: 12
       unit: g
       default: false
       notes:
-        en: One tablespoon, swirled on top. Adds richness and staying power.
-        ja: 大さじ1を上にのせる。コクと腹持ちを加える。
-    - id: maple_syrup
-      amount: 20
+        en: Best plant zinc source. Add just before eating — goes soft fast.
+        ja: 亜鉛が豊富。水分に触れるとすぐやわらかくなるので直前に加える。
+    - id: ground_flaxseed
+      amount: 10
       unit: g
       default: false
       notes:
-        en: A drizzle for anyone who wants it sweeter. The fruit usually covers it.
-        ja: もっと甘くしたい人向けにひとかけ。普段はフルーツの甘みで十分。
+        en: MUST be ground, not whole. Whole seeds pass through undigested.
+        ja: 必ず粉末タイプを。粒のままでは消化されない。
+    - id: granola
+      amount: 25
+      unit: g
+      default: false
+      notes:
+        en: Add right before eating or it goes soggy. Check the label for added sugar.
+        ja: 直前に加えないとやわらかくなる。砂糖量に注意。
+    - id: walnuts
+      amount: 15
+      unit: g
+      default: false
+      notes:
+        en: Highest omega-3 nut. Store in the fridge or freezer — goes rancid fast.
+        ja: オメガ3が最も豊富なナッツ。酸化しやすいので冷蔵・冷凍保存。
+    - id: almonds
+      amount: 12
+      unit: g
+      default: false
+      notes:
+        en: Sliced stays crisp longer than whole or chopped.
+        ja: スライスが食感長持ち。
+    - id: honey
+      amount: 14
+      unit: g
+      default: false
+      notes:
+        en: A small drizzle balances the kefir tang.
+        ja: 少量でケフィアの酸味を和らげる。
+    - id: cinnamon
+      amount: 1
+      unit: g
+      default: false
+      notes:
+        en: Ceylon is preferred over cassia for daily use (lower coumarin).
+        ja: セイロン推奨（カシアはクマリン含有量が高い）。
 ---
 
 <div class="lang-en">
 
-This is the no-cooking, no-thinking breakfast: stir it together the night
-before, and it is ready the moment you open the fridge. The chia seeds turn
-the kefir into a soft pudding while you sleep.
+This is the no-cooking breakfast: stir the base together the night before,
+then add fruit and toppings fresh in the morning.
 
-1. **Combine the dry base.** In a jar or bowl, stir together the rolled oats
-   and chia seeds until evenly mixed.
-2. **Add the kefir.** Pour the kefir over the dry base and stir thoroughly,
-   making sure no chia seeds settle and clump at the bottom.
-3. **Layer the fruit.** Fold in your selected fruit, reserving a few pieces to
-   sit on top.
-4. **Rest overnight.** Cover and refrigerate for at least 6 hours, ideally
-   overnight. The oats soften and the chia thickens everything to a spoonable
-   pudding.
-5. **Top and serve.** In the morning, stir once, add your toppings, and eat
-   straight from the jar.
+1. **Combine the dry base.** In a jar, stir together the rolled oats, chia
+   seeds, and salt.
+2. **Add the wet base.** Pour in the kefir and vanilla extract and stir
+   thoroughly, making sure no chia seeds settle and clump at the bottom.
+3. **Rest overnight.** Cover and refrigerate for at least 6 hours. The
+   mixture looks very wet when first stirred — that is normal; the oats and
+   chia absorb it overnight.
+4. **Add fruit in the morning.** Most fruits brown, soften, or turn bitter
+   overnight, so fold them in fresh. Frozen blueberries, blackberries, and
+   mango are the exceptions and can go in the night before.
+5. **Top and serve.** Add the toppings just before eating so they stay crisp.
 
-**Tip:** the bowl keeps for up to 3 days refrigerated, so scale the servings
-up and make a batch.
+### Tips
+
+- Stays fresh for 3 days in the fridge. It gets tangier each day as the kefir
+  cultures stay active.
+- Frozen berries are nutritionally equivalent to fresh, and often cheaper.
+- Too thick in the morning? Add a splash of water or kefir.
+- Meal prep: store the oat-and-kefir base and the fruit separately, and add
+  the fruit each morning.
 
 </div>
 
 <div class="lang-ja">
 
-火を使わず、考える必要もない朝食です。前の晩に混ぜておけば、冷蔵庫を開けた瞬間に
-できあがっています。眠っている間にチアシードがケフィアを柔らかなプリン状に変えます。
+火を使わない朝食です。前の晩にベースを混ぜておき、朝にフルーツとトッピングを
+新鮮なまま加えます。
 
-1. **乾いたベースを混ぜる。** 瓶またはボウルに、ロールドオーツとチアシードを入れ、
-   均一になるまで混ぜる。
-2. **ケフィアを加える。** 乾いたベースにケフィアを注ぎ、チアシードが底に沈んで
-   固まらないようにしっかり混ぜる。
-3. **フルーツを重ねる。** 選んだフルーツを混ぜ込み、数粒は上にのせる分として残す。
-4. **一晩寝かせる。** 蓋をして冷蔵庫で最低6時間、できれば一晩冷やす。オーツが
-   柔らかくなり、チアシードが全体をスプーンですくえるプリン状にとろみづける。
-5. **トッピングして仕上げる。** 朝、ひと混ぜしてトッピングを加え、瓶のまま食べる。
+1. **乾いたベースを混ぜる。** 瓶に、ロールドオーツ・チアシード・塩を入れて混ぜる。
+2. **液体のベースを加える。** ケフィアとバニラエクストラクトを注ぎ、チアシードが
+   底に沈んで固まらないようにしっかり混ぜる。
+3. **一晩寝かせる。** 蓋をして冷蔵庫で最低6時間冷やす。混ぜた直後はとても水っぽく
+   見えるが正常で、一晩でオーツとチアが吸収する。
+4. **朝にフルーツを加える。** ほとんどのフルーツは一晩で変色・崩れ・苦みが出るため、
+   朝に新鮮なまま加える。冷凍のブルーベリー・ブラックベリー・マンゴーは例外で、
+   前夜から入れてよい。
+5. **トッピングして仕上げる。** トッピングは食感を保つため食べる直前に加える。
 
-**コツ：** 冷蔵で3日ほど保存できるので、食数を増やしてまとめて作っておくと便利。
+### コツ
+
+- 冷蔵庫で3日間保存可能。日を追うごとにケフィアの菌が活発で酸味が増す。
+- 冷凍ベリーは栄養価がほぼ同等で、コストも安いことが多い。
+- 朝に固すぎる場合は、水かケフィアを少量加える。
+- 作り置きはオーツとケフィアのベースとフルーツを別々に保存し、毎朝フルーツを加える。
 
 </div>

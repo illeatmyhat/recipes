@@ -1,0 +1,35 @@
+id: granola
+fdc_id: 171646
+names:
+  en: Granola, homemade
+  ja: グラノーラ
+aliases:
+  en:
+    - Plain granola
+    - Oat granola
+  ja:
+    - グラノラ
+    - オーツグラノーラ
+availability:
+  us:
+    brands: ["Nature Valley", "Bob's Red Mill", "365 Whole Foods"]
+    note_en: Sold plain or with honey and nuts; sugar content varies by brand.
+  ja:
+    brands: ["カルビー フルグラ", "日清シスコ ごろグラ"]
+    note_en: Widely sold at supermarkets; fruit granola is the popular style.
+    note_ja: スーパーで一般的に入手可能。
+nutrition:
+  per_100g:
+    calories: 489
+    fat: 24.31
+    saturated_fat: 3.96
+    trans_fat: 0.023
+    cholesterol: 0
+    sodium: 26
+    carbohydrates: 53.88
+    fiber: 8.9
+    sugars: 19.8
+    protein: 13.67
+    calcium: 76
+    iron: 3.95
+density_g_per_ml: null

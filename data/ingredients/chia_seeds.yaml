@@ -9,15 +9,14 @@ aliases:
     - Chia seed
   ja:
     - 乾燥チアシード
-    - サルビアの種
 availability:
   us:
-    brands: ["Bob's Red Mill", "Nutiva", "Navitas Organics"]
+    brands: ["Bob's Red Mill", "Nutiva", "Viva Naturals"]
     note_en: Sold as black or white chia; nutrition is essentially identical.
   ja:
     brands: ["NICHIGA", "オーガニックチアシード", "Nutiva"]
-    note_en: Available at Kaldi, Costco, and online retailers.
-    note_ja: カルディ・コストコ・通販で入手可能。
+    note_en: Available at Kaldi, Costco, and iHerb.
+    note_ja: カルディ・コストコ・iHerbで入手可能。
 nutrition:
   per_100g:
     calories: 486

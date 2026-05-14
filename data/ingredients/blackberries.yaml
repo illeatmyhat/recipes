@@ -1,0 +1,35 @@
+id: blackberries
+fdc_id: 173946
+names:
+  en: Blackberries, raw
+  ja: ブラックベリー（生）
+aliases:
+  en:
+    - Fresh blackberries
+    - Bramble berries
+  ja:
+    - 黒いちご
+    - 生ブラックベリー
+availability:
+  us:
+    brands: ["Driscoll's", "365 Whole Foods", "Naturipe"]
+    note_en: Sold fresh in clamshells; frozen also widely available.
+  ja:
+    brands: ["冷凍ブラックベリー"]
+    note_en: Fresh is rare; frozen is sold at supermarkets and import stores.
+    note_ja: 生は入手困難、冷凍が中心。
+nutrition:
+  per_100g:
+    calories: 43
+    fat: 0.49
+    saturated_fat: 0.014
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 1
+    carbohydrates: 9.61
+    fiber: 5.3
+    sugars: 4.88
+    protein: 1.39
+    calcium: 29
+    iron: 0.62
+density_g_per_ml: null
