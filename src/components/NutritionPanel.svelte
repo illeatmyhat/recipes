@@ -46,7 +46,14 @@
     mounted = true;
   });
 
-  const factor = $derived(mounted ? $servingsFactor : 1);
+  // The panel shows per-serving nutrition by default. The "× N" toggle
+  // multiplies everything by the chosen number of servings (the whole recipe).
+  let showTotal = $state(false);
+  const perServingFactor = 1 / recipe.servingsDefault;
+  const factor = $derived.by(() => {
+    if (!showTotal) return perServingFactor;
+    return mounted ? $servingsFactor : 1;
+  });
   const activeFruitIds = $derived(mounted ? $selectedFruits : defaultFruitIds);
   const activeToppingIds = $derived(mounted ? $selectedToppings : defaultToppingIds);
   const servingCount = $derived(mounted ? $servings : recipe.servingsDefault);
@@ -148,12 +155,31 @@
 
 <section class="panel" aria-labelledby="nutrition-heading">
   <header class="head">
-    <h2 id="nutrition-heading">{t('nutritionFacts', $locale)}</h2>
+    <div class="head-row">
+      <h2 id="nutrition-heading">{t('nutritionFacts', $locale)}</h2>
+      <button
+        type="button"
+        class="scale-toggle"
+        class:on={showTotal}
+        aria-pressed={showTotal}
+        aria-label={t('scaleToggle', $locale)}
+        disabled={servingCount === 1}
+        onclick={() => (showTotal = !showTotal)}
+      >
+        × {servingCount}
+      </button>
+    </div>
     <p class="serving-line">
-      {servingCount}
-      {servingCount === 1 ? t('serving', $locale) : t('servingsPlural', $locale)}
-      <span aria-hidden="true">·</span>
-      {fmt(totalGrams)}g total
+      {#if showTotal}
+        {servingCount}
+        {servingCount === 1 ? t('serving', $locale) : t('servingsPlural', $locale)}
+        <span aria-hidden="true">·</span>
+        {fmt(totalGrams)}g {t('totalWord', $locale)}
+      {:else}
+        {t('perServing', $locale)}
+        <span aria-hidden="true">·</span>
+        {fmt(totalGrams)}g
+      {/if}
     </p>
   </header>
 
@@ -314,12 +340,44 @@
     background: var(--surface);
     font-variant-numeric: tabular-nums;
   }
+  .head-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
   .head h2 {
     margin: 0;
     font-size: 2rem;
     font-weight: 800;
     letter-spacing: -0.02em;
     line-height: 1;
+  }
+  .scale-toggle {
+    flex: none;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--bg);
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    padding: 0.3rem 0.75rem;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  .scale-toggle:hover:not(:disabled) {
+    border-color: var(--accent);
+  }
+  .scale-toggle.on {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .scale-toggle:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
   }
   .serving-line {
     margin: 0.35rem 0 0;
