@@ -18,6 +18,7 @@ import CustomizePanel from './CustomizePanel.svelte';
 import NutritionPanel from './NutritionPanel.svelte';
 import LocaleSwitcher from './LocaleSwitcher.svelte';
 import { UI } from '../lib/i18n';
+import { formatAmount } from '../lib/units';
 import type { ResolvedRecipe } from '../lib/types';
 
 interface Props {
@@ -71,8 +72,7 @@ const { recipe, heroImage } = Astro.props;
                     <Bilingual text={ing.names} />
                   </span>
                   <span class="ing-amount">
-                    {ing.amount}
-                    {ing.unit}
+                    <span class="lang-en">{formatAmount(ing.amount, ing.unit, 'en')}</span><span class="lang-ja">{formatAmount(ing.amount, ing.unit, 'ja')}</span>
                   </span>
                 </div>
                 <p class="ing-note">

@@ -9,8 +9,11 @@ export type Locale = 'en' | 'ja';
 /** A string that exists in every supported locale. */
 export type Localized = Record<Locale, string>;
 
-/** Units accepted in recipe frontmatter. `ml` ingredients need a density. */
-export type Unit = 'g' | 'ml';
+/**
+ * Units accepted in recipe frontmatter. Volume units (`ml`, `tsp`, `tbsp`)
+ * need the ingredient's `density_g_per_ml` so they can be weighed for nutrition.
+ */
+export type Unit = 'g' | 'ml' | 'tsp' | 'tbsp';
 
 /** Categories an optional ingredient can belong to. */
 export type OptionalCategory = 'fruits' | 'toppings';

@@ -32,4 +32,4 @@ nutrition:
     protein: 0
     calcium: 24
     iron: 0.33
-density_g_per_ml: null
+density_g_per_ml: 1.22

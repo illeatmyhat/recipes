@@ -8,6 +8,7 @@
     initStore,
   } from './RecipeStore';
   import { t } from '../lib/i18n';
+  import { formatAmount } from '../lib/units';
   import type { ResolvedIngredient, ResolvedRecipe } from '../lib/types';
 
   let { recipe }: { recipe: ResolvedRecipe } = $props();
@@ -63,7 +64,7 @@
             <span class="body">
               <span class="name">
                 {item.names[$locale]}
-                <span class="amount">{item.amount}{item.unit}</span>
+                <span class="amount">{formatAmount(item.amount, item.unit, $locale)}</span>
               </span>
               <span class="note">{item.notes[$locale]}</span>
             </span>

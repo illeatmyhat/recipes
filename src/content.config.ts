@@ -24,7 +24,7 @@ const warning = z.object({
 const ingredientRef = z.object({
   id: z.string(),
   amount: z.number().positive(),
-  unit: z.enum(['g', 'ml']),
+  unit: z.enum(['g', 'ml', 'tsp', 'tbsp']),
   notes: localized,
   warnings: z.array(warning).default([]),
 });

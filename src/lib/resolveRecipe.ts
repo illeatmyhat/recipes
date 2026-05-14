@@ -11,6 +11,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { load } from 'js-yaml';
 import { scaleNutrition } from './nutrition';
+import { UNIT_ML } from './units';
 import type {
   IngredientData,
   IngredientRef,
@@ -54,19 +55,21 @@ function loadIngredient(id: string): IngredientData {
 }
 
 /**
- * Convert a recipe amount to grams. `g` is already weight; `ml` is converted
- * via the ingredient's density, which therefore must be present.
+ * Convert a recipe amount to grams. `g` is already weight; volume units
+ * (`ml`, `tsp`, `tbsp`) are converted to millilitres and then weighed via the
+ * ingredient's density, which therefore must be present.
  */
 function toGrams(ref: IngredientRef, data: IngredientData): number {
   if (ref.unit === 'g') return ref.amount;
-  // ref.unit === 'ml'
+  // Volume unit — needs a density to be weighed.
   if (data.density_g_per_ml == null) {
     throw new Error(
-      `resolveRecipe: ingredient "${ref.id}" is used with unit "ml" but its ` +
-        `YAML has density_g_per_ml: null. A density is required to weigh liquids.`,
+      `resolveRecipe: ingredient "${ref.id}" is used with unit "${ref.unit}" ` +
+        `but its YAML has density_g_per_ml: null. Volume units need a density.`,
     );
   }
-  return ref.amount * data.density_g_per_ml;
+  const millilitres = ref.amount * UNIT_ML[ref.unit];
+  return millilitres * data.density_g_per_ml;
 }
 
 /** Merge one ingredient reference with its DB entry and scale its nutrition. */
