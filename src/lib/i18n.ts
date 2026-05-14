@@ -15,7 +15,8 @@ export const UI = {
   servings: { en: 'Servings', ja: '食数' },
   serving: { en: 'serving', ja: '食' },
   servingsPlural: { en: 'servings', ja: '食' },
-  perServing: { en: 'per serving', ja: '1食あたり' },
+  perServing: { en: 'Per serving', ja: '1食あたり' },
+  wholeRecipe: { en: 'Whole recipe', ja: '全量' },
   totalWord: { en: 'total', ja: '合計' },
   scaleToggle: {
     en: 'Toggle between per-serving and whole-recipe nutrition',

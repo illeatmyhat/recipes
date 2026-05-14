@@ -46,9 +46,9 @@
     mounted = true;
   });
 
-  // The panel shows per-serving nutrition by default. The "× N" toggle
-  // multiplies everything by the chosen number of servings (the whole recipe).
-  let showTotal = $state(false);
+  // The panel shows whole-recipe nutrition by default — scaled to the chosen
+  // number of servings. The switch flips it to a single per-serving portion.
+  let showTotal = $state(true);
   const perServingFactor = 1 / recipe.servingsDefault;
   const factor = $derived.by(() => {
     if (!showTotal) return perServingFactor;
@@ -155,18 +155,33 @@
 
 <section class="panel" aria-labelledby="nutrition-heading">
   <header class="head">
-    <div class="head-row">
-      <h2 id="nutrition-heading">{t('nutritionFacts', $locale)}</h2>
+    <h2 id="nutrition-heading">{t('nutritionFacts', $locale)}</h2>
+    <div
+      class="mode-switch"
+      class:disabled={servingCount === 1}
+      role="group"
+      aria-label={t('scaleToggle', $locale)}
+    >
+      <span class="thumb" class:right={showTotal} aria-hidden="true"></span>
       <button
         type="button"
-        class="scale-toggle"
-        class:on={showTotal}
-        aria-pressed={showTotal}
-        aria-label={t('scaleToggle', $locale)}
+        class="seg"
+        class:active={!showTotal}
+        aria-pressed={!showTotal}
         disabled={servingCount === 1}
-        onclick={() => (showTotal = !showTotal)}
+        onclick={() => (showTotal = false)}
       >
-        × {servingCount}
+        {t('perServing', $locale)}
+      </button>
+      <button
+        type="button"
+        class="seg"
+        class:active={showTotal}
+        aria-pressed={showTotal}
+        disabled={servingCount === 1}
+        onclick={() => (showTotal = true)}
+      >
+        {t('wholeRecipe', $locale)}
       </button>
     </div>
     <p class="serving-line">
@@ -340,12 +355,6 @@
     background: var(--surface);
     font-variant-numeric: tabular-nums;
   }
-  .head-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-  }
   .head h2 {
     margin: 0;
     font-size: 2rem;
@@ -353,30 +362,52 @@
     letter-spacing: -0.02em;
     line-height: 1;
   }
-  .scale-toggle {
-    flex: none;
+  /* A sliding two-position switch: the accent "thumb" glides under whichever
+     label is active, so it reads as a control you can flip, not a static tag. */
+  .mode-switch {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 0.7rem;
+    padding: 0.2rem;
     border: 1px solid var(--line);
     border-radius: 999px;
     background: var(--bg);
-    color: var(--ink);
-    font: inherit;
-    font-size: 0.9rem;
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
-    padding: 0.3rem 0.75rem;
-    cursor: pointer;
-    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
   }
-  .scale-toggle:hover:not(:disabled) {
-    border-color: var(--accent);
+  .mode-switch.disabled {
+    opacity: 0.5;
   }
-  .scale-toggle.on {
+  .thumb {
+    position: absolute;
+    top: 0.2rem;
+    bottom: 0.2rem;
+    left: 0.2rem;
+    width: calc(50% - 0.2rem);
+    border-radius: 999px;
     background: var(--accent);
-    border-color: var(--accent);
+    transition: transform 0.18s ease;
+  }
+  .thumb.right {
+    transform: translateX(100%);
+  }
+  .seg {
+    position: relative;
+    z-index: 1;
+    border: none;
+    background: transparent;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.35rem 0.5rem;
+    border-radius: 999px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: color 0.18s ease;
+  }
+  .seg.active {
     color: #fff;
   }
-  .scale-toggle:disabled {
-    opacity: 0.4;
+  .mode-switch.disabled .seg {
     cursor: not-allowed;
   }
   .serving-line {
