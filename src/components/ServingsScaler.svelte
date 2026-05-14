@@ -6,9 +6,10 @@
 
   let { recipe }: { recipe: ResolvedRecipe } = $props();
 
-  // Discrete serving sizes — picking one scales every amount, weight, and
-  // nutrient value across the page via the shared `servings` store.
-  const OPTIONS = [1, 2, 3, 5] as const;
+  // Slider range — dragging it scales every amount, weight, and nutrient
+  // value across the page via the shared `servings` store.
+  const MIN = 1;
+  const MAX = 12;
 
   // SSR renders the recipe's default; after hydration the shared store drives it.
   let mounted = $state(false);
@@ -25,29 +26,36 @@
     mounted = true;
   });
 
-  function choose(n: number): void {
-    servings.set(n);
+  function onInput(event: Event): void {
+    servings.set(Number((event.currentTarget as HTMLInputElement).value));
   }
 </script>
 
 <section class="scaler" aria-labelledby="scaler-heading">
-  <h2 id="scaler-heading">{t('servings', $locale)}</h2>
-  <div class="control" role="group" aria-label={t('servings', $locale)}>
-    {#each OPTIONS as n (n)}
-      <button
-        type="button"
-        class="opt"
-        class:on={count === n}
-        aria-pressed={count === n}
-        onclick={() => choose(n)}
+  <div class="head">
+    <h2 id="scaler-heading">{t('servings', $locale)}</h2>
+    <output class="value" for="servings-range" aria-live="polite">
+      <span class="num">{count}</span>
+      <span class="unit"
+        >{count === 1 ? t('serving', $locale) : t('servingsPlural', $locale)}</span
       >
-        {n}
-      </button>
-    {/each}
+    </output>
   </div>
-  <p class="caption" aria-live="polite">
-    {count === 1 ? t('serving', $locale) : t('servingsPlural', $locale)}
-  </p>
+  <input
+    id="servings-range"
+    class="range"
+    type="range"
+    min={MIN}
+    max={MAX}
+    step="1"
+    value={count}
+    oninput={onInput}
+    aria-label={t('servings', $locale)}
+  />
+  <div class="ticks" aria-hidden="true">
+    <span>{MIN}</span>
+    <span>{MAX}</span>
+  </div>
 </section>
 
 <style>
@@ -57,43 +65,47 @@
     padding: 1rem 1.25rem;
     background: var(--surface);
   }
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+  }
   h2 {
-    margin: 0 0 0.75rem;
+    margin: 0;
     font-size: 0.8rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--ink-soft);
   }
-  .control {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.4rem;
+  .value {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
   }
-  .opt {
-    padding: 0.7rem 0;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    background: var(--bg);
-    font-size: 1.25rem;
+  .num {
+    font-size: 1.8rem;
     font-weight: 700;
     font-variant-numeric: tabular-nums;
-    color: var(--ink);
-    cursor: pointer;
-    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    line-height: 1;
   }
-  .opt:hover:not(.on) {
-    border-color: var(--accent);
-    background: var(--accent-soft);
-  }
-  .opt.on {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
-  }
-  .caption {
-    margin: 0.6rem 0 0;
-    text-align: center;
+  .unit {
     font-size: 0.85rem;
     color: var(--ink-soft);
+  }
+  .range {
+    width: 100%;
+    margin: 0;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+  .ticks {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.25rem;
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
   }
 </style>
