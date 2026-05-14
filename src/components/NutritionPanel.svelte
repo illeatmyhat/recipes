@@ -165,7 +165,7 @@
       <span class="thumb" class:right={showTotal} aria-hidden="true"></span>
       <button
         type="button"
-        class="seg"
+        class="mode-seg"
         class:active={!showTotal}
         aria-pressed={!showTotal}
         disabled={servingCount === 1}
@@ -175,7 +175,7 @@
       </button>
       <button
         type="button"
-        class="seg"
+        class="mode-seg"
         class:active={showTotal}
         aria-pressed={showTotal}
         disabled={servingCount === 1}
@@ -390,7 +390,7 @@
   .thumb.right {
     transform: translateX(100%);
   }
-  .seg {
+  .mode-seg {
     position: relative;
     z-index: 1;
     border: none;
@@ -404,10 +404,10 @@
     cursor: pointer;
     transition: color 0.18s ease;
   }
-  .seg.active {
+  .mode-seg.active {
     color: var(--on-accent);
   }
-  .mode-switch.disabled .seg {
+  .mode-switch.disabled .mode-seg {
     cursor: not-allowed;
   }
   .serving-line {
