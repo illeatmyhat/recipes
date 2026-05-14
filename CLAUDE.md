@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - `npm run dev` — dev server
 - `npm run build` — static build to `dist/`
-- `npm run preview` — serve the production build (recipe URL: `http://localhost:4321/recipes/recipes/overnight-oats/`)
+- `npm run preview` — serve the production build. Port 4321 is usually busy, so it lands on 4322; grep the startup output for the actual port. Recipe URL: `http://localhost:<port>/recipes/recipes/overnight-oats/`.
 - `npm run check` — `astro check`. **This is the only verification gate** — there is no test suite. It must stay at 0 errors / 0 warnings / 0 hints.
 - `node scripts/process-hero.mjs <source.jpg>` — one-off: crop a source photo to the 16:9 hero image.
 
@@ -29,9 +29,13 @@ The core idea is that **ingredient nutrition lives in a separate database and is
 
 ### Islands and shared state
 
-`RecipePage.astro` is a static shell; the interactive parts are Svelte islands in `src/components/*.svelte` (`ServingsScaler`, `IngredientList`, `CustomizePanel`, `NutritionPanel`, `LocaleSwitcher`). They share mutable state — servings, ingredient selections, locale — through the writable stores in `RecipeStore.ts`, not props. `RecipeStore` ends up in a single shared build chunk, so the stores are true cross-island singletons (verified: every island bundle in `dist/_astro/` imports it from the same chunk). Static recipe data is still passed as props since it never changes.
+`RecipePage.astro` is a static shell; the interactive parts are Svelte islands in `src/components/*.svelte` (`ServingsScaler`, `IngredientList`, `NutritionPanel`, `LocaleSwitcher`, `ThemeToggle`, `TabBar`, plus `CustomizePanel` which is `client:idle` because it starts inside a `display:none` tab). They share mutable state — servings, ingredient selections, locale — through the writable stores in `RecipeStore.ts`, not props. `RecipeStore` ends up in a single shared build chunk, so the stores are true cross-island singletons (verified: every island bundle in `dist/_astro/` imports it from the same chunk). Static recipe data is still passed as props since it never changes.
 
-Each island calls `initStore()` in `onMount` (idempotent — the first to hydrate wins) and uses a `mounted` flag so SSR renders the recipe's defaults and the store takes over only after hydration.
+Each island calls `initStore()` (or `initLocale()` for locale-only islands) in `onMount` — idempotent, the first to hydrate wins — and uses a `mounted` flag so SSR renders the recipe's defaults and the store takes over only after hydration.
+
+### Document-level UI state: theme, locale, tabs
+
+Three concerns are reflected onto `<html>` attributes so CSS can drive them: `data-theme` (dark mode), `data-locale` (EN/JA), `data-tab` (Recipe/Customize tab). `data-theme` and `data-locale` are resolved **before first paint** by `is:inline` scripts in `RecipeLayout.astro` (stored choice → system/browser → default) to avoid a flash; the matching island then mirrors that attribute into its store. Theme and locale persist to `localStorage` and sync across open tabs via the `storage` event. The shared `SiteControls.astro` bundles `ThemeToggle` + `LocaleSwitcher` for both the recipe pages and the index.
 
 ### Localization (EN/JA)
 
@@ -39,6 +43,26 @@ Two parallel systems, both driven by the `locale` store:
 
 - **Islands** read UI strings reactively from `src/lib/i18n.ts` via `t(key, locale)`.
 - **Static content** is emitted twice (`.lang-en` / `.lang-ja` siblings, see `Bilingual.astro` and the `.lang-*` rules in `global.css`); the `locale` store flips `<html data-locale>` so the right copy shows. This keeps content localized with JS disabled (defaults to EN).
+
+## Browser testing (Chrome)
+
+There is no browser on `PATH` in this environment — not even Edge. A standalone
+Chromium is installed at `chrome/` (gitignored); install or refresh it with
+`npx @puppeteer/browsers install chrome@stable`. That command prints the exact
+`chrome.exe` path — reference it as `$CH` below.
+
+**Lighthouse** — `CHROME_PATH=$CH npx lighthouse <url> --preset=desktop --chrome-flags="--headless --no-sandbox" --output=json --output-path=./lh.json`. The report is written fine; an `EPERM` error on temp-dir cleanup afterward is harmless — ignore it. Parse scores from the JSON. Target is ≥ 90 in every category (currently 100s). `lh-*.json` is gitignored.
+
+**Screenshots** — `"$CH" --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=W,H --screenshot=<out.png> <url>`:
+- The capture is only as tall as the window — set `--window-size` height tall enough for the whole page.
+- Headless Chrome 148 defaults to `prefers-color-scheme: dark`. Force it with `--blink-settings=preferredColorScheme=0` (dark) or `=1` (light).
+- Add `--force-device-scale-factor=2` for legible text, then crop regions with `sharp` (already a dependency) — there is no other image tool.
+
+**Interactive checks (CDP)** — for clicking/toggling, launch Chrome with `--remote-debugging-port=9222` and drive it from a Node script (Node 22+ has a built-in `WebSocket`). Create a tab with `PUT /json/new?<url>` (a GET is rejected), connect to its `webSocketDebuggerUrl`, then use `Runtime.evaluate` and `Page.captureScreenshot`. This is how tab switching, locale persistence, and cross-tab `storage` sync were verified. Note: `client:visible` islands need a few seconds and may need the element scrolled into view before they hydrate.
+
+**Path note** — in the Bash tool `/tmp/...` resolves to `C:\Users\...\AppData\Local\Temp\...`. When a path crosses into Node or `sharp`, pass the absolute Windows path the tool printed, not `/tmp/...`.
+
+Always kill the preview server and any debugging Chrome (by port) when done.
 
 ## Hard rules
 
