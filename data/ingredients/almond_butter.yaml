@@ -1,0 +1,35 @@
+id: almond_butter
+fdc_id: 168588
+names:
+  en: Almond butter, plain, without salt
+  ja: アーモンドバター（無塩・プレーン）
+aliases:
+  en:
+    - Unsalted almond butter
+    - Plain almond butter
+  ja:
+    - 無塩アーモンドバター
+    - アーモンドペースト
+availability:
+  us:
+    brands: ["Justin's", "Barney Butter", "365 Whole Foods"]
+    note_en: Choose "no salt added"; natural versions need stirring.
+  ja:
+    brands: ["MD アーモンドバター", "Justin's", "raw アーモンドバター"]
+    note_en: Available at Kaldi, import shops, and online.
+    note_ja: カルディ・輸入食品店・通販で入手可能。
+nutrition:
+  per_100g:
+    calories: 614
+    fat: 55.5
+    saturated_fat: 4.173
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 7
+    carbohydrates: 18.82
+    fiber: 10.3
+    sugars: 4.45
+    protein: 20.96
+    calcium: 347
+    iron: 3.49
+density_g_per_ml: null

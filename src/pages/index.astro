@@ -1,0 +1,66 @@
+---
+/**
+ * Site root — a minimal index of every recipe. The recipe pages themselves
+ * live under /recipes/<slug> (see src/pages/recipes/[...slug].astro).
+ */
+import { getCollection } from 'astro:content';
+import RecipeLayout from '../layouts/RecipeLayout.astro';
+import Bilingual from '../components/Bilingual.astro';
+
+const recipes = (await getCollection('recipes')).sort((a, b) =>
+  a.data.title.en.localeCompare(b.data.title.en),
+);
+---
+
+<RecipeLayout title="Recipes" description="A small collection of recipes.">
+  <header class="head">
+    <h1>Recipes</h1>
+    <p class="sub">Build-time nutrition, scaled to any serving.</p>
+  </header>
+  <ul class="list">
+    {
+      recipes.map((entry) => (
+        <li>
+          <a href={`${import.meta.env.BASE_URL}/recipes/${entry.data.slug}`.replace(/\/+/g, '/')}>
+            <Bilingual text={entry.data.title} />
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</RecipeLayout>
+
+<style>
+  .head {
+    margin-bottom: 1.5rem;
+  }
+  .head h1 {
+    margin: 0;
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+  .sub {
+    margin: 0.25rem 0 0;
+    color: var(--ink-soft);
+  }
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .list a {
+    display: block;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  .list a:hover {
+    border-color: var(--accent);
+  }
+</style>

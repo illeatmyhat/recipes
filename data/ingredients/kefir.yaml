@@ -1,0 +1,35 @@
+id: kefir
+fdc_id: 170904
+names:
+  en: Plain milk kefir
+  ja: ケフィア（プレーン）
+aliases:
+  en:
+    - Cultured milk kefir
+    - Drinkable kefir
+  ja:
+    - ミルクケフィア
+    - 飲むヨーグルト（ケフィア）
+availability:
+  us:
+    brands: ["Lifeway", "Wallaby Organic", "Maple Hill"]
+    note_en: USDA lists a lowfat plain entry; whole-milk kefir runs slightly higher in fat and calories.
+  ja:
+    brands: ["ケフラン", "オハヨー", "Lifeway"]
+    note_en: Sold at supermarkets and health food stores, often as kefir starter kits.
+    note_ja: スーパー・健康食品店で入手可能（ケフィア種菌としても販売）。
+nutrition:
+  per_100g:
+    calories: 43
+    fat: 1.02
+    saturated_fat: 0.66
+    trans_fat: 0.037
+    cholesterol: 5
+    sodium: 40
+    carbohydrates: 4.77
+    fiber: 0
+    sugars: 4.61
+    protein: 3.79
+    calcium: 130
+    iron: 0.04
+density_g_per_ml: 1.03

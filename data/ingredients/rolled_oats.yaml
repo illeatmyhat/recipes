@@ -1,0 +1,35 @@
+id: rolled_oats
+fdc_id: 169705
+names:
+  en: Old fashioned rolled oats
+  ja: ロールドオーツ
+aliases:
+  en:
+    - Classic rolled oats
+    - Regular rolled oats
+  ja:
+    - オートミール
+    - 押し麦オーツ
+availability:
+  us:
+    brands: ["Quaker", "Bob's Red Mill", "Kodiak"]
+    note_en: Look for "old fashioned" or "classic" on the label.
+  ja:
+    brands: ["日食オーツ", "Bob's Red Mill", "クエーカー"]
+    note_en: Available at Kaldi, Costco, and import food stores.
+    note_ja: カルディ・コストコ・輸入食品店で入手可能。
+nutrition:
+  per_100g:
+    calories: 379
+    fat: 6.9
+    saturated_fat: 1.22
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 2
+    carbohydrates: 67.7
+    fiber: 10.1
+    sugars: 0.99
+    protein: 13.15
+    calcium: 52
+    iron: 4.25
+density_g_per_ml: null

@@ -1,0 +1,251 @@
+---
+/**
+ * Static shell for a recipe page.
+ *
+ * Astro renders everything here to plain HTML at build time — hero image,
+ * title, ingredient list, method (the MDX body via <slot/>) and the default
+ * state of every island. The page is therefore fully readable with zero JS.
+ *
+ * The three interactive islands hydrate with `client:visible`; they read their
+ * mutable state from the shared store in RecipeStore.ts, so this shell only
+ * has to hand them the resolved (static) recipe data as a prop.
+ */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Bilingual from './Bilingual.astro';
+import ServingsScaler from './ServingsScaler.svelte';
+import CustomizePanel from './CustomizePanel.svelte';
+import NutritionPanel from './NutritionPanel.svelte';
+import LocaleSwitcher from './LocaleSwitcher.svelte';
+import { UI } from '../lib/i18n';
+import type { ResolvedRecipe } from '../lib/types';
+
+interface Props {
+  recipe: ResolvedRecipe;
+  heroImage: ImageMetadata;
+}
+
+const { recipe, heroImage } = Astro.props;
+---
+
+<article class="recipe">
+  <div class="topbar">
+    <p class="kicker">
+      <Bilingual text={{ en: 'Recipe', ja: 'レシピ' }} />
+    </p>
+    <LocaleSwitcher client:visible recipe={recipe} />
+  </div>
+
+  <h1 class="title">
+    <Bilingual text={recipe.title} />
+  </h1>
+
+  <Image
+    class="hero"
+    src={heroImage}
+    alt={recipe.title.en}
+    widths={[320, 640, 960, 1280]}
+    sizes="(min-width: 1080px) 1040px, 100vw"
+    format="webp"
+    quality={72}
+    loading="eager"
+    fetchpriority="high"
+  />
+
+  <div class="grid">
+    <div class="main">
+      <ServingsScaler client:visible recipe={recipe} />
+
+      <section class="ingredients" aria-labelledby="ingredients-heading">
+        <h2 id="ingredients-heading">
+          <Bilingual text={UI.ingredients} />
+        </h2>
+
+        <h3 class="subhead"><Bilingual text={UI.base} /></h3>
+        <ul class="ing-list">
+          {
+            recipe.baseIngredients.map((ing) => (
+              <li class="ing">
+                <div class="ing-head">
+                  <span class="ing-name">
+                    <Bilingual text={ing.names} />
+                  </span>
+                  <span class="ing-amount">
+                    {ing.amount}
+                    {ing.unit}
+                  </span>
+                </div>
+                <p class="ing-note">
+                  <Bilingual text={ing.notes} />
+                </p>
+                {ing.warnings.length > 0 && (
+                  <ul class="warnings">
+                    {ing.warnings.map((w) => (
+                      <li class:list={['warning', w.type]}>
+                        <Bilingual text={{ en: w.en, ja: w.ja }} />
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <CustomizePanel client:visible recipe={recipe} />
+
+      <section class="method" aria-labelledby="method-heading">
+        <h2 id="method-heading">
+          <Bilingual text={UI.method} />
+        </h2>
+        <div class="method-body">
+          <slot />
+        </div>
+      </section>
+    </div>
+
+    <aside class="side">
+      <div class="sticky">
+        <NutritionPanel client:visible recipe={recipe} />
+      </div>
+    </aside>
+  </div>
+</article>
+
+<style>
+  .recipe {
+    display: block;
+  }
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+  .kicker {
+    margin: 0;
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .title {
+    margin: 0 0 1rem;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    letter-spacing: -0.02em;
+  }
+  .hero {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--radius);
+    margin-bottom: 1.5rem;
+  }
+  .grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .main {
+    display: grid;
+    gap: 1.5rem;
+    align-content: start;
+  }
+  .ingredients,
+  .method {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    background: var(--surface);
+  }
+  h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.15rem;
+  }
+  .subhead {
+    margin: 0 0 0.5rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .ing-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.85rem;
+  }
+  .ing {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 0.85rem;
+  }
+  .ing:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .ing-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    align-items: baseline;
+  }
+  .ing-name {
+    font-weight: 600;
+  }
+  .ing-amount {
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .ing-note {
+    margin: 0.2rem 0 0;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+  .warnings {
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.35rem;
+  }
+  .warning {
+    font-size: 0.85rem;
+    padding: 0.35rem 0.6rem;
+    border-radius: 8px;
+  }
+  .warning.avoid {
+    background: var(--warn-soft);
+    color: var(--warn);
+  }
+  .warning.good {
+    background: var(--good-soft);
+    color: var(--good);
+  }
+  .method-body :global(ol),
+  .method-body :global(ul) {
+    padding-left: 1.2rem;
+  }
+  .method-body :global(li) {
+    margin-bottom: 0.5rem;
+  }
+  .method-body :global(h3) {
+    margin: 1.2rem 0 0.4rem;
+    font-size: 1rem;
+  }
+  .method-body :global(p) {
+    margin: 0.5rem 0;
+  }
+  .sticky {
+    position: sticky;
+    top: 1.5rem;
+  }
+  @media (min-width: 880px) {
+    .grid {
+      grid-template-columns: 1fr 22rem;
+      align-items: start;
+    }
+  }
+</style>

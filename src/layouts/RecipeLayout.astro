@@ -1,0 +1,45 @@
+---
+/**
+ * Base layout for recipe pages. Intentionally minimal — no sidebar, no header
+ * chrome — just the document shell, global styles, and a centered <main>.
+ *
+ * `data-locale="en"` is set statically so the page is fully localized (to
+ * English) with JavaScript disabled; the locale store flips it on hydration.
+ */
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-locale="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A5%A3%3C/text%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <main class="shell">
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style>
+  .shell {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem 4rem;
+  }
+</style>

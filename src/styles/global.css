@@ -1,0 +1,73 @@
+/* Plain CSS — no framework. Design tokens + base typography + the locale-aware
+   show/hide rules that let static (JS-disabled) content still localize. */
+
+:root {
+  --bg: #faf7f2;
+  --surface: #ffffff;
+  --ink: #2b2522;
+  --ink-soft: #6f655d;
+  --line: #e4ddd2;
+  --accent: #c4622d;
+  --accent-soft: #f6e7dd;
+  --good: #2f7d4f;
+  --good-soft: #e3f1e7;
+  --warn: #b23b2e;
+  --warn-soft: #f6e1de;
+  --max: 1080px;
+  --radius: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Hiragino Kaku Gothic ProN', 'Noto Sans JP', Meiryo, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--accent);
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* --- Locale-aware static content ----------------------------------------
+   English shows by default (and with JS disabled). When the locale store
+   sets <html data-locale="ja">, Japanese blocks reveal and English hides.
+   `revert` restores each element's natural display (span->inline, div->block). */
+.lang-ja {
+  display: none;
+}
+[data-locale='ja'] .lang-ja {
+  display: revert;
+}
+[data-locale='ja'] .lang-en {
+  display: none;
+}

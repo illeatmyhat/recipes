@@ -1,0 +1,35 @@
+id: maple_syrup
+fdc_id: 169661
+names:
+  en: Pure maple syrup
+  ja: メープルシロップ（純粋）
+aliases:
+  en:
+    - 100% maple syrup
+    - Real maple syrup
+  ja:
+    - 純粋メープルシロップ
+    - 楓蜜
+availability:
+  us:
+    brands: ["Crown Maple", "Coombs Family Farms", "365 Whole Foods"]
+    note_en: Look for "100% pure" — avoid "pancake" or "table syrup" blends.
+  ja:
+    brands: ["カークランド", "明治屋", "ケベック産メープルシロップ"]
+    note_en: Available at supermarkets, Costco, and import food stores.
+    note_ja: スーパー・コストコ・輸入食品店で入手可能。
+nutrition:
+  per_100g:
+    calories: 260
+    fat: 0.06
+    saturated_fat: 0.007
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 12
+    carbohydrates: 67.04
+    fiber: 0
+    sugars: 60.46
+    protein: 0.04
+    calcium: 102
+    iron: 0.11
+density_g_per_ml: null

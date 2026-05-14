@@ -1,0 +1,35 @@
+id: chia_seeds
+fdc_id: 170554
+names:
+  en: Chia seeds, dried
+  ja: チアシード
+aliases:
+  en:
+    - Dried chia seed
+    - Chia seed
+  ja:
+    - 乾燥チアシード
+    - サルビアの種
+availability:
+  us:
+    brands: ["Bob's Red Mill", "Nutiva", "Navitas Organics"]
+    note_en: Sold as black or white chia; nutrition is essentially identical.
+  ja:
+    brands: ["NICHIGA", "オーガニックチアシード", "Nutiva"]
+    note_en: Available at Kaldi, Costco, and online retailers.
+    note_ja: カルディ・コストコ・通販で入手可能。
+nutrition:
+  per_100g:
+    calories: 486
+    fat: 30.74
+    saturated_fat: 3.33
+    trans_fat: 0.14
+    cholesterol: 0
+    sodium: 16
+    carbohydrates: 42.12
+    fiber: 34.4
+    sugars: 0
+    protein: 16.54
+    calcium: 631
+    iron: 7.72
+density_g_per_ml: null

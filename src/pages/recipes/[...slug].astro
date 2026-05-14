@@ -1,0 +1,36 @@
+---
+/**
+ * Dynamic route for every recipe.
+ *
+ * `getStaticPaths` enumerates the `recipes` content collection so each recipe
+ * is pre-rendered to static HTML at build time. The MDX body is rendered via
+ * <Content/> (the method steps); the frontmatter is merged with the ingredient
+ * database by `resolveRecipe` and handed to the static shell as a prop.
+ */
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render } from 'astro:content';
+import RecipeLayout from '../../layouts/RecipeLayout.astro';
+import RecipePage from '../../components/RecipePage.astro';
+import { resolveRecipe } from '../../lib/resolveRecipe';
+
+export const getStaticPaths = (async () => {
+  const recipes = await getCollection('recipes');
+  return recipes.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry },
+  }));
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+// Build-time merge: frontmatter + ingredient YAML, scaled to recipe amounts.
+const recipe = resolveRecipe(entry.data);
+const pageTitle = `${recipe.title.en} — Recipes`;
+---
+
+<RecipeLayout title={pageTitle} description={recipe.title.en}>
+  <RecipePage recipe={recipe} heroImage={entry.data.hero_image}>
+    <Content />
+  </RecipePage>
+</RecipeLayout>
