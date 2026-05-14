@@ -178,6 +178,8 @@
     font-size: 0.9rem;
     color: var(--accent);
     font-weight: 700;
+    /* Purely decorative (aria-hidden) — keep it out of text selection. */
+    user-select: none;
   }
   .toggle.on .check {
     background: var(--accent);
