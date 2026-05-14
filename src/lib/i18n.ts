@@ -27,6 +27,10 @@ export const UI = {
     en: '* The % Daily Value tells you how much a nutrient in a serving contributes to a daily diet. 2,000 calories a day is used for general nutrition advice.',
     ja: '* ％1日の摂取目安量は、1食分の栄養素が1日の食事に占める割合を示します。一般的な栄養アドバイスには1日2,000kcalが用いられます。',
   },
+  dataDisclaimer: {
+    en: 'Nutritional values are estimates for informational purposes only and do not constitute medical or dietary advice. Individuals with specific health conditions should consult a qualified healthcare professional.',
+    ja: '栄養成分値は参考目的の推定値であり、医療または栄養指導の代わりになるものではありません。特定の健康状態をお持ちの方は、専門の医療機関にご相談ください。',
+  },
   breakdownHint: {
     en: 'Tap any nutrient to see how each ingredient contributes.',
     ja: '栄養素をタップすると、材料ごとの内訳が表示されます。',

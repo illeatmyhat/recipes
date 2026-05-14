@@ -286,6 +286,7 @@
   </table>
 
   <p class="footnote">{t('dvFootnote', $locale)}</p>
+  <p class="footnote disclaimer">{t('dataDisclaimer', $locale)}</p>
   <p class="hint">{t('breakdownHint', $locale)}</p>
 
   <section class="highlights" aria-label={t('highlights', $locale)}>
@@ -452,6 +453,11 @@
     color: var(--ink-soft);
     line-height: 1.4;
   }
+  .disclaimer {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--line);
+  }
   .hint {
     margin: 0.35rem 0 0;
     font-size: 0.8rem;
@@ -495,7 +501,7 @@
   }
   @media (min-width: 480px) {
     .grid {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 </style>
