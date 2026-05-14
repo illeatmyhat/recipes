@@ -143,9 +143,14 @@ const { recipe, heroImage } = Astro.props;
   @media (min-width: 880px) {
     .layout {
       grid-template-columns: 1fr 22rem;
+      /* The empty 1fr row gives a tall .main somewhere to extend into, so its
+         height is not distributed into row 1 — that would push the nutrition
+         panel far below the slider. Now the two right-column items stay snug. */
+      grid-template-rows: auto auto 1fr;
       grid-template-areas:
         'main scaler'
-        'main nutrition';
+        'main nutrition'
+        'main .';
       align-items: start;
     }
   }
