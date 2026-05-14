@@ -13,6 +13,7 @@
   } from './RecipeStore';
   import { t } from '../lib/i18n';
   import { formatAmount } from '../lib/units';
+  import NextTab from './NextTab.svelte';
   import type { ResolvedIngredient, ResolvedRecipe } from '../lib/types';
 
   let { recipe }: { recipe: ResolvedRecipe } = $props();
@@ -96,6 +97,7 @@
       {@render group(t('toppings', $locale), toppings)}
     {/if}
   </div>
+  <NextTab from="recipe" />
 </section>
 
 <style>

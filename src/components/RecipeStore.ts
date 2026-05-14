@@ -35,6 +35,14 @@ export const servingsFactor: Readable<number> = derived(
   ([$servings, $default]) => ($default > 0 ? $servings / $default : 1),
 );
 
+/** The main-column tabs, in carousel order. Shared by TabBar and NextTab. */
+export type Tab = 'recipe' | 'customize';
+export const TABS: ReadonlyArray<Tab> = ['recipe', 'customize'];
+
+/** Which main-column tab is showing. {@link initTabs} reflects it onto
+ *  `<html data-tab>`, which the CSS in RecipePage uses to swap panels. */
+export const activeTab = writable<Tab>('recipe');
+
 /** Defaults pulled from a resolved recipe, handed to {@link initStore}. */
 export interface StoreDefaults {
   servingsDefault: number;
@@ -44,6 +52,23 @@ export interface StoreDefaults {
 
 let storeInitialized = false;
 let localeInitialized = false;
+let tabsInitialized = false;
+
+/**
+ * Reflect the active tab onto `<html data-tab>` so the CSS in RecipePage shows
+ * the matching panel. Idempotent. Called by TabBar and NextTab.
+ */
+export function initTabs(): void {
+  if (tabsInitialized) return;
+  tabsInitialized = true;
+
+  activeTab.subscribe((tab) => {
+    if (typeof document === 'undefined') return;
+    // 'recipe' is the CSS default — clear the attribute rather than set it.
+    if (tab === 'recipe') delete document.documentElement.dataset.tab;
+    else document.documentElement.dataset.tab = tab;
+  });
+}
 
 /**
  * Initialise the UI locale from the value the inline script in RecipeLayout

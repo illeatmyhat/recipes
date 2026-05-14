@@ -67,7 +67,6 @@ Always kill the preview server and any debugging Chrome (by port) when done.
 ## Hard rules
 
 - **Nutrition data must come exclusively from the USDA SR Legacy dataset.** Foundation, FNDDS, and Branded entries are off-limits. (The README says "FoodData Central" loosely — SR Legacy is the actual constraint.)
-- Commits: sign off with `-c commit.gpgsign=false` and end the message with the `Co-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>` trailer.
 - All text files are LF (`.gitattributes` enforces it) — do not introduce CRLF.
 
 ## Deployment

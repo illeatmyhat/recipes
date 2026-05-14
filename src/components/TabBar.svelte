@@ -2,68 +2,45 @@
   // The two-tab navigation for the main column: "Recipe" (ingredients + method)
   // and "Customize" (the fruit/topping toggles).
   //
-  // Tab state is local — no other island needs it. The active tab is reflected
-  // onto <html data-tab>, and the CSS in RecipePage shows/hides the matching
-  // .tab-panel. With no data-tab set (no JS, or pre-hydration) the CSS defaults
-  // to the Recipe tab, which is also this component's initial state.
-  //
-  // No initStore() call here: TabBar depends on none of the seeded recipe
-  // stores. It only reads `locale` for its labels, which the always-visible
-  // islands in the default tab initialise.
+  // Tab state lives in the shared `activeTab` store so the NextTab buttons at
+  // the bottom of each panel can drive it too. initTabs reflects it onto
+  // <html data-tab>, and the CSS in RecipePage shows the matching .tab-panel.
+  // With no data-tab set (no JS, or pre-hydration) the CSS defaults to the
+  // Recipe tab, which is also the store's initial value.
   import { onMount } from 'svelte';
-  import { locale } from './RecipeStore';
+  import { locale, activeTab, initTabs, TABS } from './RecipeStore';
   import { t } from '../lib/i18n';
 
-  type Tab = 'recipe' | 'customize';
-
-  const TABS: ReadonlyArray<{ id: Tab; labelKey: 'recipeTab' | 'customizeTab' }> = [
-    { id: 'recipe', labelKey: 'recipeTab' },
-    { id: 'customize', labelKey: 'customizeTab' },
-  ];
-
-  let active = $state<Tab>('recipe');
-
-  function select(tab: Tab): void {
-    active = tab;
-    // 'recipe' is the CSS default, so clear the attribute rather than set it.
-    if (tab === 'recipe') delete document.documentElement.dataset.tab;
-    else document.documentElement.dataset.tab = tab;
-  }
-
-  onMount(() => {
-    // Mirror whatever the (JS-less) default resolved to — always 'recipe'.
-    const current = document.documentElement.dataset.tab;
-    active = current === 'customize' ? 'customize' : 'recipe';
-  });
+  onMount(() => initTabs());
 
   // Left/Right arrows move between tabs, per the WAI-ARIA tablist pattern.
   function onKeydown(event: KeyboardEvent): void {
     const dir = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
     if (dir === 0) return;
     event.preventDefault();
-    const i = TABS.findIndex((tb) => tb.id === active);
+    const i = TABS.indexOf($activeTab);
     const next = TABS[(i + dir + TABS.length) % TABS.length];
     if (next) {
-      select(next.id);
-      document.getElementById(`tab-${next.id}`)?.focus();
+      activeTab.set(next);
+      document.getElementById(`tab-${next}`)?.focus();
     }
   }
 </script>
 
 <div class="tabs" role="tablist" aria-label={t('tabs', $locale)} onkeydown={onKeydown}>
-  {#each TABS as tab (tab.id)}
-    {@const selected = active === tab.id}
+  {#each TABS as tab (tab)}
+    {@const selected = $activeTab === tab}
     <button
       type="button"
       class="tab"
       role="tab"
-      id={`tab-${tab.id}`}
+      id={`tab-${tab}`}
       aria-selected={selected}
-      aria-controls={`panel-${tab.id}`}
+      aria-controls={`panel-${tab}`}
       tabindex={selected ? 0 : -1}
-      onclick={() => select(tab.id)}
+      onclick={() => activeTab.set(tab)}
     >
-      {t(tab.labelKey, $locale)}
+      {t(`${tab}Tab`, $locale)}
     </button>
   {/each}
 </div>

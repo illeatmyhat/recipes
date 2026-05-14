@@ -10,6 +10,7 @@
   } from './RecipeStore';
   import { t } from '../lib/i18n';
   import { formatAmount } from '../lib/units';
+  import NextTab from './NextTab.svelte';
   import type { ResolvedIngredient, ResolvedRecipe } from '../lib/types';
 
   let { recipe }: { recipe: ResolvedRecipe } = $props();
@@ -95,6 +96,7 @@
     activeToppings,
     selectedToppings,
   )}
+  <NextTab from="customize" />
 </section>
 
 <style>
