@@ -33,6 +33,8 @@ to add interactivity.
 `.github/workflows/deploy.yml` builds with `withastro/action` and deploys to
 GitHub Pages on every push to `main`.
 
-> The hero image at `src/content/recipes/images/overnight-oats.jpg` is a
-> generated placeholder — see `scripts/make-placeholder.mjs`. Replace it with
-> the real photo (keep the same path and filename).
+## Credits
+
+Hero image: ["A bowl of oatmeal with fruit and nuts"](https://unsplash.com/photos/a-bowl-of-oatmeal-with-fruit-and-nuts-s8GfYrV88vo)
+by Alex Bayev on Unsplash, used under the free Unsplash License. It was cropped
+to 16:9 with `scripts/process-hero.mjs`.
