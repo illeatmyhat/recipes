@@ -349,7 +349,7 @@
 
 <style>
   .panel {
-    border: 2px solid var(--ink);
+    border: 2px solid var(--rule);
     border-radius: 8px;
     padding: 1rem 1.1rem 1.25rem;
     background: var(--surface);
@@ -419,8 +419,8 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    border-top: 8px solid var(--ink);
-    border-bottom: 4px solid var(--ink);
+    border-top: 8px solid var(--rule);
+    border-bottom: 4px solid var(--rule);
     margin-top: 0.5rem;
     padding: 0.25rem 0;
   }
@@ -438,7 +438,7 @@
     text-align: right;
     font-size: 0.8rem;
     font-weight: 700;
-    border-bottom: 1px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
   }
   .facts {
     width: 100%;

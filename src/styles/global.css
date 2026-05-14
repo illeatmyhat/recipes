@@ -8,6 +8,11 @@
   --ink: #2b2522;
   --ink-soft: #6f655d;
   --line: #e4ddd2;
+  /* --rule is the heavy structural ink of the Nutrition Facts panel (its
+     2px frame and the thick calorie bars). In light mode it is the iconic
+     near-black of a printed FDA label; see the dark blocks for why it is
+     its own token rather than just --ink. */
+  --rule: #2b2522;
   /* --accent / --good are darkened just enough to clear WCAG AA (4.5:1) for
      small text on the white surface and the cream --bg — the tightest case.
      --on-accent is the text/icon colour that sits on an --accent fill. */
@@ -40,6 +45,11 @@
   --ink: #f0e9e0;
   --ink-soft: #b3a89c;
   --line: #3a342c;
+  /* In dark mode --ink is near-white, which turns the Nutrition panel's heavy
+     rules into glaring white slabs. --rule keeps those rules' thickness (so it
+     still reads as an FDA-style label) but in a muted warm ink — ~3.8:1 on the
+     panel surface: clearly stronger than the soft --line panels, not a shout. */
+  --rule: #837a6d;
   --accent: #e0915f;
   --on-accent: #2b2017;
   --accent-soft: #38291d;
@@ -57,6 +67,7 @@
     --ink: #f0e9e0;
     --ink-soft: #b3a89c;
     --line: #3a342c;
+    --rule: #837a6d;
     --accent: #e0915f;
     --on-accent: #2b2017;
     --accent-soft: #38291d;
