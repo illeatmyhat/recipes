@@ -42,32 +42,45 @@ export interface StoreDefaults {
   defaultToppingIds: string[];
 }
 
-let initialized = false;
+let storeInitialized = false;
+let localeInitialized = false;
 
 /**
- * Seed the stores from a recipe's defaults and run locale detection.
- * Idempotent: the first island to hydrate wins, later ones are no-ops, so
- * every island shares one consistent initial state.
+ * Detect and apply the UI locale, then keep the `<html data-locale>` attribute
+ * and the `?lang=` URL param in sync with the store. Idempotent.
+ *
+ * Split out from {@link initStore} because the index page has locale-switching
+ * but no recipe — its LocaleSwitcher calls this directly.
  */
-export function initStore(defaults: StoreDefaults): void {
-  if (initialized) return;
-  initialized = true;
-
-  servingsDefault.set(defaults.servingsDefault);
-  servings.set(defaults.servingsDefault);
-  selectedFruits.set([...defaults.defaultFruitIds]);
-  selectedToppings.set([...defaults.defaultToppingIds]);
+export function initLocale(): void {
+  if (localeInitialized) return;
+  localeInitialized = true;
 
   const detected = detectLocale();
   locale.set(detected);
   applyLocaleToDocument(detected);
 
-  // Keep the <html data-locale> attribute and the URL in sync with the store
-  // so CSS-driven (JS-optional) content and shareable links both follow along.
+  // CSS-driven (JS-optional) content and shareable links both follow the store.
   locale.subscribe((value) => {
     applyLocaleToDocument(value);
     syncLocaleToUrl(value);
   });
+}
+
+/**
+ * Seed the recipe stores from a recipe's defaults, and initialise the locale.
+ * Idempotent: the first island to hydrate wins, later ones are no-ops, so
+ * every island shares one consistent initial state.
+ */
+export function initStore(defaults: StoreDefaults): void {
+  if (!storeInitialized) {
+    storeInitialized = true;
+    servingsDefault.set(defaults.servingsDefault);
+    servings.set(defaults.servingsDefault);
+    selectedFruits.set([...defaults.defaultFruitIds]);
+    selectedToppings.set([...defaults.defaultToppingIds]);
+  }
+  initLocale();
 }
 
 /**

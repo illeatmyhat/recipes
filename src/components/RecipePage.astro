@@ -21,9 +21,8 @@ import ServingsScaler from './ServingsScaler.svelte';
 import IngredientList from './IngredientList.svelte';
 import CustomizePanel from './CustomizePanel.svelte';
 import NutritionPanel from './NutritionPanel.svelte';
-import LocaleSwitcher from './LocaleSwitcher.svelte';
-import ThemeToggle from './ThemeToggle.svelte';
 import TabBar from './TabBar.svelte';
+import SiteControls from './SiteControls.astro';
 import { UI } from '../lib/i18n';
 import type { ResolvedRecipe } from '../lib/types';
 
@@ -40,10 +39,7 @@ const { recipe, heroImage } = Astro.props;
     <p class="kicker">
       <Bilingual text={{ en: 'Recipe', ja: 'レシピ' }} />
     </p>
-    <div class="controls">
-      <ThemeToggle client:visible />
-      <LocaleSwitcher client:visible recipe={recipe} />
-    </div>
+    <SiteControls />
   </div>
 
   <h1 class="title">
@@ -121,13 +117,6 @@ const { recipe, heroImage } = Astro.props;
     gap: 1rem;
     margin-bottom: 0.75rem;
     flex-wrap: wrap;
-  }
-  .controls {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    justify-content: flex-end;
   }
   .kicker {
     margin: 0;

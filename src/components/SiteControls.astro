@@ -1,0 +1,24 @@
+---
+/**
+ * The page-level controls — theme toggle + language switcher — as one unit.
+ * Shared by every page (the recipe pages and the index) so the controls stay
+ * consistent and live in a single place.
+ */
+import ThemeToggle from './ThemeToggle.svelte';
+import LocaleSwitcher from './LocaleSwitcher.svelte';
+---
+
+<div class="controls">
+  <ThemeToggle client:visible />
+  <LocaleSwitcher client:visible />
+</div>
+
+<style>
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+</style>

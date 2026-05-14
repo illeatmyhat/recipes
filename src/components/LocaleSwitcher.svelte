@@ -3,26 +3,19 @@
   // which in turn updates <html data-locale> and the ?lang= URL param, so both
   // the Svelte islands and the CSS-localized static content react instantly.
   import { onMount } from 'svelte';
-  import { locale, initStore } from './RecipeStore';
+  import { locale, initLocale } from './RecipeStore';
   import { t } from '../lib/i18n';
-  import type { Locale, ResolvedRecipe } from '../lib/types';
-
-  let { recipe }: { recipe: ResolvedRecipe } = $props();
+  import type { Locale } from '../lib/types';
 
   const OPTIONS: ReadonlyArray<{ code: Locale; flag: string; label: string }> = [
     { code: 'en', flag: '🇺🇸', label: 'English' },
     { code: 'ja', flag: '🇯🇵', label: '日本語' },
   ];
 
-  onMount(() => {
-    initStore({
-      servingsDefault: recipe.servingsDefault,
-      defaultFruitIds: recipe.fruits.filter((f) => f.selectedByDefault).map((f) => f.id),
-      defaultToppingIds: recipe.toppings
-        .filter((tp) => tp.selectedByDefault)
-        .map((tp) => tp.id),
-    });
-  });
+  // Locale switching needs no recipe data, so this works on any page (the
+  // index included). Recipe-page islands also call initStore, which calls
+  // initLocale — all idempotent, so whichever hydrates first wins.
+  onMount(() => initLocale());
 </script>
 
 <div class="locale" role="group" aria-label={t('language', $locale)}>
