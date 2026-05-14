@@ -2,6 +2,10 @@
 dist/
 .output/
 
+# local Lighthouse tooling (standalone Chromium + reports)
+chrome/
+lh-*.json
+
 # dependencies
 node_modules/
 

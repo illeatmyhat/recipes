@@ -7,9 +7,11 @@
   --ink: #2b2522;
   --ink-soft: #6f655d;
   --line: #e4ddd2;
-  --accent: #c4622d;
+  /* --accent / --good are darkened just enough to clear WCAG AA (4.5:1) for
+     small text on the white surface and the cream --bg — the tightest case. */
+  --accent: #b25420;
   --accent-soft: #f6e7dd;
-  --good: #2f7d4f;
+  --good: #2b7548;
   --good-soft: #e3f1e7;
   --warn: #b23b2e;
   --warn-soft: #f6e1de;
