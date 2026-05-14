@@ -28,8 +28,8 @@ export const UI = {
     ja: '* ％1日の摂取目安量は、1食分の栄養素が1日の食事に占める割合を示します。一般的な栄養アドバイスには1日2,000kcalが用いられます。',
   },
   dataDisclaimer: {
-    en: 'Nutritional values are estimates for informational purposes only and do not constitute medical or dietary advice. Individuals with specific health conditions should consult a qualified healthcare professional.',
-    ja: '栄養成分値は参考目的の推定値であり、医療または栄養指導の代わりになるものではありません。特定の健康状態をお持ちの方は、専門の医療機関にご相談ください。',
+    en: 'Nutritional values are estimates based on the unprocessed form of each ingredient and are provided for informational purposes only; they do not constitute medical or dietary advice. Individuals with specific health conditions should consult a qualified healthcare professional.',
+    ja: '栄養成分値は各材料の未加工の状態に基づく参考目的の推定値であり、医療または栄養指導の代わりになるものではありません。特定の健康状態をお持ちの方は、専門の医療機関にご相談ください。',
   },
   breakdownHint: {
     en: 'Tap any nutrient to see how each ingredient contributes.',
