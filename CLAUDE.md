@@ -4,11 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-- `npm run dev` — dev server
-- `npm run build` — static build to `dist/`
-- `npm run preview` — serve the production build. Port 4321 is usually busy, so it lands on 4322; grep the startup output for the actual port. Recipe URL: `http://localhost:<port>/recipes/recipes/overnight-oats/`.
-- `npm run check` — `astro check`. **This is the only verification gate** — there is no test suite. It must stay at 0 errors / 0 warnings / 0 hints.
+- `npm run dev` — Astro dev server with hot module reload. Run it **once** and leave it up; edits reflect live with no rebuild. Port 4321 is often already taken, so it usually lands on 4322 — check the startup output. Recipe URL: `http://localhost:<port>/recipes/recipes/overnight-oats/`.
+- `npm run build` — static build to `dist/`.
+- `npm run preview` — serve the built `dist/`. **No** hot reload (it serves the last build), so it's only worth running for things that need the production output: Lighthouse scores, inspecting build chunks.
+- `npm run check` — `astro check` (type-checking).
 - `node scripts/process-hero.mjs <source.jpg>` — one-off: crop a source photo to the 16:9 hero image.
+
+**Local workflow:** keep a single `npm run dev` running and let HMR handle edits — don't start a second dev/preview server (starting extra servers is what causes "port creep"). Before committing, run `npm run check` **and** `npm run build`: together they are the verification gate — there is no test suite, so `check` must stay at 0 errors / 0 warnings / 0 hints and the build must succeed.
 
 TypeScript is strict and there is no `any` anywhere in `src/lib` — keep it that way.
 
@@ -62,7 +64,7 @@ Chromium is installed at `chrome/` (gitignored); install or refresh it with
 
 **Path note** — in the Bash tool `/tmp/...` resolves to `C:\Users\...\AppData\Local\Temp\...`. When a path crosses into Node or `sharp`, pass the absolute Windows path the tool printed, not `/tmp/...`.
 
-Always kill the preview server and any debugging Chrome (by port) when done.
+Reuse one debugging Chrome across a work session rather than relaunching it per check — keeping it alive (alongside the single dev server) avoids relaunch overhead. Clean both up by port when the work is done.
 
 ## Hard rules
 
