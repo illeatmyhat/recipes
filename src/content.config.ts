@@ -48,6 +48,8 @@ const optionalCategory = z.object({
 });
 
 // ── v3 (pattern / roles / fills) ─────────────────────────────────────────────
+// Localizable fields hold the CANONICAL (EN) string; JA lives in the per-locale
+// sidecar catalog `<slug>.ja.yaml` and is merged at build time (src/lib/v3/i18n.ts).
 const amount = z.object({
   value: z.number().positive(),
   unit: z.enum(['g', 'ml']),
@@ -62,14 +64,14 @@ const fill = z.object({
   id: z.string(),
   amount: amount.optional(),
   default: z.boolean().optional(),
-  why: localized.optional(),
-  note: localized.optional(),
-  alias: localized.optional(),
+  why: z.string().optional(),
+  note: z.string().optional(),
+  alias: z.string().optional(),
 });
 
 const role = z.object({
-  label: localized,
-  why: localized,
+  label: z.string(),
+  why: z.string(),
   range,
   amount: amount.optional(),
   proportionalTo: z.string().optional(),
@@ -81,22 +83,22 @@ const role = z.object({
 const knob = z.discriminatedUnion('kind', [
   z.object({
     kind: z.literal('enum'),
-    label: localized,
-    why: localized.optional(),
+    label: z.string(),
+    why: z.string().optional(),
     values: z.array(z.string()).nonempty(),
     default: z.string(),
-    optionLabels: z.record(z.string(), localized).optional(),
+    optionLabels: z.record(z.string(), z.string()).optional(),
   }),
   z.object({
     kind: z.literal('bool'),
-    label: localized,
-    why: localized.optional(),
+    label: z.string(),
+    why: z.string().optional(),
     default: z.boolean(),
   }),
   z.object({
     kind: z.literal('scalar'),
-    label: localized,
-    why: localized.optional(),
+    label: z.string(),
+    why: z.string().optional(),
     min: z.number(),
     max: z.number(),
     step: z.number().optional(),
@@ -106,8 +108,8 @@ const knob = z.discriminatedUnion('kind', [
 
 const constraint = z.object({
   when: z.string(),
-  warn: localized.optional(),
-  error: localized.optional(),
+  warn: z.string().optional(),
+  error: z.string().optional(),
 });
 
 const servings = z.object({
@@ -131,14 +133,15 @@ const recipes = defineCollection({
         base_ingredients: z.array(ingredientRef).nonempty(),
         optional_ingredients: z.array(optionalCategory),
       }),
-      // v3 — required discriminant: roles + pattern + servings
+      // v3 — required discriminant: roles + pattern + servings.
+      // Localizable text is canonical EN; JA in the sidecar catalog.
       z.object({
-        title: localized,
+        title: z.string(),
         slug: z.string(),
         hero_image: image(),
-        customize_title: localized.optional(),
+        customize_title: z.string().optional(),
         locales: z.array(z.enum(['en', 'ja'])).nonempty(),
-        pattern: localized,
+        pattern: z.string(),
         servings,
         knobs: z.record(z.string(), knob).optional(),
         roles: z.record(z.string(), role),

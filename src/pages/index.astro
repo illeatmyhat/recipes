@@ -7,10 +7,13 @@ import { getCollection } from 'astro:content';
 import RecipeLayout from '../layouts/RecipeLayout.astro';
 import Bilingual from '../components/Bilingual.astro';
 import SiteControls from '../components/SiteControls.astro';
+import { recipeTitle } from '../lib/v3/i18n';
 
-const recipes = (await getCollection('recipes')).sort((a, b) =>
-  a.data.title.en.localeCompare(b.data.title.en),
-);
+// title is inline {en,ja} (v1) or a canonical EN string + catalog (v3);
+// recipeTitle normalizes both to a Localized for sorting and display.
+const recipes = (await getCollection('recipes'))
+  .map((entry) => ({ slug: entry.data.slug, title: recipeTitle(entry.data) }))
+  .sort((a, b) => a.title.en.localeCompare(b.title.en));
 ---
 
 <RecipeLayout
@@ -35,8 +38,8 @@ const recipes = (await getCollection('recipes')).sort((a, b) =>
     {
       recipes.map((entry) => (
         <li>
-          <a href={`${import.meta.env.BASE_URL}/recipes/${entry.data.slug}`.replace(/\/+/g, '/')}>
-            <Bilingual text={entry.data.title} />
+          <a href={`${import.meta.env.BASE_URL}/recipes/${entry.slug}`.replace(/\/+/g, '/')}>
+            <Bilingual text={entry.title} />
           </a>
         </li>
       ))

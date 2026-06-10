@@ -12,7 +12,8 @@ import { join } from 'node:path';
 import { load } from 'js-yaml';
 import { emptyNutrition, scaleNutrition } from './nutrition';
 import { resolveV3Recipe } from './v3/toResolvedRecipe';
-import type { RecipeFrontmatterV3 } from './v3/types';
+import { hydrateRecipe } from './v3/i18n';
+import type { CanonicalRecipeFrontmatterV3 } from './v3/types';
 import type {
   IngredientData,
   IngredientRef,
@@ -151,9 +152,10 @@ function resolveIngredient(
  * scaled; nothing is `any`.
  */
 export function resolveRecipe(
-  frontmatter: RecipeFrontmatter | RecipeFrontmatterV3,
+  frontmatter: RecipeFrontmatter | CanonicalRecipeFrontmatterV3,
 ): ResolvedRecipe {
-  if ('roles' in frontmatter) return resolveV3Recipe(frontmatter);
+  // v3: merge the per-locale catalog with the canonical EN frontmatter, then resolve.
+  if ('roles' in frontmatter) return resolveV3Recipe(hydrateRecipe(frontmatter));
 
   const baseIngredients = frontmatter.base_ingredients.map((ref) =>
     resolveIngredient(ref, null),

@@ -5,9 +5,12 @@
  * types describe a recipe as a pattern instantiated by roles, filled by
  * ingredients, plus the `Params` that drive resolution and the resolved output.
  *
- * Localized text is the *resolved* `Localized` shape ({ en, ja }). The catalog
- * architecture (canonical EN + per-locale sidecars) is a loading concern that
- * produces these values; the engine consumes them already merged. No `any`.
+ * **Localizable slot `T`.** Every human-facing string is a type parameter:
+ * `T = string` is the *canonical* (authored EN) form that lives in the MDX
+ * frontmatter; `T = Localized` is the *hydrated* form (merged with the per-locale
+ * catalog — see i18n.ts) that the engine consumes. The `…T<T>` interfaces are
+ * the general shape; the bare `Role` / `Fill` / `RecipeV3` aliases are the
+ * `Localized` instantiation the engine uses, so engine code is unchanged. No `any`.
  */
 import type { Locale, Localized, Unit, NutritionFacts, IngredientData } from '../types';
 
@@ -24,34 +27,25 @@ export interface Range {
   max?: number;
 }
 
-/**
- * One concrete ingredient that can fill a role. `amount` means different things
- * by role kind: in a substitutive role (role carries `amount`) it overrides the
- * role's full-equivalent for this fill; in an additive role it is the fill's own
- * contribution.
- */
-export interface Fill {
+/** One concrete ingredient that can fill a role. `T` is the localizable slot. */
+export interface FillT<T> {
   /** Ingredient id in the DB. */
   id: string;
   amount?: Amount;
   default?: boolean;
   /** Why this fill fits / what to know when choosing it. */
-  why?: Localized;
+  why?: T;
   /** Recipe-specific handling ("add at the 20-minute mark"). */
-  note?: Localized;
+  note?: T;
   /** Recipe-specific PROSE name (bare noun phrase) for in-sentence use. */
-  alias?: Localized;
+  alias?: T;
 }
 
-/**
- * A job the pattern needs done. Declared once with its `why`; filled by one or
- * more ingredients. `amount` present ⇒ substitutive (chosen fills partition it);
- * absent ⇒ additive (each chosen fill brings its own amount).
- */
-export interface Role {
+/** A job the pattern needs done; filled by one or more ingredients. */
+export interface RoleT<T> {
   /** Display heading for the by-role projection (e.g. "Protein" / "タンパク質"). */
-  label: Localized;
-  why: Localized;
+  label: T;
+  why: T;
   range: Range;
   /** Present ⇒ substitutive: the role owns this total, chosen fills partition it. */
   amount?: Amount;
@@ -61,51 +55,51 @@ export interface Role {
   fixed?: boolean;
   /** Declarative multiplier table: "<knob>.<value>" -> multiplier. No arithmetic. */
   scale?: Record<string, number>;
-  fills: Fill[];
+  fills: FillT<T>[];
 }
 
 /** A closed choice that drives scaling/guards but adds no ingredient. */
-export interface EnumKnob {
+export interface EnumKnobT<T> {
   kind: 'enum';
-  label: Localized;
-  why?: Localized;
+  label: T;
+  why?: T;
   values: string[];
   default: string;
-  optionLabels?: Record<string, Localized>;
+  optionLabels?: Record<string, T>;
 }
 
 /** An on/off knob. */
-export interface BoolKnob {
+export interface BoolKnobT<T> {
   kind: 'bool';
-  label: Localized;
-  why?: Localized;
+  label: T;
+  why?: T;
   default: boolean;
 }
 
 /** A continuous/stepped number knob (not `servings`, which is its own field). */
-export interface ScalarKnob {
+export interface ScalarKnobT<T> {
   kind: 'scalar';
-  label: Localized;
-  why?: Localized;
+  label: T;
+  why?: T;
   min: number;
   max: number;
   step?: number;
   default: number;
 }
 
-export type Knob = EnumKnob | BoolKnob | ScalarKnob;
+export type KnobT<T> = EnumKnobT<T> | BoolKnobT<T> | ScalarKnobT<T>;
 
 /** A value a knob can hold in `Params`. */
 export type KnobValue = string | number | boolean;
 
 /** An explicit annotation over a region of the parameter space. */
-export interface Constraint {
+export interface ConstraintT<T> {
   /** Boolean expression over params (see guards.ts grammar). */
   when: string;
   /** Soft: show a caution when `when` holds. */
-  warn?: Localized;
+  warn?: T;
   /** Hard: the combination is disallowed in the UI when `when` holds. */
-  error?: Localized;
+  error?: T;
 }
 
 /** The servings scalar — the canonical first parameter. */
@@ -115,24 +109,43 @@ export interface ServingsSpec {
   default: number;
 }
 
-/** A v3 recipe's structured data (the MDX frontmatter shape). */
-export interface RecipeV3 {
-  title: Localized;
+/** A v3 recipe's structured data, generic over the localizable slot `T`. */
+export interface RecipeT<T> {
+  title: T;
   slug: string;
   /** The thesis — why this combination works. The only required content element. */
-  pattern: Localized;
+  pattern: T;
   locales: Locale[];
   servings: ServingsSpec;
-  knobs?: Record<string, Knob>;
-  roles: Record<string, Role>;
-  constraints?: Constraint[];
+  knobs?: Record<string, KnobT<T>>;
+  roles: Record<string, RoleT<T>>;
+  constraints?: ConstraintT<T>[];
 }
 
+// ── Hydrated (Localized) aliases — what the engine consumes ───────────────────
+export type Fill = FillT<Localized>;
+export type Role = RoleT<Localized>;
+export type EnumKnob = EnumKnobT<Localized>;
+export type BoolKnob = BoolKnobT<Localized>;
+export type ScalarKnob = ScalarKnobT<Localized>;
+export type Knob = KnobT<Localized>;
+export type Constraint = ConstraintT<Localized>;
+export type RecipeV3 = RecipeT<Localized>;
+
+// ── Canonical (authored EN) forms — what the MDX frontmatter holds ────────────
+export type CanonicalRecipeV3 = RecipeT<string>;
+
 /**
- * The parsed v3 MDX frontmatter: a {@link RecipeV3} plus the optional
- * Customize-tab heading. (`hero_image` is resolved by Astro and handled by the
- * page, not the resolver.)
+ * Parsed v3 MDX frontmatter (canonical EN): a {@link CanonicalRecipeV3} plus the
+ * optional Customize-tab heading. Hydrated to {@link RecipeFrontmatterV3} by
+ * merging the per-locale catalog (i18n.ts). (`hero_image` is resolved by Astro
+ * and handled by the page, not the resolver.)
  */
+export interface CanonicalRecipeFrontmatterV3 extends CanonicalRecipeV3 {
+  customize_title?: string;
+}
+
+/** The hydrated v3 frontmatter the resolver/bridge consume. */
 export interface RecipeFrontmatterV3 extends RecipeV3 {
   customize_title?: Localized;
 }

@@ -1,0 +1,53 @@
+# JA catalog for weight-loss-stew. Canonical EN lives in weight-loss-stew.mdx;
+# keys are dotted paths into its frontmatter. Merged at build by src/lib/v3/i18n.ts.
+title: 満腹ダイエットシチュー
+customize_title: 鍋をカスタマイズ
+pattern: >-
+  高ボリューム・高食物繊維・十分なタンパク質・低カロリー密度。胃はカロリーではなく
+  「量」を感じ取る。この大きさの液体ベースの食事は何時間も満腹感を保つ。聖域となる
+  食材はなく、すべての役割がこの目的のためにある。目的さえ保てば、入れ替えても
+  料理の本質は変わらない。
+
+roles.added_fat.label: 油
+roles.added_fat.why: 鍋全体の油は大さじ1だけ。香りではなく風味の媒体（揮発成分は煮込みで飛ぶ）。省略可能で、水で炒めてもよい。
+roles.added_fat.fills.olive_oil.note: 大さじ1。鍋に加える油はこれだけ。
+
+roles.aromatics.label: 香味野菜
+roles.aromatics.why: ほぼゼロカロリーの野菜で作る風味の土台。カロリー密度を上げずにコクを出す。
+roles.aromatics.fills.onion.note: 大きめの玉ねぎ約1個を大きく刻む。
+roles.aromatics.fills.garlic.note: にんにく約4片を大きめに。
+
+roles.lentils.label: レンズ豆
+roles.lentils.why: 屋台骨。タンパク質・食物繊維・鉄分を加え、煮汁にとろみをつける。両方をこなすのはこれだけで、代替はない。
+roles.lentils.fills.lentils.note: 乾燥で約½カップ。ブラウンまたはグリーンは煮崩れしにくい。
+
+roles.protein.label: タンパク質
+roles.protein.why: 満腹感にはタンパク質が必要。ただしパターン上は低脂肪であること。脂の多い部位はカロリー計算を崩す。
+roles.protein.fills.tofu.note: 1丁。水切りのみでよく、押す必要はない。崩しながら加える。
+
+roles.potato.label: じゃがいも
+roles.potato.why: 満腹感の主役。安価でかさのある食材。翌日温め直すとレジスタントスターチができ、さらに良い。
+roles.potato.fills.potato.note: 鍋のかさの中心。食べごたえが出るよう大きめに切る。
+
+roles.vegetables.label: 野菜
+roles.vegetables.why: ほぼゼロカロリーでかさと食物繊維を稼ぐ。高ボリュームの要。
+roles.vegetables.fills.carrots.note: にんじん2〜3本を大きめに切る。
+roles.vegetables.fills.celery.note: 約4本。旨味の土台。
+roles.vegetables.fills.mushrooms.note: 約230g。さっと洗うだけでよい。
+roles.vegetables.fills.diced_tomatoes.note: 1缶を汁ごと。とろみとほどよい酸味。
+
+roles.greens.label: 青菜
+roles.greens.why: ほぼゼロカロリーでかさと微量栄養素を加える。最後に入れて食感を残す。
+roles.greens.fills.spinach.note: 約2カップ。火を止めてすぐしんなりする。
+
+roles.seasonings.label: 調味料
+roles.seasonings.why: ほぼゼロカロリーで旨味と温かみを出す。ダイエット食らしくない味の理由。
+roles.seasonings.fills.soy_sauce.note: 大さじ約2。約20kcalで煮込んだ旨味。減塩で塩分を自分で調整。
+roles.seasonings.fills.cumin.note: 小さじ約1。温かく土っぽいベース。
+roles.seasonings.fills.smoked_paprika.note: 小さじ約1。肉なしでスモーキーなコク。
+roles.seasonings.fills.salt.note: 最後にしょうゆの後で味を見て調整。
+roles.seasonings.fills.black_pepper.note: 他の調味料と一緒に数回挽き入れる。
+
+roles.extras.label: お好みで
+roles.extras.why: お好みの引き締め役。パターンには必須ではない。
+roles.extras.fills.ginger.note: 少量のジンジャーパウダーが全体を引き締める。

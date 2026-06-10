@@ -1,169 +1,141 @@
 ---
-title:
-  en: High-Volume Weight-Loss Stew
-  ja: 満腹ダイエットシチュー
+title: High-Volume Weight-Loss Stew
 slug: weight-loss-stew
 hero_image: ./images/weight-loss-stew.jpg
 locales: [en, ja]
-customize_title:
-  en: Customize your pot
-  ja: 鍋をカスタマイズ
-pattern:
-  en: >-
-    High volume, high fiber, enough protein, low calorie density. Your stomach
-    senses volume, not calories — a liquid meal this size keeps you full for
-    hours. No ingredient is sacred; every role serves this goal, and any swap
-    that preserves it preserves the dish.
-  ja: >-
-    高ボリューム・高食物繊維・十分なタンパク質・低カロリー密度。胃はカロリーではなく
-    「量」を感じ取る。この大きさの液体ベースの食事は何時間も満腹感を保つ。聖域となる
-    食材はなく、すべての役割がこの目的のためにある。目的さえ保てば、入れ替えても
-    料理の本質は変わらない。
+customize_title: Customize your pot
+pattern: >-
+  High volume, high fiber, enough protein, low calorie density. Your stomach
+  senses volume, not calories — a liquid meal this size keeps you full for
+  hours. No ingredient is sacred; every role serves this goal, and any swap
+  that preserves it preserves the dish.
 servings:
   min: 1
   max: 8
   default: 4
 roles:
   added_fat:
-    label: { en: Added fat, ja: 油 }
-    why:
-      en: >-
-        The whole pot's fat budget is one tablespoon — a flavour carrier, not
-        aroma (the volatiles boil off in a stew anyway). Skippable: you can
-        water-sauté instead.
-      ja: 鍋全体の油は大さじ1だけ。香りではなく風味の媒体（揮発成分は煮込みで飛ぶ）。省略可能で、水で炒めてもよい。
+    label: Added fat
+    why: >-
+      The whole pot's fat budget is one tablespoon — a flavour carrier, not
+      aroma (the volatiles boil off in a stew anyway). Skippable: you can
+      water-sauté instead.
     range: { min: 0, max: 1 }
     fills:
       - id: olive_oil
         amount: { value: 15, unit: ml }
         default: true
-        note: { en: One tablespoon — all the added fat in the pot., ja: 大さじ1。鍋に加える油はこれだけ。 }
+        note: One tablespoon — all the added fat in the pot.
   aromatics:
-    label: { en: Aromatics, ja: 香味野菜 }
-    why:
-      en: The flavour base, built from near-calorie-free vegetables — depth without density.
-      ja: ほぼゼロカロリーの野菜で作る風味の土台。カロリー密度を上げずにコクを出す。
+    label: Aromatics
+    why: The flavour base, built from near-calorie-free vegetables — depth without density.
     range: { min: 1 }
     fills:
       - id: onion
         amount: { value: 200, unit: g }
         default: true
-        note: { en: Roughly one large onion, in big chunks., ja: 大きめの玉ねぎ約1個を大きく刻む。 }
+        note: Roughly one large onion, in big chunks.
       - id: garlic
         amount: { value: 12, unit: g }
         default: true
-        note: { en: About four cloves, in big pieces., ja: にんにく約4片を大きめに。 }
+        note: About four cloves, in big pieces.
   lentils:
-    label: { en: Lentils, ja: レンズ豆 }
-    why:
-      en: >-
-        Load-bearing — protein, fibre, and iron, and they thicken the broth.
-        Nothing else here does both jobs, so this role has no alternative.
-      ja: 屋台骨。タンパク質・食物繊維・鉄分を加え、煮汁にとろみをつける。両方をこなすのはこれだけで、代替はない。
+    label: Lentils
+    why: >-
+      Load-bearing — protein, fibre, and iron, and they thicken the broth.
+      Nothing else here does both jobs, so this role has no alternative.
     range: { min: 1, max: 1 }
     fills:
       - id: lentils
         amount: { value: 96, unit: g }
         default: true
-        note: { en: About ½ cup dry. Brown or green hold their shape in a stew., ja: 乾燥で約½カップ。ブラウンまたはグリーンは煮崩れしにくい。 }
+        note: About ½ cup dry. Brown or green hold their shape in a stew.
   protein:
-    label: { en: Protein, ja: タンパク質 }
-    why:
-      en: >-
-        Satiety needs protein — but the pattern needs it LEAN, so it stays
-        filling per calorie. A fatty cut would wreck the maths.
-      ja: 満腹感にはタンパク質が必要。ただしパターン上は低脂肪であること。脂の多い部位はカロリー計算を崩す。
+    label: Protein
+    why: >-
+      Satiety needs protein — but the pattern needs it LEAN, so it stays
+      filling per calorie. A fatty cut would wreck the maths.
     range: { min: 1, max: 2 }
     amount: { value: 396, unit: g }
     fills:
       - id: tofu
         default: true
-        note: { en: One block. Just drain — no need to press. Crumble it into the pot., ja: 1丁。水切りのみでよく、押す必要はない。崩しながら加える。 }
+        note: One block. Just drain — no need to press. Crumble it into the pot.
   potato:
-    label: { en: Potatoes, ja: じゃがいも }
-    why:
-      en: >-
-        The satiety star — dense, cheap volume. Reheated leftovers form
-        resistant starch, even better the next day.
-      ja: 満腹感の主役。安価でかさのある食材。翌日温め直すとレジスタントスターチができ、さらに良い。
+    label: Potatoes
+    why: >-
+      The satiety star — dense, cheap volume. Reheated leftovers form
+      resistant starch, even better the next day.
     range: { min: 1, max: 1 }
     fills:
       - id: potato
         amount: { value: 550, unit: g }
         default: true
-        note: { en: The bulk of the pot — cut large for a stew with bite., ja: 鍋のかさの中心。食べごたえが出るよう大きめに切る。 }
+        note: The bulk of the pot — cut large for a stew with bite.
   vegetables:
-    label: { en: Vegetables, ja: 野菜 }
-    why:
-      en: Bulk volume and fibre at almost no calories — the engine of the high-volume idea.
-      ja: ほぼゼロカロリーでかさと食物繊維を稼ぐ。高ボリュームの要。
+    label: Vegetables
+    why: Bulk volume and fibre at almost no calories — the engine of the high-volume idea.
     range: { min: 1 }
     fills:
       - id: carrots
         amount: { value: 200, unit: g }
         default: true
-        note: { en: Two or three carrots, cut large., ja: にんじん2〜3本を大きめに切る。 }
+        note: Two or three carrots, cut large.
       - id: celery
         amount: { value: 160, unit: g }
         default: true
-        note: { en: About four stalks. A savoury backbone., ja: 約4本。旨味の土台。 }
+        note: About four stalks. A savoury backbone.
       - id: mushrooms
         amount: { value: 227, unit: g }
         default: true
-        note: { en: About 8 oz. A quick rinse is fine., ja: 約230g。さっと洗うだけでよい。 }
+        note: About 8 oz. A quick rinse is fine.
       - id: diced_tomatoes
         amount: { value: 411, unit: g }
         default: true
-        note: { en: One can, juice and all — body and a little tang., ja: 1缶を汁ごと。とろみとほどよい酸味。 }
+        note: One can, juice and all — body and a little tang.
   greens:
-    label: { en: Greens, ja: 青菜 }
-    why:
-      en: Volume and micronutrients at almost no calories, stirred in at the end so they keep some body.
-      ja: ほぼゼロカロリーでかさと微量栄養素を加える。最後に入れて食感を残す。
+    label: Greens
+    why: Volume and micronutrients at almost no calories, stirred in at the end so they keep some body.
     range: { min: 1, max: 2 }
     amount: { value: 60, unit: g }
     fills:
       - id: spinach
         default: true
-        note: { en: About two cups. Wilts in a minute off the heat., ja: 約2カップ。火を止めてすぐしんなりする。 }
+        note: About two cups. Wilts in a minute off the heat.
   seasonings:
-    label: { en: Seasonings, ja: 調味料 }
-    why:
-      en: Umami and warmth at near-zero calories — why this doesn't taste like diet food.
-      ja: ほぼゼロカロリーで旨味と温かみを出す。ダイエット食らしくない味の理由。
+    label: Seasonings
+    why: Umami and warmth at near-zero calories — why this doesn't taste like diet food.
     range: { min: 2, max: 6 }
     fills:
       - id: soy_sauce
         amount: { value: 30, unit: ml }
         default: true
-        note: { en: About 2 tbsp. Slow-cooked umami for ~20 kcal. Low-sodium so you control the salt., ja: 大さじ約2。約20kcalで煮込んだ旨味。減塩で塩分を自分で調整。 }
+        note: About 2 tbsp. Slow-cooked umami for ~20 kcal. Low-sodium so you control the salt.
       - id: cumin
         amount: { value: 2, unit: g }
         default: true
-        note: { en: About a teaspoon. A warm, earthy base note., ja: 小さじ約1。温かく土っぽいベース。 }
+        note: About a teaspoon. A warm, earthy base note.
       - id: smoked_paprika
         amount: { value: 2, unit: g }
         default: true
-        note: { en: About a teaspoon. Smoky depth without any meat., ja: 小さじ約1。肉なしでスモーキーなコク。 }
+        note: About a teaspoon. Smoky depth without any meat.
       - id: salt
         amount: { value: 2, unit: g }
         default: true
-        note: { en: To taste, at the end, after the soy sauce., ja: 最後にしょうゆの後で味を見て調整。 }
+        note: To taste, at the end, after the soy sauce.
       - id: black_pepper
         amount: { value: 1, unit: g }
         default: true
-        note: { en: A few grinds with the other seasonings., ja: 他の調味料と一緒に数回挽き入れる。 }
+        note: A few grinds with the other seasonings.
   extras:
-    label: { en: Optional, ja: お好みで }
-    why:
-      en: A brightening accent if you want it — not needed for the pattern.
-      ja: お好みの引き締め役。パターンには必須ではない。
+    label: Optional
+    why: A brightening accent if you want it — not needed for the pattern.
     range: { min: 0 }
     fills:
       - id: ginger
         amount: { value: 3, unit: g }
         default: false
-        note: { en: A little ground ginger brightens the whole pot., ja: 少量のジンジャーパウダーが全体を引き締める。 }
+        note: A little ground ginger brightens the whole pot.
 ---
 
 <div class="lang-en">
