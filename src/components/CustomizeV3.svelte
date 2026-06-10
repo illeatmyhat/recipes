@@ -128,7 +128,7 @@
 
   {#if knobEntries.length > 0}
     <section class="knobs" aria-label={t('adjust', $locale)}>
-      <h3>{t('adjust', $locale)}</h3>
+      <p class="knobs-head">{t('adjust', $locale)}</p>
       {#each knobEntries as [id, knob] (id)}
         {@const val = knobValue(id, knob)}
         <div class="knob">
@@ -249,7 +249,7 @@
   .notice.error { border-color: #c0392b; background: color-mix(in srgb, #c0392b 12%, var(--bg)); }
 
   .knobs { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 0.75rem 0.85rem; display: grid; gap: 0.75rem; }
-  .knobs h3 { margin: 0; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+  .knobs-head { margin: 0; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
   .knob { display: grid; gap: 0.3rem; }
   .knob-head { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; }
   .knob-label { font-weight: 600; font-size: 0.92rem; }
