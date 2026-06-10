@@ -16,6 +16,7 @@ import { hydrateRecipe, recipeCatalog } from './i18n';
 import { loadIngredient } from './db';
 import { templateReads } from './method';
 import { defaultParams } from './resolve';
+import { lintCatalogStaleness } from './staleness';
 import { extractSteps, readKey } from './steps';
 import type { CanonicalRecipeFrontmatterV3, RecipeBundle, StepMeta, StepRead } from './types';
 
@@ -30,7 +31,10 @@ function recipeBody(slug: string): string {
 
 /** Build the serializable bundle for one v3 recipe from its canonical frontmatter. */
 export function buildBundle(fm: CanonicalRecipeFrontmatterV3): RecipeBundle {
-  const recipe = hydrateRecipe(fm);
+  // Canonical EN source per catalog path — fed by hydration (frontmatter) and
+  // step extraction (method body) below, then handed to the staleness lint.
+  const sources: Record<string, string> = {};
+  const recipe = hydrateRecipe(fm, sources);
 
   const ids = new Set<string>();
   for (const role of Object.values(recipe.roles)) {
@@ -44,6 +48,8 @@ export function buildBundle(fm: CanonicalRecipeFrontmatterV3): RecipeBundle {
   // template's placeholders; titles localized from `steps.<id>.title`.
   const catalog = recipeCatalog(fm.slug, 'ja');
   const steps: StepMeta[] = extractSteps(recipeBody(fm.slug)).map((s) => {
+    sources[`steps.${s.id}`] = s.body;
+    if (s.title !== undefined) sources[`steps.${s.id}.title`] = s.title;
     const reads: StepRead[] = [...s.reads];
     const keys = new Set(reads.map(readKey));
     const template = catalog[`steps.${s.id}`];
@@ -88,6 +94,8 @@ export function buildBundle(fm: CanonicalRecipeFrontmatterV3): RecipeBundle {
       reads,
     };
   });
+
+  lintCatalogStaleness(fm.slug, 'ja', sources, catalog);
 
   // A role no step reads never appears in the Cook stage — almost certainly
   // an authoring gap (the ingredient would be bought but never reached for).

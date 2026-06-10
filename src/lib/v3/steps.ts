@@ -31,13 +31,18 @@ export function readKey(read: StepRead): string {
   return read.fill === undefined ? read.role : `${read.role}:${read.fill}`;
 }
 
+/** An extracted step: the metadata plus the raw EN body (staleness-lint source). */
+export interface ExtractedStep extends StepMetaT<string> {
+  body: string;
+}
+
 /**
  * Parse every `<Step id when? title?>` block (and the `<Ref of fill?/>`s
  * inside it) out of a canonical MDX body. Throws on a missing or duplicate
  * step id — both would corrupt catalog keys and the by-step projection.
  */
-export function extractSteps(body: string): StepMetaT<string>[] {
-  const steps: StepMetaT<string>[] = [];
+export function extractSteps(body: string): ExtractedStep[] {
+  const steps: ExtractedStep[] = [];
   const seen = new Set<string>();
   for (const m of body.matchAll(STEP)) {
     const attrs = parseAttrs(m[1] as string);
@@ -66,7 +71,7 @@ export function extractSteps(body: string): StepMetaT<string>[] {
       }
     }
 
-    steps.push({ id, when: attrs.when, title: attrs.title, reads });
+    steps.push({ id, when: attrs.when, title: attrs.title, reads, body: inner.trim() });
   }
   return steps;
 }

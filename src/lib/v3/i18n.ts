@@ -77,10 +77,13 @@ export function recipeTitle(data: { slug: string; title: string | Localized }): 
 interface Ctx {
   cat: Record<string, string>;
   missing: string[];
+  /** When present, every visited path's canonical EN is recorded here (staleness lint). */
+  sources?: Record<string, string>;
 }
 
 /** Build a Localized from canonical EN + the catalog entry at `path`. */
 function loc(en: string, path: string, ctx: Ctx): Localized {
+  if (ctx.sources) ctx.sources[path] = en;
   const ja = ctx.cat[path];
   if (ja === undefined) {
     ctx.missing.push(path);
@@ -163,9 +166,14 @@ function hydrateConstraint(c: ConstraintT<string>, i: number, ctx: Ctx): Constra
  * Merge a canonical (EN) v3 frontmatter with its per-locale catalog(s) into the
  * `Localized` frontmatter the resolver consumes. Currently localizes to JA; the
  * `Localized` shape is `{ en, ja }` (extend when a third locale lands).
+ * Pass `sources` to also collect every visited path's canonical EN string
+ * (feeds the staleness lint — see staleness.ts).
  */
-export function hydrateRecipe(fm: CanonicalRecipeFrontmatterV3): RecipeFrontmatterV3 {
-  const ctx: Ctx = { cat: loadCatalog(fm.slug, 'ja'), missing: [] };
+export function hydrateRecipe(
+  fm: CanonicalRecipeFrontmatterV3,
+  sources?: Record<string, string>,
+): RecipeFrontmatterV3 {
+  const ctx: Ctx = { cat: loadCatalog(fm.slug, 'ja'), missing: [], sources };
 
   const knobs: Record<string, KnobT<Localized>> = {};
   for (const [id, knob] of Object.entries(fm.knobs ?? {})) {
