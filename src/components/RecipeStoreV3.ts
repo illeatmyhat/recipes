@@ -14,6 +14,7 @@
 import { writable, derived, type Readable } from 'svelte/store';
 import { resolve } from '../lib/v3/resolve';
 import { emptyNutrition } from '../lib/nutrition';
+import { humanizeId } from '../lib/v3/names';
 import { initLocale } from './RecipeStore';
 import type {
   KnobValue,
@@ -29,9 +30,18 @@ export const params = writable<Params>({ servings: 1, knobs: {}, selection: {} }
 let bundle: RecipeBundle | null = null;
 let initialized = false;
 
+/**
+ * The bundle seeded by the first island to hydrate, or `null` before any has.
+ * Lets prop-less islands (MethodController) reach the shared recipe data
+ * without embedding yet another serialized bundle copy in the page HTML.
+ */
+export function getBundle(): RecipeBundle | null {
+  return bundle;
+}
+
 /** A defensive zero-nutrition stand-in (the bundle should carry every fill id). */
 function placeholder(id: string): LoadedIngredient {
-  const name = id.replace(/_/g, ' ');
+  const name = humanizeId(id);
   return {
     data: {
       id,

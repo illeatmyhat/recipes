@@ -1,16 +1,18 @@
 /**
- * Build-time context for the method MDX components (v3).
+ * Per-render context for the method MDX components (v3).
  *
  * `<Step>`/`<Ref>` render inside a recipe's MDX body, which Astro renders as a
  * slot — there is no way to hand them per-recipe props from the page. Instead
- * `RecipePageV3.astro` registers the current recipe's bundle + JA catalog in
- * its frontmatter, and the components read it back while the slot renders.
+ * `RecipePageV3.astro` registers the current recipe's bundle + JA catalog on
+ * `Astro.locals`, and the components read it back from their own
+ * `Astro.locals` while the slot renders.
  *
- * A module-level singleton is sound here because Astro builds pages serially
- * (`build.concurrency` defaults to 1) and the slot renders within the same
- * page render that set the context. If concurrency is ever raised, v3 pages
- * could interleave and this needs to become keyed/async-local — the unknown-
- * role errors in Step/Ref would surface the mixup immediately.
+ * `Astro.locals` is one object per page render, shared by the page and every
+ * component (slot content included) in that render — so the context cannot go
+ * stale across pages or cross-contaminate interleaved renders (dev-server
+ * concurrency, `build.concurrency` > 1), with no module-level state and
+ * nothing to clear. A `<Step>`/`<Ref>` rendered outside a v3 recipe page
+ * still fails loudly via {@link getMethodContext}.
  */
 import type { RecipeBundle } from './types';
 
@@ -20,19 +22,23 @@ export interface MethodContext {
   catalog: Record<string, string>;
 }
 
-let current: MethodContext | null = null;
-
-/** Register the recipe whose MDX body is about to render. */
-export function setMethodContext(ctx: MethodContext): void {
-  current = ctx;
+/** The slice of `Astro.locals` this module owns (see src/env.d.ts). */
+export interface MethodContextLocals {
+  v3MethodContext?: MethodContext;
 }
 
-/** The registered context; throws if no v3 page set one (Step/Ref outside a v3 recipe). */
-export function getMethodContext(): MethodContext {
-  if (!current) {
+/** Register the recipe whose MDX body is about to render (call with `Astro.locals`). */
+export function setMethodContext(locals: MethodContextLocals, ctx: MethodContext): void {
+  locals.v3MethodContext = ctx;
+}
+
+/** The render's context; throws if no v3 page set one (Step/Ref outside a v3 recipe). */
+export function getMethodContext(locals: MethodContextLocals): MethodContext {
+  const ctx = locals.v3MethodContext;
+  if (!ctx) {
     throw new Error(
       'v3 method: <Step>/<Ref> rendered with no method context — they only work in the MDX body of a v3 recipe.',
     );
   }
-  return current;
+  return ctx;
 }

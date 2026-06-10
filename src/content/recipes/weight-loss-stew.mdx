@@ -174,8 +174,13 @@ import Ref from '../../components/Ref.astro';
 </Step>
 
 <Step id="season" title="Season">
-  Add the <Ref of="seasonings" /> and let them cook a few minutes — the soy
-  sauce builds a slow-cooked, umami flavor.
+  Add the <Ref of="seasonings" /> and let them cook a few minutes so the
+  flavors open up.
+</Step>
+
+<Step id="soy_umami" title="The umami shortcut" when="has(seasonings, 'soy_sauce')">
+  The <Ref of="seasonings" fill="soy_sauce" /> is doing the slow-cooker's job —
+  a few minutes of simmering reads like hours of braising.
 </Step>
 
 <Step id="add_ginger" title="Brighten it" when="has(extras, 'ginger')">
@@ -183,9 +188,15 @@ import Ref from '../../components/Ref.astro';
   the whole pot.
 </Step>
 
+<Step id="rinse_mushrooms" title="Prep the mushrooms" when="has(vegetables, 'mushrooms')">
+  Give the <Ref of="vegetables" fill="mushrooms" /> a quick rinse — no need to
+  scrub or peel.
+</Step>
+
 <Step id="add_vegetables" title="Add the vegetables">
-  Add the <Ref of="potato" /> and the <Ref of="vegetables" />, everything cut
-  large — big pieces keep the stew chunky. Let it all cook down for a moment.
+  Add the <Ref of="potato" /> and the <Ref of="vegetables" />, with everything
+  that needs a knife cut into large chunks — big pieces keep the stew chunky.
+  Let it all cook down for a moment.
 </Step>
 
 <Step id="tomato_juice" title="Tomatoes, juice and all" when="has(vegetables, 'diced_tomatoes')">

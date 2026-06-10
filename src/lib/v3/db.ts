@@ -11,17 +11,12 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { load } from 'js-yaml';
 import { emptyNutrition } from '../nutrition';
+import { humanizeId } from './names';
 import type { IngredientData } from '../types';
 import type { IngredientLookup, LoadedIngredient } from './types';
 
 const INGREDIENT_DIR = join(process.cwd(), 'data', 'ingredients');
 const cache = new Map<string, LoadedIngredient>();
-
-/** `smoked_paprika` -> `Smoked paprika`. */
-function humanizeId(id: string): string {
-  const words = id.replace(/_/g, ' ').trim();
-  return words.charAt(0).toUpperCase() + words.slice(1);
-}
 
 function placeholderIngredient(id: string): IngredientData {
   const name = humanizeId(id);

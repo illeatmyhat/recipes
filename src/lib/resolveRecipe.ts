@@ -11,6 +11,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { load } from 'js-yaml';
 import { emptyNutrition, scaleNutrition } from './nutrition';
+import { humanizeId } from './v3/names';
 import type {
   IngredientData,
   IngredientRef,
@@ -26,12 +27,6 @@ const INGREDIENT_DIR = join(process.cwd(), 'data', 'ingredients');
 
 /** In-process cache so the same YAML file is parsed once per build. */
 const ingredientCache = new Map<string, IngredientData>();
-
-/** Turn an ingredient id into a readable label, e.g. `smoked_paprika` -> `Smoked paprika`. */
-function humanizeId(id: string): string {
-  const words = id.replace(/_/g, ' ').trim();
-  return words.charAt(0).toUpperCase() + words.slice(1);
-}
 
 /**
  * A neutral stand-in for an ingredient whose `/data/ingredients/<id>.yaml` does

@@ -14,7 +14,7 @@
  * default parameter point, keeping the page readable with JS off.
  */
 import { getMethodContext } from '../lib/v3/methodContext';
-import { refText } from '../lib/v3/method';
+import { refSpan, refText } from '../lib/v3/method';
 
 interface Props {
   of: string;
@@ -22,7 +22,7 @@ interface Props {
 }
 
 const { of: roleId, fill } = Astro.props;
-const { bundle } = getMethodContext();
+const { bundle } = getMethodContext(Astro.locals);
 const text = refText(
   bundle.recipe,
   bundle.ingredients,
@@ -33,4 +33,5 @@ const text = refText(
 );
 ---
 
-<span class="m-ref" data-ref={roleId} data-ref-fill={fill} data-ref-lang="en">{text}</span>
+{/* refSpan is the single definition of the m-ref marker contract. */}
+<Fragment set:html={refSpan(roleId, fill, 'en', text)} />

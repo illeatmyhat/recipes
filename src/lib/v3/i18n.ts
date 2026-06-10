@@ -41,7 +41,11 @@ function loadCatalog(slug: string, locale: Locale): Record<string, string> {
   let result: Record<string, string>;
   try {
     result = (load(readFileSync(file, 'utf8')) ?? {}) as Record<string, string>;
-  } catch {
+  } catch (err) {
+    // Only a MISSING catalog degrades to EN; a present-but-broken one (YAML
+    // syntax error) must fail the build — silently dropping a whole locale is
+    // worse than a red build.
+    if ((err as { code?: string }).code !== 'ENOENT') throw err;
     console.warn(`v3 i18n: recipe "${slug}" has no ${slug}.${locale}.yaml — all ${locale} text falls back to EN.`);
     result = {};
   }

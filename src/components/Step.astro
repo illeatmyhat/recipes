@@ -29,10 +29,16 @@ interface Props {
 }
 
 const { id, when, title } = Astro.props;
-const { bundle, catalog } = getMethodContext();
+const { bundle, catalog } = getMethodContext(Astro.locals);
 const { recipe, ingredients, defaults } = bundle;
 
-const enHtml = await Astro.slots.render('default');
+// Astro's runtime returns undefined for a childless slot despite the
+// Promise<string> typing — normalize, and reject an empty step outright (the
+// canonical EN prose lives in the MDX body, never in a catalog).
+const enHtml = ((await Astro.slots.render('default')) ?? '').trim();
+if (enHtml === '') {
+  throw new Error(`v3 method: step "${id}" has no body — write the canonical EN prose as its children.`);
+}
 
 // JA surface from the catalog (template + title), EN fallback with a warning.
 const jaTemplate = catalog[`steps.${id}`];

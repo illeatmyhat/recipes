@@ -12,12 +12,12 @@
  * No I/O and no DOM — safe in the browser and at build time alike.
  */
 import type { Locale, Localized } from '../types';
-import { joinNames, proseName } from './names';
-import type { LoadedIngredient, RecipeV3 } from './types';
+import { humanizeId, joinNames, proseName } from './names';
+import type { Fill, LoadedIngredient, RecipeV3 } from './types';
 
 /** Defensive names for an ingredient id missing from the bundle (should not happen). */
 function fallbackNames(id: string): Localized {
-  const name = id.replace(/_/g, ' ');
+  const name = humanizeId(id);
   return { en: name, ja: name };
 }
 
@@ -40,20 +40,17 @@ export function refText(
   if (!role) {
     throw new Error(`v3 method: ref reads unknown role "${roleId}".`);
   }
-  const nameOf = (id: string): string => {
-    const fill = role.fills.find((f) => f.id === id);
-    const names = ingredients[id]?.data.names ?? fallbackNames(id);
-    return proseName(fill, names, loc);
-  };
+  const nameOf = (fill: Fill): string =>
+    proseName(fill, ingredients[fill.id]?.data.names ?? fallbackNames(fill.id), loc);
   if (fillId !== undefined) {
-    if (!role.fills.some((f) => f.id === fillId)) {
+    const fill = role.fills.find((f) => f.id === fillId);
+    if (!fill) {
       throw new Error(`v3 method: ref reads unknown fill "${roleId}:${fillId}".`);
     }
-    return nameOf(fillId);
+    return nameOf(fill);
   }
   const picked = selection[roleId] ?? [];
-  const ordered = role.fills.filter((f) => picked.includes(f.id)).map((f) => f.id);
-  return joinNames[loc](ordered.map(nameOf));
+  return joinNames[loc](role.fills.filter((f) => picked.includes(f.id)).map(nameOf));
 }
 
 // ── catalog step templates ({role} / {role:fill} placeholders) ────────────────
@@ -84,8 +81,14 @@ function escapeHtml(s: string): string {
     .replace(/"/g, '&quot;');
 }
 
-/** The `<span data-ref …>` marker both ref surfaces render to. */
-function refSpan(roleId: string, fillId: string | undefined, loc: Locale, text: string): string {
+/**
+ * The `<span data-ref …>` marker both ref surfaces render to — the SINGLE
+ * definition of the marker contract that MethodController's selectors, the
+ * `.m-ref` CSS, and {@link htmlRefReads} all consume. Ref.astro (EN) emits
+ * this via `set:html`; {@link renderStepTemplate} (catalog locales) emits it
+ * directly.
+ */
+export function refSpan(roleId: string, fillId: string | undefined, loc: Locale, text: string): string {
   const fillAttr = fillId === undefined ? '' : ` data-ref-fill="${escapeHtml(fillId)}"`;
   return (
     `<span class="m-ref" data-ref="${escapeHtml(roleId)}"${fillAttr} ` +
@@ -105,6 +108,16 @@ export function renderStepTemplate(
   selection: Record<string, string[]>,
   loc: Locale,
 ): string {
+  // A brace the TOKEN regex doesn't match is a malformed placeholder ("{role: fill}",
+  // "{role }") — it would ship as literal braces in prose, so fail the build
+  // as loudly as an unknown <Ref> role does on the EN surface.
+  const leftover = template.replace(TOKEN, '');
+  if (leftover.includes('{') || leftover.includes('}')) {
+    throw new Error(
+      `v3 method: malformed placeholder in step template "${template}" — ` +
+        `placeholders must be exactly {role} or {role:fill}.`,
+    );
+  }
   let out = '';
   let last = 0;
   for (const m of template.matchAll(TOKEN)) {

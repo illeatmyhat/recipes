@@ -16,6 +16,18 @@
 import type { Locale, Localized } from '../types';
 import type { Fill } from './types';
 
+/**
+ * Humanize an ingredient id for fallback display: `smoked_paprika` →
+ * `Smoked paprika`. The single source for every missing-ingredient name
+ * (db.ts, resolveRecipe.ts, RecipeStoreV3.ts, method.ts) — prose contexts run
+ * the result through {@link normalizeProse}, so display stays capitalized and
+ * prose stays lower-case from one definition.
+ */
+export function humanizeId(id: string): string {
+  const words = id.replace(/_/g, ' ').trim();
+  return words.charAt(0).toUpperCase() + words.slice(1);
+}
+
 /** Strip a parenthetical, a trailing comma-clause, and case from a canonical name. */
 export function normalizeProse(raw: string): string {
   return raw
