@@ -40,6 +40,27 @@ Sign up at https://fdc.nal.usda.gov/api-key-signup.html.
 - For brand-named ingredients in the transcript, map to the generic SR Legacy
   food (e.g. a specific yogurt brand → "Yogurt, plain, whole milk").
 
+## One ingredient file, or several? (varieties)
+
+Keep **one** ingredient YAML per nutritionally-distinct food. When an ingredient
+comes in varieties that differ only in **flavor or intended use** — not nutrition
+— do NOT make a file per variety; they would carry identical SR Legacy numbers
+and just fragment the database. Examples: olive oil "extra light tasting" (high
+smoke point, for frying) vs "robust"/extra-virgin (for dressings and finishing);
+light vs dark soy sauce.
+
+Instead, with the single shared ingredient:
+
+- Steer the variety **per recipe** with the ingredient ref's `warnings`
+  (avoid/good) and/or `notes` — because the right choice depends on that recipe's
+  method (e.g. a deep-fry recipe wants the high-smoke-point oil; a dressing wants
+  the robust one). This is the same mechanism the rolled-oats recipe uses.
+- List the variety names in the ingredient's `aliases` so shoppers recognize them.
+
+Split into separate files only when the varieties differ **materially in
+nutrition** and each has its own SR Legacy entry (e.g. raw vs roasted nuts,
+whole vs nonfat milk).
+
 ## If no SR Legacy entry exists
 
 Some modern/branded items simply aren't in SR Legacy (it was frozen in 2019).

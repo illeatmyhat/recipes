@@ -30,7 +30,10 @@ Work the checklist top to bottom. Paths are relative to the project root.
    `data/ingredients/<id>.yaml` already exists (reuse it if so). For each
    missing one, create it from `templates/ingredient.yaml`, sourcing nutrition
    via the fetch script — **USDA SR Legacy only**. See
-   [reference/sourcing.md](reference/sourcing.md).
+   [reference/sourcing.md](reference/sourcing.md). Only fill in `brands` when the
+   ingredient is one buyers commonly get in the wrong form (e.g. rolled vs quick
+   oats, low-sodium soy sauce, smoked paprika); leave `brands: []` for basic
+   produce and pantry staples — don't invent brand names.
 4. **Convert all amounts to metric** (`g`/`ml`). Use `g` for solids, `ml` only
    for liquids (which then need a non-null `density_g_per_ml`). See
    [reference/units.md](reference/units.md).
