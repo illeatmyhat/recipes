@@ -429,6 +429,100 @@ a regression to fix.
 
 ---
 
+## Customize UX (design pass — decided 2026-06-10)
+
+How the model is *presented and driven*. The one fixed point: the **Nutrition
+Facts panel is sacred** — always visible, always folding honest numbers from
+the resolved list. Every customize interaction is "change a control → watch the
+nutrition pane (and the live method) respond." The pane is a feedback surface,
+never an error channel.
+
+### Stages are modalities, and the modalities are the projections
+
+A recipe is used in three stages, and each reorganizes the ingredient list a
+different way — which is exactly the three projection axes. The stages *are* the
+projections; the tab bar gives each its moment:
+
+| Tab (stage) | Projection axis | Shows |
+| --- | --- | --- |
+| **Customize** (decide) | by **role** | roles + fills + whys; the swap controls |
+| **Shop** (buy) | by **aisle** | merged by ingredient id, ordered by store section, tick-off |
+| **Cook** (make) | by **step** | **mise en place** — ingredients bucketed by the step that needs them |
+
+This replaces the v1 `[Recipe | Customize]` tabs (where customize was a
+peripheral optional-toppings toggle) with `[Customize | Shop | Cook]`, customize
+elevated to primary. Shop is promoted from a sub-toggle buried in the ingredient
+list to its own stage. Mise-en-place is the Cook stage's value: it uses the
+by-step data (derived from each step's `<Ref>`s) to answer "what do I gather
+before I start?", complementing the method's "what do I do". An ingredient used
+in two steps appears under each — correct for mise en place, harmless to
+nutrition (a non-owning read).
+
+### Always-on frame
+
+- **Pattern** — the thesis renders as a quiet deck **under the title**,
+  visible in every stage. It frames shopping ("why these things"), cooking ("why
+  this order"), and substitution ("the bar a swap must clear"). It is the one
+  required content element, so it sits with the title, not inside a tab.
+- **Servings scaler** — stays above the tabs (it affects all stages).
+- **Method** — stays always-visible **below** the tabs (ingredients/method
+  separation is a centuries-old standard, kept). Its `<Ref>`s patch live as
+  fills change — the clearest demonstration that a recipe is a function of the
+  reader's choices, across every stage.
+
+### The role card (the atom of the teaching interaction)
+
+A role expresses its **job** (the `why` line, always visible — the lesson), its
+**current fill(s)** with live amount, its **alternatives** (each with its own
+`why`/tradeoff), and any **reality note** on the chosen fill. Four shapes fall
+out of cardinality:
+
+- **Base** (derived: `min ≥ 1`, single fill) — no choice; a fixed skeleton
+  ingredient + why, shown first as a labelled "Base" tier.
+- **Substitution** (`max 1`, several fills) — radio.
+- **Multi** (`max > 1` / unbounded) — checkboxes.
+- **Add-on** (`min 0`) — toggle on/off.
+
+**Responsive disclosure (one DOM, two presentations).** On a phone, each role is
+**collapsed**: one line (job + current fill + amount), alternatives one tap away.
+On a desktop, every role is **expanded** (all alternatives visible at once —
+scrolling is cheap there). This is a native `<details>`/`<summary>` disclosure
+force-opened by a `@media (min-width: …)` rule that hides the summary and shows
+the fills — so the responsive switch is **pure CSS** (no viewport JS, no resize
+thrash) and works **JS-off on every screen** (browser-native expand). The Svelte
+island owns only the *selection* (radio/checkbox → store), never the disclosure.
+Substitutive multi-fill just shows the split grams; no ratio control (deferred,
+open Q7).
+
+### Validation maps min/max straight onto the controls
+
+The model's **min = structural, max = advisory** split *is* the UX:
+
+- **min — the control resists.** A radio role always has exactly one fill
+  (unviolable). A multi role with `min ≥ 1` won't deselect below its floor; the
+  last required item resists with an explanatory line ("A protein is required —
+  it's what makes this filling"). The resistance itself teaches the role is
+  load-bearing, and the invalid "dish breaks" state never renders.
+- **max — allow and gently flag.** Exceeding the advisory ceiling shows a quiet
+  inline note on the role, never a block.
+- **constraint `warn`** — a soft caution shown inline beside the controls
+  involved, at the moment the combination is chosen.
+- **constraint `error` — functional disable.** An option is disabled **iff
+  applying it to the current `Params` would produce a `blocked` result**
+  (`options.filter(opt => resolve(withOption(P, opt)).blocked)`). This is
+  symmetric and complete by construction: it gates *every* click that would
+  block, in both directions, so there is no asymmetric back door (the naive
+  "disable the option named in the constraint" leaks — set the other half first,
+  then the ungated half). Inductively, starting from the always-valid default
+  point and disabling every blocking single-step transition, the current
+  `Params` is **never** blocked — so no "selected-while-disabled" state can
+  exist. The pure-function engine makes the gating correct for free.
+
+All notices live **at their source in the Customize stage** (cause next to
+effect), leaving the nutrition pane to its one honest job.
+
+---
+
 ## Worked example — the weight-loss stew (abridged)
 
 ```yaml
@@ -553,8 +647,10 @@ this dish's context rather than copying generic facts.
    per-locale aisle map.** `aisle: Record<Locale, StoreSection>`; the shopping
    list groups by the viewer's locale. See "Aisle is locale-specific". (What
    remains is implementation: defining each locale's section enum + ordering.)
-3. **`error` constraints in a static build** — disable the control vs
-   allow-and-flag. (Carried from v2.)
+3. ~~**`error` constraints in a static build**~~ **— SETTLED (2026-06-10):
+   functional disable.** An option is disabled iff applying it to the current
+   `Params` would `block`; symmetric/complete, keeps `Params` never-blocked
+   inductively from the valid default point. See *Customize UX → Validation*.
 4. **Rounding/display of scaled amounts** — reuse/extend `units.ts` hinting.
    (Carried.) Note: the *partition* worry (125 g chicken ≈ ⅔ breast) is
    **settled as a non-issue** (2026-06-10): it's an author concern, not a model
