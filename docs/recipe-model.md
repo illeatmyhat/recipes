@@ -145,6 +145,7 @@ interface Fill {
   default?: boolean;
   why?: string;                        // why it fits / what to know when choosing it (canonical text)
   note?: string;                       // recipe-specific handling ("add at the 20-minute mark")
+  alias?: string;                      // recipe-specific PROSE name for in-sentence use; see "Names in prose"
 }
 ```
 
@@ -264,9 +265,16 @@ removed the parallel-language nesting that made v2's markup XML-dense:
 
 - `<Step id when?>` — `id` is required (stable key for catalogs and the step
   projection); `when` guards visibility.
-- `<Ref of="role"/>` — reads a role; renders the chosen fills' localized names
-  (multi-fill renders a localized list join: "tofu and chicken" /
-  「豆腐と鶏むね肉」). References never own quantity.
+- `<Ref of="role"/>` — reads a **role**; renders all currently-chosen fills as
+  a localized list join ("tofu and chicken" / 「豆腐と鶏むね肉」). References
+  never own quantity.
+- `<Ref of="role" fill="chicken_breast"/>` — reads **one named fill** of a
+  role; renders just that fill's name. This exists because a fill-specific
+  reality step ("hold the chicken back") is scoped by its guard to one fill,
+  and a whole-role ref would wrongly name the others too ("hold the *tofu and
+  chicken* back" — tofu can simmer fine). The model already carries which fill
+  the step is about (the guard says so); the fill scope on the ref just lets
+  the prose match. Validated by the prototype (the bug it caught).
 - SSR renders the default parameter point (`data-when` / `data-ref` annotated
   HTML); one `MethodController` island re-evaluates guards and patches refs on
   param change, mirroring the `data-theme`/`data-locale` pattern. The guard
@@ -278,6 +286,28 @@ under negation). Roles with `min ≥ 1` and all knobs are always bound and read
 freely. Note: this is *not* a token-presence check — `!has(...)` contains the
 token and proves the opposite — the checker evaluates polarity, which is
 trivial over this small grammar.
+
+**Names in prose (a rendering finding from the prototype).** The catalog/DB
+name is a *canonical* name, not a *sentence* name: USDA names are Title-Cased
+and some carry internal commas ("Salt, table"). Interpolated into a step they
+read wrong ("Chop the Onion") and, worse, an internal comma collides with the
+list-join separator ("…cumin, and Salt, table and cook"). So the name used **in
+prose** is resolved separately from the canonical name:
+
+1. a fill may carry a recipe-specific `alias` (e.g. `salt` → "salt", `tofu` →
+   "the tofu"); else
+2. fall back to a prose-normalized DB name (lower-cased, comma-stripped).
+
+This `alias` is the recipe-local prose form; it is catalog-localized like any
+other text. (Ingredient-view and shopping-list still show the canonical name —
+only step prose uses the alias.)
+
+**Empty fill lists in joins (defense in depth).** A `<Ref of="role"/>` whose
+selection is empty must render nothing *and* the surrounding connective must
+not dangle ("Stir in the lentils and ."). In practice the UI blocks the only
+states that cause this (an under-filled `min ≥ 1` role is invalid), but the
+join helper still defends: an empty list collapses the clause rather than
+emitting a bare "and"/と. (Prototype finding #3.)
 
 **Step data shape (derived, not authored):**
 
@@ -513,8 +543,13 @@ this dish's context rather than copying generic facts.
    remains is implementation: defining each locale's section enum + ordering.)
 3. **`error` constraints in a static build** — disable the control vs
    allow-and-flag. (Carried from v2.)
-4. **Rounding/display of scaled amounts** (partition can yield 125 g of
-   chicken breast ≈ ⅔ breast) — reuse/extend `units.ts` hinting. (Carried.)
+4. **Rounding/display of scaled amounts** — reuse/extend `units.ts` hinting.
+   (Carried.) Note: the *partition* worry (125 g chicken ≈ ⅔ breast) is
+   **settled as a non-issue** (2026-06-10): it's an author concern, not a model
+   flaw. Cooking isn't baking — the author sets each fill's full-equivalent so
+   the swap *eats* roughly equivalently ("one package of tofu ≈ N chicken
+   breasts"); precision isn't required, and the resulting nutrition cascade is
+   a consequence the eater is *meant* to notice (the teaching, not a defect).
 5. **Amount-less ingredients** — `to_taste` sentinel folds 0 nutrition vs a
    token estimate; portion hints for staged additions. (Carried; the
    two-purposes-vs-staged boundary is now settled, see Roles.)
@@ -523,3 +558,9 @@ this dish's context rather than copying generic facts.
    real.
 7. **Partition proportions** — equal split among chosen fills for now;
    author-tunable weights only when a real recipe demands them.
+8. **Localized list-join grammar.** A multi-fill `<Ref>` renders a list of
+   names ("tofu and chicken" / 「豆腐と鶏むね肉」). Conjunction differs by
+   language (English Oxford-comma + "and"; Japanese と/や; others have dual
+   forms, gendered connectors). Likely a per-locale `join(names[])` function;
+   whether that suffices for all target locales is unproven. To be exercised by
+   the prototype.
