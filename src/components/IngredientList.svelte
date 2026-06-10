@@ -18,7 +18,7 @@
   import { t } from '../lib/i18n';
   import { formatAmount } from '../lib/units';
   import NextTab from './NextTab.svelte';
-  import type { ResolvedIngredient, ResolvedRecipe } from '../lib/types';
+  import type { Localized, ResolvedIngredient, ResolvedRecipe } from '../lib/types';
 
   let { recipe }: { recipe: ResolvedRecipe } = $props();
 
@@ -36,6 +36,26 @@
 
   const factor = $derived(mounted ? $servingsFactor : 1);
   const selected = $derived(mounted ? $selectedOptional : defaults);
+
+  // Base ingredients partitioned into their optional sub-groups, preserving
+  // recipe order. A `null` label is the generic "Base" bucket — used for any
+  // ungrouped ingredient, and the only bucket when the recipe sets no groups
+  // (so older recipes render exactly as before, under one "Base" heading).
+  const baseGroups = $derived.by(() => {
+    const groups: { key: string; label: Localized | null; items: ResolvedIngredient[] }[] = [];
+    const byKey = new Map<string, number>();
+    for (const ing of recipe.baseIngredients) {
+      const key = ing.group ? ing.group.en : '';
+      let i = byKey.get(key);
+      if (i === undefined) {
+        i = groups.length;
+        byKey.set(key, i);
+        groups.push({ key, label: ing.group, items: [] });
+      }
+      groups[i].items.push(ing);
+    }
+    return groups;
+  });
 
   // Each optional category narrowed to its currently-selected ingredients
   // (kept in recipe order). Categories with nothing selected are dropped.
@@ -130,7 +150,9 @@
     </button>
   </div>
   <div class="groups">
-    {@render group(t('base', $locale), recipe.baseIngredients)}
+    {#each baseGroups as g (g.key)}
+      {@render group(g.label ? g.label[$locale] : t('base', $locale), g.items)}
+    {/each}
     {#each activeCategories as category (category.id)}
       {@render group(category.label[$locale], category.ingredients)}
     {/each}

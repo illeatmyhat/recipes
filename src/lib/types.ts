@@ -88,6 +88,13 @@ export interface IngredientRef {
   unit: Unit;
   notes: Localized;
   warnings: IngredientWarning[];
+  /**
+   * Optional sub-group heading for base ingredients (e.g. "Protein",
+   * "Seasonings"), letting a long base list read as labelled clusters. When no
+   * base ingredient sets one, the list renders under the single generic "Base"
+   * heading. Unused by optional ingredients (they group by their category).
+   */
+  group?: Localized;
 }
 
 /** An optional ingredient reference — same as {@link IngredientRef} plus a default flag. */
@@ -149,6 +156,8 @@ export interface ResolvedIngredient {
   category: string | null;
   /** Whether the recipe selects this ingredient by default. Always true for base. */
   selectedByDefault: boolean;
+  /** Optional sub-group heading for a base ingredient; `null` when ungrouped. */
+  group: Localized | null;
 }
 
 /** An optional category after its ingredient refs have been resolved. */

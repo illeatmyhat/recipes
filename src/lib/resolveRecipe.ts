@@ -136,6 +136,7 @@ function resolveIngredient(
     nutrition,
     category,
     selectedByDefault,
+    group: ref.group ?? null,
   };
 }
 

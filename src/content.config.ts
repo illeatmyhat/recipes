@@ -27,6 +27,9 @@ const ingredientRef = z.object({
   unit: z.enum(['g', 'ml']),
   notes: localized,
   warnings: z.array(warning).default([]),
+  // Optional sub-group heading for a base ingredient (e.g. "Protein"). Omit it
+  // and the base list renders under the single generic "Base" heading.
+  group: localized.optional(),
 });
 
 const optionalIngredientRef = ingredientRef.extend({

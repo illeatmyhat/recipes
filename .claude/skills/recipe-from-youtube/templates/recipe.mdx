@@ -14,10 +14,18 @@ customize_title:
   en: Customize your bowl
   ja: ボウルをカスタマイズ
 # base_ingredients: always included. Non-empty. Metric only (g | ml).
+# For a long base list, give each item a `group:` heading (e.g. Protein,
+# Seasonings, Vegetables) so it renders as labelled clusters instead of one flat
+# list; keep grouped items adjacent and in cooking order. Omit `group` entirely
+# (as a short recipe can) and everything renders under one generic "Base" heading.
 base_ingredients:
   - id: <ingredient-id>            # needs data/ingredients/<id>.yaml
     amount: 35
     unit: g                        # `ml` requires density_g_per_ml in the YAML
+    # group is OPTIONAL — a localized sub-heading for the base list. Delete if unused.
+    group:
+      en: Protein
+      ja: タンパク質
     notes:
       en: <short why/how note>
       ja: <same note in Japanese>
