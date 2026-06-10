@@ -1,0 +1,73 @@
+---
+# src/content/recipes/<slug>.mdx — validated by the Zod schema in
+# src/content.config.ts. Every human string is bilingual { en, ja }.
+title:
+  en: <English title>
+  ja: <Japanese title>
+slug: <kebab-case-slug>            # MUST match the filename <slug>.mdx
+hero_image: ./images/<slug>.jpg    # produced by scripts/process-hero.mjs
+locales: [en, ja]
+servings_default: 1                # positive integer; the recipe's base yield
+# customize_title is OPTIONAL — set only when recipe-specific phrasing reads
+# better than the generic i18n label. Delete these 3 lines if not used.
+customize_title:
+  en: Customize your bowl
+  ja: ボウルをカスタマイズ
+# base_ingredients: always included. Non-empty. Metric only (g | ml).
+base_ingredients:
+  - id: <ingredient-id>            # needs data/ingredients/<id>.yaml
+    amount: 35
+    unit: g                        # `ml` requires density_g_per_ml in the YAML
+    notes:
+      en: <short why/how note>
+      ja: <same note in Japanese>
+    # warnings is OPTIONAL — omit the whole key if there are none.
+    warnings:
+      - type: avoid                # avoid | good
+        en: "⚠️ <what to avoid>"
+        ja: "⚠️ <Japanese>"
+      - type: good
+        en: "✓ <what to use instead>"
+        ja: "✓ <Japanese>"
+# optional_ingredients: author-defined categories shown in the Customize tab.
+# Use [] if the recipe has none. Each category needs a non-empty ingredient list.
+optional_ingredients:
+  - id: toppings
+    label:
+      en: Toppings
+      ja: トッピング
+    ingredients:
+      - id: <ingredient-id>
+        amount: 15
+        unit: g
+        default: true             # true = pre-selected in the Customize tab
+        notes:
+          en: <note>
+          ja: <Japanese note>
+---
+
+<div class="lang-en">
+
+<ol class="steps">
+<li><strong>Step name</strong><p>Step instructions. One sentence or two.</p></li>
+<li><strong>Next step</strong><p>...</p></li>
+</ol>
+
+### Tips
+
+- A tip that didn't fit in an ingredient note.
+
+</div>
+
+<div class="lang-ja">
+
+<ol class="steps">
+<li><strong>手順名</strong><p>手順の説明。</p></li>
+<li><strong>次の手順</strong><p>...</p></li>
+</ol>
+
+### コツ
+
+- 材料メモに入りきらなかったコツ。
+
+</div>

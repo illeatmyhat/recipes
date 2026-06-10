@@ -1,0 +1,41 @@
+# data/ingredients/<id>.yaml — one file per ingredient.
+# Create this ONLY when the ingredient does not already exist in data/ingredients/.
+# `id` must equal the filename (<id>.yaml) and every ref id that points to it.
+id: <id>
+# USDA FoodData Central id. MUST be an SR Legacy entry — get it (and the
+# per_100g block below) from scripts/fetch-usda.mjs.
+fdc_id: 0
+names:
+  en: <English name>
+  ja: <Japanese name>
+aliases:
+  en:
+    - <other English name the transcript / shoppers might use>
+  ja:
+    - <other Japanese name>
+availability:
+  us:
+    brands: ["<brand>", "<brand>"]
+    note_en: <where/how to buy it in the US>
+  ja:
+    brands: ["<brand>"]
+    note_en: <English note for the JA market>
+    note_ja: <Japanese note (optional but preferred)>
+# Paste the next two keys verbatim from: node scripts/fetch-usda.mjs <fdcId>
+nutrition:
+  per_100g:
+    calories: 0
+    fat: 0
+    saturated_fat: 0
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 0
+    carbohydrates: 0
+    fiber: 0
+    sugars: 0
+    protein: 0
+    calcium: 0
+    iron: 0
+# Grams per millilitre. REQUIRED (non-null) if any recipe uses this ingredient
+# with unit `ml`; otherwise null. See reference/units.md for common values.
+density_g_per_ml: null
