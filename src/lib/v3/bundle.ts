@@ -48,11 +48,25 @@ export function buildBundle(fm: CanonicalRecipeFrontmatterV3): RecipeBundle {
     const keys = new Set(reads.map(readKey));
     const template = catalog[`steps.${s.id}`];
     if (template !== undefined) {
+      const jaKeys = new Set(templateReads(template).map(readKey));
       for (const read of templateReads(template)) {
         if (!keys.has(readKey(read))) {
           keys.add(readKey(read));
           reads.push(read);
         }
+      }
+      // Read-set parity lint (#4): a warning, never an error — Japanese
+      // legitimately drops arguments English requires. Flagged for review.
+      const enOnly = [...new Set(s.reads.map(readKey))].filter((k) => !jaKeys.has(k));
+      const jaOnly = [...jaKeys].filter((k) => !new Set(s.reads.map(readKey)).has(k));
+      if (enOnly.length > 0 || jaOnly.length > 0) {
+        const parts = [
+          enOnly.length > 0 ? `en-only: ${enOnly.join(', ')}` : '',
+          jaOnly.length > 0 ? `ja-only: ${jaOnly.join(', ')}` : '',
+        ].filter(Boolean);
+        console.warn(
+          `v3 bundle: recipe "${fm.slug}" step "${s.id}" reads differ between locales (${parts.join('; ')}) — fine if intentional.`,
+        );
       }
     }
     for (const read of reads) {
