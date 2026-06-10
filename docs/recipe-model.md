@@ -298,6 +298,18 @@ prose** is resolved separately from the canonical name:
    "the tofu"); else
 2. fall back to a prose-normalized DB name (lower-cased, comma-stripped).
 
+The two tiers divide by *judgment needed*: normalization handles the mechanical
+cases for free ("Salt, table" → "salt"), but cannot distil
+"Kiwifruit (kiwi), green, peeled, raw" → "peeled kiwis" — that needs a human,
+which is what the `alias` is for.
+
+The `alias` is a **bare noun phrase** — no leading article and no trailing
+connective. Surrounding grammar belongs to the step template, not the name: the
+template writes "the {greens}" or "{protein:chicken_breast} back", so an alias
+of "the tofu" would double the article. Good aliases: "salt", "peeled kiwis",
+"olive oil". Bad: "the tofu" (article is the template's), "and walnuts"
+(connective is the join's).
+
 This `alias` is the recipe-local prose form; it is catalog-localized like any
 other text. (Ingredient-view and shopping-list still show the canonical name —
 only step prose uses the alias.)
