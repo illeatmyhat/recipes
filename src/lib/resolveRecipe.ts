@@ -11,9 +11,6 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { load } from 'js-yaml';
 import { emptyNutrition, scaleNutrition } from './nutrition';
-import { resolveV3Recipe } from './v3/toResolvedRecipe';
-import { hydrateRecipe } from './v3/i18n';
-import type { CanonicalRecipeFrontmatterV3 } from './v3/types';
 import type {
   IngredientData,
   IngredientRef,
@@ -144,19 +141,11 @@ function resolveIngredient(
 }
 
 /**
- * Resolve a recipe's frontmatter into a fully typed {@link ResolvedRecipe}.
- *
- * Accepts both frontmatter shapes during the v3 migration: a **v3** recipe
- * (has `roles`) is delegated to the v3 engine via the temporary bridge; a
- * **v1** recipe is resolved here. Every ingredient is loaded, merged, and
- * scaled; nothing is `any`.
+ * Resolve a v1 recipe's frontmatter into a fully typed {@link ResolvedRecipe}.
+ * Every ingredient is loaded, merged, and scaled; nothing is `any`. (v3 recipes
+ * take the bundle path — see src/lib/v3/bundle.ts.)
  */
-export function resolveRecipe(
-  frontmatter: RecipeFrontmatter | CanonicalRecipeFrontmatterV3,
-): ResolvedRecipe {
-  // v3: merge the per-locale catalog with the canonical EN frontmatter, then resolve.
-  if ('roles' in frontmatter) return resolveV3Recipe(hydrateRecipe(frontmatter));
-
+export function resolveRecipe(frontmatter: RecipeFrontmatter): ResolvedRecipe {
   const baseIngredients = frontmatter.base_ingredients.map((ref) =>
     resolveIngredient(ref, null),
   );

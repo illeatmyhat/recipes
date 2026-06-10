@@ -1,0 +1,130 @@
+---
+/**
+ * Static shell for a v3 recipe page.
+ *
+ * SSR renders the default parameter point fully (readable JS-off); the islands
+ * hydrate and take over, re-resolving on the client as the user customizes.
+ *
+ * Layout mirrors v1: servings + nutrition in the right column on a wide screen,
+ * stacked on a narrow one. The tabs `[Customize | Shop | Cook]` reproject the
+ * ingredients; the method (the MDX body via <slot/>) stays always-visible below
+ * with live refs (refs land with #3). The nutrition panel is the sacred aside.
+ */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Bilingual from './Bilingual.astro';
+import SiteControls from './SiteControls.astro';
+import ServingsScalerV3 from './ServingsScalerV3.svelte';
+import TabBarV3 from './TabBarV3.svelte';
+import CustomizeV3 from './CustomizeV3.svelte';
+import ShopV3 from './ShopV3.svelte';
+import CookV3 from './CookV3.svelte';
+import NutritionPanelV3 from './NutritionPanelV3.svelte';
+import { UI } from '../lib/i18n';
+import type { RecipeBundle } from '../lib/v3/types';
+
+interface Props {
+  bundle: RecipeBundle;
+  heroImage: ImageMetadata;
+}
+
+const { bundle, heroImage } = Astro.props;
+const { recipe } = bundle;
+---
+
+<article class="recipe">
+  <div class="topbar">
+    <p class="kicker"><Bilingual text={{ en: 'Recipe', ja: 'レシピ' }} /></p>
+    <SiteControls />
+  </div>
+
+  <h1 class="title"><Bilingual text={recipe.title} /></h1>
+  <p class="pattern"><Bilingual text={recipe.pattern} /></p>
+
+  <Image
+    class="hero"
+    src={heroImage}
+    alt={recipe.title.en}
+    widths={[320, 640, 960, 1280]}
+    sizes="(min-width: 1080px) 1040px, 100vw"
+    format="webp"
+    quality={72}
+    loading="eager"
+    fetchpriority="high"
+  />
+
+  <div class="layout">
+    <div class="scaler-area">
+      <ServingsScalerV3 client:visible bundle={bundle} />
+    </div>
+
+    <div class="main">
+      <TabBarV3 client:visible />
+
+      <div class="stage-panel" data-stage-panel="customize">
+        <CustomizeV3 client:visible bundle={bundle} />
+      </div>
+      <div class="stage-panel" data-stage-panel="shop">
+        <ShopV3 client:idle bundle={bundle} />
+      </div>
+      <div class="stage-panel" data-stage-panel="cook">
+        <CookV3 client:idle bundle={bundle} />
+      </div>
+
+      <section class="method" aria-labelledby="method-heading">
+        <h2 id="method-heading"><Bilingual text={UI.method} /></h2>
+        <div class="method-body"><slot /></div>
+      </section>
+    </div>
+
+    <aside class="nutrition-area">
+      <div class="sticky">
+        <NutritionPanelV3 client:visible bundle={bundle} />
+      </div>
+    </aside>
+  </div>
+</article>
+
+<style>
+  .recipe { display: block; }
+  .topbar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+  .kicker { margin: 0; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); }
+  .title { margin: 0 0 0.5rem; font-size: clamp(1.8rem, 4vw, 2.6rem); letter-spacing: -0.02em; }
+  /* The pattern: a quiet thesis deck under the title, present in every stage. */
+  .pattern { margin: 0 0 1.25rem; font-size: 1.02rem; line-height: 1.5; color: var(--ink-soft); max-width: 60ch; border-left: 3px solid var(--accent); padding-left: 0.9rem; }
+  .hero { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius); margin-bottom: 1.5rem; }
+
+  .layout { display: grid; gap: 1.5rem; grid-template-areas: 'scaler' 'main' 'nutrition'; }
+  .scaler-area { grid-area: scaler; }
+  .main { grid-area: main; display: grid; gap: 1.5rem; align-content: start; }
+  .nutrition-area { grid-area: nutrition; }
+
+  /* Stage panels — CSS swaps them off <html data-stage>; customize is the
+     default (shown pre-hydration / JS-off). */
+  .stage-panel { display: none; }
+  .stage-panel[data-stage-panel='customize'] { display: block; }
+  :global([data-stage='shop']) .stage-panel[data-stage-panel='customize'] { display: none; }
+  :global([data-stage='shop']) .stage-panel[data-stage-panel='shop'] { display: block; }
+  :global([data-stage='cook']) .stage-panel[data-stage-panel='customize'] { display: none; }
+  :global([data-stage='cook']) .stage-panel[data-stage-panel='cook'] { display: block; }
+
+  @media (min-width: 880px) {
+    .layout { grid-template-columns: 1fr 22rem; grid-template-rows: auto auto 1fr; grid-template-areas: 'main scaler' 'main nutrition' 'main .'; align-items: start; }
+  }
+
+  .method { border: 1px solid var(--line); border-radius: var(--radius); padding: 1.25rem; background: var(--surface); }
+  .method h2 { margin: 0 0 0.75rem; font-size: 1.15rem; }
+  .method-body :global(ol), .method-body :global(ul) { padding-left: 1.2rem; }
+  .method-body :global(li) { margin-bottom: 0.5rem; }
+  .method-body :global(h3) { margin: 1.2rem 0 0.4rem; font-size: 1rem; }
+  .method-body :global(p) { margin: 0.5rem 0; }
+  .method-body :global(ol.steps) { list-style: none; margin: 0; padding: 0; counter-reset: step; }
+  .method-body :global(ol.steps > li) { counter-increment: step; position: relative; margin: 0; padding: 1rem 0 1rem 2.9rem; }
+  .method-body :global(ol.steps > li:first-child) { padding-top: 0; }
+  .method-body :global(ol.steps > li:not(:last-child)) { border-bottom: 1px solid var(--line); }
+  .method-body :global(ol.steps > li::before) { content: counter(step); position: absolute; left: 0; top: 1rem; width: 1.75rem; height: 1.75rem; border: 1px solid var(--line); border-radius: 50%; display: grid; place-items: center; font-size: 0.8rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .method-body :global(ol.steps > li:first-child::before) { top: 0; }
+  .method-body :global(ol.steps strong) { display: block; margin-bottom: 0.3rem; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent); }
+  .method-body :global(ol.steps p) { margin: 0; color: var(--ink); }
+  .sticky { position: sticky; top: 1.5rem; }
+</style>

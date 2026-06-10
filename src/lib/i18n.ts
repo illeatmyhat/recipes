@@ -72,6 +72,25 @@ export const UI = {
     en: 'Switch between light and dark theme',
     ja: 'ライト・ダークテーマを切り替え',
   },
+
+  // v3 stages (Customize | Shop | Cook) and the role-card UI.
+  customizeStage: { en: 'Customize', ja: 'カスタマイズ' },
+  shopStage: { en: 'Shop', ja: '買い物' },
+  cookStage: { en: 'Cook', ja: '作る' },
+  stages: { en: 'Recipe stages', ja: 'レシピの段階' },
+  miseEnPlace: { en: 'Mise en place', ja: '下ごしらえ' },
+  miseHint: {
+    en: 'What to have ready for each step — the method is below.',
+    ja: '各ステップに用意するもの。作り方は下にあります。',
+  },
+  shopHint: {
+    en: 'One line per item — tick them off as you go.',
+    ja: '材料ごとに1行 — 買い物しながらチェック。',
+  },
+  swap: { en: 'Swap', ja: '変更' },
+  required: { en: 'Required', ja: '必須' },
+  pickUpTo: { en: 'up to', ja: '最大' },
+  step: { en: 'Step', ja: '手順' },
 } as const satisfies Record<string, Phrase>;
 
 /** Key of a known UI phrase. */

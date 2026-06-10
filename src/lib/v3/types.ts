@@ -210,6 +210,18 @@ export interface LoadedIngredient {
 }
 
 /**
+ * Everything an island needs to re-resolve a v3 recipe on the client: the
+ * hydrated recipe, every referenced ingredient's data (so the pure `resolve`
+ * can run without filesystem access), and the default parameter point. Built at
+ * build time (`bundle.ts`), serialized as an island prop. Fully plain data.
+ */
+export interface RecipeBundle {
+  recipe: RecipeFrontmatterV3;
+  ingredients: Record<string, LoadedIngredient>;
+  defaults: Params;
+}
+
+/**
  * Injected ingredient lookup. `resolve` takes this rather than touching the
  * filesystem itself, keeping it a pure, testable function; `db.ts` provides the
  * build-time implementation.
