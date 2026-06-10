@@ -24,6 +24,29 @@ Work the checklist top to bottom. Paths are relative to the project root.
    ingredient list with amounts; the method as discrete steps; any tips and
    "do / don't" warnings. Group ingredients into **base** (always used) vs
    **optional** categories (e.g. Toppings, Fruits) the way the cook frames them.
+
+   Extract the *reasoning*, not just the amounts — transcripts are richer in
+   "why" than in grams, and the why is the point of this site (see
+   [docs/recipe-model.md](../../../docs/recipe-model.md) for the model this
+   feeds). Three things to capture deliberately:
+
+   - **The pattern (required).** Identify the recipe's *thesis* — the one
+     sentence for **why this combination works** ("high volume, high fiber,
+     enough protein, low calorie density"; "fat + acid + heat emulsifies the
+     sauce"). Lead the **Tips** with it. If the cook never states it, infer it
+     from the dish; if you genuinely can't, the recipe may not have a teachable
+     spine — say so rather than inventing one.
+   - **Each ingredient's job + substitutions.** When the cook names what an
+     ingredient *does* ("the lentils thicken the broth") or offers a swap ("you
+     could use chicken instead of tofu"), capture it in that ingredient's
+     `notes`. Don't let the reasoning evaporate into a bare amount. Rule of
+     thumb: if you can't say why an ingredient is in the dish, that's worth
+     flagging, not hiding.
+   - **Reality as explanation, not just caution.** A `warning` should explain
+     *why the recipe is built the way it is*, with the cause, not just a "don't":
+     write "breast goes in for the last 10 minutes **because** it dries out over
+     a full simmer", not "⚠ don't overcook the chicken". Same field, the
+     causal version teaches.
 2. **Pick a slug** (kebab-case). Files become `src/content/recipes/<slug>.mdx`
    and `src/content/recipes/images/<slug>.jpg`.
 3. **Resolve each ingredient.** For every ingredient, check whether
