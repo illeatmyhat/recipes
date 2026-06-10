@@ -87,7 +87,7 @@ interface Ingredient {
   aliases: Record<Locale, string[]>;
   nutrition: { per_100g: NutritionFacts };
   density_g_per_ml: number | null;     // required iff ever used with `ml`
-  aisle: StoreSection;                 // see Open question #2 (locale-dependence)
+  aisle: Record<Locale, StoreSection>; // per-locale store section; see "Aisle is locale-specific"
 }
 ```
 
@@ -364,13 +364,26 @@ through parameter space.
 
 ### Projections (a grouping is a view, not an attribute)
 
-- **Shopping list** — merge rows by ingredient id, group by aisle (Open
-  question #2), sum grams.
+- **Shopping list** — merge rows by ingredient id, group by aisle **in the
+  viewer's locale** (see below), sum grams.
 - **Ingredient view** — by role, tiered: **Base** (derived) first as the
   dish's skeleton, then substitutable roles, then `min: 0` roles. Tiering
   keeps role count from forcing excessive scrolling: ~9 roles render as 3–4
   visual sections.
 - **Step view** — `reads` per step (mise en place), derived from refs.
+
+**Aisle is locale-specific (decided 2026-06-10).** Store geography is *not* an
+invariant fact about a food — it differs by country, and the site is EN/JA.
+Tofu sits in its own refrigerated soy section in a Japanese supermarket, not
+in `dairy_eggs`; eggs are often shelf-stable in Japan; soy sauce/miso are a
+major dedicated aisle in Japan and an "international" shelf-slice in the US. So
+`aisle` is `Record<Locale, StoreSection>` — each locale has its own section
+enum, and the shopping list groups by the **viewer's** locale. The section
+*labels* are a fixed bilingual enum in `i18n.ts`. The skill fills both
+locales' aisles when it creates the ingredient YAML (it has the context — it
+is writing the `.ja.yaml` catalog anyway). Note: the shipped shopping list
+currently groups by **role**, not aisle at all, so this is new capability, not
+a regression to fix.
 
 ---
 
@@ -485,16 +498,19 @@ this dish's context rather than copying generic facts.
 
 ## Open questions
 
-1. **Linearity honesty.** Everything scales `× servings`, but salt/spices
-   scale sub-linearly and simmer times don't scale at all. The model silently
-   teaches "cooking is linear", which a critical-thinking tool shouldn't.
-   Candidate mitigations: conservative `servings.max` (the range *is* the
-   region where linearity holds), `fixed` roles, or a scaling note. Unsettled.
-2. **`aisle` is not locale-invariant.** Store geography differs by country
-   (tofu in a Japanese supermarket is its own section, not `dairy_eggs`); an
-   8-value Anglo-grocery enum in the DB contradicts the bilingual goal.
-   Candidates: per-locale aisle map in the DB, or locale-specific section
-   *ordering* over one neutral enum. Unsettled.
+1. ~~**Linearity honesty.**~~ **— SETTLED (2026-06-10): keep `servings.max`
+   low.** Everything scales `× servings`, but salt/spices scale sub-linearly
+   and simmer times don't scale at all. Resolution: this is a home-cook tool,
+   so a conservative `servings.max` keeps every recipe inside the region where
+   the linear model is honest. No sub-linear math (would break the
+   "inspectable multipliers, no arithmetic" rule and add false precision); the
+   range cap *is* the mitigation. A role that genuinely shouldn't scale can
+   still be marked `fixed`, and a `why` may note "taste as you go" where spice
+   non-linearity bites near the top of the range.
+2. ~~**`aisle` is not locale-invariant.**~~ **— SETTLED (2026-06-10):
+   per-locale aisle map.** `aisle: Record<Locale, StoreSection>`; the shopping
+   list groups by the viewer's locale. See "Aisle is locale-specific". (What
+   remains is implementation: defining each locale's section enum + ordering.)
 3. **`error` constraints in a static build** — disable the control vs
    allow-and-flag. (Carried from v2.)
 4. **Rounding/display of scaled amounts** (partition can yield 125 g of
