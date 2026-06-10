@@ -36,3 +36,6 @@ nutrition:
     calcium: 229
     iron: 21.14
 density_g_per_ml: null
+aisle:
+  en: spices
+  ja: spices

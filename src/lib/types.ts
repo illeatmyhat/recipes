@@ -57,6 +57,27 @@ export interface Availability {
   note_ja?: string;
 }
 
+/**
+ * Supermarket sections the shopping list can group by. One shared id space;
+ * each locale's stores pick from it independently (store geography is not an
+ * invariant fact about a food — tofu is its own refrigerated soy section in
+ * Japan, dairy-adjacent in the US; soy sauce is a major aisle in Japan, an
+ * international shelf-slice in the US). Labels live in `STORE_SECTIONS`
+ * (src/lib/i18n.ts), in store-walk order.
+ */
+export type StoreSection =
+  | 'produce'
+  | 'meat_seafood'
+  | 'tofu_soy'
+  | 'dairy_eggs'
+  | 'dry_goods'
+  | 'canned'
+  | 'condiments'
+  | 'spices'
+  | 'oils'
+  | 'international'
+  | 'other';
+
 /** A single ingredient YAML file under /data/ingredients/<id>.yaml. */
 export interface IngredientData {
   id: string;
@@ -72,6 +93,11 @@ export interface IngredientData {
   };
   /** Grams per millilitre. Required to weigh `ml` ingredients; null for solids. */
   density_g_per_ml: number | null;
+  /**
+   * Which supermarket section carries this food, per viewer locale. Optional
+   * during migration — the shopping list groups absentees under "other".
+   */
+  aisle?: Record<Locale, StoreSection>;
 }
 
 /** A warning attached to an ingredient in recipe frontmatter. */

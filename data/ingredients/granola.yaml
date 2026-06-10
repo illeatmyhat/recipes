@@ -33,3 +33,6 @@ nutrition:
     calcium: 76
     iron: 3.95
 density_g_per_ml: null
+aisle:
+  en: dry_goods
+  ja: dry_goods

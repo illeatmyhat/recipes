@@ -33,3 +33,6 @@ nutrition:
     calcium: 33
     iron: 0.57
 density_g_per_ml: null
+aisle:
+  en: canned
+  ja: canned

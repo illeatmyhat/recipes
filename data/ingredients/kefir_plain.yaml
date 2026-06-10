@@ -33,3 +33,6 @@ nutrition:
     calcium: 130
     iron: 0.04
 density_g_per_ml: 1.03
+aisle:
+  en: dairy_eggs
+  ja: dairy_eggs

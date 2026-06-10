@@ -45,3 +45,12 @@ nutrition:
 # Grams per millilitre. REQUIRED (non-null) if any recipe uses this ingredient
 # with unit `ml`; otherwise null. See reference/units.md for common values.
 density_g_per_ml: null
+# Which supermarket section carries this food, PER LOCALE — store geography
+# differs by country (tofu: dairy_eggs in the US, tofu_soy in Japan; soy
+# sauce: international in the US, condiments in Japan). Fill BOTH. Valid
+# sections (see StoreSection in src/lib/types.ts): produce, meat_seafood,
+# tofu_soy, dairy_eggs, dry_goods, canned, condiments, spices, oils,
+# international, other.
+aisle:
+  en: <section id>
+  ja: <section id>

@@ -6,7 +6,7 @@
  * labels, nutrient names. Islands read these reactively off the `locale` store
  * so switching language re-renders every string instantly.
  */
-import type { Locale, NutrientKey } from './types';
+import type { Locale, NutrientKey, StoreSection } from './types';
 
 /** A phrase in every supported locale. */
 export type Phrase = Record<Locale, string>;
@@ -116,3 +116,22 @@ export const NUTRIENT_LABELS: Record<NutrientKey, Phrase> = {
   calcium: { en: 'Calcium', ja: 'カルシウム' },
   iron: { en: 'Iron', ja: '鉄分' },
 };
+
+/**
+ * Supermarket section labels in store-walk order — the shopping list renders
+ * its groups in this sequence. One shared id space; which section a food sits
+ * in is per-locale data on the ingredient (`aisle`, see src/lib/types.ts).
+ */
+export const STORE_SECTIONS: ReadonlyArray<{ id: StoreSection; label: Phrase }> = [
+  { id: 'produce', label: { en: 'Produce', ja: '青果' } },
+  { id: 'meat_seafood', label: { en: 'Meat & seafood', ja: '精肉・鮮魚' } },
+  { id: 'tofu_soy', label: { en: 'Tofu & soy', ja: '豆腐・大豆製品' } },
+  { id: 'dairy_eggs', label: { en: 'Dairy & eggs', ja: '乳製品・卵' } },
+  { id: 'dry_goods', label: { en: 'Dry goods', ja: '乾物・豆・シリアル' } },
+  { id: 'canned', label: { en: 'Canned goods', ja: '缶詰' } },
+  { id: 'condiments', label: { en: 'Condiments & sauces', ja: '調味料' } },
+  { id: 'spices', label: { en: 'Spices', ja: 'スパイス' } },
+  { id: 'oils', label: { en: 'Oils & vinegars', ja: '油・酢' } },
+  { id: 'international', label: { en: 'International', ja: '輸入食品' } },
+  { id: 'other', label: { en: 'Other', ja: 'その他' } },
+];

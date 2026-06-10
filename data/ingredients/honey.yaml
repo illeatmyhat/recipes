@@ -33,3 +33,6 @@ nutrition:
     calcium: 6
     iron: 0.42
 density_g_per_ml: null
+aisle:
+  en: condiments
+  ja: condiments

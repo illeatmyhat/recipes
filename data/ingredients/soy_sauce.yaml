@@ -35,3 +35,6 @@ nutrition:
     calcium: 30
     iron: 1.35
 density_g_per_ml: 1.15
+aisle:
+  en: international
+  ja: condiments

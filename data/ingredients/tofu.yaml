@@ -33,3 +33,6 @@ nutrition:
     calcium: 350
     iron: 5.36
 density_g_per_ml: null
+aisle:
+  en: dairy_eggs
+  ja: tofu_soy

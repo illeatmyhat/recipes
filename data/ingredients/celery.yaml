@@ -31,3 +31,6 @@ nutrition:
     calcium: 40
     iron: 0.2
 density_g_per_ml: null
+aisle:
+  en: produce
+  ja: produce
