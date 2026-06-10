@@ -209,16 +209,41 @@ export interface LoadedIngredient {
   placeholder: boolean;
 }
 
+/** One ref read by a step: a whole role, or one named fill of it. */
+export interface StepRead {
+  role: string;
+  /** Present ⇒ fill-scoped (`<Ref fill>` / `{role:fill}`): just that fill. */
+  fill?: string;
+}
+
+/**
+ * Step metadata extracted from the MDX body at build time (steps.ts): what
+ * each step is called, when it shows, and which roles/fills it reads. The
+ * union of both surfaces' refs (EN `<Ref>`s + catalog-template placeholders).
+ * Drives the Cook stage's by-step mise en place. `T` is the localizable slot.
+ */
+export interface StepMetaT<T> {
+  id: string;
+  /** Visibility guard (guards.ts grammar); absent ⇒ always shown. */
+  when?: string;
+  title?: T;
+  reads: StepRead[];
+}
+
+export type StepMeta = StepMetaT<Localized>;
+
 /**
  * Everything an island needs to re-resolve a v3 recipe on the client: the
  * hydrated recipe, every referenced ingredient's data (so the pure `resolve`
- * can run without filesystem access), and the default parameter point. Built at
- * build time (`bundle.ts`), serialized as an island prop. Fully plain data.
+ * can run without filesystem access), the default parameter point, and the
+ * method's step metadata (by-step projection). Built at build time
+ * (`bundle.ts`), serialized as an island prop. Fully plain data.
  */
 export interface RecipeBundle {
   recipe: RecipeFrontmatterV3;
   ingredients: Record<string, LoadedIngredient>;
   defaults: Params;
+  steps: StepMeta[];
 }
 
 /**

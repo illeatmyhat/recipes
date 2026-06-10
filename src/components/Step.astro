@@ -78,6 +78,21 @@ for (const r of reads) {
   }
 }
 
+// Cross-check against the build-time extraction (steps.ts → bundle.steps)
+// that feeds the Cook stage: if the parser missed this step or disagrees on
+// its reads, the by-step mise en place would silently desync from the method.
+const meta = bundle.steps.find((s) => s.id === id);
+if (!meta) {
+  throw new Error(`v3 method: step "${id}" rendered but is missing from the extracted bundle.steps.`);
+}
+const metaRoles = new Set(meta.reads.map((r) => r.role));
+if (metaRoles.size !== reads.size || [...reads].some((r) => !metaRoles.has(r))) {
+  throw new Error(
+    `v3 method: step "${id}" reads {${[...reads].join(', ')}} when rendered but ` +
+      `{${[...metaRoles].join(', ')}} when extracted — steps.ts has a parser gap.`,
+  );
+}
+
 const visible = when === undefined ? true : evalGuard(when, defaults);
 ---
 
