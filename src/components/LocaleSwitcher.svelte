@@ -14,8 +14,8 @@
   ];
 
   // Locale switching needs no recipe data, so this works on any page (the
-  // index included). Recipe-page islands also call initStore, which calls
-  // initLocale — all idempotent, so whichever hydrates first wins.
+  // index included). Recipe-page islands also call initLocale (via initV3) —
+  // all idempotent, so whichever hydrates first wins.
   onMount(() => initLocale());
 </script>
 

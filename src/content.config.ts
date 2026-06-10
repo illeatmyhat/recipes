@@ -4,52 +4,16 @@
  * Recipes live in `src/content/recipes/*.mdx` so that MDX bodies, frontmatter,
  * and relative hero images all work natively. Ingredient data lives separately
  * under `/data/ingredients/*.yaml` and is merged in at build time by
- * `resolveRecipe` — see src/lib/resolveRecipe.ts.
+ * `buildBundle` — see src/lib/v3/bundle.ts.
  *
- * Two frontmatter shapes are accepted during the v3 migration, discriminated by
- * a required field: **v1** (`base_ingredients` — flat list + optional
- * categories) and **v3** (`roles` — pattern/roles/fills, see
- * docs/recipe-model.md). A recipe is one or the other; the resolver branches on
- * which is present.
+ * Frontmatter is the v3 shape (pattern/roles/fills, docs/recipe-model.md):
+ * localizable fields hold the CANONICAL (EN) string; JA lives in the per-locale
+ * sidecar catalog `<slug>.ja.yaml` and is merged at build time (src/lib/v3/i18n.ts).
  */
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
-const localized = z.object({
-  en: z.string(),
-  ja: z.string(),
-});
-
-const warning = z.object({
-  type: z.enum(['avoid', 'good']),
-  en: z.string(),
-  ja: z.string(),
-});
-
-// ── v1 (flat base + optional categories) ─────────────────────────────────────
-const ingredientRef = z.object({
-  id: z.string(),
-  amount: z.number().positive(),
-  unit: z.enum(['g', 'ml']),
-  notes: localized,
-  warnings: z.array(warning).default([]),
-  group: localized.optional(),
-});
-
-const optionalIngredientRef = ingredientRef.extend({
-  default: z.boolean().default(false),
-});
-
-const optionalCategory = z.object({
-  id: z.string(),
-  label: localized,
-  ingredients: z.array(optionalIngredientRef).nonempty(),
-});
-
-// ── v3 (pattern / roles / fills) ─────────────────────────────────────────────
-// Localizable fields hold the CANONICAL (EN) string; JA lives in the per-locale
-// sidecar catalog `<slug>.ja.yaml` and is merged at build time (src/lib/v3/i18n.ts).
 const amount = z.object({
   value: z.number().positive(),
   unit: z.enum(['g', 'ml']),
@@ -121,33 +85,18 @@ const servings = z.object({
 const recipes = defineCollection({
   loader: glob({ pattern: '**/*.mdx', base: './src/content/recipes' }),
   schema: ({ image }) =>
-    z.union([
-      // v1 — required discriminant: base_ingredients
-      z.object({
-        title: localized,
-        slug: z.string(),
-        hero_image: image(),
-        customize_title: localized.optional(),
-        locales: z.array(z.enum(['en', 'ja'])).nonempty(),
-        servings_default: z.number().int().positive(),
-        base_ingredients: z.array(ingredientRef).nonempty(),
-        optional_ingredients: z.array(optionalCategory),
-      }),
-      // v3 — required discriminant: roles + pattern + servings.
-      // Localizable text is canonical EN; JA in the sidecar catalog.
-      z.object({
-        title: z.string(),
-        slug: z.string(),
-        hero_image: image(),
-        customize_title: z.string().optional(),
-        locales: z.array(z.enum(['en', 'ja'])).nonempty(),
-        pattern: z.string(),
-        servings,
-        knobs: z.record(z.string(), knob).optional(),
-        roles: z.record(z.string(), role),
-        constraints: z.array(constraint).optional(),
-      }),
-    ]),
+    z.object({
+      title: z.string(),
+      slug: z.string(),
+      hero_image: image(),
+      customize_title: z.string().optional(),
+      locales: z.array(z.enum(['en', 'ja'])).nonempty(),
+      pattern: z.string(),
+      servings,
+      knobs: z.record(z.string(), knob).optional(),
+      roles: z.record(z.string(), role),
+      constraints: z.array(constraint).optional(),
+    }),
 });
 
 export const collections = { recipes };

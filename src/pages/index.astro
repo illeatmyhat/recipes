@@ -9,8 +9,8 @@ import Bilingual from '../components/Bilingual.astro';
 import SiteControls from '../components/SiteControls.astro';
 import { recipeTitle } from '../lib/v3/i18n';
 
-// title is inline {en,ja} (v1) or a canonical EN string + catalog (v3);
-// recipeTitle normalizes both to a Localized for sorting and display.
+// title is a canonical EN string; recipeTitle merges the JA from the
+// recipe's sidecar catalog for sorting and display.
 const recipes = (await getCollection('recipes'))
   .map((entry) => ({ slug: entry.data.slug, title: recipeTitle(entry.data) }))
   .sort((a, b) => a.title.en.localeCompare(b.title.en));

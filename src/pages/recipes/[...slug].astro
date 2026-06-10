@@ -4,15 +4,14 @@
  *
  * `getStaticPaths` enumerates the `recipes` content collection so each recipe
  * is pre-rendered to static HTML at build time. The MDX body is rendered via
- * <Content/> (the method steps); the frontmatter is merged with the ingredient
- * database by `resolveRecipe` and handed to the static shell as a prop.
+ * <Content/> (the method steps); the frontmatter is packaged with the
+ * ingredient database into a client-re-resolvable bundle (buildBundle) and
+ * handed to the static shell as a prop.
  */
 import type { GetStaticPaths } from 'astro';
 import { getCollection, render } from 'astro:content';
 import RecipeLayout from '../../layouts/RecipeLayout.astro';
-import RecipePage from '../../components/RecipePage.astro';
 import RecipePageV3 from '../../components/RecipePageV3.astro';
-import { resolveRecipe } from '../../lib/resolveRecipe';
 import { buildBundle } from '../../lib/v3/bundle';
 
 export const getStaticPaths = (async () => {
@@ -26,25 +25,13 @@ export const getStaticPaths = (async () => {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 
-// v3 (`roles`) builds a client-re-resolvable bundle and renders the v3 shell;
-// v1 resolves to a baked ResolvedRecipe and renders the v1 shell.
-const data = entry.data;
-const bundle = 'roles' in data ? buildBundle(data) : undefined;
-const recipe = bundle ? undefined : resolveRecipe(data as Exclude<typeof data, { roles: unknown }>);
-const title = bundle ? bundle.recipe.title : recipe!.title;
+const bundle = buildBundle(entry.data);
+const title = bundle.recipe.title;
 const pageTitle = { en: `${title.en} — Recipes`, ja: `${title.ja} — レシピ` };
 ---
 
 <RecipeLayout title={pageTitle} description={title.en}>
-  {
-    bundle ? (
-      <RecipePageV3 bundle={bundle} heroImage={data.hero_image}>
-        <Content />
-      </RecipePageV3>
-    ) : (
-      <RecipePage recipe={recipe!} heroImage={data.hero_image}>
-        <Content />
-      </RecipePage>
-    )
-  }
+  <RecipePageV3 bundle={bundle} heroImage={entry.data.hero_image}>
+    <Content />
+  </RecipePageV3>
 </RecipeLayout>

@@ -63,12 +63,10 @@ export function recipeCatalog(slug: string, locale: Locale): Record<string, stri
 }
 
 /**
- * Normalize a recipe's title to {@link Localized} regardless of shape: v1 holds
- * an inline `{ en, ja }`; v3 holds a canonical EN string with the JA in its
- * catalog. Used by the index, which lists both kinds.
+ * A recipe's {@link Localized} title: the canonical EN string from the
+ * frontmatter plus the JA from its catalog (EN fallback). Used by the index.
  */
-export function recipeTitle(data: { slug: string; title: string | Localized }): Localized {
-  if (typeof data.title !== 'string') return data.title;
+export function recipeTitle(data: { slug: string; title: string }): Localized {
   const ja = loadCatalog(data.slug, 'ja').title;
   return { en: data.title, ja: ja ?? data.title };
 }

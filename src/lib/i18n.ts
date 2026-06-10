@@ -26,7 +26,6 @@ export const UI = {
   increase: { en: 'Increase servings', ja: '食数を増やす' },
 
   nutritionFacts: { en: 'Nutrition Facts', ja: '栄養成分表示' },
-  amountPerServing: { en: 'Amount per serving', ja: '1食あたりの量' },
   calories: { en: 'Calories', ja: 'エネルギー' },
   dailyValue: { en: '% Daily Value*', ja: '1日の目安に対する割合*' },
   /** Trailing label for a bare "%DV" figure, e.g. "59% of Daily Value". */
@@ -45,24 +44,7 @@ export const UI = {
   },
   highlights: { en: 'Highlights', ja: '栄養ハイライト' },
 
-  customizeTitle: { en: 'Customize this recipe', ja: 'このレシピをカスタマイズ' },
-  customizeHint: {
-    en: 'Toggle optional ingredients — nutrition updates live.',
-    ja: 'お好みの材料を切り替え — 栄養成分はその場で更新されます。',
-  },
-  selected: { en: 'selected', ja: '選択中' },
-
-  recipeTab: { en: 'Recipe', ja: 'レシピ' },
-  customizeTab: { en: 'Customize', ja: 'カスタマイズ' },
-  tabs: { en: 'Recipe sections', ja: 'レシピのセクション' },
-
-  ingredients: { en: 'Ingredients', ja: '材料' },
-  shoppingList: { en: 'Shopping list', ja: '買い物リスト' },
-  base: { en: 'Base', ja: 'ベース' },
-  optional: { en: 'Optional', ja: 'お好みで' },
   method: { en: 'Method', ja: '作り方' },
-  alsoKnownAs: { en: 'Also known as', ja: '別名' },
-  whereToBuy: { en: 'Where to buy', ja: '購入できる場所' },
   language: { en: 'Language', ja: '言語' },
 
   theme: { en: 'Theme', ja: 'テーマ' },
@@ -96,7 +78,6 @@ export const UI = {
   swap: { en: 'Swap', ja: '変更' },
   required: { en: 'Required', ja: '必須' },
   pickUpTo: { en: 'up to', ja: '最大' },
-  step: { en: 'Step', ja: '手順' },
 } as const satisfies Record<string, Phrase>;
 
 /** Key of a known UI phrase. */
