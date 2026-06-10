@@ -49,6 +49,8 @@ export interface Fill {
  * absent ⇒ additive (each chosen fill brings its own amount).
  */
 export interface Role {
+  /** Display heading for the by-role projection (e.g. "Protein" / "タンパク質"). */
+  label: Localized;
   why: Localized;
   range: Range;
   /** Present ⇒ substitutive: the role owns this total, chosen fills partition it. */
@@ -124,6 +126,15 @@ export interface RecipeV3 {
   knobs?: Record<string, Knob>;
   roles: Record<string, Role>;
   constraints?: Constraint[];
+}
+
+/**
+ * The parsed v3 MDX frontmatter: a {@link RecipeV3} plus the optional
+ * Customize-tab heading. (`hero_image` is resolved by Astro and handled by the
+ * page, not the resolver.)
+ */
+export interface RecipeFrontmatterV3 extends RecipeV3 {
+  customize_title?: Localized;
 }
 
 /**
