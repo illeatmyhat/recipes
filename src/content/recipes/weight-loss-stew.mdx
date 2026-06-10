@@ -13,6 +13,33 @@ servings:
   min: 1
   max: 8
   default: 4
+knobs:
+  thickness:
+    kind: scalar
+    label: Thickness
+    why: >-
+      The lentils are the thickener, so this scales just them. Thicker also
+      means more protein and fibre per bowl.
+    min: 0.75
+    max: 1.5
+    step: 0.25
+    default: 1
+  blend:
+    kind: bool
+    label: Blend for creaminess
+    why: >-
+      Puréeing part of the pot makes the broth creamy with zero cream — turn
+      this on and the method gains a step.
+    default: false
+constraints:
+  - when: "!has(seasonings, 'salt') && !has(seasonings, 'soy_sauce')"
+    error: >-
+      Keep at least one salt source — with neither salt nor soy sauce the pot
+      is genuinely unseasoned, and no spice can fix that.
+  - when: "!has(added_fat, 'olive_oil')"
+    warn: >-
+      Water-sautéing works — keep an eye on the pot and add splashes of water
+      as the aromatics start to catch.
 roles:
   added_fat:
     label: Added fat
@@ -45,6 +72,7 @@ roles:
       Load-bearing — protein, fibre, and iron, and they thicken the broth.
       Nothing else here does both jobs, so this role has no alternative.
     range: { min: 1, max: 1 }
+    scale: { 'thickness.0.75': 0.75, 'thickness.1.25': 1.25, 'thickness.1.5': 1.5 }
     fills:
       - id: lentils
         amount: { value: 96, unit: g }
@@ -208,6 +236,11 @@ import Ref from '../../components/Ref.astro';
   Cover with just enough water to reach the top of the ingredients. Put the lid
   on, drop to low heat, and simmer 25–30 minutes until the <Ref of="lentils" />
   are soft and the broth has thickened.
+</Step>
+
+<Step id="blend_half" title="Blend for creaminess" when="blend">
+  Ladle about a third of the pot into a blender (or use a stick blender right
+  in the pot), purée, and stir it back in — a creamy broth with zero cream.
 </Step>
 
 <Step id="finish_greens" title="Finish with greens">

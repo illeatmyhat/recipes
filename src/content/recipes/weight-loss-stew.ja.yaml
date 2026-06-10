@@ -8,6 +8,14 @@ pattern: >-
   食材はなく、すべての役割がこの目的のためにある。目的さえ保てば、入れ替えても
   料理の本質は変わらない。
 
+knobs.thickness.label: とろみ
+knobs.thickness.why: とろみの素はレンズ豆なので、レンズ豆だけを増減する。濃くするほど1杯あたりのタンパク質と食物繊維も増える。
+knobs.blend.label: ブレンドでクリーミーに
+knobs.blend.why: 鍋の一部をピューレにすると、クリームなしでクリーミーなスープになる。オンにすると作り方に1ステップ増える。
+
+constraints.0.error: 塩気の素を最低ひとつ残すこと。塩もしょうゆもないと本当に味がつかず、スパイスでは補えない。
+constraints.1.warn: 油なしの蒸し炒めでも作れる。焦げつきやすいので、鍋から目を離さず水を少しずつ足しながら。
+
 roles.added_fat.label: 油
 roles.added_fat.why: 鍋全体の油は大さじ1だけ。香りではなく風味の媒体（揮発成分は煮込みで飛ぶ）。省略可能で、水で炒めてもよい。
 roles.added_fat.fills.olive_oil.note: 大さじ1。鍋に加える油はこれだけ。
@@ -82,5 +90,7 @@ steps.tomato_juice.title: トマトは汁ごと
 steps.tomato_juice: "{vegetables:diced_tomatoes}は汁ごと入れる。この汁がスープの土台になる。"
 steps.simmer.title: 煮込む
 steps.simmer: "材料の上ぎりぎりまで水を注ぐ。蓋をして弱火にし、{lentils}が柔らかく煮汁がとろりとするまで25〜30分煮込む。"
+steps.blend_half.title: ブレンドでクリーミーに
+steps.blend_half: "鍋の約3分の1をブレンダーにかけ（スティックブレンダーで鍋の中で直接でも）、ピューレにして鍋に戻す。クリームなしでクリーミーなスープに。"
 steps.finish_greens.title: 青菜で仕上げ
 steps.finish_greens: "火を止めて{greens}を加え、しんなりさせる。大きなボウルによそう。1人前でもたっぷりの満足ボリューム。"

@@ -2,12 +2,20 @@
   // The Customize stage — the by-role projection and the core teaching
   // interaction. Each role is a card: its job (`why`), current fill(s) with live
   // grams, and the alternatives. Collapsed on mobile / expanded on desktop via
-  // native <details> force-opened by CSS. The island owns only selection.
+  // native <details> force-opened by CSS. The island owns selection + knobs.
+  //
+  // Validation maps the model's min=structural / max=advisory split onto the
+  // controls (#9): min resists (the floor pick can't be removed), max shows a
+  // quiet advisory note, constraint `warn`s render inline at the top, and
+  // constraint `error`s become FUNCTIONAL DISABLE — an option is disabled iff
+  // applying it to the current Params would resolve to `blocked`, which keeps
+  // Params never-blocked inductively from the valid default. The nutrition
+  // pane is never the error channel.
   import { onMount } from 'svelte';
   import { locale } from './RecipeStore';
-  import { params, resolved, resolveBundle, initV3, setFill, toggleFill } from './RecipeStoreV3';
+  import { params, resolved, resolveBundle, initV3, setFill, toggleFill, setKnob } from './RecipeStoreV3';
   import { t } from '../lib/i18n';
-  import type { RecipeBundle, RoleT } from '../lib/v3/types';
+  import type { Knob, KnobValue, Params, RecipeBundle, RoleT } from '../lib/v3/types';
   import type { Localized } from '../lib/types';
 
   let { bundle }: { bundle: RecipeBundle } = $props();
@@ -18,7 +26,8 @@
     mounted = true;
   });
 
-  const sel = $derived(mounted ? $params.selection : bundle.defaults.selection);
+  const currentP = $derived<Params>(mounted ? $params : bundle.defaults);
+  const sel = $derived(currentP.selection);
   const ssr = resolveBundle(bundle, bundle.defaults);
   const current = $derived(mounted ? ($resolved ?? ssr) : ssr);
 
@@ -33,6 +42,9 @@
     return all.sort((a, b) => rank(a) - rank(b));
   });
 
+  const knobEntries = $derived(Object.entries(bundle.recipe.knobs ?? {}) as [string, Knob][]);
+  const knobValue = (id: string, knob: Knob): KnobValue => currentP.knobs[id] ?? knob.default;
+
   const gramsOf = (id: string): number =>
     current.rows.filter((r) => r.id === id).reduce((s, r) => s + r.grams, 0);
 
@@ -44,6 +56,33 @@
 
   function picked(roleId: string, fillId: string): boolean {
     return (sel[roleId] ?? []).includes(fillId);
+  }
+
+  /** The Params that clicking this option would produce. */
+  function withClick(p: Params, roleId: string, fillId: string, kind: 'radio' | 'multi'): Params {
+    const cur = p.selection[roleId] ?? [];
+    const next =
+      kind === 'radio'
+        ? [fillId]
+        : cur.includes(fillId)
+          ? cur.filter((id) => id !== fillId)
+          : [...cur, fillId];
+    return { ...p, selection: { ...p.selection, [roleId]: next } };
+  }
+
+  /**
+   * Functional disable: the constraint-error text this click would trigger,
+   * or null when the click is fine. `resolve` is cheap (a few small loops),
+   * so re-checking every option per param change is fine at recipe scale.
+   */
+  function blockReason(roleId: string, fillId: string, kind: 'radio' | 'multi'): Localized | null {
+    if (kind === 'radio' && picked(roleId, fillId)) return null; // re-pick is a no-op
+    const result = resolveBundle(bundle, withClick(currentP, roleId, fillId, kind));
+    if (!result.blocked) return null;
+    const notice = result.notices.find((n) => n.kind === 'constraint-error');
+    return notice && 'text' in notice
+      ? notice.text
+      : { en: t('optionBlocked', 'en'), ja: t('optionBlocked', 'ja') };
   }
 
   // min-resist: don't allow a multi role to drop below its floor.
@@ -60,11 +99,93 @@
     if (max === undefined) return '';
     return `${t('pickUpTo', $locale)} ${max}`;
   }
+
+  // Advisory max: the soft notice for a role currently over its suggested max.
+  const overMax = (roleId: string): number | null => {
+    const n = current.notices.find((x) => x.kind === 'above-max' && x.role === roleId);
+    return n && 'max' in n ? n.max : null;
+  };
+
+  // Constraint notices (author text) — warns expected in normal use; an error
+  // here would mean a blocked state leaked past functional disable.
+  const constraintNotices = $derived(
+    current.notices.flatMap((n) =>
+      n.kind === 'constraint-warn' || n.kind === 'constraint-error'
+        ? [{ error: n.kind === 'constraint-error', text: n.text }]
+        : [],
+    ),
+  );
 </script>
 
 <section class="customize" aria-label={t('customizeStage', $locale)}>
+  {#if constraintNotices.length > 0}
+    <div class="notices">
+      {#each constraintNotices as n, i (i)}
+        <p class="notice" class:error={n.error} role={n.error ? 'alert' : 'status'}>{L(n.text)}</p>
+      {/each}
+    </div>
+  {/if}
+
+  {#if knobEntries.length > 0}
+    <section class="knobs" aria-label={t('adjust', $locale)}>
+      <h3>{t('adjust', $locale)}</h3>
+      {#each knobEntries as [id, knob] (id)}
+        {@const val = knobValue(id, knob)}
+        <div class="knob">
+          <div class="knob-head">
+            <span class="knob-label">{L(knob.label)}</span>
+            {#if knob.kind === 'bool'}
+              <button
+                type="button"
+                class="switch"
+                class:on={val === true}
+                role="switch"
+                aria-checked={val === true}
+                aria-label={L(knob.label)}
+                onclick={() => setKnob(id, !(val === true))}
+              >
+                <span class="switch-thumb" aria-hidden="true"></span>
+              </button>
+            {:else if knob.kind === 'scalar'}
+              <span class="knob-value">×{val}</span>
+            {/if}
+          </div>
+          {#if knob.kind === 'scalar'}
+            <input
+              class="slider"
+              type="range"
+              min={knob.min}
+              max={knob.max}
+              step={knob.step ?? 1}
+              value={Number(val)}
+              aria-label={L(knob.label)}
+              oninput={(e) => setKnob(id, Number(e.currentTarget.value))}
+            />
+          {:else if knob.kind === 'enum'}
+            <div class="segments" role="radiogroup" aria-label={L(knob.label)}>
+              {#each knob.values as option (option)}
+                <button
+                  type="button"
+                  class="segment"
+                  class:active={val === option}
+                  role="radio"
+                  aria-checked={val === option}
+                  onclick={() => setKnob(id, option)}
+                >
+                  {knob.optionLabels?.[option] ? L(knob.optionLabels[option]) : option}
+                </button>
+              {/each}
+            </div>
+          {/if}
+          {#if knob.why}<p class="knob-why">{L(knob.why)}</p>{/if}
+        </div>
+      {/each}
+    </section>
+  {/if}
+
   {#each ordered as { id, role } (id)}
     {@const kind = kindOf(role)}
+    {@const over = overMax(id)}
     <details class="role" open={kind === 'base'}>
       <summary class="role-head">
         <span class="role-label">{L(role.label)}</span>
@@ -74,6 +195,9 @@
         </span>
       </summary>
       <p class="why">{L(role.why)}</p>
+      {#if over !== null}
+        <p class="advisory">{t('aboveMax', $locale).replace('{n}', String(over))}</p>
+      {/if}
 
       <ul class="fills" class:base={kind === 'base'}>
         {#each role.fills as fill (fill.id)}
@@ -88,10 +212,12 @@
                 {#if fill.note}<span class="fill-note">{L(fill.note)}</span>{/if}
               </div>
             {:else}
+              {@const blocked = blockReason(id, fill.id, kind === 'radio' ? 'radio' : 'multi')}
               <button
                 type="button"
                 class="fill"
                 class:on
+                disabled={blocked !== null}
                 role={kind === 'radio' ? 'radio' : 'checkbox'}
                 aria-checked={on}
                 onclick={() => (kind === 'radio' ? setFill(id, fill.id) : onMulti(id, fill.id, role.range.min))}
@@ -104,6 +230,7 @@
                   </span>
                   {#if fill.why}<span class="fill-why">{L(fill.why)}</span>{/if}
                   {#if on && fill.note}<span class="fill-note">{L(fill.note)}</span>{/if}
+                  {#if blocked !== null}<span class="fill-block">{L(blocked)}</span>{/if}
                 </span>
               </button>
             {/if}
@@ -116,6 +243,32 @@
 
 <style>
   .customize { display: grid; gap: 0.85rem; }
+
+  .notices { display: grid; gap: 0.4rem; }
+  .notice { margin: 0; padding: 0.55rem 0.8rem; border: 1px solid var(--accent); border-radius: 8px; background: var(--accent-soft); font-size: 0.85rem; }
+  .notice.error { border-color: #c0392b; background: color-mix(in srgb, #c0392b 12%, var(--bg)); }
+
+  .knobs { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 0.75rem 0.85rem; display: grid; gap: 0.75rem; }
+  .knobs h3 { margin: 0; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+  .knob { display: grid; gap: 0.3rem; }
+  .knob-head { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; }
+  .knob-label { font-weight: 600; font-size: 0.92rem; }
+  .knob-value { color: var(--ink-soft); font-variant-numeric: tabular-nums; font-size: 0.9rem; }
+  .knob-why { margin: 0; font-size: 0.82rem; color: var(--ink-soft); }
+
+  .switch { position: relative; width: 2.6rem; height: 1.45rem; border: 1px solid var(--line); border-radius: 999px; background: var(--bg); cursor: pointer; padding: 0; flex: none; }
+  .switch-thumb { position: absolute; top: 0.14rem; left: 0.14rem; width: 1.05rem; height: 1.05rem; border-radius: 50%; background: var(--ink-soft); transition: transform 0.15s ease, background 0.15s ease; }
+  .switch.on { background: var(--accent); border-color: var(--accent); }
+  .switch.on .switch-thumb { transform: translateX(1.15rem); background: var(--on-accent); }
+
+  .slider { width: 100%; accent-color: var(--accent); }
+
+  .segments { display: flex; gap: 0.25rem; border: 1px solid var(--line); border-radius: 999px; padding: 0.2rem; background: var(--bg); width: fit-content; }
+  .segment { border: none; background: transparent; font: inherit; font-size: 0.82rem; font-weight: 600; padding: 0.3rem 0.7rem; border-radius: 999px; color: var(--ink-soft); cursor: pointer; }
+  .segment.active { background: var(--accent); color: var(--on-accent); }
+
+  .advisory { margin: -0.3rem 0 0.6rem; font-size: 0.82rem; color: var(--accent); }
+
   .role { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 0.4rem 0.85rem; }
   .role-head { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; cursor: pointer; padding: 0.5rem 0; list-style: none; }
   .role-head::-webkit-details-marker { display: none; }
@@ -128,6 +281,8 @@
   .fill { display: flex; gap: 0.6rem; width: 100%; text-align: left; align-items: flex-start; padding: 0.55rem 0.7rem; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); cursor: pointer; font: inherit; color: var(--ink); }
   .fill.static { cursor: default; }
   .fill.on { border-color: var(--accent); background: var(--accent-soft); }
+  .fill:disabled { opacity: 0.55; cursor: not-allowed; }
+  .fill-block { font-size: 0.82rem; color: #c0392b; }
   .mark { flex: none; width: 1.3rem; height: 1.3rem; display: grid; place-items: center; border: 1px solid var(--line); background: var(--surface); font-size: 0.8rem; color: var(--accent); font-weight: 700; }
   .mark.radio { border-radius: 50%; }
   .mark.multi { border-radius: 5px; }

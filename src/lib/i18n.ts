@@ -78,6 +78,12 @@ export const UI = {
   shopStage: { en: 'Shop', ja: '買い物' },
   cookStage: { en: 'Cook', ja: '作る' },
   stages: { en: 'Recipe stages', ja: 'レシピの段階' },
+  adjust: { en: 'Adjust', ja: '調整' },
+  aboveMax: {
+    en: 'Over the suggested maximum of {n} — it still works, but each pick matters less.',
+    ja: '目安の上限（{n}）を超えています。作れますが、1つあたりの存在感は薄くなります。',
+  },
+  optionBlocked: { en: 'Not possible with the current choices.', ja: '現在の選択では選べません。' },
   miseEnPlace: { en: 'Mise en place', ja: '下ごしらえ' },
   miseHint: {
     en: 'What to have ready for each step — the method is below.',
