@@ -1,185 +1,242 @@
 ---
-title:
-  en: Overnight Oats & Chia Seed Bowl
-  ja: オーバーナイトオーツ & チアシードボウル
+title: Overnight Oats & Chia Seed Bowl
 slug: overnight-oats
 hero_image: ./images/overnight-oats.jpg
 locales: [en, ja]
-servings_default: 1
-customize_title:
-  en: Customize your bowl
-  ja: ボウルをカスタマイズ
-base_ingredients:
-  - id: rolled_oats
-    amount: 35
-    unit: g
-    notes:
-      en: Absorbs kefir overnight.
-      ja: 一晩でケフィアを吸収する。
-    warnings:
-      - type: avoid
-        en: "⚠️ Avoid quick, instant, or steel cut oats."
-        ja: "⚠️ クイック・インスタント・スチールカットは不可。"
-      - type: good
-        en: "✓ Use old fashioned, classic, or regular rolled oats."
-        ja: "✓ ロールドオーツ・クラシックオーツを使うこと。"
-  - id: chia_seeds
-    amount: 15
-    unit: g
-    notes:
-      en: Gels overnight, gives the bowl its body. Don't reduce the amount.
-      ja: 一晩でゲル状になり食感のベースになる。量を減らさないこと。
-  - id: kefir_plain
-    amount: 300
-    unit: ml
-    notes:
-      en: Use plain unflavored. Full-fat gives a creamier result. Shake before pouring.
-      ja: 無糖タイプを使用。全脂肪でよりクリーミーに。使う前によく振ること。
-  - id: vanilla_extract
-    amount: 2
-    unit: ml
-    notes:
-      en: Pure extract lasts indefinitely. Imitation degrades after 2–4 years.
-      ja: 純粋エクストラクトは無期限保存可。合成品は2〜4年で劣化。
-  - id: salt
-    amount: 0.5
-    unit: g
-    notes:
-      en: Don't skip — balances the kefir tang.
-      ja: 省かないこと。ケフィアの酸味とのバランスに必要。
-optional_ingredients:
-  - id: fruits
-    label:
-      en: Fruits
-      ja: フルーツ
-    ingredients:
-      - id: banana
-        amount: 60
-        unit: g
-        default: false
-        notes:
-          en: Browns overnight. Always add fresh.
-          ja: 前夜から入れると黒くなる。必ず朝に加えること。
-      - id: kiwi
-        amount: 70
-        unit: g
-        default: false
-        notes:
-          en: Enzymes turn the mixture bitter overnight. Always add fresh.
-          ja: 酵素がタンパク質を分解し苦みが出る。必ず朝に加えること。
-      - id: raspberries
-        amount: 60
-        unit: g
-        default: false
-        notes:
-          en: Disintegrate overnight. Always add fresh.
-          ja: 前夜に入れると崩れる。必ず朝に加えること。
+customize_title: Customize your bowl
+pattern: >-
+  No cooking and no added sugar: rolled oats and chia soak in kefir overnight
+  and set into a thick, probiotic base. The fruit is the only sweetener and
+  the toppings carry the crunch — protein, fiber, and live cultures,
+  assembled in two minutes the night before.
+servings:
+  min: 1
+  max: 4
+  default: 1
+knobs:
+  texture:
+    kind: enum
+    label: Texture
+    why: >-
+      Chia is the gelling agent and kefir is what it gels — extra thick
+      scales the chia up and pulls the kefir back, for a bowl the spoon
+      stands up in.
+    values: [classic, extra_thick]
+    default: classic
+    optionLabels:
+      classic: Classic
+      extra_thick: Extra thick
+roles:
+  oats:
+    label: Oats
+    why: >-
+      The body of the bowl — rolled flakes soften overnight in the liquid
+      with no cooking at all. The cut is what matters, not the brand: it has
+      to be old-fashioned rolled.
+    range: { min: 1, max: 1 }
+    fills:
+      - id: rolled_oats
+        amount: { value: 35, unit: g }
+        default: true
+        note: >-
+          Old fashioned, classic, or regular rolled oats only. Quick and
+          instant oats dissolve into paste overnight; steel cut stays gritty
+          without cooking.
+        alias: oats
+  chia:
+    label: Chia seeds
+    why: >-
+      The setting agent — chia gels overnight and gives the bowl its pudding
+      body. Don't cut the amount: below this the bowl pours instead of
+      holding its shape.
+    range: { min: 1, max: 1 }
+    scale: { 'texture.extra_thick': 1.5 }
+    fills:
+      - id: chia_seeds
+        amount: { value: 15, unit: g }
+        default: true
+  liquid:
+    label: Liquid
+    why: >-
+      What the oats and chia drink overnight. Kefir brings the live cultures,
+      the protein, and the tang the whole bowl is balanced around — full-fat
+      sets the creamiest.
+    range: { min: 1, max: 1 }
+    scale: { 'texture.extra_thick': 0.8 }
+    fills:
+      - id: kefir_plain
+        amount: { value: 300, unit: ml }
+        default: true
+        note: Plain and unflavored. Shake well before pouring.
+        alias: kefir
+  vanilla:
+    label: Vanilla
+    why: Rounds the kefir's sourness toward dessert without adding sugar.
+    range: { min: 1, max: 1 }
+    fills:
+      - id: vanilla_extract
+        amount: { value: 2, unit: ml }
+        default: true
+        note: >-
+          Pure extract keeps indefinitely; imitation degrades after 2–4
+          years.
+        alias: vanilla
+  salt:
+    label: Salt
+    why: >-
+      A pinch against the tang — it balances the kefir the way salt balances
+      caramel. Don't skip it.
+    range: { min: 1, max: 1 }
+    fills:
+      - id: salt
+        amount: { value: 0.5, unit: g }
+        default: true
+        alias: salt
+  fruits:
+    label: Fruit
+    why: >-
+      The only sweetener in the bowl — there is no added sugar, so the fruit
+      carries the sweetness and most of the vitamins. One to three kinds is
+      the sweet spot; past that the base drowns.
+    range: { min: 1, max: 3 }
+    fills:
       - id: strawberries
-        amount: 80
-        unit: g
+        amount: { value: 80, unit: g }
         default: true
-        notes:
-          en: Go mushy overnight. Prefer fresh in the morning.
-          ja: 前夜から入れるとやわらかくなりすぎる。朝に加えるのがベスト。
-      - id: peach
-        amount: 80
-        unit: g
-        default: false
-        notes:
-          en: Fresh browns — add in the morning. Frozen is OK overnight.
-          ja: 生は変色するので朝に。冷凍は前夜からOK。
+        note: Go mushy overnight — best added fresh in the morning.
       - id: blueberries
-        amount: 100
-        unit: g
+        amount: { value: 100, unit: g }
         default: true
-        notes:
-          en: Fresh or frozen both fine. Frozen can go in the night before.
-          ja: 生でも冷凍でもOK。冷凍は前夜から入れると朝に解凍されている。
+        note: >-
+          Fresh or frozen. Frozen can go in the night before and is thawed by
+          morning.
       - id: blackberries
-        amount: 60
-        unit: g
+        amount: { value: 60, unit: g }
         default: true
-        notes:
-          en: More intense flavor, so use a smaller amount. Frozen is OK overnight.
-          ja: 風味が強いので少なめ。冷凍OK。
+        note: >-
+          More intense than the other berries, so a smaller amount. Frozen is
+          fine overnight.
+      - id: raspberries
+        amount: { value: 60, unit: g }
+        default: false
+        note: Disintegrate overnight — always add fresh.
+      - id: banana
+        amount: { value: 60, unit: g }
+        default: false
+        note: Browns overnight — always add fresh in the morning.
+      - id: kiwi
+        amount: { value: 70, unit: g }
+        default: false
+        note: Its enzymes turn the bowl bitter overnight — always add fresh.
+        alias: kiwi
+      - id: peach
+        amount: { value: 80, unit: g }
+        default: false
+        note: >-
+          Fresh browns overnight — add it in the morning. Frozen is fine from
+          the night before.
       - id: mango
-        amount: 80
-        unit: g
+        amount: { value: 80, unit: g }
         default: false
-        notes:
-          en: Frozen preferred — cheaper. Thaw overnight.
-          ja: 冷凍が便利でコスト安。前夜から冷蔵庫で解凍。
-  - id: toppings
-    label:
-      en: Toppings
-      ja: トッピング
-    ingredients:
+        note: >-
+          Frozen is cheaper and just as good — thaw it overnight in the
+          fridge.
+        alias: mango
+  toppings:
+    label: Toppings
+    why: >-
+      The base is uniformly soft, so at least one topping for contrast —
+      crunch, extra protein, or good fats. Each one earns its spot a
+      different way.
+    range: { min: 1 }
+    fills:
       - id: hemp_seeds
-        amount: 15
-        unit: g
+        amount: { value: 15, unit: g }
         default: true
-        notes:
-          en: Complete protein (all 9 amino acids). Best all-around topping.
-          ja: 必須アミノ酸9種含む完全タンパク質。混ぜても目立たない。
+        note: >-
+          A complete protein — all nine essential amino acids — and it
+          disappears into the base. The best all-rounder.
       - id: pumpkin_seeds
-        amount: 12
-        unit: g
+        amount: { value: 12, unit: g }
         default: false
-        notes:
-          en: Best plant zinc source. Add just before eating — goes soft fast.
-          ja: 亜鉛が豊富。水分に触れるとすぐやわらかくなるので直前に加える。
+        note: >-
+          The best plant source of zinc. They soften fast — scatter them on
+          just before eating.
+        alias: pumpkin seeds
       - id: ground_flaxseed
-        amount: 10
-        unit: g
+        amount: { value: 10, unit: g }
         default: false
-        notes:
-          en: MUST be ground, not whole. Whole seeds pass through undigested.
-          ja: 必ず粉末タイプを。粒のままでは消化されない。
+        note: Ground, never whole — whole flaxseed passes through undigested.
       - id: granola
-        amount: 25
-        unit: g
+        amount: { value: 25, unit: g }
         default: false
-        notes:
-          en: Add right before eating or it goes soggy. Check the label for added sugar.
-          ja: 直前に加えないとやわらかくなる。砂糖量に注意。
+        note: >-
+          Check the label for added sugar — and it goes on last; see the
+          method.
       - id: walnuts
-        amount: 15
-        unit: g
+        amount: { value: 15, unit: g }
         default: false
-        notes:
-          en: Highest omega-3 nut. Store in the fridge or freezer — goes rancid fast.
-          ja: オメガ3が最も豊富なナッツ。酸化しやすいので冷蔵・冷凍保存。
+        note: >-
+          The omega-3 nut. They go rancid fast — store them in the fridge or
+          freezer.
       - id: almonds
-        amount: 12
-        unit: g
+        amount: { value: 12, unit: g }
         default: false
-        notes:
-          en: Sliced stays crisp longer than whole or chopped.
-          ja: スライスが食感長持ち。
+        note: Sliced stays crisp longer than whole or chopped.
       - id: honey
-        amount: 14
-        unit: g
+        amount: { value: 14, unit: g }
         default: false
-        notes:
-          en: A small drizzle balances the kefir tang.
-          ja: 少量でケフィアの酸味を和らげる。
+        note: >-
+          A small drizzle if the fruit isn't sweet enough — the one added
+          sugar on offer.
       - id: cinnamon
-        amount: 1
-        unit: g
+        amount: { value: 1, unit: g }
         default: false
-        notes:
-          en: Ceylon is preferred over cassia for daily use (lower coumarin).
-          ja: セイロン推奨（カシアはクマリン含有量が高い）。
+        note: Ceylon over cassia for a daily bowl — far less coumarin.
 ---
 
-<div class="lang-en">
+import Step from '../../components/Step.astro';
+import Ref from '../../components/Ref.astro';
 
 <ol class="steps">
-<li><strong>Night before</strong><p>Combine oats and chia seeds in a container. Pour in kefir, add vanilla and salt. Stir well, cover, and refrigerate overnight (minimum 6 hours).</p></li>
-<li><strong>Morning</strong><p>Scoop the oat mixture into a large bowl. It will be thick and creamy. Add a splash of kefir or water if you prefer a looser texture.</p></li>
-<li><strong>Add fruit</strong><p>Top with fresh or thawed frozen fruit. Delicate fruits (banana, kiwi, raspberries) should always be added fresh — never the night before.</p></li>
-<li><strong>Finish</strong><p>Add toppings for crunch, protein, or healthy fats. Add granola and seeds right before eating to preserve texture. Serve immediately.</p></li>
+
+<Step id="soak" title="Night before">
+  Combine the <Ref of="oats" /> and <Ref of="chia" /> in a jar or container.
+  Pour in the <Ref of="liquid" />, add the <Ref of="vanilla" /> and
+  <Ref of="salt" />, and stir well. Cover and refrigerate overnight — six
+  hours at minimum.
+</Step>
+
+<Step id="morning" title="Morning">
+  Scoop the set base into a big bowl — it should be thick and creamy. Too
+  thick? Loosen it with a splash of water or <Ref of="liquid" />.
+</Step>
+
+<Step id="add_fruit" title="Add the fruit">
+  Top with the <Ref of="fruits" />, fresh or thawed from frozen. The delicate
+  ones — banana, kiwi, raspberries — always go in fresh in the morning:
+  overnight they brown, turn bitter, or fall apart.
+</Step>
+
+<Step id="finish" title="Finish">
+  Add the <Ref of="toppings" /> and eat right away — the contrast between
+  the cold, creamy base and whatever you put on top is the point of the
+  bowl.
+</Step>
+
+<Step id="granola_last" title="Granola goes on last" when="has(toppings, 'granola')">
+  The <Ref of="toppings" fill="granola" /> goes on right before the first
+  spoonful — it turns soggy within minutes of touching the wet base.
+</Step>
+
+<Step id="seeds_last" title="Seeds just before eating" when="has(toppings, 'pumpkin_seeds')">
+  Scatter the <Ref of="toppings" fill="pumpkin_seeds" /> on just before
+  eating — they soften almost immediately on contact with the base.
+</Step>
+
 </ol>
+
+<div class="lang-en">
 
 ### Tips
 
@@ -193,13 +250,6 @@ optional_ingredients:
 </div>
 
 <div class="lang-ja">
-
-<ol class="steps">
-<li><strong>前夜</strong><p>オーツとチアシードを容器に入れる。ケフィアを注ぎ、バニラと塩を加える。よく混ぜ、蓋をして一晩（最低6時間）冷蔵する。</p></li>
-<li><strong>当日朝</strong><p>オーツの生地を大きめのボウルに移す。とろりと濃厚な状態になっている。ゆるめの食感が好みなら、ケフィアか水を少量加える。</p></li>
-<li><strong>フルーツを加える</strong><p>生または解凍した冷凍フルーツをのせる。傷みやすいフルーツ（バナナ・キウイ・ラズベリー）は必ず当日に生のまま加える。前夜に入れてはいけない。</p></li>
-<li><strong>仕上げ</strong><p>食感・タンパク質・良質な脂質のためにトッピングを加える。グラノーラと種子類は食感を保つため、食べる直前に加える。すぐに食べる。</p></li>
-</ol>
 
 ### コツ
 

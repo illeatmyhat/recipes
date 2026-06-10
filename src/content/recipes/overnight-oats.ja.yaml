@@ -1,0 +1,75 @@
+# JA catalog for overnight-oats. Canonical EN lives in overnight-oats.mdx;
+# keys are dotted paths into its frontmatter. Merged at build by src/lib/v3/i18n.ts.
+title: オーバーナイトオーツ & チアシードボウル
+customize_title: ボウルをカスタマイズ
+pattern: >-
+  加熱なし・砂糖なし。ロールドオーツとチアシードを一晩ケフィアに浸すと、とろりと
+  濃厚なプロバイオティクスのベースに固まる。甘みはフルーツだけ、食感はトッピングが
+  担う。タンパク質・食物繊維・生きた乳酸菌を、前夜の2分で組み立てる一杯。
+
+knobs.texture.label: 食感
+knobs.texture.why: とろみの素はチアシードで、それを固めるのがケフィア。「エクストラシック」はチアを増やしケフィアを減らし、スプーンが立つ固さにする。
+knobs.texture.optionLabels.classic: クラシック
+knobs.texture.optionLabels.extra_thick: エクストラシック
+
+roles.oats.label: オーツ
+roles.oats.why: ボウルの本体。ロールドオーツは加熱せずに一晩で液体を吸って柔らかくなる。大事なのはブランドではなく加工法 — 必ずロールドタイプを。
+roles.oats.fills.rolled_oats.note: ロールド・クラシック・レギュラーのみ。クイックやインスタントは一晩でペースト状に溶け、スチールカットは加熱しないと粒のまま。
+roles.oats.fills.rolled_oats.alias: オーツ
+
+roles.chia.label: チアシード
+roles.chia.why: 固めるのはチアシード。一晩でゲル化し、プリンのような食感を作る。量を減らさないこと — これより少ないと固まらずに流れる。
+
+roles.liquid.label: 液体
+roles.liquid.why: オーツとチアが一晩で吸う液体。ケフィアは乳酸菌・タンパク質・このボウルの軸になる酸味をもたらす。全脂肪が最もクリーミーに固まる。
+roles.liquid.fills.kefir_plain.note: 無糖プレーンを使用。注ぐ前によく振ること。
+roles.liquid.fills.kefir_plain.alias: ケフィア
+
+roles.vanilla.label: バニラ
+roles.vanilla.why: 砂糖を加えずに、ケフィアの酸味をデザート寄りに丸める。
+roles.vanilla.fills.vanilla_extract.note: 純粋エクストラクトは無期限保存可。合成品は2〜4年で劣化。
+roles.vanilla.fills.vanilla_extract.alias: バニラ
+
+roles.salt.label: 塩
+roles.salt.why: 酸味に対するひとつまみ。キャラメルに塩が効くように、ケフィアの酸味を整える。省かないこと。
+roles.salt.fills.salt.alias: 塩
+
+roles.fruits.label: フルーツ
+roles.fruits.why: このボウル唯一の甘み。砂糖を加えないので、甘さとビタミンの大半はフルーツが担う。1〜3種類がベスト。それ以上はベースが負ける。
+roles.fruits.fills.strawberries.note: 前夜から入れるとやわらかくなりすぎる。朝に加えるのがベスト。
+roles.fruits.fills.blueberries.note: 生でも冷凍でもOK。冷凍は前夜から入れると朝には解凍されている。
+roles.fruits.fills.blackberries.note: 他のベリーより風味が強いので少なめ。冷凍は前夜からOK。
+roles.fruits.fills.raspberries.note: 前夜に入れると崩れる。必ず朝に加えること。
+roles.fruits.fills.banana.note: 前夜から入れると黒くなる。必ず朝に生のまま加えること。
+roles.fruits.fills.kiwi.note: 酵素が一晩で苦みを出す。必ず朝に加えること。
+roles.fruits.fills.kiwi.alias: キウイ
+roles.fruits.fills.peach.note: 生は変色するので朝に。冷凍は前夜からOK。
+roles.fruits.fills.mango.note: 冷凍が安くて味も十分。前夜から冷蔵庫で解凍する。
+roles.fruits.fills.mango.alias: マンゴー
+
+roles.toppings.label: トッピング
+roles.toppings.why: ベースは一様にやわらかいので、対比のために最低ひとつ — 食感・タンパク質・良質な脂質。それぞれ役割が違う。
+roles.toppings.fills.hemp_seeds.note: 必須アミノ酸9種を含む完全タンパク質で、ベースに混ざって目立たない。万能の一番手。
+roles.toppings.fills.pumpkin_seeds.note: 植物性では最高の亜鉛源。すぐやわらかくなるので、食べる直前に散らす。
+roles.toppings.fills.pumpkin_seeds.alias: かぼちゃの種
+roles.toppings.fills.ground_flaxseed.note: 必ず粉末を。粒のままでは消化されずに通過する。
+roles.toppings.fills.granola.note: 砂糖の量をラベルで確認。のせるのは一番最後 — 作り方参照。
+roles.toppings.fills.walnuts.note: オメガ3が最も豊富なナッツ。酸化しやすいので冷蔵・冷凍保存。
+roles.toppings.fills.almonds.note: スライスが食感長持ち。ホールや刻みより崩れにくい。
+roles.toppings.fills.honey.note: フルーツで足りなければ少量。ここで唯一の「加える糖」。
+roles.toppings.fills.cinnamon.note: 毎日食べるならカシアよりセイロン（クマリンがずっと少ない）。
+
+# Method steps — templates for the MDX body's <Step id> elements. `{role}`
+# renders the role's chosen fills as a list join; `{role:fill}` names one fill.
+steps.soak.title: 前夜
+steps.soak: "{oats}と{chia}を容器に入れる。{liquid}を注ぎ、{vanilla}と{salt}を加えてよく混ぜる。蓋をして一晩（最低6時間）冷蔵する。"
+steps.morning.title: 当日朝
+steps.morning: "固まったベースを大きめのボウルに移す。とろりと濃厚になっているはず。固すぎる場合は、水か{liquid}を少量加えてゆるめる。"
+steps.add_fruit.title: フルーツをのせる
+steps.add_fruit: "{fruits}をのせる。生でも解凍した冷凍でもよい。傷みやすいもの（バナナ・キウイ・ラズベリー）は必ず朝に生のまま — 前夜から入れると変色したり、苦くなったり、崩れたりする。"
+steps.finish.title: 仕上げ
+steps.finish: "{toppings}をのせて、すぐに食べる。冷たくクリーミーなベースと、上にのせたものの対比がこのボウルの醍醐味。"
+steps.granola_last.title: グラノーラは一番最後
+steps.granola_last: "{toppings:granola}は最初のひと口の直前にのせる。湿ったベースに触れると数分でやわらかくなる。"
+steps.seeds_last.title: 種は食べる直前に
+steps.seeds_last: "{toppings:pumpkin_seeds}は食べる直前に散らす。ベースに触れるとすぐやわらかくなる。"
