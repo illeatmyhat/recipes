@@ -1,0 +1,89 @@
+---
+/**
+ * `<Step id when? title?>` — one method step in a v3 recipe's MDX body.
+ *
+ * The body (the slot) is the canonical EN prose, with `<Ref/>` components for
+ * ingredient reads; the JA surface is the catalog template `steps.<id>`
+ * (placeholders `{role}` / `{role:fill}`), rendered to the same `data-ref`
+ * markup. SSR evaluates `when` at the default parameter point and fills every
+ * ref, so the default method is fully readable with JS off; the
+ * MethodController island re-evaluates `data-when` and re-fills role refs as
+ * params change.
+ *
+ * Build-time lints:
+ * - `when` must parse (guard grammar, src/lib/v3/guards.ts);
+ * - boundness: a step reading a `min: 0` role must carry a `when` that proves
+ *   it bound — a positive `has(role, …)` conjunct (docs/recipe-model.md);
+ * - unknown role/fill reads throw (via refText);
+ * - missing `steps.<id>` catalog keys warn and fall back to the EN surface,
+ *   mirroring the frontmatter completeness lint in src/lib/v3/i18n.ts.
+ */
+import { collectPositiveHas, evalGuard, parseGuard } from '../lib/v3/guards';
+import { htmlRefReads, renderStepTemplate, templateReads } from '../lib/v3/method';
+import { getMethodContext } from '../lib/v3/methodContext';
+
+interface Props {
+  id: string;
+  when?: string;
+  title?: string;
+}
+
+const { id, when, title } = Astro.props;
+const { bundle, catalog } = getMethodContext();
+const { recipe, ingredients, defaults } = bundle;
+
+const enHtml = await Astro.slots.render('default');
+
+// JA surface from the catalog (template + title), EN fallback with a warning.
+const jaTemplate = catalog[`steps.${id}`];
+const jaTitle = catalog[`steps.${id}.title`];
+const missing: string[] = [];
+if (jaTemplate === undefined) missing.push(`steps.${id}`);
+if (title !== undefined && jaTitle === undefined) missing.push(`steps.${id}.title`);
+if (missing.length > 0) {
+  console.warn(
+    `v3 method: recipe "${recipe.slug}" is missing ja catalog key(s) ` +
+      `(fell back to EN): ${missing.join(', ')}`,
+  );
+}
+const jaHtml =
+  jaTemplate === undefined
+    ? enHtml
+    : `<p>${renderStepTemplate(jaTemplate, recipe, ingredients, defaults.selection, 'ja')}</p>`;
+
+// What this step reads — the union of both surfaces' refs. Drives the
+// boundness lint here and the Cook stage's by-step mise en place (data-reads).
+const reads = new Set<string>(htmlRefReads(enHtml));
+if (jaTemplate !== undefined) {
+  for (const r of templateReads(jaTemplate)) reads.add(r.role);
+}
+
+const bound = when === undefined ? new Set<string>() : collectPositiveHas(parseGuard(when));
+for (const r of reads) {
+  const role = recipe.roles[r];
+  if (!role) {
+    throw new Error(`v3 method: step "${id}" reads unknown role "${r}".`);
+  }
+  if (role.range.min === 0 && !bound.has(r)) {
+    throw new Error(
+      `v3 method: step "${id}" reads min:0 role "${r}" without a positive ` +
+        `has(${r}, …) guard — an unchosen role would leave the prose dangling.`,
+    );
+  }
+}
+
+const visible = when === undefined ? true : evalGuard(when, defaults);
+---
+
+<li class="step" data-step={id} data-when={when} data-reads={[...reads].join(' ')} hidden={!visible}>
+  {
+    title !== undefined && (
+      <strong>
+        <span class="lang-en">{title}</span>
+        <span class="lang-ja">{jaTitle ?? title}</span>
+      </strong>
+    )
+  }
+  <div class="lang-en" set:html={enHtml} />
+  <div class="lang-ja" set:html={jaHtml} />
+</li>

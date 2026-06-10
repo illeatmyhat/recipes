@@ -19,8 +19,8 @@ import type { Fill } from './types';
 /** Strip a parenthetical, a trailing comma-clause, and case from a canonical name. */
 export function normalizeProse(raw: string): string {
   return raw
-    .replace(/\s*\([^)]*\)/g, '') // "(kiwi)"
-    .replace(/,.*$/, '') // ", green, peeled, raw" / ", table"
+    .replace(/\s*[（(][^（）()]*[）)]/g, '') // "(kiwi)" / "（生）"
+    .replace(/[,、].*$/, '') // ", green, peeled, raw" / ", table"
     .trim()
     .toLowerCase();
 }

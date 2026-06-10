@@ -50,6 +50,7 @@ roles:
         amount: { value: 96, unit: g }
         default: true
         note: About ½ cup dry. Brown or green hold their shape in a stew.
+        alias: lentils
   protein:
     label: Protein
     why: >-
@@ -72,6 +73,7 @@ roles:
         amount: { value: 550, unit: g }
         default: true
         note: The bulk of the pot — cut large for a stew with bite.
+        alias: potatoes
   vegetables:
     label: Vegetables
     why: Bulk volume and fibre at almost no calories — the engine of the high-volume idea.
@@ -93,6 +95,7 @@ roles:
         amount: { value: 411, unit: g }
         default: true
         note: One can, juice and all — body and a little tang.
+        alias: diced tomatoes
   greens:
     label: Greens
     why: Volume and micronutrients at almost no calories, stirred in at the end so they keep some body.
@@ -123,6 +126,7 @@ roles:
         amount: { value: 2, unit: g }
         default: true
         note: To taste, at the end, after the soy sauce.
+        alias: salt
       - id: black_pepper
         amount: { value: 1, unit: g }
         default: true
@@ -138,17 +142,71 @@ roles:
         note: A little ground ginger brightens the whole pot.
 ---
 
-<div class="lang-en">
+import Step from '../../components/Step.astro';
+import Ref from '../../components/Ref.astro';
 
 <ol class="steps">
-<li><strong>Prep the aromatics</strong><p>Chop about four cloves of garlic and one onion into big pieces — this is a chunky stew, so keep everything with some bite.</p></li>
-<li><strong>Start the base</strong><p>Heat a Dutch oven over medium with one tablespoon of olive oil — all the added fat for the whole pot. Add the onion and garlic and let them soften.</p></li>
-<li><strong>Add lentils and tofu</strong><p>Rinse about ½ cup of lentils and stir them in. Drain the tofu (no need to press it) and break it into the pot in chunks.</p></li>
-<li><strong>Season</strong><p>Add cumin, smoked paprika, salt, pepper, and about 2 tablespoons of low-sodium soy sauce. Let it cook a few minutes — the soy sauce builds a slow-cooked, umami flavor.</p></li>
-<li><strong>Add the vegetables</strong><p>Chop the celery, potatoes, carrots, and remaining onion large, and clean the mushrooms. Add them all, then pour in the whole can of diced tomatoes. Let it cook down for a moment.</p></li>
-<li><strong>Simmer</strong><p>Cover with just enough water to reach the top of the ingredients. Put the lid on, drop to low heat, and simmer 25–30 minutes until the lentils are soft and the broth has thickened.</p></li>
-<li><strong>Finish with greens</strong><p>Stir in about two cups of spinach and let it wilt. Serve in big bowls — one serving is a huge, filling portion.</p></li>
+
+<Step id="prep_aromatics" title="Prep the aromatics">
+  Chop the <Ref of="aromatics" /> into big pieces — this is a chunky stew, so
+  keep everything with some bite.
+</Step>
+
+<Step id="start_base_oil" title="Start the base" when="has(added_fat, 'olive_oil')">
+  Heat a Dutch oven over medium with the <Ref of="added_fat" /> — all the added
+  fat for the whole pot. Add the <Ref of="aromatics" /> and let them soften.
+</Step>
+
+<Step id="start_base_dry" title="Start the base" when="!has(added_fat, 'olive_oil')">
+  Heat a dry Dutch oven over medium and water-sauté: add the
+  <Ref of="aromatics" /> with a splash of water and let them soften, adding a
+  little more water whenever the pot starts to catch.
+</Step>
+
+<Step id="add_lentils" title="Add the lentils">
+  Rinse the <Ref of="lentils" /> and stir them in — they'll thicken the broth
+  as they cook.
+</Step>
+
+<Step id="add_protein" title="Add the protein" when="has(protein, 'tofu')">
+  Drain the <Ref of="protein" fill="tofu" /> — no need to press it — and break
+  it into the pot in big chunks.
+</Step>
+
+<Step id="season" title="Season">
+  Add the <Ref of="seasonings" /> and let them cook a few minutes — the soy
+  sauce builds a slow-cooked, umami flavor.
+</Step>
+
+<Step id="add_ginger" title="Brighten it" when="has(extras, 'ginger')">
+  Stir in the <Ref of="extras" fill="ginger" /> — a small spoonful brightens
+  the whole pot.
+</Step>
+
+<Step id="add_vegetables" title="Add the vegetables">
+  Add the <Ref of="potato" /> and the <Ref of="vegetables" />, everything cut
+  large — big pieces keep the stew chunky. Let it all cook down for a moment.
+</Step>
+
+<Step id="tomato_juice" title="Tomatoes, juice and all" when="has(vegetables, 'diced_tomatoes')">
+  The <Ref of="vegetables" fill="diced_tomatoes" /> go in juice and all — their
+  liquid is the start of the broth.
+</Step>
+
+<Step id="simmer" title="Simmer">
+  Cover with just enough water to reach the top of the ingredients. Put the lid
+  on, drop to low heat, and simmer 25–30 minutes until the <Ref of="lentils" />
+  are soft and the broth has thickened.
+</Step>
+
+<Step id="finish_greens" title="Finish with greens">
+  Off the heat, stir in the <Ref of="greens" /> and let them wilt. Serve in big
+  bowls — one serving is a huge, filling portion.
+</Step>
+
 </ol>
+
+<div class="lang-en">
 
 ### Tips
 
@@ -165,16 +223,6 @@ roles:
 </div>
 
 <div class="lang-ja">
-
-<ol class="steps">
-<li><strong>香味野菜を準備</strong><p>にんにく約4片と玉ねぎ1個を大きめに刻む。ごろっとしたシチューなので、すべて食べごたえのある大きさに。</p></li>
-<li><strong>ベースを作る</strong><p>ダッチオーブンを中火で熱し、オリーブオイル大さじ1を入れる（鍋全体で使う油はこれだけ）。玉ねぎとにんにくを加えてしんなりさせる。</p></li>
-<li><strong>レンズ豆と豆腐を加える</strong><p>レンズ豆約½カップを洗って加える。豆腐は水気を切り（押す必要はない）、大きく崩しながら鍋に入れる。</p></li>
-<li><strong>味付け</strong><p>クミン、スモークパプリカ、塩、こしょう、減塩しょうゆ大さじ約2を加える。数分煮ると、しょうゆが長時間煮込んだような旨味を出す。</p></li>
-<li><strong>野菜を加える</strong><p>セロリ、じゃがいも、にんじん、残りの玉ねぎを大きめに切り、マッシュルームを洗う。すべて加え、ダイストマト1缶を汁ごと注ぐ。少し煮詰める。</p></li>
-<li><strong>煮込む</strong><p>材料の上ぎりぎりまで水を注ぐ。蓋をして弱火にし、レンズ豆が柔らかく煮汁がとろりとするまで25〜30分煮込む。</p></li>
-<li><strong>青菜で仕上げ</strong><p>ほうれん草約2カップを加え、しんなりさせる。大きなボウルによそう。1人前でもたっぷりの満足ボリューム。</p></li>
-</ol>
 
 ### コツ
 

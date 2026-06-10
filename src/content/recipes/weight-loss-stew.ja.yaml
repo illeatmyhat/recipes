@@ -20,6 +20,7 @@ roles.aromatics.fills.garlic.note: にんにく約4片を大きめに。
 roles.lentils.label: レンズ豆
 roles.lentils.why: 屋台骨。タンパク質・食物繊維・鉄分を加え、煮汁にとろみをつける。両方をこなすのはこれだけで、代替はない。
 roles.lentils.fills.lentils.note: 乾燥で約½カップ。ブラウンまたはグリーンは煮崩れしにくい。
+roles.lentils.fills.lentils.alias: レンズ豆
 
 roles.protein.label: タンパク質
 roles.protein.why: 満腹感にはタンパク質が必要。ただしパターン上は低脂肪であること。脂の多い部位はカロリー計算を崩す。
@@ -28,6 +29,7 @@ roles.protein.fills.tofu.note: 1丁。水切りのみでよく、押す必要は
 roles.potato.label: じゃがいも
 roles.potato.why: 満腹感の主役。安価でかさのある食材。翌日温め直すとレジスタントスターチができ、さらに良い。
 roles.potato.fills.potato.note: 鍋のかさの中心。食べごたえが出るよう大きめに切る。
+roles.potato.fills.potato.alias: じゃがいも
 
 roles.vegetables.label: 野菜
 roles.vegetables.why: ほぼゼロカロリーでかさと食物繊維を稼ぐ。高ボリュームの要。
@@ -35,6 +37,7 @@ roles.vegetables.fills.carrots.note: にんじん2〜3本を大きめに切る�
 roles.vegetables.fills.celery.note: 約4本。旨味の土台。
 roles.vegetables.fills.mushrooms.note: 約230g。さっと洗うだけでよい。
 roles.vegetables.fills.diced_tomatoes.note: 1缶を汁ごと。とろみとほどよい酸味。
+roles.vegetables.fills.diced_tomatoes.alias: ダイストマト
 
 roles.greens.label: 青菜
 roles.greens.why: ほぼゼロカロリーでかさと微量栄養素を加える。最後に入れて食感を残す。
@@ -46,8 +49,34 @@ roles.seasonings.fills.soy_sauce.note: 大さじ約2。約20kcalで煮込んだ�
 roles.seasonings.fills.cumin.note: 小さじ約1。温かく土っぽいベース。
 roles.seasonings.fills.smoked_paprika.note: 小さじ約1。肉なしでスモーキーなコク。
 roles.seasonings.fills.salt.note: 最後にしょうゆの後で味を見て調整。
+roles.seasonings.fills.salt.alias: 塩
 roles.seasonings.fills.black_pepper.note: 他の調味料と一緒に数回挽き入れる。
 
 roles.extras.label: お好みで
 roles.extras.why: お好みの引き締め役。パターンには必須ではない。
 roles.extras.fills.ginger.note: 少量のジンジャーパウダーが全体を引き締める。
+
+# Method steps — templates for the MDX body's <Step id> elements. `{role}`
+# renders the role's chosen fills as a list join; `{role:fill}` names one fill.
+steps.prep_aromatics.title: 香味野菜を準備
+steps.prep_aromatics: "{aromatics}を大きめに刻む。ごろっとしたシチューなので、すべて食べごたえのある大きさに。"
+steps.start_base_oil.title: ベースを作る
+steps.start_base_oil: "ダッチオーブンを中火で熱し、{added_fat}を入れる（鍋全体で使う油はこれだけ）。{aromatics}を加えてしんなりさせる。"
+steps.start_base_dry.title: ベースを作る
+steps.start_base_dry: "油を使わない場合：ダッチオーブンを中火で熱し、{aromatics}を少量の水で蒸し炒めにする。焦げつきそうになったら水を少し足す。"
+steps.add_lentils.title: レンズ豆を加える
+steps.add_lentils: "{lentils}を洗って加える。煮込むうちに煮汁にとろみがつく。"
+steps.add_protein.title: タンパク質を加える
+steps.add_protein: "{protein:tofu}は水気を切り（押す必要はない）、大きく崩しながら鍋に入れる。"
+steps.season.title: 味付け
+steps.season: "{seasonings}を加えて数分煮る。しょうゆが長時間煮込んだような旨味を出す。"
+steps.add_ginger.title: 香りづけ
+steps.add_ginger: "{extras:ginger}をひとさじ加えると、鍋全体の味が引き締まる。"
+steps.add_vegetables.title: 野菜を加える
+steps.add_vegetables: "{potato}と{vegetables}をすべて大きめに切って加える。少しの間煮詰める。"
+steps.tomato_juice.title: トマトは汁ごと
+steps.tomato_juice: "{vegetables:diced_tomatoes}は汁ごと入れる。この汁がスープの土台になる。"
+steps.simmer.title: 煮込む
+steps.simmer: "材料の上ぎりぎりまで水を注ぐ。蓋をして弱火にし、{lentils}が柔らかく煮汁がとろりとするまで25〜30分煮込む。"
+steps.finish_greens.title: 青菜で仕上げ
+steps.finish_greens: "火を止めて{greens}を加え、しんなりさせる。大きなボウルによそう。1人前でもたっぷりの満足ボリューム。"

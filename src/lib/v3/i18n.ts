@@ -50,6 +50,15 @@ function loadCatalog(slug: string, locale: Locale): Record<string, string> {
 }
 
 /**
+ * The raw flat catalog for one recipe+locale. Used by the method `<Step>`
+ * components, whose JA surface (`steps.<id>` templates) lives in the catalog
+ * but outside the frontmatter that {@link hydrateRecipe} covers.
+ */
+export function recipeCatalog(slug: string, locale: Locale): Record<string, string> {
+  return loadCatalog(slug, locale);
+}
+
+/**
  * Normalize a recipe's title to {@link Localized} regardless of shape: v1 holds
  * an inline `{ en, ja }`; v3 holds a canonical EN string with the JA in its
  * catalog. Used by the index, which lists both kinds.

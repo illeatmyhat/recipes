@@ -20,7 +20,10 @@ import CustomizeV3 from './CustomizeV3.svelte';
 import ShopV3 from './ShopV3.svelte';
 import CookV3 from './CookV3.svelte';
 import NutritionPanelV3 from './NutritionPanelV3.svelte';
+import MethodController from './MethodController.svelte';
 import { UI } from '../lib/i18n';
+import { recipeCatalog } from '../lib/v3/i18n';
+import { setMethodContext } from '../lib/v3/methodContext';
 import type { RecipeBundle } from '../lib/v3/types';
 
 interface Props {
@@ -30,6 +33,10 @@ interface Props {
 
 const { bundle, heroImage } = Astro.props;
 const { recipe } = bundle;
+
+// The MDX body (the slot) renders <Step>/<Ref> components, which read the
+// current recipe through this build-time context — see methodContext.ts.
+setMethodContext({ bundle, catalog: recipeCatalog(recipe.slug, 'ja') });
 ---
 
 <article class="recipe">
@@ -73,7 +80,8 @@ const { recipe } = bundle;
 
       <section class="method" aria-labelledby="method-heading">
         <h2 id="method-heading"><Bilingual text={UI.method} /></h2>
-        <div class="method-body"><slot /></div>
+        <div class="method-body" id="method-body"><slot /></div>
+        <MethodController client:idle bundle={bundle} />
       </section>
     </div>
 
@@ -126,5 +134,8 @@ const { recipe } = bundle;
   .method-body :global(ol.steps > li:first-child::before) { top: 0; }
   .method-body :global(ol.steps strong) { display: block; margin-bottom: 0.3rem; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent); }
   .method-body :global(ol.steps p) { margin: 0; color: var(--ink); }
+  /* Live refs — the spans the MethodController re-fills as fills change. A
+     quiet tint marks which words of the method are functions of your choices. */
+  .method-body :global(.m-ref) { background: var(--accent-soft); border-radius: 4px; padding: 0 0.2em; box-decoration-break: clone; }
   .sticky { position: sticky; top: 1.5rem; }
 </style>
