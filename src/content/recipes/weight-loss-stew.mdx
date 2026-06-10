@@ -7,27 +7,41 @@ hero_image: ./images/weight-loss-stew.jpg
 locales: [en, ja]
 servings_default: 4
 base_ingredients:
+  # — Oil & aromatics —
   - id: olive_oil
     amount: 15
     unit: ml
+    group:
+      en: Oil & aromatics
+      ja: 油・香味野菜
     notes:
       en: One tablespoon is all the added fat in the whole pot. Keeps the calorie density low.
       ja: 鍋全体で使う油はこの大さじ1だけ。カロリー密度を低く保つ。
   - id: garlic
     amount: 12
     unit: g
+    group:
+      en: Oil & aromatics
+      ja: 油・香味野菜
     notes:
       en: About four cloves, in big pieces. Goes in first with the onion.
       ja: にんにく約4片を大きめに刻む。玉ねぎと一緒に最初に炒める。
   - id: onion
     amount: 200
     unit: g
+    group:
+      en: Oil & aromatics
+      ja: 油・香味野菜
     notes:
       en: Roughly one large onion. Keep the chunks big for a stew with bite.
       ja: 大きめの玉ねぎ約1個。食べごたえが出るよう大きめに切る。
+  # — Protein —
   - id: lentils
     amount: 96
     unit: g
+    group:
+      en: Protein
+      ja: タンパク質
     notes:
       en: About ½ cup dry. Don't skip them — they add protein, fiber, iron, and thicken the broth.
       ja: 乾燥で約½カップ。省かないこと。タンパク質・食物繊維・鉄分を加え、煮汁にとろみをつける。
@@ -38,24 +52,37 @@ base_ingredients:
   - id: tofu
     amount: 396
     unit: g
+    group:
+      en: Protein
+      ja: タンパク質
     notes:
       en: One block. Just drain it — no need to press or squeeze. Break it up into the pot.
       ja: 1丁。水気を切るだけでよく、押したり絞ったりは不要。鍋の中で崩しながら加える。
+  # — Seasonings —
   - id: cumin
     amount: 2
     unit: g
+    group:
+      en: Seasonings
+      ja: 調味料
     notes:
       en: About a teaspoon. Warm, earthy base note.
       ja: 小さじ約1。温かみのある土っぽい風味のベース。
   - id: smoked_paprika
     amount: 2
     unit: g
+    group:
+      en: Seasonings
+      ja: 調味料
     notes:
       en: About a teaspoon. Adds smoky depth without any meat.
       ja: 小さじ約1。肉なしでスモーキーなコクを加える。
   - id: soy_sauce
     amount: 30
     unit: ml
+    group:
+      en: Seasonings
+      ja: 調味料
     notes:
       en: About 2 tablespoons. The umami that makes it taste slow-cooked — only ~20 calories.
       ja: 大さじ約2。長時間煮込んだような旨味を出す。約20キロカロリーのみ。
@@ -66,48 +93,73 @@ base_ingredients:
   - id: salt
     amount: 2
     unit: g
+    group:
+      en: Seasonings
+      ja: 調味料
     notes:
       en: Season to taste at the end, after the low-sodium soy sauce.
       ja: 減塩しょうゆを入れた後、最後に味を見て調整する。
   - id: black_pepper
     amount: 1
     unit: g
+    group:
+      en: Seasonings
+      ja: 調味料
     notes:
       en: A few grinds with the other seasonings.
       ja: 他の調味料と一緒に数回挽き入れる。
-  - id: celery
-    amount: 160
-    unit: g
-    notes:
-      en: About four stalks, cut large. Adds bulk and savory backbone.
-      ja: 約4本を大きめに切る。かさと旨味の土台になる。
-  - id: mushrooms
-    amount: 227
-    unit: g
-    notes:
-      en: About 8 oz. A quick rinse is fine — they're going into a stew.
-      ja: 約230g。シチューに入れるのでさっと洗うだけでよい。
+  # — Vegetables —
   - id: potato
     amount: 550
     unit: g
+    group:
+      en: Vegetables
+      ja: 野菜
     notes:
       en: The satiety star. Reheated leftovers form resistant starch — even better the next day.
       ja: 満腹感の主役。翌日温め直すとレジスタントスターチができ、さらに良い。
   - id: carrots
     amount: 200
     unit: g
+    group:
+      en: Vegetables
+      ja: 野菜
     notes:
       en: Two or three carrots, cut large for a hearty, bite-y stew.
       ja: にんじん2〜3本を大きめに切り、食べごたえを出す。
+  - id: celery
+    amount: 160
+    unit: g
+    group:
+      en: Vegetables
+      ja: 野菜
+    notes:
+      en: About four stalks, cut large. Adds bulk and savory backbone.
+      ja: 約4本を大きめに切る。かさと旨味の土台になる。
+  - id: mushrooms
+    amount: 227
+    unit: g
+    group:
+      en: Vegetables
+      ja: 野菜
+    notes:
+      en: About 8 oz. A quick rinse is fine — they're going into a stew.
+      ja: 約230g。シチューに入れるのでさっと洗うだけでよい。
   - id: diced_tomatoes
     amount: 411
     unit: g
+    group:
+      en: Vegetables
+      ja: 野菜
     notes:
       en: One can, juice and all. Adds fullness, body, and a little tang.
       ja: 1缶を汁ごと加える。ボリュームととろみ、ほどよい酸味を出す。
   - id: spinach
     amount: 60
     unit: g
+    group:
+      en: Vegetables
+      ja: 野菜
     notes:
       en: About two cups. Stir in at the very end and let it wilt down.
       ja: 約2カップ。最後に加え、しんなりするまで火を通す。
@@ -122,8 +174,8 @@ optional_ingredients:
         unit: g
         default: false
         notes:
-          en: A little grated ginger brightens the whole pot if you want it.
-          ja: お好みで、おろし生姜を少し加えると全体が引き締まる。
+          en: A little ground ginger brightens the whole pot if you want it.
+          ja: お好みで、ジンジャーパウダーを少し加えると全体が引き締まる。
 ---
 
 <div class="lang-en">

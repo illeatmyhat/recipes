@@ -1,0 +1,34 @@
+id: ginger
+fdc_id: 170926
+names:
+  en: Ground ginger
+  ja: ジンジャーパウダー
+aliases:
+  en:
+    - Ginger
+  ja:
+    - 生姜パウダー
+    - ショウガ
+availability:
+  us:
+    brands: []
+    note_en: Ground ginger from the spice aisle.
+  ja:
+    brands: []
+    note_en: Ground ginger.
+    note_ja: スーパーの調味料売り場で入手可能。
+nutrition:
+  per_100g:
+    calories: 335
+    fat: 4.24
+    saturated_fat: 2.599
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 27
+    carbohydrates: 71.62
+    fiber: 14.1
+    sugars: 3.39
+    protein: 8.98
+    calcium: 114
+    iron: 19.8
+density_g_per_ml: null

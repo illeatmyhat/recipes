@@ -1,0 +1,38 @@
+id: smoked_paprika
+# Nutrition is from plain paprika — the closest SR Legacy entry; smoked paprika
+# is not in the SR Legacy dataset. They are nutritionally equivalent; "smoked"
+# is a processing/flavor difference, conveyed by the name and recipe note.
+fdc_id: 171329
+names:
+  en: Smoked paprika
+  ja: スモークパプリカ
+aliases:
+  en:
+    - Pimentón
+    - Paprika
+  ja:
+    - パプリカ
+    - 燻製パプリカ
+availability:
+  us:
+    brands: []
+    note_en: Spanish smoked paprika (pimentón). Plain paprika works but loses the smoke.
+  ja:
+    brands: []
+    note_en: Smoked (Spanish) paprika; plain paprika is a milder substitute.
+    note_ja: スモークパプリカ（燻製）。普通のパプリカでも代用可だが燻製の風味は出ない。
+nutrition:
+  per_100g:
+    calories: 282
+    fat: 12.89
+    saturated_fat: 2.14
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 68
+    carbohydrates: 53.99
+    fiber: 34.9
+    sugars: 10.34
+    protein: 14.14
+    calcium: 229
+    iron: 21.14
+density_g_per_ml: null

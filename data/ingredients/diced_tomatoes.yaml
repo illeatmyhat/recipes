@@ -1,0 +1,35 @@
+id: diced_tomatoes
+fdc_id: 170051
+names:
+  en: Canned diced tomatoes
+  ja: ダイストマト缶
+aliases:
+  en:
+    - Diced tomatoes
+    - Canned tomatoes
+  ja:
+    - カットトマト
+    - トマト缶
+availability:
+  us:
+    brands: []
+    note_en: One standard can (about 14–15 oz), diced, used with its juice.
+  ja:
+    brands: []
+    note_en: One standard can of diced tomatoes, used with its juice.
+    note_ja: カットトマト缶1個（約400g）、汁ごと使用。
+nutrition:
+  per_100g:
+    calories: 16
+    fat: 0.25
+    saturated_fat: 0.034
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 115
+    carbohydrates: 3.47
+    fiber: 1.9
+    sugars: 2.55
+    protein: 0.79
+    calcium: 33
+    iron: 0.57
+density_g_per_ml: null
