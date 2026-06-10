@@ -1,0 +1,35 @@
+id: onion
+fdc_id: 170000
+names:
+  en: Onion
+  ja: 玉ねぎ
+aliases:
+  en:
+    - Yellow onion
+    - Brown onion
+  ja:
+    - たまねぎ
+    - オニオン
+availability:
+  us:
+    brands: []
+    note_en: Yellow or brown onions, sold loose in the produce section.
+  ja:
+    brands: []
+    note_en: Sold loose in every supermarket.
+    note_ja: スーパーの野菜売り場で入手可能。
+nutrition:
+  per_100g:
+    calories: 40
+    fat: 0.1
+    saturated_fat: 0.042
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 4
+    carbohydrates: 9.34
+    fiber: 1.7
+    sugars: 4.24
+    protein: 1.1
+    calcium: 23
+    iron: 0.21
+density_g_per_ml: null

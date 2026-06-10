@@ -1,0 +1,35 @@
+id: olive_oil
+fdc_id: 171413
+names:
+  en: Olive oil
+  ja: オリーブオイル
+aliases:
+  en:
+    - Extra virgin olive oil
+    - Cooking olive oil
+  ja:
+    - エキストラバージンオリーブオイル
+    - オリーブ油
+availability:
+  us:
+    brands: []
+    note_en: Any plain olive oil works; extra virgin for the most flavor.
+  ja:
+    brands: []
+    note_en: Sold in every supermarket.
+    note_ja: スーパーで一般的に入手可能。
+nutrition:
+  per_100g:
+    calories: 884
+    fat: 100
+    saturated_fat: 13.808
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 2
+    carbohydrates: 0
+    fiber: 0
+    sugars: 0
+    protein: 0
+    calcium: 1
+    iron: 0.56
+density_g_per_ml: 0.91

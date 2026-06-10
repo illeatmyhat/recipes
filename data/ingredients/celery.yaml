@@ -1,0 +1,33 @@
+id: celery
+fdc_id: 169988
+names:
+  en: Celery
+  ja: セロリ
+aliases:
+  en:
+    - Celery stalks
+  ja:
+    - セロリー
+availability:
+  us:
+    brands: []
+    note_en: Sold as whole bunches in the produce section.
+  ja:
+    brands: []
+    note_en: Sold as bunches in every supermarket.
+    note_ja: スーパーの野菜売り場で入手可能。
+nutrition:
+  per_100g:
+    calories: 14
+    fat: 0.17
+    saturated_fat: 0.042
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 80
+    carbohydrates: 2.97
+    fiber: 1.6
+    sugars: 1.34
+    protein: 0.69
+    calcium: 40
+    iron: 0.2
+density_g_per_ml: null

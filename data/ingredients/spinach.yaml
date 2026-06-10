@@ -1,0 +1,35 @@
+id: spinach
+fdc_id: 168462
+names:
+  en: Spinach
+  ja: ほうれん草
+aliases:
+  en:
+    - Fresh spinach
+    - Baby spinach
+  ja:
+    - ホウレンソウ
+    - ベビースピナッチ
+availability:
+  us:
+    brands: []
+    note_en: Fresh bunches or bagged baby spinach in the produce section.
+  ja:
+    brands: []
+    note_en: Sold in bunches or bags in every supermarket.
+    note_ja: スーパーの野菜売り場で入手可能。
+nutrition:
+  per_100g:
+    calories: 23
+    fat: 0.39
+    saturated_fat: 0.063
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 79
+    carbohydrates: 3.63
+    fiber: 2.2
+    sugars: 0.42
+    protein: 2.86
+    calcium: 99
+    iron: 2.71
+density_g_per_ml: null

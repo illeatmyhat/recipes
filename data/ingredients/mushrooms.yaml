@@ -1,0 +1,35 @@
+id: mushrooms
+fdc_id: 169251
+names:
+  en: White mushrooms
+  ja: マッシュルーム
+aliases:
+  en:
+    - Button mushrooms
+    - Cremini mushrooms
+  ja:
+    - ホワイトマッシュルーム
+    - ブラウンマッシュルーム
+availability:
+  us:
+    brands: []
+    note_en: Sold whole or pre-sliced in the produce section.
+  ja:
+    brands: []
+    note_en: Sold whole or sliced in supermarkets.
+    note_ja: スーパーの野菜売り場で入手可能。
+nutrition:
+  per_100g:
+    calories: 22
+    fat: 0.34
+    saturated_fat: 0.05
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 5
+    carbohydrates: 3.26
+    fiber: 1
+    sugars: 1.98
+    protein: 3.09
+    calcium: 3
+    iron: 0.5
+density_g_per_ml: null

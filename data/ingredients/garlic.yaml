@@ -1,0 +1,35 @@
+id: garlic
+fdc_id: 169230
+names:
+  en: Garlic
+  ja: にんにく
+aliases:
+  en:
+    - Fresh garlic
+    - Garlic cloves
+  ja:
+    - ニンニク
+    - ガーリック
+availability:
+  us:
+    brands: []
+    note_en: Sold as whole bulbs in the produce section.
+  ja:
+    brands: []
+    note_en: Sold as whole bulbs in every supermarket.
+    note_ja: スーパーの野菜売り場で球のまま入手可能。
+nutrition:
+  per_100g:
+    calories: 149
+    fat: 0.5
+    saturated_fat: 0.089
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 17
+    carbohydrates: 33.06
+    fiber: 2.1
+    sugars: 1
+    protein: 6.36
+    calcium: 181
+    iron: 1.7
+density_g_per_ml: null

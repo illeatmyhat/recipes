@@ -10,7 +10,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { load } from 'js-yaml';
-import { scaleNutrition } from './nutrition';
+import { emptyNutrition, scaleNutrition } from './nutrition';
 import type {
   IngredientData,
   IngredientRef,
@@ -27,6 +27,36 @@ const INGREDIENT_DIR = join(process.cwd(), 'data', 'ingredients');
 /** In-process cache so the same YAML file is parsed once per build. */
 const ingredientCache = new Map<string, IngredientData>();
 
+/** Turn an ingredient id into a readable label, e.g. `smoked_paprika` -> `Smoked paprika`. */
+function humanizeId(id: string): string {
+  const words = id.replace(/_/g, ' ').trim();
+  return words.charAt(0).toUpperCase() + words.slice(1);
+}
+
+/**
+ * A neutral stand-in for an ingredient whose `/data/ingredients/<id>.yaml` does
+ * not exist yet. It carries zero nutrition (so totals stay honest rather than
+ * fabricated), a humanized name, and density 1 so `ml` refs can still be weighed.
+ * The build degrades cleanly — one missing entry no longer fails the whole site —
+ * and the placeholder vanishes automatically once the real YAML lands. Loud
+ * `console.warn` keeps the gap visible (and surfaces typo'd ids).
+ */
+function placeholderIngredient(id: string): IngredientData {
+  const name = humanizeId(id);
+  return {
+    id,
+    fdc_id: 0,
+    names: { en: name, ja: name },
+    aliases: { en: [], ja: [] },
+    availability: {
+      us: { brands: [], note_en: 'Nutrition data pending.' },
+      ja: { brands: [], note_en: 'Nutrition data pending.', note_ja: '栄養データは準備中です。' },
+    },
+    nutrition: { per_100g: emptyNutrition() },
+    density_g_per_ml: 1,
+  };
+}
+
 /** Load and parse a single ingredient YAML file by its id. */
 function loadIngredient(id: string): IngredientData {
   const cached = ingredientCache.get(id);
@@ -37,10 +67,13 @@ function loadIngredient(id: string): IngredientData {
   try {
     raw = readFileSync(file, 'utf8');
   } catch {
-    throw new Error(
-      `resolveRecipe: ingredient "${id}" not found at ${file}. ` +
-        `Every id referenced in recipe frontmatter needs a /data/ingredients/<id>.yaml file.`,
+    console.warn(
+      `resolveRecipe: ingredient "${id}" has no ${file} — using a zero-nutrition ` +
+        `placeholder. Add /data/ingredients/${id}.yaml (or fix a typo'd id).`,
     );
+    const placeholder = placeholderIngredient(id);
+    ingredientCache.set(id, placeholder);
+    return placeholder;
   }
 
   const data = load(raw) as IngredientData;

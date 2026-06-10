@@ -1,0 +1,35 @@
+id: tofu
+fdc_id: 172476
+names:
+  en: Tofu
+  ja: 豆腐
+aliases:
+  en:
+    - Firm tofu
+    - Bean curd
+  ja:
+    - 木綿豆腐
+    - とうふ
+availability:
+  us:
+    brands: []
+    note_en: Refrigerated tubs near the produce or dairy section. Firm or extra-firm works best.
+  ja:
+    brands: []
+    note_en: Sold everywhere; use momen (firm) tofu.
+    note_ja: スーパーで一般的に入手可能。木綿豆腐がおすすめ。
+nutrition:
+  per_100g:
+    calories: 76
+    fat: 4.78
+    saturated_fat: 0.691
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 7
+    carbohydrates: 1.87
+    fiber: 0.3
+    sugars: 0.62
+    protein: 8.08
+    calcium: 350
+    iron: 5.36
+density_g_per_ml: null

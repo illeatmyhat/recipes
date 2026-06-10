@@ -1,0 +1,34 @@
+id: carrots
+fdc_id: 170393
+names:
+  en: Carrots
+  ja: にんじん
+aliases:
+  en:
+    - Carrot
+  ja:
+    - ニンジン
+    - 人参
+availability:
+  us:
+    brands: []
+    note_en: Sold loose or bagged in the produce section.
+  ja:
+    brands: []
+    note_en: Sold loose or bagged in every supermarket.
+    note_ja: スーパーの野菜売り場で入手可能。
+nutrition:
+  per_100g:
+    calories: 41
+    fat: 0.24
+    saturated_fat: 0.032
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 69
+    carbohydrates: 9.58
+    fiber: 2.8
+    sugars: 4.74
+    protein: 0.93
+    calcium: 33
+    iron: 0.3
+density_g_per_ml: null
