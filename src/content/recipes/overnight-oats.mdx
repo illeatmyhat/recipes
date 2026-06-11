@@ -145,10 +145,10 @@ roles:
   toppings:
     label: Toppings
     why: >-
-      The base is uniformly soft, so at least one topping for contrast —
-      crunch, extra protein, or good fats. Each one earns its spot a
+      The base is uniformly soft, so toppings bring the contrast — crunch,
+      extra protein, or good fats. All optional; each one earns its spot a
       different way.
-    range: { min: 1 }
+    range: { min: 0 }
     fills:
       - id: hemp_seeds
         amount: { value: 15, unit: g }
@@ -218,7 +218,7 @@ import Ref from '../../components/Ref.astro';
   overnight they brown, turn bitter, or fall apart.
 </Step>
 
-<Step id="finish" title="Finish">
+<Step id="finish" title="Finish" when="count(toppings) > 0">
   Add the <Ref of="toppings" /> and eat right away — the contrast between
   the cold, creamy base and whatever you put on top is the point of the
   bowl.

@@ -10,10 +10,13 @@
  *   and   := cmp ('&&' cmp)*
  *   cmp   := unary (('==' | '!=' | '<' | '>' | '<=' | '>=') unary)?
  *   unary := '!' unary | atom
- *   atom  := name | literal | 'has(' name ',' string ')' | '(' expr ')'
+ *   atom  := name | literal | 'has(' name ',' string ')' | 'count(' name ')'
+ *          | '(' expr ')'
  *
  * `name` resolves against `Params`: `servings`, a knob value, or a role (its
- * single selected fill id). `has(role, 'x')` tests membership of a selection.
+ * single selected fill id). `has(role, 'x')` tests membership of a selection;
+ * `count(role)` is its size, so `count(toppings) > 0` guards a step on "any
+ * fill chosen" — the only way to read an optional multi-fill role generally.
  */
 import type { Params } from './types';
 
@@ -24,6 +27,7 @@ export type GuardAst =
   | { type: 'not'; expr: GuardAst }
   | { type: 'cmp'; op: CmpOp; left: GuardAst; right: GuardAst }
   | { type: 'has'; role: string; value: string }
+  | { type: 'count'; role: string }
   | { type: 'name'; name: string }
   | { type: 'lit'; value: string | number | boolean };
 
@@ -190,6 +194,14 @@ class Parser {
         this.expectPunc(')');
         return { type: 'has', role: role.v, value: val.v };
       }
+      if (t.v === 'count') {
+        this.expectPunc('(');
+        const role = this.peek();
+        if (!role || role.t !== 'id') throw new Error(`guard: count() needs a role in "${this.src}"`);
+        this.pos += 1;
+        this.expectPunc(')');
+        return { type: 'count', role: role.v };
+      }
       return { type: 'name', name: t.v };
     }
     throw new Error(`guard: unexpected token in "${this.src}"`);
@@ -247,6 +259,8 @@ function evalNode(n: GuardAst, p: Params): Value {
       return compare(n.op, evalNode(n.left, p), evalNode(n.right, p));
     case 'has':
       return (p.selection[n.role] ?? []).includes(n.value);
+    case 'count':
+      return (p.selection[n.role] ?? []).length;
     case 'name':
       return resolveName(n.name, p);
     case 'lit':
@@ -261,11 +275,29 @@ export function evalGuard(src: string, p: Params): boolean {
 
 /**
  * The roles a guard proves *bound* (selection ≥ 1): a positive `has(role, …)`
- * appearing as a top-level `&&` conjunct, never negated and never under `||`.
- * Used by the build-time boundness lint (a step reading a min:0 role must be
- * guarded by one of these). Conservative by design — see docs/recipe-model.md.
+ * or a `count(role) > 0` / `count(role) >= 1` comparison (either operand
+ * order) appearing as a top-level `&&` conjunct, never negated and never
+ * under `||`. Used by the build-time boundness lint (a step reading a min:0
+ * role must be guarded by one of these). Conservative by design — see
+ * docs/recipe-model.md.
  */
 export function collectPositiveHas(ast: GuardAst): Set<string> {
+  // `count(role) OP literal` (or mirrored) proving selection ≥ 1.
+  const MIRROR: Partial<Record<CmpOp, CmpOp>> = { '<': '>', '>': '<', '<=': '>=', '>=': '<=' };
+  const countAtLeastOne = (n: GuardAst): string | null => {
+    if (n.type !== 'cmp') return null;
+    let count: GuardAst = n.left;
+    let lit: GuardAst = n.right;
+    let op: CmpOp = n.op;
+    if (count.type !== 'count') {
+      // mirrored form: `0 < count(role)` / `1 <= count(role)`
+      [count, lit] = [lit, count];
+      op = MIRROR[op] ?? op;
+    }
+    if (count.type !== 'count' || lit.type !== 'lit' || typeof lit.value !== 'number') return null;
+    const bound = (op === '>' && lit.value >= 0) || (op === '>=' && lit.value >= 1);
+    return bound ? count.role : null;
+  };
   const out = new Set<string>();
   const walkConjuncts = (n: GuardAst): void => {
     if (n.type === 'and') {
@@ -273,8 +305,11 @@ export function collectPositiveHas(ast: GuardAst): Set<string> {
       walkConjuncts(n.right);
     } else if (n.type === 'has') {
       out.add(n.role);
+    } else {
+      const role = countAtLeastOne(n);
+      if (role !== null) out.add(role);
     }
-    // or/not/cmp/name/lit do not contribute a guarantee
+    // or/not/name/lit and other cmp shapes do not contribute a guarantee
   };
   walkConjuncts(ast);
   return out;

@@ -48,7 +48,7 @@ roles.fruits.fills.mango.note: 冷凍が安くて味も十分。前夜から冷�
 roles.fruits.fills.mango.alias: マンゴー
 
 roles.toppings.label: トッピング
-roles.toppings.why: ベースは一様にやわらかいので、対比のために最低ひとつ — 食感・タンパク質・良質な脂質。それぞれ役割が違う。
+roles.toppings.why: ベースは一様にやわらかいので、トッピングで対比をつける — 食感・タンパク質・良質な脂質。すべてお好みで。それぞれ役割が違う。
 roles.toppings.fills.hemp_seeds.note: 必須アミノ酸9種を含む完全タンパク質で、ベースに混ざって目立たない。万能の一番手。
 roles.toppings.fills.pumpkin_seeds.note: 植物性では最高の亜鉛源。すぐやわらかくなるので、食べる直前に散らす。
 roles.toppings.fills.pumpkin_seeds.alias: かぼちゃの種

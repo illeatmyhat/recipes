@@ -7,9 +7,10 @@
  * (e.g. `roles.protein.why`, `roles.protein.fills.tofu.alias`). `hydrateRecipe`
  * merges canonical + catalog into the `Localized` shape the engine consumes.
  *
- * Missing keys fall back to the canonical EN and are reported (completeness
- * lint — a loud warning for now; the eventual gate is an error). Touches the
- * filesystem — build time only.
+ * Completeness is a build ERROR (decided 2026-06-10): a recipe declaring a
+ * locale must translate every key — an untranslated string blocks deploy
+ * rather than silently shipping English. (Staleness stays a warning; it needs
+ * human review.) Touches the filesystem — build time only.
  *
  * Scope note: this localizes the v3 **frontmatter** content. The method *body*
  * moves to canonical-EN + catalog with the `<Step id>` components (#3); the
@@ -194,10 +195,12 @@ export function hydrateRecipe(
     customize_title: locOpt(fm.customize_title, 'customize_title', ctx),
   };
 
-  if (ctx.missing.length > 0) {
-    console.warn(
-      `v3 i18n: recipe "${fm.slug}" is missing ${ctx.missing.length} ja catalog ` +
-        `key(s) (fell back to EN): ${ctx.missing.join(', ')}`,
+  // Completeness gate: only recipes that declare the locale owe it a full
+  // catalog (an EN-only recipe is legitimate and skips this entirely).
+  if (ctx.missing.length > 0 && fm.locales.includes('ja')) {
+    throw new Error(
+      `v3 i18n: recipe "${fm.slug}" declares ja but is missing ${ctx.missing.length} ` +
+        `catalog key(s) in ${fm.slug}.ja.yaml: ${ctx.missing.join(', ')}`,
     );
   }
   return hydrated;

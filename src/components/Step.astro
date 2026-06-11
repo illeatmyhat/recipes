@@ -15,8 +15,8 @@
  * - boundness: a step reading a `min: 0` role must carry a `when` that proves
  *   it bound — a positive `has(role, …)` conjunct (docs/recipe-model.md);
  * - unknown role/fill reads throw (via refText);
- * - missing `steps.<id>` catalog keys warn and fall back to the EN surface,
- *   mirroring the frontmatter completeness lint in src/lib/v3/i18n.ts.
+ * - missing `steps.<id>` catalog keys fail the build when the recipe declares
+ *   ja, mirroring the frontmatter completeness gate in src/lib/v3/i18n.ts.
  */
 import { collectPositiveHas, evalGuard, parseGuard } from '../lib/v3/guards';
 import { htmlRefReads, renderStepTemplate, templateReads } from '../lib/v3/method';
@@ -40,16 +40,18 @@ if (enHtml === '') {
   throw new Error(`v3 method: step "${id}" has no body — write the canonical EN prose as its children.`);
 }
 
-// JA surface from the catalog (template + title), EN fallback with a warning.
+// JA surface from the catalog (template + title). A recipe that declares ja
+// owes every step a template — missing keys fail the build (same completeness
+// gate as the frontmatter, src/lib/v3/i18n.ts); an EN-only recipe falls back.
 const jaTemplate = catalog[`steps.${id}`];
 const jaTitle = catalog[`steps.${id}.title`];
 const missing: string[] = [];
 if (jaTemplate === undefined) missing.push(`steps.${id}`);
 if (title !== undefined && jaTitle === undefined) missing.push(`steps.${id}.title`);
-if (missing.length > 0) {
-  console.warn(
-    `v3 method: recipe "${recipe.slug}" is missing ja catalog key(s) ` +
-      `(fell back to EN): ${missing.join(', ')}`,
+if (missing.length > 0 && recipe.locales.includes('ja')) {
+  throw new Error(
+    `v3 method: recipe "${recipe.slug}" declares ja but is missing catalog ` +
+      `key(s): ${missing.join(', ')}`,
   );
 }
 const jaHtml =
