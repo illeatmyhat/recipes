@@ -5,10 +5,15 @@
   // geography is per-locale data on the ingredient (`aisle`): the same list
   // re-groups when the locale flips — dark soy is a specialty errand for a
   // US shopper and an ordinary condiments-aisle row for a Chinese one. Rows
-  // merge by ingredient id. An ingredient with no aisle at all is NOT
+  // merge by ingredient id. A REAL ingredient with no aisle at all is NOT
   // bought (tap water): it never appears here, while staying a real
-  // ingredient in Cook and the nutrition math. When every row is a primary-
-  // store row, the store heading is dropped — one store is just "the list".
+  // ingredient in Cook and the nutrition math — but a PLACEHOLDER (missing
+  // or typo'd ingredient data) is aisle-less too, and that one must stay
+  // visible: it files under the primary store's "other" section rather than
+  // silently dropping off the list. When the single errand is the primary
+  // store, its heading is dropped — one store is just "the list"; a lone
+  // online or specialty errand keeps its heading (for order-ahead it IS the
+  // lead-time signal).
   import { onMount } from 'svelte';
   import { locale } from './LocaleStore';
   import { params, resolved, resolveBundle, initRecipe } from './RecipeStore';
@@ -32,6 +37,7 @@
     id: string;
     names: Localized;
     grams: number;
+    placeholder: boolean;
   }
   interface Section {
     id: StoreSection;
@@ -56,12 +62,22 @@
     for (const r of current.rows) {
       const existing = merged.get(r.id);
       if (existing) existing.grams += r.grams;
-      else merged.set(r.id, { id: r.id, names: r.names, grams: r.grams });
+      else
+        merged.set(r.id, {
+          id: r.id,
+          names: r.names,
+          grams: r.grams,
+          placeholder: r.placeholder,
+        });
     }
     const byStore = new Map<Store, Map<StoreSection, Line[]>>();
     for (const line of merged.values()) {
-      const placement = placementOf(line.id, $locale);
-      if (!placement) continue; // not a bought ingredient (e.g. water)
+      const placement =
+        placementOf(line.id, $locale) ??
+        // Missing ingredient data must not read as "deliberately not bought":
+        // surface the row under primary/other so the shopper still sees it.
+        (line.placeholder ? { store: 'primary' as const, section: 'other' as const } : null);
+      if (!placement) continue; // a real, aisle-less food is not bought (e.g. water)
       const bySection = byStore.get(placement.store) ?? new Map<StoreSection, Line[]>();
       byStore.set(placement.store, bySection);
       const lines = bySection.get(placement.section);
@@ -88,7 +104,7 @@
   <div class="errands">
     {#each errands as errand (errand.id)}
       <div class="store">
-        {#if errands.length > 1}
+        {#if errands.length > 1 || errand.id !== 'primary'}
           <h3 class="store-head">{L(errand.label)}</h3>
         {/if}
         <div class="sections">

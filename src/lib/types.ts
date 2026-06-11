@@ -115,33 +115,40 @@ export interface MarketGuidance {
  * list is errands, not one walk through one imaginary store: `primary` is
  * the everyday supermarket (the default), `specialty` the market's second
  * stop (a Chinese grocery, an Italian deli — each locale's catalog names
- * it), and `online` is order-ahead — not on any local shelf. Stores render
- * in `STORE_ORDER` (src/lib/i18n.ts): online FIRST (its defining property
- * is lead time, so the cook must see it before the trip), then primary,
- * then specialty. Display-only: resolution never reads it.
+ * it), and `online` is order-ahead — not on any local shelf. The array IS
+ * the errand render order: online FIRST (its defining property is lead
+ * time, so the cook must see it before the trip), then primary, then
+ * specialty. Display-only: resolution never reads it. The `Store` union is
+ * derived from this array so the id set, the render walk, and the catalog
+ * completeness gate (src/lib/i18n.ts) can never drift apart.
  */
-export type Store = 'online' | 'primary' | 'specialty';
+export const STORE_IDS = ['online', 'primary', 'specialty'] as const;
+export type Store = (typeof STORE_IDS)[number];
 
 /**
- * Supermarket sections the shopping list can group by. One shared id space;
- * each locale's stores pick from it independently (store geography is not an
- * invariant fact about a food — tofu is its own refrigerated soy section in
- * Japan, dairy-adjacent in the US; soy sauce is a major aisle in Japan, an
- * international shelf-slice in the US). Labels live in `STORE_SECTIONS`
- * (src/lib/i18n.ts), in store-walk order.
+ * Supermarket sections the shopping list can group by, in store-walk render
+ * order. One shared id space; each locale's stores pick from it
+ * independently (store geography is not an invariant fact about a food —
+ * tofu is its own refrigerated soy section in Japan, dairy-adjacent in the
+ * US; soy sauce is a major aisle in Japan, an international shelf-slice in
+ * the US). Labels live in `STORE_SECTIONS` (src/lib/i18n.ts). The
+ * `StoreSection` union is derived from this array — adding a section here
+ * is the whole engine-side change.
  */
-export type StoreSection =
-  | 'produce'
-  | 'meat_seafood'
-  | 'tofu_soy'
-  | 'dairy_eggs'
-  | 'dry_goods'
-  | 'canned'
-  | 'condiments'
-  | 'spices'
-  | 'oils'
-  | 'international'
-  | 'other';
+export const SECTION_IDS = [
+  'produce',
+  'meat_seafood',
+  'tofu_soy',
+  'dairy_eggs',
+  'dry_goods',
+  'canned',
+  'condiments',
+  'spices',
+  'oils',
+  'international',
+  'other',
+] as const;
+export type StoreSection = (typeof SECTION_IDS)[number];
 
 /**
  * Where one locale buys a food: a store plus that store's section. In the

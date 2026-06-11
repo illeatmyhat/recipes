@@ -27,11 +27,13 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { load } from 'js-yaml';
-import { emptyNutrition } from '../nutrition';
+import { emptyNutrition, NUTRIENT_KEYS } from '../nutrition';
 import { fallbackNames } from './names';
 import {
   LOCALES,
   perLocale,
+  SECTION_IDS,
+  STORE_IDS,
   type AislePlacement,
   type Locale,
   type Localized,
@@ -76,17 +78,57 @@ interface IngredientLocaleData {
   availability?: RawGuidance;
 }
 
-/** Normalize an authored aisle: bare section ⇒ the primary store. */
-function normalizeAisle(raw: RawAisle): AislePlacement {
-  return typeof raw === 'string' ? { store: 'primary', section: raw } : raw;
+/**
+ * Normalize an authored aisle: bare section ⇒ the primary store. The store
+ * and section values are validated against the engine id sets here — the
+ * YAML arrives as an unchecked cast, and the Shop walk renders only known
+ * ids, so an unvalidated typo would silently drop the row from the list.
+ */
+function normalizeAisle(id: string, locale: Locale, raw: RawAisle): AislePlacement {
+  const placement = typeof raw === 'string' ? { store: 'primary' as const, section: raw } : raw;
+  if (!(STORE_IDS as readonly string[]).includes(placement.store)) {
+    throw new Error(
+      `recipe db: ingredient "${id}" ${locale} aisle has unknown store ` +
+        `"${placement.store}" — one of: ${STORE_IDS.join(', ')}.`,
+    );
+  }
+  if (!(SECTION_IDS as readonly string[]).includes(placement.section)) {
+    throw new Error(
+      `recipe db: ingredient "${id}" ${locale} aisle has unknown section ` +
+        `"${placement.section}" — one of: ${SECTION_IDS.join(', ')}.`,
+    );
+  }
+  return placement;
 }
 
-/** Normalize authored guidance: bare-string notes become MarketNote objects. */
-function normalizeGuidance(raw: RawGuidance): MarketGuidance {
-  return {
-    brands: raw.brands,
-    notes: raw.notes?.map((n) => (typeof n === 'string' ? { text: n } : n)),
-  };
+/** First value that appears twice, or undefined when all are unique. */
+function firstDup(values: readonly string[] | undefined): string | undefined {
+  const seen = new Set<string>();
+  for (const v of values ?? []) {
+    if (seen.has(v)) return v;
+    seen.add(v);
+  }
+  return undefined;
+}
+
+/**
+ * Normalize authored guidance: bare-string notes become MarketNote objects.
+ * Duplicate note texts / brands are a build error — the Shop surface keys
+ * its lists by these strings, and Svelte throws on duplicate keys at
+ * hydration (in production too), which would kill the whole island.
+ */
+function normalizeGuidance(id: string, locale: Locale, raw: RawGuidance): MarketGuidance {
+  const notes = raw.notes?.map((n) => (typeof n === 'string' ? { text: n } : n));
+  const dupNote = firstDup(notes?.map((n) => n.text));
+  const dupBrand = firstDup(raw.brands);
+  if (dupNote !== undefined || dupBrand !== undefined) {
+    throw new Error(
+      `recipe db: ingredient "${id}" ${locale} availability repeats the ` +
+        (dupNote !== undefined ? `note "${dupNote}"` : `brand "${dupBrand}"`) +
+        ` — entries must be unique.`,
+    );
+  }
+  return { brands: raw.brands, notes };
 }
 
 const INGREDIENT_DIR = join(process.cwd(), 'data', 'ingredients');
@@ -98,7 +140,9 @@ const cache = new Map<string, LoadedIngredient>();
 const coresByFdc = new Map<number, { id: string; per100gJson: string }>();
 
 function checkSharedFdc(id: string, core: IngredientCore): void {
-  const per100gJson = JSON.stringify(core.nutrition.per_100g);
+  // Serialize values in the fixed NUTRIENT_KEYS order: the comparison must
+  // care about numbers, not the author's YAML key order.
+  const per100gJson = JSON.stringify(NUTRIENT_KEYS.map((k) => core.nutrition.per_100g[k]));
   const prior = coresByFdc.get(core.fdc_id);
   if (prior && prior.id !== id && prior.per100gJson !== per100gJson) {
     throw new Error(
@@ -146,10 +190,14 @@ function assemble(id: string, core: IngredientCore): IngredientData {
     names[locale] = loc.names;
     if (loc.aliases !== undefined) data.aliases[locale] = loc.aliases;
     if (loc.aisle !== undefined) {
-      (data.aisle ??= {} as Record<Locale, AislePlacement>)[locale] = normalizeAisle(loc.aisle);
+      (data.aisle ??= {} as Record<Locale, AislePlacement>)[locale] = normalizeAisle(
+        id,
+        locale,
+        loc.aisle,
+      );
     }
     if (loc.availability !== undefined) {
-      (data.availability ??= {})[locale] = normalizeGuidance(loc.availability);
+      (data.availability ??= {})[locale] = normalizeGuidance(id, locale, loc.availability);
     }
   }
   // Aisle is all-or-nothing across locales: store geography either exists for
@@ -181,8 +229,10 @@ export const loadIngredient: IngredientLookup = (id: string): LoadedIngredient =
     checkSharedFdc(id, parsed);
     core = parsed;
   } catch (err) {
-    // A genuine parse/id error should be loud; a missing core file degrades.
-    if (err instanceof Error && err.message.startsWith('recipe db:')) throw err;
+    // Only a MISSING core file degrades; anything else (a YAML syntax error,
+    // an id mismatch, a shared-fdc divergence) must stay loud — deploying a
+    // zero-nutrition placeholder for a file that exists is silent data loss.
+    if ((err as { code?: string }).code !== 'ENOENT') throw err;
     console.warn(
       `recipe db: ingredient "${id}" has no ${file} — using a zero-nutrition ` +
         `placeholder. Add /data/ingredients/${id}.yaml (or fix a typo'd id).`,

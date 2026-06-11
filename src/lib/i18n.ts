@@ -15,6 +15,8 @@ import {
   isLocale,
   LOCALES,
   perLocale,
+  SECTION_IDS,
+  STORE_IDS,
   type Locale,
   type Localized,
   type NutrientKey,
@@ -104,29 +106,6 @@ const UI_KEYS = [
 /** Key of a known UI phrase. */
 export type UIKey = (typeof UI_KEYS)[number];
 
-/**
- * Errand order of the shopping list's stores (Q15; labels live in the
- * catalogs). Order-ahead leads: its defining property is lead time, so the
- * cook must see it before any trip begins; the everyday supermarket comes
- * before the specialty stop.
- */
-const STORE_ORDER: readonly Store[] = ['online', 'primary', 'specialty'];
-
-/** Store-walk order of the shopping-list sections (labels live in the catalogs). */
-const SECTION_ORDER: readonly StoreSection[] = [
-  'produce',
-  'meat_seafood',
-  'tofu_soy',
-  'dairy_eggs',
-  'dry_goods',
-  'canned',
-  'condiments',
-  'spices',
-  'oils',
-  'international',
-  'other',
-];
-
 // ── completeness gate ─────────────────────────────────────────────────────────
 // The catalogs are hand-edited YAML; this module is the schema. Key-set drift
 // (between locales, or between a catalog and the typed key space) throws here,
@@ -135,8 +114,8 @@ const SECTION_ORDER: readonly StoreSection[] = [
   const expected = [
     ...UI_KEYS.map((k) => `ui.${k}`),
     ...NUTRIENT_KEYS.map((k) => `nutrients.${k}`),
-    ...STORE_ORDER.map((k) => `stores.${k}`),
-    ...SECTION_ORDER.map((k) => `sections.${k}`),
+    ...STORE_IDS.map((k) => `stores.${k}`),
+    ...SECTION_IDS.map((k) => `sections.${k}`),
   ].sort();
   for (const locale of LOCALES) {
     const actual = Object.keys(CATALOGS[locale]).sort();
@@ -176,9 +155,11 @@ export const NUTRIENT_LABELS: Record<NutrientKey, Localized> = Object.fromEntrie
  * Store labels in errand order — the shopping list's top-level groups (Q15).
  * Each locale's catalog names its own stores (the specialty stop especially:
  * what it is differs by market); which store carries a food is per-locale
- * data on the ingredient (`aisle`, see src/lib/types.ts).
+ * data on the ingredient (`aisle`, see src/lib/types.ts). Order and id set
+ * come from `STORE_IDS` — the same single source the `Store` union and the
+ * completeness gate derive from.
  */
-export const STORES: ReadonlyArray<{ id: Store; label: Localized }> = STORE_ORDER.map(
+export const STORES: ReadonlyArray<{ id: Store; label: Localized }> = STORE_IDS.map(
   (id) => ({ id, label: phraseAt(`stores.${id}`) }),
 );
 
@@ -186,6 +167,7 @@ export const STORES: ReadonlyArray<{ id: Store; label: Localized }> = STORE_ORDE
  * Supermarket section labels in store-walk order — the shopping list renders
  * its groups in this sequence. One shared id space; which section a food sits
  * in is per-locale data on the ingredient (`aisle`, see src/lib/types.ts).
+ * Order and id set come from `SECTION_IDS` (see `STORES`).
  */
 export const STORE_SECTIONS: ReadonlyArray<{ id: StoreSection; label: Localized }> =
-  SECTION_ORDER.map((id) => ({ id, label: phraseAt(`sections.${id}`) }));
+  SECTION_IDS.map((id) => ({ id, label: phraseAt(`sections.${id}`) }));
