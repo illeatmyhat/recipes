@@ -51,6 +51,11 @@ ui.swap: Swap
 ui.required: Required
 ui.pickUpTo: up to
 
+# Provenance (Q11): the page-state badge and the editorial-option mark.
+ui.asTaughtBy: As taught by {name}
+ui.yourVariation: Your variation (based on {name})
+ui.ourAddition: our addition
+
 # Prose list join: A<sep>B<sep>…<finalSep>Z; exactly two items use pairSep.
 ui.listSeparator: ', '
 ui.listFinalSeparator: ', and '

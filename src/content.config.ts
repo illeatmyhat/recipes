@@ -26,14 +26,23 @@ const range = z.object({
   max: z.number().int().positive().optional(),
 });
 
-const fill = z.object({
-  id: z.string(),
-  amount: amount.optional(),
-  default: z.boolean().optional(),
-  why: z.string().optional(),
-  note: z.string().optional(),
-  alias: z.string().optional(),
-});
+const provenance = z.enum(['source', 'editorial']);
+
+const fill = z
+  .object({
+    id: z.string(),
+    amount: amount.optional(),
+    default: z.boolean().optional(),
+    provenance: provenance.optional(),
+    why: z.string().optional(),
+    note: z.string().optional(),
+    alias: z.string().optional(),
+  })
+  // The badge's "source point" is the default parameter point (Q11); that
+  // equivalence only holds if nothing editorial is ever a default.
+  .refine((f) => !(f.provenance === 'editorial' && f.default === true), {
+    message: 'an editorial fill cannot be default: true — the default point IS the source point',
+  });
 
 const role = z.object({
   label: z.string(),
@@ -51,6 +60,7 @@ const knob = z.discriminatedUnion('kind', [
     kind: z.literal('enum'),
     label: z.string(),
     why: z.string().optional(),
+    provenance: provenance.optional(),
     values: z.array(z.string()).nonempty(),
     default: z.string(),
     optionLabels: z.record(z.string(), z.string()).optional(),
@@ -59,12 +69,14 @@ const knob = z.discriminatedUnion('kind', [
     kind: z.literal('bool'),
     label: z.string(),
     why: z.string().optional(),
+    provenance: provenance.optional(),
     default: z.boolean(),
   }),
   z.object({
     kind: z.literal('scalar'),
     label: z.string(),
     why: z.string().optional(),
+    provenance: provenance.optional(),
     min: z.number(),
     max: z.number(),
     step: z.number().optional(),
@@ -94,6 +106,7 @@ const recipes = defineCollection({
       customize_title: z.string().optional(),
       locales: z.array(z.enum(LOCALES)).nonempty(),
       pattern: z.string(),
+      source: z.object({ name: z.string() }).optional(),
       servings,
       knobs: z.record(z.string(), knob).optional(),
       roles: z.record(z.string(), role),

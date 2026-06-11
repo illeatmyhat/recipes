@@ -49,6 +49,11 @@ ui.swap: 変更
 ui.required: 必須
 ui.pickUpTo: 最大
 
+# 出どころ表示（Q11）：ページ状態バッジと「サイト独自」マーク。
+ui.asTaughtBy: '{name}直伝'
+ui.yourVariation: あなたのアレンジ（{name}のレシピより）
+ui.ourAddition: 当サイトの追加
+
 # Prose list join: A<sep>B<sep>…<finalSep>Z; exactly two items use pairSep.
 ui.listSeparator: と
 ui.listFinalSeparator: と

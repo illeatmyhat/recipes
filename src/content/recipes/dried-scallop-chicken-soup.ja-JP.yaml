@@ -3,6 +3,7 @@
 # Merged at build by src/lib/recipe/i18n.ts.
 title: 干し貝柱と鶏肉のとろみスープ
 customize_title: スープをカスタマイズ
+source.name: ラウお父さん
 pattern: >-
   宴席の高級スープの正体は、いつだってスープそのものだった。フカヒレ自体は
   無味——他人のだしに浮かぶ「食感」にすぎない——だから、なくても完全に成立する。

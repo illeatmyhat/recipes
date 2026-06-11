@@ -13,6 +13,7 @@ import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import LocaleText from './LocaleText.astro';
 import SiteControls from './SiteControls.astro';
+import ProvenanceBadge from './ProvenanceBadge.svelte';
 import RecipeApp from './RecipeApp.svelte';
 import { UI } from '../lib/i18n';
 import { recipeCatalog } from '../lib/recipe/i18n';
@@ -43,6 +44,9 @@ setMethodContext(Astro.locals, {
   </div>
 
   <h1 class="title"><LocaleText text={recipe.title} /></h1>
+  {/* client:idle, not client:visible — page state must stay live even while
+      the badge is scrolled out of view (the reader customizes mid-page). */}
+  {recipe.source && <ProvenanceBadge client:idle source={recipe.source.name} />}
   <p class="pattern"><LocaleText text={recipe.pattern} /></p>
 
   <Image

@@ -149,7 +149,10 @@
         {@const val = knobValue(id, knob)}
         <div class="knob">
           <div class="knob-head">
-            <span class="knob-label">{L(knob.label)}</span>
+            <span class="knob-label">
+              {L(knob.label)}
+              {#if knob.provenance === 'editorial'}<span class="prov">{t('ourAddition', $locale)}</span>{/if}
+            </span>
             {#if knob.kind === 'bool'}
               <button
                 type="button"
@@ -244,7 +247,12 @@
                 <span class="mark {kind}" class:on aria-hidden="true">{on ? (kind === 'radio' ? '●' : '✓') : ''}</span>
                 <span class="fill-body">
                   <span class="fill-main">
-                    <span class="fill-name">{fillName(fill)}</span>
+                    <span class="fill-name">
+                      {fillName(fill)}
+                      <!-- Provenance (Q11): the reader sees BEFORE clicking which
+                           options the cook offered — editorial ones wear a mark. -->
+                      {#if fill.provenance === 'editorial'}<span class="prov">{t('ourAddition', $locale)}</span>{/if}
+                    </span>
                     {#if on}<span class="fill-amt">{Math.round(gramsOf(id, fill.id))} g</span>{/if}
                   </span>
                   {#if fill.why}<span class="fill-why">{L(fill.why)}</span>{/if}
@@ -312,6 +320,9 @@
   .fill-amt { color: var(--ink-soft); font-variant-numeric: tabular-nums; flex: none; }
   .fill-why, .fill-note { font-size: 0.82rem; color: var(--ink-soft); }
   .fill-note { color: var(--accent); }
+
+  /* "our addition" — a quiet inline provenance mark on editorial options. */
+  .prov { margin-left: 0.4rem; padding: 0.1rem 0.45rem; border: 1px solid var(--line); border-radius: 999px; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-soft); white-space: nowrap; vertical-align: 0.1em; }
 
   /* Desktop: force every role expanded regardless of the <details> open state
      (overrides the UA `details:not([open]) > :not(summary){display:none}`), and

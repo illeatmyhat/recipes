@@ -117,6 +117,7 @@ function hydrateFill(fill: FillT<string>, roleId: string, ctx: Ctx): FillT<Local
     id: fill.id,
     amount: fill.amount,
     default: fill.default,
+    provenance: fill.provenance,
     why: locOpt(fill.why, `${base}.why`, ctx),
     note: locOpt(fill.note, `${base}.note`, ctx),
     alias: locOpt(fill.alias, `${base}.alias`, ctx),
@@ -141,6 +142,7 @@ function hydrateKnob(knobId: string, knob: KnobT<string>, ctx: Ctx): KnobT<Local
   const common = {
     label: loc(knob.label, `${base}.label`, ctx),
     why: locOpt(knob.why, `${base}.why`, ctx),
+    provenance: knob.provenance,
   };
   if (knob.kind === 'enum') {
     const optionLabels: Record<string, Localized> = {};
@@ -212,6 +214,7 @@ export function hydrateRecipe(
     slug: fm.slug,
     pattern: loc(fm.pattern, 'pattern', ctx),
     locales: fm.locales,
+    source: fm.source ? { name: loc(fm.source.name, 'source.name', ctx) } : undefined,
     servings: fm.servings,
     knobs: fm.knobs ? knobs : undefined,
     roles,

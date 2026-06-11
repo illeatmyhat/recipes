@@ -28,12 +28,24 @@ export interface Range {
   max?: number;
 }
 
+/**
+ * Where a choice comes from (Q11, docs/recipe-model.md). `source` (the
+ * default — pay-as-you-go, never written) means the cook sanctioned it;
+ * `editorial` marks knowledge the source didn't narrate — it renders with a
+ * quiet "our addition" label, and choosing it flips the page badge from
+ * "As taught by …" to "Your variation". An editorial fill can never be
+ * `default: true` (gated by the schema): the default point IS the source point.
+ */
+export type Provenance = 'source' | 'editorial';
+
 /** One concrete ingredient that can fill a role. `T` is the localizable slot. */
 export interface FillT<T> {
   /** Ingredient id in the DB. */
   id: string;
   amount?: Amount;
   default?: boolean;
+  /** Absent ⇒ 'source': the cook offered this option. */
+  provenance?: Provenance;
   /** Why this fill fits / what to know when choosing it. */
   why?: T;
   /** Recipe-specific handling ("add at the 20-minute mark"). */
@@ -64,6 +76,8 @@ export interface EnumKnobT<T> {
   kind: 'enum';
   label: T;
   why?: T;
+  /** Absent ⇒ 'source'. Only an EDITORIAL knob's movement trips the badge. */
+  provenance?: Provenance;
   values: string[];
   default: string;
   optionLabels?: Record<string, T>;
@@ -74,6 +88,8 @@ export interface BoolKnobT<T> {
   kind: 'bool';
   label: T;
   why?: T;
+  /** Absent ⇒ 'source'. Only an EDITORIAL knob's movement trips the badge. */
+  provenance?: Provenance;
   default: boolean;
 }
 
@@ -82,6 +98,8 @@ export interface ScalarKnobT<T> {
   kind: 'scalar';
   label: T;
   why?: T;
+  /** Absent ⇒ 'source'. Only an EDITORIAL knob's movement trips the badge. */
+  provenance?: Provenance;
   min: number;
   max: number;
   step?: number;
@@ -110,6 +128,17 @@ export interface ServingsSpec {
   default: number;
 }
 
+/**
+ * Who taught this recipe (Q11). Present ⇒ the page opens with an
+ * "As taught by {name}" badge that flips to "Your variation" the moment any
+ * choice departs the source point (servings and source-narrated knobs never
+ * trip it). Absent ⇒ no badge — pay-as-you-go.
+ */
+export interface SourceT<T> {
+  /** Attribution name, localizable per-recipe content ("Daddy Lau"). */
+  name: T;
+}
+
 /** A recipe's structured data, generic over the localizable slot `T`. */
 export interface RecipeT<T> {
   title: T;
@@ -117,6 +146,7 @@ export interface RecipeT<T> {
   /** The thesis — why this combination works. The only required content element. */
   pattern: T;
   locales: Locale[];
+  source?: SourceT<T>;
   servings: ServingsSpec;
   knobs?: Record<string, KnobT<T>>;
   roles: Record<string, RoleT<T>>;

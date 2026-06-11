@@ -14,6 +14,7 @@
  */
 import { writable, derived, type Readable } from 'svelte/store';
 import { resolve } from '../lib/recipe/resolve';
+import { departsFromSource } from '../lib/recipe/provenance';
 import { emptyNutrition } from '../lib/nutrition';
 import { fallbackNames } from '../lib/recipe/names';
 import { perLocale } from '../lib/types';
@@ -67,6 +68,15 @@ export function resolveBundle(b: RecipeBundle, p: Params): Resolved {
  */
 export const resolved: Readable<Resolved | null> = derived(params, ($params) =>
   bundle ? resolveBundle(bundle, $params) : null,
+);
+
+/**
+ * Whether the live params depart from the recipe's source point (Q11) —
+ * drives the provenance badge. `false` before {@link initRecipe} seeds the
+ * bundle, which matches SSR: the default point is never departed.
+ */
+export const departs: Readable<boolean> = derived(params, ($params) =>
+  bundle ? departsFromSource(bundle.recipe, bundle.defaults, $params) : false,
 );
 
 /** Seed the recipe stores from a bundle and initialise locale + tabs. Idempotent. */

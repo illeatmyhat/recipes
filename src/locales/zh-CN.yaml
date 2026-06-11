@@ -49,6 +49,11 @@ ui.swap: 更换
 ui.required: 必选
 ui.pickUpTo: 最多
 
+# 出处标识（Q11）：页面状态徽章与「本站添加」标记。
+ui.asTaughtBy: '{name}亲授'
+ui.yourVariation: 你的改编（基于{name}的做法）
+ui.ourAddition: 本站添加
+
 # Prose list join: A<sep>B<sep>…<finalSep>Z; exactly two items use pairSep.
 ui.listSeparator: 、
 ui.listFinalSeparator: 和
