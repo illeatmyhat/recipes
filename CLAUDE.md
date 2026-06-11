@@ -31,9 +31,9 @@ Recipes are the **v3 model** — a *pattern* (the dish's thesis) instantiated by
 
 ### Islands and shared state
 
-`RecipePageV3.astro` is a static shell rendering the default parameter point (readable JS-off); the interactive parts are Svelte islands in `src/components/*.svelte` (`ServingsScalerV3`, `TabBarV3`, `CustomizeV3`, `ShopV3`, `CookV3`, `NutritionPanelV3`, the prop-less `MethodController`, plus the shared `LocaleSwitcher`/`ThemeToggle`). They share mutable state through stores, not props: `RecipeStoreV3.ts` (params, resolved output, stage tab) and `RecipeStore.ts` (locale only). Both land in shared build chunks, so the stores are true cross-island singletons. Static recipe data (the bundle) is still passed as props since it never changes — currently embedded once per island prop; the single-shared-payload refactor is the biggest remaining page-weight win.
+`RecipePageV3.astro` is a static shell (title, pattern, hero); everything interactive is the single `RecipeApp.svelte` island, which takes the bundle as its **one serialized prop** (Astro serializes island props into the page HTML, so one island ⇒ one ~34 KB copy instead of five) and the server-rendered method (the MDX body) as its slot. Inside it, `ServingsScalerV3`, `TabBarV3`, `CustomizeV3`, `ShopV3`, `CookV3`, `NutritionPanelV3`, and the prop-less `MethodController` are plain Svelte children. State is shared through stores, not props: `RecipeStoreV3.ts` (params, resolved output, stage tab) and `RecipeStore.ts` (locale only — also used by the index's `LocaleSwitcher`/`ThemeToggle` islands). Both land in shared build chunks, so the stores are true cross-island singletons.
 
-Each island calls `initV3(bundle)` (or `initLocale()` for locale-only islands) in `onMount` — idempotent, the first to hydrate wins — and uses a `mounted` flag so SSR renders the recipe's defaults and the store takes over only after hydration.
+Each bundle-holding component calls `initV3(bundle)` (or `initLocale()` for locale-only islands) in `onMount` — idempotent, the first to mount wins — and uses a `mounted` flag so SSR renders the recipe's defaults and the store takes over only after hydration.
 
 ### Document-level UI state: theme, locale, stage
 
