@@ -1,0 +1,13 @@
+# en-US ingredient data for data/ingredients/granola.yaml — locale-specific fields only.
+names: Granola, homemade
+aliases:
+  - Plain granola
+  - Oat granola
+aisle: dry_goods
+availability:
+  brands:
+    - Nature Valley
+    - Bob's Red Mill
+    - 365 Whole Foods
+  notes:
+    - Sold plain or with honey and nuts; sugar content varies by brand.

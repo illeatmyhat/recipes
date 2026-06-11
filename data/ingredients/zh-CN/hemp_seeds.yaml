@@ -1,4 +1,4 @@
-# zh-CN overlay for data/ingredients/hemp_seeds.yaml — localizable fields only.
+# zh-CN ingredient data for data/ingredients/hemp_seeds.yaml — locale-specific fields only.
 names: 火麻仁（去壳）
 aliases:
   - 汉麻籽

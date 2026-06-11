@@ -1,4 +1,4 @@
-# zh-CN overlay for data/ingredients/mango.yaml — localizable fields only.
+# zh-CN ingredient data for data/ingredients/mango.yaml — locale-specific fields only.
 names: 芒果
 aliases: []
 aisle: produce

@@ -1,0 +1,13 @@
+# ja-JP ingredient data for data/ingredients/chia_seeds.yaml — locale-specific fields only.
+names: チアシード
+aliases:
+  - 乾燥チアシード
+aisle: dry_goods
+availability:
+  brands:
+    - NICHIGA
+    - オーガニックチアシード
+    - Nutiva
+  notes:
+    - text: カルディ・コストコ・iHerbで入手可能。
+      important: true

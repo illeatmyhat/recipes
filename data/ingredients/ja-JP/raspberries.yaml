@@ -1,0 +1,13 @@
+# ja-JP ingredient data for data/ingredients/raspberries.yaml — locale-specific fields only.
+names: ラズベリー（生）
+aliases:
+  - 木いちご
+  - フランボワーズ
+aisle: produce
+availability:
+  brands:
+    - 冷凍ラズベリー
+    - 輸入生ラズベリー
+  notes:
+    - text: 生は高価で季節限定、冷凍が一般的。
+      important: true

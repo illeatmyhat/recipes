@@ -1,21 +1,5 @@
 id: carrots
 fdc_id: 170393
-names:
-  en-US: Carrots
-  ja-JP: にんじん
-aliases:
-  en-US:
-    - Carrot
-  ja-JP:
-    - ニンジン
-    - 人参
-availability:
-  en-US:
-    notes:
-      - Sold loose or bagged in the produce section.
-  ja-JP:
-    notes:
-      - スーパーの野菜売り場で入手可能。
 nutrition:
   per_100g:
     calories: 41
@@ -31,6 +15,3 @@ nutrition:
     calcium: 33
     iron: 0.3
 density_g_per_ml: null
-aisle:
-  en-US: produce
-  ja-JP: produce

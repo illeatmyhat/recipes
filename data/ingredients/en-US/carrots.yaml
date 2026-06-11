@@ -1,0 +1,8 @@
+# en-US ingredient data for data/ingredients/carrots.yaml — locale-specific fields only.
+names: Carrots
+aliases:
+  - Carrot
+aisle: produce
+availability:
+  notes:
+    - Sold loose or bagged in the produce section.

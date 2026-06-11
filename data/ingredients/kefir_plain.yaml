@@ -1,32 +1,5 @@
 id: kefir_plain
 fdc_id: 170904
-names:
-  en-US: Plain milk kefir
-  ja-JP: ケフィア（プレーン）
-aliases:
-  en-US:
-    - Cultured milk kefir
-    - Plain unflavored kefir
-  ja-JP:
-    - ミルクケフィア
-    - 飲むヨーグルト（ケフィア）
-availability:
-  en-US:
-    brands:
-      - Lifeway
-      - Green Valley
-      - Maple Hill
-    notes:
-      - text: Use plain, unflavored — check the yogurt-drink section. Full-fat is creamier.
-        important: true
-  ja-JP:
-    brands:
-      - ケフラン
-      - オハヨー
-      - Lifeway
-    notes:
-      - text: 大型スーパーや成城石井・カルディで入手可能。ヨーグルト飲料コーナーを確認。
-        important: true
 nutrition:
   per_100g:
     calories: 43
@@ -42,6 +15,3 @@ nutrition:
     calcium: 130
     iron: 0.04
 density_g_per_ml: 1.03
-aisle:
-  en-US: dairy_eggs
-  ja-JP: dairy_eggs

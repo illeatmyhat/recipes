@@ -1,0 +1,13 @@
+# en-US ingredient data for data/ingredients/blackberries.yaml — locale-specific fields only.
+names: Blackberries, raw
+aliases:
+  - Fresh blackberries
+  - Bramble berries
+aisle: produce
+availability:
+  brands:
+    - Driscoll's
+    - 365 Whole Foods
+    - Naturipe
+  notes:
+    - Sold fresh in clamshells; frozen also widely available.

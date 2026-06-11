@@ -1,0 +1,9 @@
+# ja-JP ingredient data for data/ingredients/cumin.yaml — locale-specific fields only.
+names: クミン
+aliases:
+  - クミンパウダー
+  - クミンシード
+aisle: spices
+availability:
+  notes:
+    - スーパーの調味料売り場で入手可能。

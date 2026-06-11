@@ -14,7 +14,7 @@
  *
  * Scope note: this localizes the **frontmatter** content. The method *body*
  * is canonical prose + catalog step templates (the `<Step id>` components);
- * the ingredient DB carries its own inline + overlay localization (db.ts).
+ * the ingredient DB carries its own per-locale files (db.ts).
  */
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';

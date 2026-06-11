@@ -1,0 +1,14 @@
+# ja-JP ingredient data for data/ingredients/kefir_plain.yaml — locale-specific fields only.
+names: ケフィア（プレーン）
+aliases:
+  - ミルクケフィア
+  - 飲むヨーグルト（ケフィア）
+aisle: dairy_eggs
+availability:
+  brands:
+    - ケフラン
+    - オハヨー
+    - Lifeway
+  notes:
+    - text: 大型スーパーや成城石井・カルディで入手可能。ヨーグルト飲料コーナーを確認。
+      important: true

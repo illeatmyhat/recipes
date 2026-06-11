@@ -1,4 +1,4 @@
-# zh-CN overlay for data/ingredients/cinnamon.yaml — localizable fields only.
+# zh-CN ingredient data for data/ingredients/cinnamon.yaml — locale-specific fields only.
 names: 肉桂粉
 aliases:
   - 桂皮粉

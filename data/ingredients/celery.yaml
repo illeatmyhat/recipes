@@ -1,20 +1,5 @@
 id: celery
 fdc_id: 169988
-names:
-  en-US: Celery
-  ja-JP: セロリ
-aliases:
-  en-US:
-    - Celery stalks
-  ja-JP:
-    - セロリー
-availability:
-  en-US:
-    notes:
-      - Sold as whole bunches in the produce section.
-  ja-JP:
-    notes:
-      - スーパーの野菜売り場で入手可能。
 nutrition:
   per_100g:
     calories: 14
@@ -30,6 +15,3 @@ nutrition:
     calcium: 40
     iron: 0.2
 density_g_per_ml: null
-aisle:
-  en-US: produce
-  ja-JP: produce

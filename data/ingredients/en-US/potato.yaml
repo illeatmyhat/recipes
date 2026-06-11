@@ -1,0 +1,8 @@
+# en-US ingredient data for data/ingredients/potato.yaml — locale-specific fields only.
+names: Potato
+aliases:
+  - Potatoes
+aisle: produce
+availability:
+  notes:
+    - Any all-purpose potato (russet, Yukon, or white).

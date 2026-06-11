@@ -1,30 +1,5 @@
 id: vanilla_extract
 fdc_id: 173471
-names:
-  en-US: Vanilla extract
-  ja-JP: バニラエクストラクト
-aliases:
-  en-US:
-    - Pure vanilla extract
-    - Vanilla essence
-  ja-JP:
-    - バニラエッセンス
-    - 天然バニラ
-availability:
-  en-US:
-    brands:
-      - McCormick
-      - Nielsen-Massey
-      - Simply Organic
-    notes:
-      - Sold in the baking aisle; choose "pure", not imitation vanilla.
-  ja-JP:
-    brands:
-      - 私の台所
-      - GABAN
-    notes:
-      - text: 輸入食品店・製菓材料店で入手可能。
-        important: true
 nutrition:
   per_100g:
     calories: 288
@@ -40,6 +15,3 @@ nutrition:
     calcium: 11
     iron: 0.12
 density_g_per_ml: 0.88
-aisle:
-  en-US: spices
-  ja-JP: spices

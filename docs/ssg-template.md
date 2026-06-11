@@ -21,7 +21,7 @@ boundary clean instead of discovering it later.
 | Locale set + canonical language | `site.config.ts` (repo root) | `Locale` union type-checks every per-locale record |
 | Site UI strings | `src/locales/<tag>.yaml` | key-set completeness gate (build error) |
 | Recipes | `src/content/recipes/*.mdx` + `<slug>.<tag>.yaml` sidecars | Zod schema; catalog completeness per declared locale |
-| Ingredient DB | `data/ingredients/*.yaml` + `<tag>/` overlay folders | per-locale name/aisle completeness (build error) |
+| Ingredient DB | locale-neutral cores `data/ingredients/*.yaml` + per-locale folders `<tag>/` | per-locale name/aisle completeness (build error) |
 | Hero images | alongside the recipes | — |
 | Site URL / base path | `astro.config.mjs` | — |
 | Deploy | `.github/workflows/deploy.yml` | — |
@@ -32,9 +32,9 @@ and the completeness gates exhaustive at *compile* time. A data-file config
 would degrade `Locale` to `string` and move every guarantee to runtime.
 
 Site-level catalogs are discovered from `src/locales/*.yaml` by filename
-(`import.meta.glob` in `src/lib/i18n.ts`), and ingredient overlays from
-`data/ingredients/<tag>/` — so adding a locale touches only `site.config.ts`
-plus new data files, never engine code. The build errors are the checklist:
+(`import.meta.glob` in `src/lib/i18n.ts`), and each locale's ingredient data
+from `data/ingredients/<tag>/` — so adding a locale touches only
+`site.config.ts` plus new data files, never engine code. The build errors are the checklist:
 each names the missing file or key.
 
 ## Phase 1 (current): one repo, clean boundary

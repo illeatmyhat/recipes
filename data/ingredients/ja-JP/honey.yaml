@@ -1,0 +1,12 @@
+# ja-JP ingredient data for data/ingredients/honey.yaml — locale-specific fields only.
+names: はちみつ
+aliases:
+  - 蜂蜜
+  - 純粋はちみつ
+aisle: condiments
+availability:
+  brands:
+    - サクラ印はちみつ
+    - 国産はちみつ
+  notes:
+    - スーパーで一般的に入手可能。

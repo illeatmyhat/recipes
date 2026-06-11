@@ -1,0 +1,9 @@
+# ja-JP ingredient data for data/ingredients/diced_tomatoes.yaml — locale-specific fields only.
+names: ダイストマト缶
+aliases:
+  - カットトマト
+  - トマト缶
+aisle: canned
+availability:
+  notes:
+    - カットトマト缶1個（約400g）、汁ごと使用。

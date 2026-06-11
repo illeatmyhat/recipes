@@ -1,0 +1,9 @@
+# en-US ingredient data for data/ingredients/diced_tomatoes.yaml — locale-specific fields only.
+names: Canned diced tomatoes
+aliases:
+  - Diced tomatoes
+  - Canned tomatoes
+aisle: canned
+availability:
+  notes:
+    - One standard can (about 14–15 oz), diced, used with its juice.

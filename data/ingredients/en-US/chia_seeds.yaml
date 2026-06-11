@@ -1,0 +1,13 @@
+# en-US ingredient data for data/ingredients/chia_seeds.yaml — locale-specific fields only.
+names: Chia seeds, dried
+aliases:
+  - Dried chia seed
+  - Chia seed
+aisle: dry_goods
+availability:
+  brands:
+    - Bob's Red Mill
+    - Nutiva
+    - Viva Naturals
+  notes:
+    - Sold as black or white chia; nutrition is essentially identical.

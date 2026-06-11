@@ -1,0 +1,8 @@
+# en-US ingredient data for data/ingredients/celery.yaml — locale-specific fields only.
+names: Celery
+aliases:
+  - Celery stalks
+aisle: produce
+availability:
+  notes:
+    - Sold as whole bunches in the produce section.

@@ -1,22 +1,5 @@
 id: onion
 fdc_id: 170000
-names:
-  en-US: Onion
-  ja-JP: 玉ねぎ
-aliases:
-  en-US:
-    - Yellow onion
-    - Brown onion
-  ja-JP:
-    - たまねぎ
-    - オニオン
-availability:
-  en-US:
-    notes:
-      - Yellow or brown onions, sold loose in the produce section.
-  ja-JP:
-    notes:
-      - スーパーの野菜売り場で入手可能。
 nutrition:
   per_100g:
     calories: 40
@@ -32,6 +15,3 @@ nutrition:
     calcium: 23
     iron: 0.21
 density_g_per_ml: null
-aisle:
-  en-US: produce
-  ja-JP: produce

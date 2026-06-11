@@ -1,0 +1,9 @@
+# en-US ingredient data for data/ingredients/mushrooms.yaml — locale-specific fields only.
+names: White mushrooms
+aliases:
+  - Button mushrooms
+  - Cremini mushrooms
+aisle: produce
+availability:
+  notes:
+    - Sold whole or pre-sliced in the produce section.

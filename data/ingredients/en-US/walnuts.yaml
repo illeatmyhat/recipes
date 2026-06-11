@@ -1,0 +1,13 @@
+# en-US ingredient data for data/ingredients/walnuts.yaml — locale-specific fields only.
+names: Walnuts, English, raw
+aliases:
+  - English walnuts
+  - Raw walnut halves
+aisle: dry_goods
+availability:
+  brands:
+    - Diamond
+    - Fisher
+    - 365 Whole Foods
+  notes:
+    - Sold as halves or pieces; buy raw, not candied.

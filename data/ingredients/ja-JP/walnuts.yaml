@@ -1,0 +1,12 @@
+# ja-JP ingredient data for data/ingredients/walnuts.yaml — locale-specific fields only.
+names: くるみ（生）
+aliases:
+  - クルミ
+  - 生くるみ
+aisle: dry_goods
+availability:
+  brands:
+    - 素焼きくるみ
+    - カリフォルニアくるみ
+  notes:
+    - スーパー・輸入食品店で入手可能。

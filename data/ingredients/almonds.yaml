@@ -1,29 +1,5 @@
 id: almonds
 fdc_id: 170567
-names:
-  en-US: Almonds, raw
-  ja-JP: アーモンド（生）
-aliases:
-  en-US:
-    - Raw whole almonds
-    - Sliced almonds
-  ja-JP:
-    - 生アーモンド
-    - スライスアーモンド
-availability:
-  en-US:
-    brands:
-      - Blue Diamond
-      - Fisher
-      - 365 Whole Foods
-    notes:
-      - Sold raw whole, sliced, or slivered; nutrition is the same.
-  ja-JP:
-    brands:
-      - 素焼きアーモンド
-      - カリフォルニアアーモンド
-    notes:
-      - スーパー・輸入食品店で入手可能。
 nutrition:
   per_100g:
     calories: 579
@@ -39,6 +15,3 @@ nutrition:
     calcium: 269
     iron: 3.71
 density_g_per_ml: null
-aisle:
-  en-US: dry_goods
-  ja-JP: dry_goods

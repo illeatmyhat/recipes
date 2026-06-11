@@ -1,4 +1,4 @@
-# zh-CN overlay for data/ingredients/banana.yaml — localizable fields only.
+# zh-CN ingredient data for data/ingredients/banana.yaml — locale-specific fields only.
 names: 香蕉
 aliases: []
 aisle: produce

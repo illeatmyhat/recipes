@@ -1,0 +1,9 @@
+# ja-JP ingredient data for data/ingredients/olive_oil.yaml — locale-specific fields only.
+names: オリーブオイル
+aliases:
+  - エキストラバージンオリーブオイル
+  - オリーブ油
+aisle: oils
+availability:
+  notes:
+    - スーパーで一般的に入手可能。

@@ -1,22 +1,5 @@
 id: spinach
 fdc_id: 168462
-names:
-  en-US: Spinach
-  ja-JP: ほうれん草
-aliases:
-  en-US:
-    - Fresh spinach
-    - Baby spinach
-  ja-JP:
-    - ホウレンソウ
-    - ベビースピナッチ
-availability:
-  en-US:
-    notes:
-      - Fresh bunches or bagged baby spinach in the produce section.
-  ja-JP:
-    notes:
-      - スーパーの野菜売り場で入手可能。
 nutrition:
   per_100g:
     calories: 23
@@ -32,6 +15,3 @@ nutrition:
     calcium: 99
     iron: 2.71
 density_g_per_ml: null
-aisle:
-  en-US: produce
-  ja-JP: produce

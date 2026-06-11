@@ -1,29 +1,5 @@
 id: walnuts
 fdc_id: 170187
-names:
-  en-US: Walnuts, English, raw
-  ja-JP: くるみ（生）
-aliases:
-  en-US:
-    - English walnuts
-    - Raw walnut halves
-  ja-JP:
-    - クルミ
-    - 生くるみ
-availability:
-  en-US:
-    brands:
-      - Diamond
-      - Fisher
-      - 365 Whole Foods
-    notes:
-      - Sold as halves or pieces; buy raw, not candied.
-  ja-JP:
-    brands:
-      - 素焼きくるみ
-      - カリフォルニアくるみ
-    notes:
-      - スーパー・輸入食品店で入手可能。
 nutrition:
   per_100g:
     calories: 654
@@ -39,6 +15,3 @@ nutrition:
     calcium: 98
     iron: 2.91
 density_g_per_ml: null
-aisle:
-  en-US: dry_goods
-  ja-JP: dry_goods

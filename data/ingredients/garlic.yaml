@@ -1,22 +1,5 @@
 id: garlic
 fdc_id: 169230
-names:
-  en-US: Garlic
-  ja-JP: にんにく
-aliases:
-  en-US:
-    - Fresh garlic
-    - Garlic cloves
-  ja-JP:
-    - ニンニク
-    - ガーリック
-availability:
-  en-US:
-    notes:
-      - Sold as whole bulbs in the produce section.
-  ja-JP:
-    notes:
-      - スーパーの野菜売り場で球のまま入手可能。
 nutrition:
   per_100g:
     calories: 149
@@ -32,6 +15,3 @@ nutrition:
     calcium: 181
     iron: 1.7
 density_g_per_ml: null
-aisle:
-  en-US: produce
-  ja-JP: produce

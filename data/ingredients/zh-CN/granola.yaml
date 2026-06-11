@@ -1,4 +1,4 @@
-# zh-CN overlay for data/ingredients/granola.yaml — localizable fields only.
+# zh-CN ingredient data for data/ingredients/granola.yaml — locale-specific fields only.
 names: 格兰诺拉麦片
 aliases:
   - 烘烤燕麦脆

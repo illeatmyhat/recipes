@@ -378,20 +378,23 @@ Build-time checks:
   entry stores a hash of the source string it translated; source changed ⇒
   entry flagged stale. Stays a warning — it needs human review by design.
 
-**Ingredient-DB localization (decided AND implemented 2026-06-10): inline +
-overlay folders.** The DB keeps the locales it was authored with inline
-(`en-US`/`ja-JP` today — stable reference data, low churn). Any other
-supported locale does NOT edit the 38+ canonical files: it arrives as an
-**overlay folder mirroring the canonical filenames** —
-`data/ingredients/zh-CN/<id>.yaml` overlaying `data/ingredients/<id>.yaml`
-with just the localizable fields (`names`, `aliases`, `aisle`) — merged at
-load (`db.ts`). Folder-of-small-files over one-big-file-per-locale because
+**Ingredient-DB localization (decided 2026-06-10, revised same day):
+neutral core + per-locale folders.** The core file
+(`data/ingredients/<id>.yaml`) is a **library asset, unbiased toward any
+culture**: id, FDC id, per-100g nutrition, density — and nothing
+locale-specific, the canonical locale included. (The first cut kept
+`en-US`/`ja-JP` inline with other locales as overlays; revised because an
+inline privilege for some locales contradicts the SSG goal — every locale
+is now an equal citizen.) Each supported locale owns
+`data/ingredients/<locale>/<id>.yaml` with that locale's `names`,
+`aliases`, `aisle`, and optional `availability` — assembled at load
+(`db.ts`). Folder-of-small-files over one-big-file-per-locale because
 authorship here is agent-first: per-file work units bound context, avoid
 write contention, and coverage is a listing diff. **Every supported locale
-must end up with a name + aisle, inline or overlay, or the build fails**;
-a broken overlay fails loudly rather than degrading to a placeholder. zh-CN
-is the first consumer (38 overlays), and its aisles carry genuinely
-divergent market data (soy sauce/salt → condiments, tofu → tofu_soy). No
+needs its file with a name** (and `aisle` is all-or-nothing across
+locales) **or the build fails**; a broken locale file fails loudly rather
+than degrading to a placeholder. The aisles carry genuinely divergent
+market data (soy sauce/salt → condiments in JP, tofu → tofu_soy). No
 external i18n format (PO/XLIFF/Fluent) is adopted: the flat-YAML catalogs
 already are the standard per-locale key-value pattern, and interchange
 formats only pay off if human/community translators enter the loop.
@@ -726,8 +729,9 @@ this dish's context rather than copying generic facts.
    original content *authored for that market in that language* — never
    translated from a canonical (there is no canonical; the legacy
    market-keyed `us`/`ja` shape with `note_en`/`note_ja` tangled language
-   into markets and forced near-duplicate cells). Carried inline or by the
-   locale's overlay file; the "don't invent brands" rule applies per market.
+   into markets and forced near-duplicate cells). Carried by each locale's
+   ingredient file (`data/ingredients/<locale>/<id>.yaml`, unkeyed); the
+   "don't invent brands" rule applies per market.
    **Optional with no completeness gate** — unlike names/catalogs (which
    translate canonical content), absence here means "no guidance for this
    market" and the surface renders nothing; zh-CN starts empty until someone

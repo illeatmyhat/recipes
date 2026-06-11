@@ -1,0 +1,12 @@
+# ja-JP ingredient data for data/ingredients/blueberries.yaml — locale-specific fields only.
+names: ブルーベリー（生）
+aliases:
+  - 生ブルーベリー
+  - フレッシュブルーベリー
+aisle: produce
+availability:
+  brands:
+    - 国産ブルーベリー
+    - 冷凍ブルーベリー
+  notes:
+    - 生は旬の時期、冷凍は通年スーパーで入手可能。

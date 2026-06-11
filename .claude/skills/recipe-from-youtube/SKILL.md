@@ -51,18 +51,20 @@ Work the checklist top to bottom. Paths are relative to the project root.
 
 3. **Resolve each ingredient.** For every fill, check whether
    `data/ingredients/<id>.yaml` already exists (reuse it if so). For each
-   missing one, create it from `templates/ingredient.yaml` (inline
-   en-US/ja-JP), sourcing nutrition via the fetch script — **USDA SR Legacy
-   only**, see [reference/sourcing.md](reference/sourcing.md) — **plus one
-   overlay file per remaining locale** (`data/ingredients/zh-CN/<id>.yaml`:
-   `names`/`aliases`/`aisle`, optionally `availability`). Every supported
-   locale needs a name and an `aisle` (its OWN market's store geography —
-   soy sauce: international in the US, condiments in JP/CN) or the build
-   fails. `availability` is optional per-locale market guidance authored in
-   that market's language (never translated); `important: true` notes pin
-   to the Shop row — reserve them for scarcity and wrong-form warnings.
-   Only fill `brands` when buyers commonly get the wrong form; don't invent
-   brand names.
+   missing one, create the **locale-neutral core** from
+   `templates/ingredient.yaml` (id + nutrition + density ONLY — nothing
+   locale-specific), sourcing nutrition via the fetch script — **USDA SR
+   Legacy only**, see [reference/sourcing.md](reference/sourcing.md) —
+   **plus one locale file per supported locale**
+   (`data/ingredients/<locale>/<id>.yaml`: `names`/`aliases`/`aisle`,
+   optionally `availability`; shape documented in the template). Every
+   supported locale needs its file with a name and an `aisle` (its OWN
+   market's store geography — soy sauce: international in the US,
+   condiments in JP/CN) or the build fails. `availability` is optional
+   market guidance authored in that market's language (never translated);
+   `important: true` notes pin to the Shop row — reserve them for scarcity
+   and wrong-form warnings. Only fill `brands` when buyers commonly get the
+   wrong form; don't invent brand names.
 
 4. **Convert all amounts to metric** (`g`/`ml`; `ml` needs a non-null
    `density_g_per_ml`). See [reference/units.md](reference/units.md).

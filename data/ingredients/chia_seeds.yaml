@@ -1,30 +1,5 @@
 id: chia_seeds
 fdc_id: 170554
-names:
-  en-US: Chia seeds, dried
-  ja-JP: チアシード
-aliases:
-  en-US:
-    - Dried chia seed
-    - Chia seed
-  ja-JP:
-    - 乾燥チアシード
-availability:
-  en-US:
-    brands:
-      - Bob's Red Mill
-      - Nutiva
-      - Viva Naturals
-    notes:
-      - Sold as black or white chia; nutrition is essentially identical.
-  ja-JP:
-    brands:
-      - NICHIGA
-      - オーガニックチアシード
-      - Nutiva
-    notes:
-      - text: カルディ・コストコ・iHerbで入手可能。
-        important: true
 nutrition:
   per_100g:
     calories: 486
@@ -40,6 +15,3 @@ nutrition:
     calcium: 631
     iron: 7.72
 density_g_per_ml: null
-aisle:
-  en-US: dry_goods
-  ja-JP: dry_goods

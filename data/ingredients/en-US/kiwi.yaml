@@ -1,0 +1,13 @@
+# en-US ingredient data for data/ingredients/kiwi.yaml — locale-specific fields only.
+names: Kiwifruit, green, raw
+aliases:
+  - Green kiwi
+  - Kiwi fruit
+aisle: produce
+availability:
+  brands:
+    - Zespri
+    - Sunkist
+    - 365 Whole Foods
+  notes:
+    - Sold year-round in the produce section, individually or by the bag.

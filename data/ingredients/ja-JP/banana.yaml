@@ -1,0 +1,13 @@
+# ja-JP ingredient data for data/ingredients/banana.yaml — locale-specific fields only.
+names: バナナ（生）
+aliases:
+  - 生バナナ
+  - 完熟バナナ
+aisle: produce
+availability:
+  brands:
+    - Dole
+    - Chiquita
+    - 甘熟王
+  notes:
+    - 全国のスーパー・コンビニで通年入手可能。

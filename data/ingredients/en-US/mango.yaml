@@ -1,0 +1,13 @@
+# en-US ingredient data for data/ingredients/mango.yaml — locale-specific fields only.
+names: Mangos, raw
+aliases:
+  - Fresh mango
+  - Mango fruit
+aisle: produce
+availability:
+  brands:
+    - Champagne (Ataulfo)
+    - Tommy Atkins
+    - 365 Whole Foods
+  notes:
+    - Sold loose year-round; ripeness varies, choose slightly soft fruit.

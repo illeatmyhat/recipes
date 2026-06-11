@@ -1,22 +1,5 @@
 id: cumin
 fdc_id: 170923
-names:
-  en-US: Ground cumin
-  ja-JP: クミン
-aliases:
-  en-US:
-    - Cumin
-    - Cumin seed
-  ja-JP:
-    - クミンパウダー
-    - クミンシード
-availability:
-  en-US:
-    notes:
-      - Ground cumin from the spice aisle.
-  ja-JP:
-    notes:
-      - スーパーの調味料売り場で入手可能。
 nutrition:
   per_100g:
     calories: 375
@@ -32,6 +15,3 @@ nutrition:
     calcium: 931
     iron: 66.36
 density_g_per_ml: null
-aisle:
-  en-US: spices
-  ja-JP: spices

@@ -1,0 +1,12 @@
+# ja-JP ingredient data for data/ingredients/cinnamon.yaml — locale-specific fields only.
+names: シナモン（パウダー）
+aliases:
+  - シナモンパウダー
+  - 桂皮
+aisle: spices
+availability:
+  brands:
+    - GABAN シナモンパウダー
+    - S&B シナモン
+  notes:
+    - スーパーの香辛料売り場で入手可能。

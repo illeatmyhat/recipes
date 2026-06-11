@@ -1,0 +1,13 @@
+# ja-JP ingredient data for data/ingredients/strawberries.yaml — locale-specific fields only.
+names: いちご（生）
+aliases:
+  - 生いちご
+  - ストロベリー
+aisle: produce
+availability:
+  brands:
+    - とちおとめ
+    - あまおう
+    - 紅ほっぺ
+  notes:
+    - 生は冬〜春が旬、冷凍は通年入手可能。

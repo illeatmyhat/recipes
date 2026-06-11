@@ -1,0 +1,13 @@
+# ja-JP ingredient data for data/ingredients/mango.yaml — locale-specific fields only.
+names: マンゴー（生）
+aliases:
+  - マンゴ
+  - 生マンゴー
+aisle: produce
+availability:
+  brands:
+    - 宮崎マンゴー
+    - アップルマンゴー
+    - フィリピン産マンゴー
+  notes:
+    - 輸入品は通年、国産高級品は夏に入手可能。

@@ -1,0 +1,13 @@
+# en-US ingredient data for data/ingredients/vanilla_extract.yaml — locale-specific fields only.
+names: Vanilla extract
+aliases:
+  - Pure vanilla extract
+  - Vanilla essence
+aisle: spices
+availability:
+  brands:
+    - McCormick
+    - Nielsen-Massey
+    - Simply Organic
+  notes:
+    - Sold in the baking aisle; choose "pure", not imitation vanilla.

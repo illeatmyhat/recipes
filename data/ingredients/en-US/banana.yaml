@@ -1,0 +1,13 @@
+# en-US ingredient data for data/ingredients/banana.yaml — locale-specific fields only.
+names: Banana, raw
+aliases:
+  - Fresh banana
+  - Raw banana
+aisle: produce
+availability:
+  brands:
+    - Dole
+    - Chiquita
+    - Del Monte
+  notes:
+    - Sold loose by the bunch in any grocery produce section.

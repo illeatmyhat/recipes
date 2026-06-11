@@ -1,0 +1,12 @@
+# ja-JP ingredient data for data/ingredients/kiwi.yaml — locale-specific fields only.
+names: キウイフルーツ（生）
+aliases:
+  - キウイ
+  - グリーンキウイ
+aisle: produce
+availability:
+  brands:
+    - ゼスプリ
+    - 国産キウイ
+  notes:
+    - スーパーで通年入手可能。

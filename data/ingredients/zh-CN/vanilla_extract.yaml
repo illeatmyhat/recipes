@@ -1,4 +1,4 @@
-# zh-CN overlay for data/ingredients/vanilla_extract.yaml — localizable fields only.
+# zh-CN ingredient data for data/ingredients/vanilla_extract.yaml — locale-specific fields only.
 names: 香草精
 aliases:
   - 香草提取液

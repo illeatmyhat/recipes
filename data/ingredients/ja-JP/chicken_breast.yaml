@@ -1,0 +1,10 @@
+# ja-JP ingredient data for data/ingredients/chicken_breast.yaml — locale-specific fields only.
+names: 鶏むね肉（皮なし）
+aliases:
+  - 鶏胸肉
+  - とりむね
+aisle: meat_seafood
+availability:
+  notes:
+    - text: どこのスーパーでも「鶏むね肉」として入手可。皮なしを選ぶか、皮を外す。
+      important: true

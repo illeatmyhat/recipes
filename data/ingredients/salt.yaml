@@ -1,30 +1,5 @@
 id: salt
 fdc_id: 173468
-names:
-  en-US: Salt, table
-  ja-JP: 食塩
-aliases:
-  en-US:
-    - Table salt
-    - Fine salt
-  ja-JP:
-    - 塩
-    - 精製塩
-availability:
-  en-US:
-    brands:
-      - Morton
-      - Diamond Crystal
-      - 365 Whole Foods
-    notes:
-      - Sold as iodized or plain table salt in every grocery store.
-  ja-JP:
-    brands:
-      - 伯方の塩
-      - 食卓塩
-      - 赤穂の天塩
-    notes:
-      - スーパーで一般的に入手可能。
 nutrition:
   per_100g:
     calories: 0
@@ -40,6 +15,3 @@ nutrition:
     calcium: 24
     iron: 0.33
 density_g_per_ml: 1.22
-aisle:
-  en-US: spices
-  ja-JP: condiments

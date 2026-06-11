@@ -1,0 +1,13 @@
+# ja-JP ingredient data for data/ingredients/salt.yaml — locale-specific fields only.
+names: 食塩
+aliases:
+  - 塩
+  - 精製塩
+aisle: condiments
+availability:
+  brands:
+    - 伯方の塩
+    - 食卓塩
+    - 赤穂の天塩
+  notes:
+    - スーパーで一般的に入手可能。

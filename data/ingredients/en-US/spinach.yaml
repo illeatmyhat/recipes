@@ -1,0 +1,9 @@
+# en-US ingredient data for data/ingredients/spinach.yaml — locale-specific fields only.
+names: Spinach
+aliases:
+  - Fresh spinach
+  - Baby spinach
+aisle: produce
+availability:
+  notes:
+    - Fresh bunches or bagged baby spinach in the produce section.

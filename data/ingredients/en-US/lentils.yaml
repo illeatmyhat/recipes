@@ -1,0 +1,9 @@
+# en-US ingredient data for data/ingredients/lentils.yaml — locale-specific fields only.
+names: Dried lentils
+aliases:
+  - Brown lentils
+  - Green lentils
+aisle: dry_goods
+availability:
+  notes:
+    - Sold dry in the bean or bulk aisle. Brown or green hold their shape in stew.

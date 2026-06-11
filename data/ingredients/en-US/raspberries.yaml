@@ -1,0 +1,13 @@
+# en-US ingredient data for data/ingredients/raspberries.yaml — locale-specific fields only.
+names: Raspberries, raw
+aliases:
+  - Red raspberries
+  - Fresh raspberries
+aisle: produce
+availability:
+  brands:
+    - Driscoll's
+    - 365 Whole Foods
+    - Naturipe
+  notes:
+    - Sold fresh in clamshells; also widely available frozen.

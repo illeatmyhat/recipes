@@ -1,21 +1,27 @@
 /**
  * Build-time ingredient loader.
  *
- * Reads `/data/ingredients/<id>.yaml` and returns an {@link IngredientLookup}.
- * Degrades gracefully: a missing file becomes a zero-nutrition placeholder
- * (so totals stay honest) with a loud warning, and the `placeholder` flag is
- * surfaced so the UI can mark it.
+ * An ingredient on disk is a **locale-neutral core** plus one file per
+ * supported locale — the core is a library asset, unbiased toward any
+ * culture (no locale gets inline privilege, the canonical one included):
  *
- * **Locale overlays.** The canonical file carries the locales it was authored
- * with inline; any other supported locale arrives as an
- * overlay file mirroring the canonical filename —
- * `data/ingredients/<locale>/<id>.yaml` with just the localizable fields
- * (`names`, `aliases`, `aisle`) — merged here at load. Folder-of-small-files
- * by design (decided 2026-06-10): authorship is agent-first, so per-file work
- * units bound context and avoid write contention, and coverage is a listing
- * diff. **Every supported locale must end up with a name and (when the
- * canonical file has aisles) an aisle — inline or overlay — or the build
- * fails**, consistent with the catalog completeness gate.
+ * - `data/ingredients/<id>.yaml` — id, FDC id, per-100g nutrition, density.
+ * - `data/ingredients/<locale>/<id>.yaml` — that locale's `names`, `aliases`,
+ *   `aisle`, and optional `availability` (market guidance, unkeyed — the
+ *   file IS one locale).
+ *
+ * Folder-of-small-files by design (decided 2026-06-10): authorship is
+ * agent-first, so per-file work units bound context and avoid write
+ * contention, and coverage is a listing diff. Completeness gates:
+ * **every supported locale needs its file with a name** — and when any
+ * locale declares an `aisle`, all must (all-or-nothing), consistent with
+ * the catalog completeness gate. `availability` is optional everywhere.
+ *
+ * Degrades gracefully on a missing CORE file: it becomes a zero-nutrition
+ * placeholder (so totals stay honest) with a loud warning, and the
+ * `placeholder` flag is surfaced so the UI can mark it. A missing or broken
+ * LOCALE file for a real ingredient fails the build instead — silently
+ * dropping a locale is worse than a red build.
  * Touches the filesystem — build time only.
  */
 import { readFileSync } from 'node:fs';
@@ -24,12 +30,13 @@ import { load } from 'js-yaml';
 import { emptyNutrition } from '../nutrition';
 import { fallbackNames } from './names';
 import {
-  CATALOG_LOCALES,
   LOCALES,
   perLocale,
   type Locale,
+  type Localized,
   type MarketGuidance,
   type MarketNote,
+  type NutritionFacts,
   type StoreSection,
 } from '../types';
 import type { IngredientData } from '../types';
@@ -44,12 +51,20 @@ interface RawGuidance {
   notes?: RawNote[];
 }
 
-/** The localizable fields an overlay file may carry. */
-interface OverlayData {
+/** The locale-neutral core file `data/ingredients/<id>.yaml`. */
+interface IngredientCore {
+  id: string;
+  fdc_id: number;
+  nutrition: { per_100g: NutritionFacts };
+  density_g_per_ml: number | null;
+}
+
+/** A per-locale file `data/ingredients/<locale>/<id>.yaml`. */
+interface IngredientLocaleData {
   names?: string;
   aliases?: string[];
   aisle?: StoreSection;
-  /** The overlay locale's market guidance (authored in that language). */
+  /** This locale's market guidance (authored in its language, unkeyed). */
   availability?: RawGuidance;
 }
 
@@ -75,39 +90,45 @@ function placeholderIngredient(id: string): IngredientData {
   };
 }
 
-/** Merge each catalog locale's overlay file and enforce per-locale completeness. */
-function applyOverlays(id: string, data: IngredientData): IngredientData {
-  for (const locale of CATALOG_LOCALES) {
+/** Assemble an ingredient from its core + every locale's file, gating completeness. */
+function assemble(id: string, core: IngredientCore): IngredientData {
+  const names = {} as Localized;
+  const data: IngredientData = {
+    ...core,
+    names,
+    aliases: perLocale<string[]>(() => []),
+  };
+  for (const locale of LOCALES) {
     const file = join(INGREDIENT_DIR, locale, `${id}.yaml`);
-    let overlay: OverlayData | null = null;
+    let loc: IngredientLocaleData | null = null;
     try {
-      overlay = (load(readFileSync(file, 'utf8')) ?? {}) as OverlayData;
+      loc = (load(readFileSync(file, 'utf8')) ?? {}) as IngredientLocaleData;
     } catch (err) {
       if ((err as { code?: string }).code !== 'ENOENT') throw err;
     }
-    if (overlay) {
-      if (overlay.names !== undefined) data.names[locale] = overlay.names;
-      if (overlay.aliases !== undefined) data.aliases[locale] = overlay.aliases;
-      if (overlay.aisle !== undefined && data.aisle) data.aisle[locale] = overlay.aisle;
-      if (overlay.availability !== undefined) {
-        (data.availability ??= {})[locale] = normalizeGuidance(overlay.availability);
-      }
-    }
-    data.aliases[locale] ??= [];
-  }
-  // Completeness: every supported locale needs a name (+ aisle when aisles
-  // exist at all) from either the inline fields or an overlay.
-  for (const locale of LOCALES) {
-    if (data.names[locale] === undefined) {
+    if (loc?.names === undefined) {
       throw new Error(
-        `recipe db: ingredient "${id}" has no ${locale} name — add names.${locale} inline ` +
-          `or the overlay data/ingredients/${locale}/${id}.yaml.`,
+        `recipe db: ingredient "${id}" has no ${locale} name — add ` +
+          `data/ingredients/${locale}/${id}.yaml with names/aliases/aisle.`,
       );
     }
-    if (data.aisle && data.aisle[locale] === undefined) {
+    names[locale] = loc.names;
+    if (loc.aliases !== undefined) data.aliases[locale] = loc.aliases;
+    if (loc.aisle !== undefined) {
+      (data.aisle ??= {} as Record<Locale, StoreSection>)[locale] = loc.aisle;
+    }
+    if (loc.availability !== undefined) {
+      (data.availability ??= {})[locale] = normalizeGuidance(loc.availability);
+    }
+  }
+  // Aisle is all-or-nothing across locales: store geography either exists for
+  // every market or the shopping list groups the food under "other" everywhere.
+  if (data.aisle) {
+    const missing = LOCALES.filter((l) => data.aisle?.[l] === undefined);
+    if (missing.length > 0) {
       throw new Error(
-        `recipe db: ingredient "${id}" has no ${locale} aisle — add aisle.${locale} inline ` +
-          `or to the overlay data/ingredients/${locale}/${id}.yaml.`,
+        `recipe db: ingredient "${id}" has an aisle in some locales but not ` +
+          `${missing.join(', ')} — add aisle to those locale files (or remove it everywhere).`,
       );
     }
   }
@@ -120,33 +141,26 @@ export const loadIngredient: IngredientLookup = (id: string): LoadedIngredient =
   if (cached) return cached;
 
   const file = join(INGREDIENT_DIR, `${id}.yaml`);
-  let result: LoadedIngredient;
+  let core: IngredientCore | null = null;
   try {
-    const data = load(readFileSync(file, 'utf8')) as IngredientData;
-    if (!data || data.id !== id) {
-      throw new Error(`recipe db: ${file} has id "${data?.id}" but was loaded as "${id}".`);
+    const parsed = load(readFileSync(file, 'utf8')) as IngredientCore;
+    if (!parsed || parsed.id !== id) {
+      throw new Error(`recipe db: ${file} has id "${parsed?.id}" but was loaded as "${id}".`);
     }
-    // Inline guidance is authored with the bare-string note shorthand too.
-    if (data.availability) {
-      for (const loc of Object.keys(data.availability) as Locale[]) {
-        data.availability[loc] = normalizeGuidance(data.availability[loc] as RawGuidance);
-      }
-    }
-    result = { data, placeholder: false };
+    core = parsed;
   } catch (err) {
-    // A genuine parse/id error should be loud; a missing file degrades.
+    // A genuine parse/id error should be loud; a missing core file degrades.
     if (err instanceof Error && err.message.startsWith('recipe db:')) throw err;
     console.warn(
       `recipe db: ingredient "${id}" has no ${file} — using a zero-nutrition ` +
         `placeholder. Add /data/ingredients/${id}.yaml (or fix a typo'd id).`,
     );
-    result = { data: placeholderIngredient(id), placeholder: true };
   }
-  // Outside the try: a broken or incomplete OVERLAY must fail the build, never
-  // degrade the whole ingredient to a placeholder.
-  if (!result.placeholder) {
-    result = { data: applyOverlays(id, result.data), placeholder: false };
-  }
+  // Outside the try: a broken or incomplete LOCALE file must fail the build,
+  // never degrade the whole ingredient to a placeholder.
+  const result: LoadedIngredient = core
+    ? { data: assemble(id, core), placeholder: false }
+    : { data: placeholderIngredient(id), placeholder: true };
   cache.set(id, result);
   return result;
 };

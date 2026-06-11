@@ -1,0 +1,8 @@
+# en-US ingredient data for data/ingredients/ginger.yaml — locale-specific fields only.
+names: Ground ginger
+aliases:
+  - Ginger
+aisle: spices
+availability:
+  notes:
+    - Ground ginger from the spice aisle.

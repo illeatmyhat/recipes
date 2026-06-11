@@ -1,0 +1,13 @@
+# en-US ingredient data for data/ingredients/salt.yaml — locale-specific fields only.
+names: Salt, table
+aliases:
+  - Table salt
+  - Fine salt
+aisle: spices
+availability:
+  brands:
+    - Morton
+    - Diamond Crystal
+    - 365 Whole Foods
+  notes:
+    - Sold as iodized or plain table salt in every grocery store.

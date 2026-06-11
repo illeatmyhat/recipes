@@ -1,0 +1,13 @@
+# ja-JP ingredient data for data/ingredients/ground_flaxseed.yaml — locale-specific fields only.
+names: 亜麻仁（フラックスシード）粉末
+aliases:
+  - フラックスシード
+  - 亜麻仁粉
+aisle: dry_goods
+availability:
+  brands:
+    - 日本製粉 アマニ
+    - カルディ アマニ
+  notes:
+    - text: 亜麻仁（粉末）としてカルディ・自然食品店で入手可能。
+      important: true

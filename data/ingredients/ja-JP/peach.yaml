@@ -1,0 +1,13 @@
+# ja-JP ingredient data for data/ingredients/peach.yaml — locale-specific fields only.
+names: もも（生）
+aliases:
+  - 桃
+  - ピーチ
+aisle: produce
+availability:
+  brands:
+    - 白桃
+    - 黄桃
+    - あかつき
+  notes:
+    - 夏の果物として旬にスーパー・果物店で入手可能。

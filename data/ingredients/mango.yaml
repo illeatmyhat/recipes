@@ -1,30 +1,5 @@
 id: mango
 fdc_id: 169910
-names:
-  en-US: Mangos, raw
-  ja-JP: マンゴー（生）
-aliases:
-  en-US:
-    - Fresh mango
-    - Mango fruit
-  ja-JP:
-    - マンゴ
-    - 生マンゴー
-availability:
-  en-US:
-    brands:
-      - Champagne (Ataulfo)
-      - Tommy Atkins
-      - 365 Whole Foods
-    notes:
-      - Sold loose year-round; ripeness varies, choose slightly soft fruit.
-  ja-JP:
-    brands:
-      - 宮崎マンゴー
-      - アップルマンゴー
-      - フィリピン産マンゴー
-    notes:
-      - 輸入品は通年、国産高級品は夏に入手可能。
 nutrition:
   per_100g:
     calories: 60
@@ -40,6 +15,3 @@ nutrition:
     calcium: 11
     iron: 0.16
 density_g_per_ml: null
-aisle:
-  en-US: produce
-  ja-JP: produce

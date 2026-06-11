@@ -1,0 +1,14 @@
+# en-US ingredient data for data/ingredients/rolled_oats.yaml — locale-specific fields only.
+names: Old fashioned rolled oats
+aliases:
+  - Classic rolled oats
+  - Regular rolled oats
+aisle: dry_goods
+availability:
+  brands:
+    - Quaker
+    - Bob's Red Mill
+    - Kodiak
+  notes:
+    - text: Look for "old fashioned" or "classic" on the label.
+      important: true

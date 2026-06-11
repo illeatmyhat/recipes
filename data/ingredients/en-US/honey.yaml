@@ -1,0 +1,13 @@
+# en-US ingredient data for data/ingredients/honey.yaml — locale-specific fields only.
+names: Honey
+aliases:
+  - Pure honey
+  - Raw honey
+aisle: condiments
+availability:
+  brands:
+    - Nature Nate's
+    - Local Hive
+    - 365 Whole Foods
+  notes:
+    - Sold raw or filtered; choose 100% pure honey.

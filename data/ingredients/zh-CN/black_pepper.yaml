@@ -1,4 +1,4 @@
-# zh-CN overlay for data/ingredients/black_pepper.yaml — localizable fields only.
+# zh-CN ingredient data for data/ingredients/black_pepper.yaml — locale-specific fields only.
 names: 黑胡椒
 aliases:
   - 黑胡椒粉

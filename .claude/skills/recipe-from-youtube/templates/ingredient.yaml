@@ -1,43 +1,15 @@
-# data/ingredients/<id>.yaml — one file per ingredient.
+# data/ingredients/<id>.yaml — the LOCALE-NEUTRAL core, one file per ingredient.
 # Create this ONLY when the ingredient does not already exist in data/ingredients/.
 # `id` must equal the filename (<id>.yaml) and every ref id that points to it.
+#
+# The core is a library asset: nothing locale- or culture-specific belongs in
+# it — no names, no aliases, no aisles, no buying notes. ALL of that lives in
+# one companion file PER SUPPORTED LOCALE (see the bottom of this template);
+# the build fails if any locale's file is missing.
 id: <id>
 # USDA FoodData Central id. MUST be an SR Legacy entry — get it (and the
 # per_100g block below) from scripts/fetch-usda.mjs.
 fdc_id: 0
-# Inline locales: en-US (canonical) + ja-JP. Every OTHER supported locale
-# (zh-CN today) gets an overlay file data/ingredients/<locale>/<id>.yaml with
-# `names` / `aliases` / `aisle` (and optionally `availability`) for that
-# locale — see the note at the bottom.
-names:
-  en-US: <English name>
-  ja-JP: <Japanese name>
-aliases:
-  en-US:
-    - <other English name the transcript / shoppers might use>
-  ja-JP:
-    - <other Japanese name>
-# availability: OPTIONAL per-locale market guidance. THIS inline block may
-# only carry the inline locales (en-US/ja-JP), keyed by BCP-47 tag; every
-# other locale's guidance lives in that locale's OVERLAY file instead,
-# UNKEYED (`availability: {notes: [...]}` — the overlay file already is one
-# locale). Each entry is original content authored FOR that market IN that
-# language — never a translation of another locale's note. Omit a locale (or
-# the whole block) when there is nothing useful to say; the Shop stage then
-# shows nothing. A bare string is a regular note (revealed behind the row's
-# "More tips" disclosure). Mark a note `important: true` ONLY when every
-# cook needs it before shopping: the wrong form breaks the recipe (rolled vs
-# quick oats, low-sodium vs regular soy sauce) or the item is scarce in that
-# market (import/specialty stores only). List brands ONLY when the form is
-# easy to get wrong — don't invent brand names; omit `brands` over [].
-availability:
-  en-US:
-    notes:
-      - <where/how to buy it in the US>
-  ja-JP:
-    notes:
-      - text: <Japanese note, e.g. カルディ・輸入食品店で入手可能>
-        important: true                # scarcity / wrong-form warnings only
 # Paste the next two keys verbatim from: node scripts/fetch-usda.mjs <fdcId>
 nutrition:
   per_100g:
@@ -56,22 +28,27 @@ nutrition:
 # Grams per millilitre. REQUIRED (non-null) if any recipe uses this ingredient
 # with unit `ml`; otherwise null. See reference/units.md for common values.
 density_g_per_ml: null
-# Which supermarket section carries this food, PER LOCALE — store geography
-# differs by country (tofu: dairy_eggs in the US, tofu_soy in Japan/China;
-# soy sauce: international in the US, condiments in Japan/China). Valid
-# sections (see StoreSection in src/lib/types.ts): produce, meat_seafood,
-# tofu_soy, dairy_eggs, dry_goods, canned, condiments, spices, oils,
-# international, other.
-aisle:
-  en-US: <section id>
-  ja-JP: <section id>
-# REQUIRED COMPANION — one overlay file per non-inline locale, e.g.
-# data/ingredients/zh-CN/<id>.yaml (the build fails without it):
-#   names: <zh name>
-#   aliases: [<zh alias>]
-#   aisle: <section id for that market>
-#   availability:                      # optional — that locale's market guidance,
-#     notes:                           # NOT keyed by locale (the file is the locale)
-#       - <zh note, e.g. 在进口食品店或网购平台可买到>
-#       - text: <zh scarcity / wrong-form warning>
-#         important: true
+# ── REQUIRED COMPANIONS — data/ingredients/<locale>/<id>.yaml, one per
+# supported locale (en-US, ja-JP, zh-CN — see site.config.ts), each written
+# in ITS OWN language for ITS OWN market. The shape (everything below is for
+# that one locale, so nothing is keyed by locale):
+#
+#   # <locale> ingredient data for data/ingredients/<id>.yaml — locale-specific fields only.
+#   names: <display name>
+#   aliases:                       # other names the transcript / shoppers might use
+#     - <alias>
+#   aisle: <section id>            # that market's OWN store geography — they differ
+#                                  # (tofu: dairy_eggs in the US, tofu_soy in JP/CN;
+#                                  # soy sauce: international in the US, condiments in
+#                                  # JP/CN). Valid ids (StoreSection, src/lib/types.ts):
+#                                  # produce, meat_seafood, tofu_soy, dairy_eggs,
+#                                  # dry_goods, canned, condiments, spices, oils,
+#                                  # international, other.
+#   availability:                  # OPTIONAL market guidance — original content for
+#     notes:                       # this market, never a translation of another
+#       - <plain shopping note>    # locale's note. Omit when nothing useful to say.
+#       - text: <warning>          # `important: true` ONLY for what every cook needs
+#         important: true          # before shopping: wrong-form-breaks-the-recipe
+#                                  # (rolled vs quick oats) or scarce in this market
+#     brands:                      # ONLY when the form is easy to get wrong —
+#       - <brand>                  # don't invent brand names; omit over [].

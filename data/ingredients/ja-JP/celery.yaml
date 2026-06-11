@@ -1,0 +1,8 @@
+# ja-JP ingredient data for data/ingredients/celery.yaml — locale-specific fields only.
+names: セロリ
+aliases:
+  - セロリー
+aisle: produce
+availability:
+  notes:
+    - スーパーの野菜売り場で入手可能。

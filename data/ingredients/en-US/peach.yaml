@@ -1,0 +1,13 @@
+# en-US ingredient data for data/ingredients/peach.yaml — locale-specific fields only.
+names: Peaches, raw
+aliases:
+  - Fresh peach
+  - Yellow peach
+aisle: produce
+availability:
+  brands:
+    - Sun World
+    - 365 Whole Foods
+    - local orchard
+  notes:
+    - Seasonal summer fruit; sold loose in the produce section.

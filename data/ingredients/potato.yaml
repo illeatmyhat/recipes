@@ -1,21 +1,5 @@
 id: potato
 fdc_id: 170026
-names:
-  en-US: Potato
-  ja-JP: じゃがいも
-aliases:
-  en-US:
-    - Potatoes
-  ja-JP:
-    - ジャガイモ
-    - 馬鈴薯
-availability:
-  en-US:
-    notes:
-      - Any all-purpose potato (russet, Yukon, or white).
-  ja-JP:
-    notes:
-      - 男爵やメークインなど一般的なじゃがいも。
 nutrition:
   per_100g:
     calories: 77
@@ -31,6 +15,3 @@ nutrition:
     calcium: 12
     iron: 0.81
 density_g_per_ml: null
-aisle:
-  en-US: produce
-  ja-JP: produce

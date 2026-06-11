@@ -1,0 +1,9 @@
+# en-US ingredient data for data/ingredients/cumin.yaml — locale-specific fields only.
+names: Ground cumin
+aliases:
+  - Cumin
+  - Cumin seed
+aisle: spices
+availability:
+  notes:
+    - Ground cumin from the spice aisle.

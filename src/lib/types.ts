@@ -23,9 +23,11 @@ export type Locale = (typeof LOCALES)[number];
 export const CANONICAL_LOCALE: Locale = siteConfig.canonicalLocale;
 
 /**
- * The locales translated via sidecar catalogs and ingredient overlays —
- * every supported locale except the canonical one. A recipe declaring one of
- * these owes it a complete catalog (missing keys fail the build).
+ * The locales translated via per-recipe sidecar catalogs — every supported
+ * locale except the canonical one. A recipe declaring one of these owes it
+ * a complete catalog (missing keys fail the build). (The ingredient DB is
+ * NOT canonical-relative: every locale, canonical included, owns a
+ * data/ingredients/<locale>/ folder.)
  */
 export const CATALOG_LOCALES: readonly Locale[] = LOCALES.filter(
   (l) => l !== CANONICAL_LOCALE,
@@ -129,7 +131,14 @@ export type StoreSection =
   | 'international'
   | 'other';
 
-/** A single ingredient YAML file under /data/ingredients/<id>.yaml. */
+/**
+ * An ingredient as assembled at load (src/lib/recipe/db.ts). On disk it is a
+ * **locale-neutral core** (`data/ingredients/<id>.yaml`: id, FDC id,
+ * nutrition, density — a library asset, unbiased toward any culture) plus
+ * one file per supported locale (`data/ingredients/<locale>/<id>.yaml`:
+ * names/aliases/aisle/availability). No locale is inlined in the core —
+ * the canonical locale included.
+ */
 export interface IngredientData {
   id: string;
   fdc_id: number;
@@ -143,8 +152,9 @@ export interface IngredientData {
   /** Grams per millilitre. Required to weigh `ml` ingredients; null for solids. */
   density_g_per_ml: number | null;
   /**
-   * Which supermarket section carries this food, per viewer locale. Optional
-   * during migration — the shopping list groups absentees under "other".
+   * Which supermarket section carries this food, per viewer locale.
+   * All-or-nothing across locales (gated at load); when absent entirely the
+   * shopping list groups the food under "other".
    */
   aisle?: Record<Locale, StoreSection>;
 }

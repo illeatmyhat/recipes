@@ -1,0 +1,9 @@
+# en-US ingredient data for data/ingredients/onion.yaml — locale-specific fields only.
+names: Onion
+aliases:
+  - Yellow onion
+  - Brown onion
+aisle: produce
+availability:
+  notes:
+    - Yellow or brown onions, sold loose in the produce section.

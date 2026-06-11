@@ -1,0 +1,9 @@
+# ja-JP ingredient data for data/ingredients/ginger.yaml — locale-specific fields only.
+names: ジンジャーパウダー
+aliases:
+  - 生姜パウダー
+  - ショウガ
+aisle: spices
+availability:
+  notes:
+    - スーパーの調味料売り場で入手可能。

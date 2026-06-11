@@ -1,0 +1,13 @@
+# ja-JP ingredient data for data/ingredients/pumpkin_seeds.yaml — locale-specific fields only.
+names: かぼちゃの種（パンプキンシード）
+aliases:
+  - パンプキンシード
+  - ペピータ
+aisle: dry_goods
+availability:
+  brands:
+    - カルディ パンプキンシード
+    - 素焼きかぼちゃの種
+  notes:
+    - text: 輸入食品店・自然食品店で入手可能。
+      important: true

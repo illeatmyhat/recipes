@@ -1,4 +1,4 @@
-# zh-CN overlay for data/ingredients/raspberries.yaml — localizable fields only.
+# zh-CN ingredient data for data/ingredients/raspberries.yaml — locale-specific fields only.
 names: 树莓
 aliases:
   - 覆盆子

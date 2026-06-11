@@ -1,0 +1,9 @@
+# en-US ingredient data for data/ingredients/garlic.yaml — locale-specific fields only.
+names: Garlic
+aliases:
+  - Fresh garlic
+  - Garlic cloves
+aisle: produce
+availability:
+  notes:
+    - Sold as whole bulbs in the produce section.

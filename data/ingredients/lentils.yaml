@@ -1,23 +1,5 @@
 id: lentils
 fdc_id: 172420
-names:
-  en-US: Dried lentils
-  ja-JP: レンズ豆（乾燥）
-aliases:
-  en-US:
-    - Brown lentils
-    - Green lentils
-  ja-JP:
-    - レンティル
-    - 乾燥レンズ豆
-availability:
-  en-US:
-    notes:
-      - Sold dry in the bean or bulk aisle. Brown or green hold their shape in stew.
-  ja-JP:
-    notes:
-      - text: カルディや輸入食品店、通販で入手可能。
-        important: true
 nutrition:
   per_100g:
     calories: 352
@@ -33,6 +15,3 @@ nutrition:
     calcium: 35
     iron: 6.51
 density_g_per_ml: null
-aisle:
-  en-US: dry_goods
-  ja-JP: dry_goods

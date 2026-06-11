@@ -1,4 +1,4 @@
-# zh-CN overlay for data/ingredients/mushrooms.yaml — localizable fields only.
+# zh-CN ingredient data for data/ingredients/mushrooms.yaml — locale-specific fields only.
 names: 白蘑菇
 aliases:
   - 口蘑

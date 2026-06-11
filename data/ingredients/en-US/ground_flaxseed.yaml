@@ -1,0 +1,12 @@
+# en-US ingredient data for data/ingredients/ground_flaxseed.yaml — locale-specific fields only.
+names: Flaxseed, ground
+aliases:
+  - Flaxseed meal
+  - Ground linseed
+aisle: dry_goods
+availability:
+  brands:
+    - Bob's Red Mill
+    - Spectrum
+  notes:
+    - Sold as whole seed or pre-ground meal; refrigerate ground flax.

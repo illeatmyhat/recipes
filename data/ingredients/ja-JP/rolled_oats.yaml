@@ -1,0 +1,14 @@
+# ja-JP ingredient data for data/ingredients/rolled_oats.yaml — locale-specific fields only.
+names: ロールドオーツ
+aliases:
+  - オートミール
+  - クラシックオーツ
+  - オールドファッションドオーツ
+aisle: dry_goods
+availability:
+  brands:
+    - 日食オーツ
+    - Bob's Red Mill ロールドオーツ
+  notes:
+    - text: カルディ・コストコ・輸入食品店で入手可能。
+      important: true

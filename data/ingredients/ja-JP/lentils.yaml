@@ -1,0 +1,10 @@
+# ja-JP ingredient data for data/ingredients/lentils.yaml — locale-specific fields only.
+names: レンズ豆（乾燥）
+aliases:
+  - レンティル
+  - 乾燥レンズ豆
+aisle: dry_goods
+availability:
+  notes:
+    - text: カルディや輸入食品店、通販で入手可能。
+      important: true

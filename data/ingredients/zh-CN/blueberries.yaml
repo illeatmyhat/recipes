@@ -1,4 +1,4 @@
-# zh-CN overlay for data/ingredients/blueberries.yaml — localizable fields only.
+# zh-CN ingredient data for data/ingredients/blueberries.yaml — locale-specific fields only.
 names: 蓝莓
 aliases: []
 aisle: produce

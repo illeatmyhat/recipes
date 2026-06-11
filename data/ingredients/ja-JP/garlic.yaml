@@ -1,0 +1,9 @@
+# ja-JP ingredient data for data/ingredients/garlic.yaml — locale-specific fields only.
+names: にんにく
+aliases:
+  - ニンニク
+  - ガーリック
+aisle: produce
+availability:
+  notes:
+    - スーパーの野菜売り場で球のまま入手可能。

@@ -1,4 +1,4 @@
-# zh-CN overlay for data/ingredients/ginger.yaml — localizable fields only.
+# zh-CN ingredient data for data/ingredients/ginger.yaml — locale-specific fields only.
 names: 姜粉
 aliases:
   - 生姜粉

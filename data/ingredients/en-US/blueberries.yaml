@@ -1,0 +1,13 @@
+# en-US ingredient data for data/ingredients/blueberries.yaml — locale-specific fields only.
+names: Blueberries, raw
+aliases:
+  - Fresh blueberries
+  - Raw blueberry
+aisle: produce
+availability:
+  brands:
+    - Driscoll's
+    - Wish Farms
+    - store brand
+  notes:
+    - Fresh in produce; frozen unsweetened is an equivalent substitute.

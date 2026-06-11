@@ -1,0 +1,9 @@
+# ja-JP ingredient data for data/ingredients/tofu.yaml — locale-specific fields only.
+names: 豆腐
+aliases:
+  - 木綿豆腐
+  - とうふ
+aisle: tofu_soy
+availability:
+  notes:
+    - スーパーで一般的に入手可能。木綿豆腐がおすすめ。

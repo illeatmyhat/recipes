@@ -1,0 +1,9 @@
+# en-US ingredient data for data/ingredients/tofu.yaml — locale-specific fields only.
+names: Tofu
+aliases:
+  - Firm tofu
+  - Bean curd
+aisle: dairy_eggs
+availability:
+  notes:
+    - Refrigerated tubs near the produce or dairy section. Firm or extra-firm works best.

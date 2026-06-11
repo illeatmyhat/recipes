@@ -1,0 +1,9 @@
+# ja-JP ingredient data for data/ingredients/black_pepper.yaml — locale-specific fields only.
+names: 黒こしょう
+aliases:
+  - ブラックペッパー
+  - こしょう
+aisle: spices
+availability:
+  notes:
+    - スーパーの調味料売り場で入手可能。

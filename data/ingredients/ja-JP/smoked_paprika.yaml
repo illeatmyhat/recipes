@@ -1,0 +1,9 @@
+# ja-JP ingredient data for data/ingredients/smoked_paprika.yaml — locale-specific fields only.
+names: スモークパプリカ
+aliases:
+  - パプリカ
+  - 燻製パプリカ
+aisle: spices
+availability:
+  notes:
+    - スモークパプリカ（燻製）。普通のパプリカでも代用可だが燻製の風味は出ない。

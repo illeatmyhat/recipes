@@ -1,0 +1,13 @@
+# en-US ingredient data for data/ingredients/pumpkin_seeds.yaml — locale-specific fields only.
+names: Pumpkin and squash seed kernels, dried
+aliases:
+  - Pepitas
+  - Pumpkin seed kernels
+aisle: dry_goods
+availability:
+  brands:
+    - Bob's Red Mill
+    - 365 Whole Foods
+    - Go Raw
+  notes:
+    - Sold raw or roasted, in bulk and bagged; "pepitas" are the hulled kernels.

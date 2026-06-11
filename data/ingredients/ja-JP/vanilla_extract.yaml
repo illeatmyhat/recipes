@@ -1,0 +1,13 @@
+# ja-JP ingredient data for data/ingredients/vanilla_extract.yaml — locale-specific fields only.
+names: バニラエクストラクト
+aliases:
+  - バニラエッセンス
+  - 天然バニラ
+aisle: spices
+availability:
+  brands:
+    - 私の台所
+    - GABAN
+  notes:
+    - text: 輸入食品店・製菓材料店で入手可能。
+      important: true

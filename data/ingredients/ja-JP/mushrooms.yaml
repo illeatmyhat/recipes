@@ -1,0 +1,9 @@
+# ja-JP ingredient data for data/ingredients/mushrooms.yaml — locale-specific fields only.
+names: マッシュルーム
+aliases:
+  - ホワイトマッシュルーム
+  - ブラウンマッシュルーム
+aisle: produce
+availability:
+  notes:
+    - スーパーの野菜売り場で入手可能。

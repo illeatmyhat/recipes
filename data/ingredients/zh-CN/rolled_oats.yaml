@@ -1,4 +1,4 @@
-# zh-CN overlay for data/ingredients/rolled_oats.yaml — localizable fields only.
+# zh-CN ingredient data for data/ingredients/rolled_oats.yaml — locale-specific fields only.
 names: 传统燕麦片
 aliases:
   - 老式燕麦片

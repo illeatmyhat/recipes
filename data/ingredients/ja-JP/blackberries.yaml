@@ -1,0 +1,12 @@
+# ja-JP ingredient data for data/ingredients/blackberries.yaml — locale-specific fields only.
+names: ブラックベリー（生）
+aliases:
+  - 黒いちご
+  - 生ブラックベリー
+aisle: produce
+availability:
+  brands:
+    - 冷凍ブラックベリー
+  notes:
+    - text: 生は入手困難、冷凍が中心。
+      important: true

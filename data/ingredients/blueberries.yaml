@@ -1,29 +1,5 @@
 id: blueberries
 fdc_id: 171711
-names:
-  en-US: Blueberries, raw
-  ja-JP: ブルーベリー（生）
-aliases:
-  en-US:
-    - Fresh blueberries
-    - Raw blueberry
-  ja-JP:
-    - 生ブルーベリー
-    - フレッシュブルーベリー
-availability:
-  en-US:
-    brands:
-      - Driscoll's
-      - Wish Farms
-      - store brand
-    notes:
-      - Fresh in produce; frozen unsweetened is an equivalent substitute.
-  ja-JP:
-    brands:
-      - 国産ブルーベリー
-      - 冷凍ブルーベリー
-    notes:
-      - 生は旬の時期、冷凍は通年スーパーで入手可能。
 nutrition:
   per_100g:
     calories: 57
@@ -39,6 +15,3 @@ nutrition:
     calcium: 6
     iron: 0.28
 density_g_per_ml: null
-aisle:
-  en-US: produce
-  ja-JP: produce

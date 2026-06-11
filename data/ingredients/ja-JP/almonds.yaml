@@ -1,0 +1,12 @@
+# ja-JP ingredient data for data/ingredients/almonds.yaml — locale-specific fields only.
+names: アーモンド（生）
+aliases:
+  - 生アーモンド
+  - スライスアーモンド
+aisle: dry_goods
+availability:
+  brands:
+    - 素焼きアーモンド
+    - カリフォルニアアーモンド
+  notes:
+    - スーパー・輸入食品店で入手可能。

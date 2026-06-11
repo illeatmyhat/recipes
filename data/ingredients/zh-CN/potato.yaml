@@ -1,4 +1,4 @@
-# zh-CN overlay for data/ingredients/potato.yaml — localizable fields only.
+# zh-CN ingredient data for data/ingredients/potato.yaml — locale-specific fields only.
 names: 土豆
 aliases:
   - 马铃薯

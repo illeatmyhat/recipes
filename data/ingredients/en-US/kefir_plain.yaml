@@ -1,0 +1,14 @@
+# en-US ingredient data for data/ingredients/kefir_plain.yaml — locale-specific fields only.
+names: Plain milk kefir
+aliases:
+  - Cultured milk kefir
+  - Plain unflavored kefir
+aisle: dairy_eggs
+availability:
+  brands:
+    - Lifeway
+    - Green Valley
+    - Maple Hill
+  notes:
+    - text: Use plain, unflavored — check the yogurt-drink section. Full-fat is creamier.
+      important: true

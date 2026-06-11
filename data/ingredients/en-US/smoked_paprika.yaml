@@ -1,0 +1,9 @@
+# en-US ingredient data for data/ingredients/smoked_paprika.yaml — locale-specific fields only.
+names: Smoked paprika
+aliases:
+  - Pimentón
+  - Paprika
+aisle: spices
+availability:
+  notes:
+    - Spanish smoked paprika (pimentón). Plain paprika works but loses the smoke.

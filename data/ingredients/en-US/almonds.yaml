@@ -1,0 +1,13 @@
+# en-US ingredient data for data/ingredients/almonds.yaml — locale-specific fields only.
+names: Almonds, raw
+aliases:
+  - Raw whole almonds
+  - Sliced almonds
+aisle: dry_goods
+availability:
+  brands:
+    - Blue Diamond
+    - Fisher
+    - 365 Whole Foods
+  notes:
+    - Sold raw whole, sliced, or slivered; nutrition is the same.

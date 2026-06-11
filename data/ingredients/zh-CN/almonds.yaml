@@ -1,4 +1,4 @@
-# zh-CN overlay for data/ingredients/almonds.yaml — localizable fields only.
+# zh-CN ingredient data for data/ingredients/almonds.yaml — locale-specific fields only.
 names: 扁桃仁（生）
 aliases:
   - 杏仁

@@ -1,0 +1,9 @@
+# en-US ingredient data for data/ingredients/olive_oil.yaml — locale-specific fields only.
+names: Olive oil
+aliases:
+  - Extra virgin olive oil
+  - Cooking olive oil
+aisle: oils
+availability:
+  notes:
+    - Any plain olive oil works; extra virgin for the most flavor.

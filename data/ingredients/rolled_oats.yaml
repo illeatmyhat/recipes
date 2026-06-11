@@ -1,32 +1,5 @@
 id: rolled_oats
 fdc_id: 169705
-names:
-  en-US: Old fashioned rolled oats
-  ja-JP: ロールドオーツ
-aliases:
-  en-US:
-    - Classic rolled oats
-    - Regular rolled oats
-  ja-JP:
-    - オートミール
-    - クラシックオーツ
-    - オールドファッションドオーツ
-availability:
-  en-US:
-    brands:
-      - Quaker
-      - Bob's Red Mill
-      - Kodiak
-    notes:
-      - text: Look for "old fashioned" or "classic" on the label.
-        important: true
-  ja-JP:
-    brands:
-      - 日食オーツ
-      - Bob's Red Mill ロールドオーツ
-    notes:
-      - text: カルディ・コストコ・輸入食品店で入手可能。
-        important: true
 nutrition:
   per_100g:
     calories: 389
@@ -42,6 +15,3 @@ nutrition:
     calcium: 54
     iron: 4.72
 density_g_per_ml: null
-aisle:
-  en-US: dry_goods
-  ja-JP: dry_goods

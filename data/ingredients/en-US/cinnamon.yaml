@@ -1,0 +1,13 @@
+# en-US ingredient data for data/ingredients/cinnamon.yaml — locale-specific fields only.
+names: Cinnamon, ground
+aliases:
+  - Ground cinnamon
+  - Cinnamon powder
+aisle: spices
+availability:
+  brands:
+    - McCormick
+    - Simply Organic
+    - 365 Whole Foods
+  notes:
+    - Sold ground in the spice aisle; Ceylon and cassia types are both common.

@@ -1,0 +1,13 @@
+# en-US ingredient data for data/ingredients/soy_sauce.yaml — locale-specific fields only.
+names: Low-sodium soy sauce
+aliases:
+  - Soy sauce
+  - Shoyu
+  - Reduced-sodium soy sauce
+aisle: international
+availability:
+  brands:
+    - Kikkoman Less Sodium
+  notes:
+    - text: Use a low-sodium / "less sodium" soy sauce so you control the salt.
+      important: true

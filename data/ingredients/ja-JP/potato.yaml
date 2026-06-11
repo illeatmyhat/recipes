@@ -1,0 +1,9 @@
+# ja-JP ingredient data for data/ingredients/potato.yaml — locale-specific fields only.
+names: じゃがいも
+aliases:
+  - ジャガイモ
+  - 馬鈴薯
+aisle: produce
+availability:
+  notes:
+    - 男爵やメークインなど一般的なじゃがいも。

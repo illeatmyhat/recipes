@@ -1,4 +1,4 @@
-# zh-CN overlay for data/ingredients/garlic.yaml — localizable fields only.
+# zh-CN ingredient data for data/ingredients/garlic.yaml — locale-specific fields only.
 names: 大蒜
 aliases:
   - 蒜

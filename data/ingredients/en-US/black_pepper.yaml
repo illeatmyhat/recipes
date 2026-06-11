@@ -1,0 +1,9 @@
+# en-US ingredient data for data/ingredients/black_pepper.yaml — locale-specific fields only.
+names: Black pepper
+aliases:
+  - Ground black pepper
+  - Pepper
+aisle: spices
+availability:
+  notes:
+    - Ground or whole peppercorns, in every spice aisle.

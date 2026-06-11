@@ -1,0 +1,10 @@
+# en-US ingredient data for data/ingredients/chicken_breast.yaml — locale-specific fields only.
+names: Chicken, broiler or fryers, breast, skinless, boneless, meat only, raw
+aliases:
+  - Skinless boneless chicken breast
+  - Chicken breast fillet
+aisle: meat_seafood
+availability:
+  notes:
+    - text: Any skinless, boneless breast. Skip pre-brined ("with added solution") packs — they carry extra sodium.
+      important: true

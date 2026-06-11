@@ -1,0 +1,13 @@
+# en-US ingredient data for data/ingredients/hemp_seeds.yaml — locale-specific fields only.
+names: Hemp seeds, hulled
+aliases:
+  - Hemp hearts
+  - Hulled hemp seed
+aisle: dry_goods
+availability:
+  brands:
+    - Manitoba Harvest
+    - Bob's Red Mill
+    - Nutiva
+  notes:
+    - Usually labeled "hemp hearts"; keep refrigerated after opening.

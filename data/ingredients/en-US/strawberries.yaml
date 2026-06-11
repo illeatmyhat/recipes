@@ -1,0 +1,13 @@
+# en-US ingredient data for data/ingredients/strawberries.yaml — locale-specific fields only.
+names: Strawberries, raw
+aliases:
+  - Fresh strawberries
+  - Raw strawberry
+aisle: produce
+availability:
+  brands:
+    - Driscoll's
+    - Wish Farms
+    - California Giant
+  notes:
+    - Fresh in produce; frozen unsweetened works for smoothies and baking.
