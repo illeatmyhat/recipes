@@ -15,7 +15,8 @@
   import { locale } from './RecipeStore';
   import { params, resolved, resolveBundle, initV3, setFill, toggleFill, setKnob } from './RecipeStoreV3';
   import { t } from '../lib/i18n';
-  import type { Knob, KnobValue, Params, RecipeBundle, RoleT } from '../lib/v3/types';
+  import { proseName } from '../lib/v3/names';
+  import type { FillT, Knob, KnobValue, Params, RecipeBundle, RoleT } from '../lib/v3/types';
   import { LOCALES, type Localized } from '../lib/types';
 
   let { bundle }: { bundle: RecipeBundle } = $props();
@@ -83,6 +84,16 @@
     return notice && 'text' in notice
       ? notice.text
       : (Object.fromEntries(LOCALES.map((l) => [l, t('optionBlocked', l)])) as Localized);
+  }
+
+  // A fill's control label: its recipe alias, else the prose-normalized DB
+  // name in the viewer's locale — the same resolution the method's refs use
+  // (a raw id would read as English in every locale).
+  function fillName(fill: FillT<Localized>): string {
+    const names = bundle.ingredients[fill.id]?.data.names;
+    return names
+      ? proseName(fill, names, $locale)
+      : (fill.alias ? L(fill.alias) : fill.id.replace(/_/g, ' '));
   }
 
   // min-resist: don't allow a multi role to drop below its floor.
@@ -225,7 +236,7 @@
                 <span class="mark {kind}" class:on aria-hidden="true">{on ? (kind === 'radio' ? '●' : '✓') : ''}</span>
                 <span class="fill-body">
                   <span class="fill-main">
-                    <span class="fill-name">{fill.alias ? L(fill.alias) : fill.id.replace(/_/g, ' ')}</span>
+                    <span class="fill-name">{fillName(fill)}</span>
                     {#if on}<span class="fill-amt">{Math.round(gramsOf(fill.id))} g</span>{/if}
                   </span>
                   {#if fill.why}<span class="fill-why">{L(fill.why)}</span>{/if}

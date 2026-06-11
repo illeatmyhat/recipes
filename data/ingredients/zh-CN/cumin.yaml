@@ -1,0 +1,5 @@
+# zh-CN overlay for data/ingredients/cumin.yaml — localizable fields only.
+names: 孜然粉
+aliases:
+  - 小茴香粉
+aisle: spices

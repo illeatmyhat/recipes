@@ -1,0 +1,74 @@
+# zh-CN catalog for overnight-oats. Canonical EN lives in overnight-oats.mdx;
+# keys are dotted paths into its frontmatter. Merged at build by src/lib/v3/i18n.ts.
+title: 隔夜燕麦奇亚籽碗
+customize_title: 定制你的碗
+pattern: >-
+  不开火、不加糖：燕麦片和奇亚籽在开菲尔中浸泡一夜，凝成浓稠的益生菌基底。
+  甜味全靠水果，脆感全靠配料 — 蛋白质、膳食纤维和活性菌，前一晚两分钟就组装完成。
+
+knobs.texture.label: 口感
+knobs.texture.why: 奇亚籽负责凝固，开菲尔是被凝固的部分 —「加倍浓稠」会增加奇亚籽、减少开菲尔，做出能立住勺子的一碗。
+knobs.texture.optionLabels.classic: 经典
+knobs.texture.optionLabels.extra_thick: 加倍浓稠
+
+roles.oats.label: 燕麦
+roles.oats.why: 这碗的主体 — 压片燕麦无需加热，泡一夜就吸饱液体变软。关键在加工方式而不是品牌：必须是传统压片燕麦。
+roles.oats.fills.rolled_oats.note: 只用传统、老式压片燕麦。快熟和即食燕麦泡一夜会化成糊；钢切燕麦不加热则一直是硬粒。
+roles.oats.fills.rolled_oats.alias: 燕麦
+
+roles.chia.label: 奇亚籽
+roles.chia.why: 凝固剂 — 奇亚籽一夜成胶，给这碗布丁般的质地。别减量：低于这个量就凝不住，整碗会流动。
+
+roles.liquid.label: 液体
+roles.liquid.why: 燕麦和奇亚籽一夜吸收的液体。开菲尔带来活性菌、蛋白质，以及整碗风味围绕的酸味 — 全脂的凝固后最绵密。
+roles.liquid.fills.kefir_plain.note: 用原味无糖的。倒之前摇匀。
+roles.liquid.fills.kefir_plain.alias: 开菲尔
+
+roles.vanilla.label: 香草
+roles.vanilla.why: 不加糖也能把开菲尔的酸味变得像甜品。
+roles.vanilla.fills.vanilla_extract.note: 纯香草精可无限期保存；人工香精2–4年后会变质。
+roles.vanilla.fills.vanilla_extract.alias: 香草精
+
+roles.salt.label: 盐
+roles.salt.why: 一小撮对抗酸味 — 就像盐之于焦糖，平衡开菲尔的酸。不要省略。
+roles.salt.fills.salt.alias: 盐
+
+roles.fruits.label: 水果
+roles.fruits.why: 这碗唯一的甜味来源 — 不加糖，甜味和大部分维生素都来自水果。1到3种最合适；再多基底就被淹没了。
+roles.fruits.fills.strawberries.note: 泡一夜会变得软烂 — 最好早上现加。
+roles.fruits.fills.blueberries.note: 鲜果或冷冻都行。冷冻的可以前一晚放，早上正好解冻。
+roles.fruits.fills.blackberries.note: 比其他莓果味道更浓，所以量少一些。冷冻的放过夜没问题。
+roles.fruits.fills.raspberries.note: 泡一夜会散掉 — 务必早上现加。
+roles.fruits.fills.banana.note: 放过夜会变黑 — 务必早上现加。
+roles.fruits.fills.kiwi.note: 它的酶泡一夜会让整碗发苦 — 务必现加。
+roles.fruits.fills.kiwi.alias: 猕猴桃
+roles.fruits.fills.peach.note: 鲜桃过夜会变色 — 早上加。冷冻的前一晚放没问题。
+roles.fruits.fills.mango.note: 冷冻的更便宜，味道一样好 — 前一晚放进冷藏解冻。
+roles.fruits.fills.mango.alias: 芒果
+
+roles.toppings.label: 配料
+roles.toppings.why: 基底口感均匀绵软，配料负责对比 — 脆感、额外蛋白质或优质脂肪。全部可选；每样各有各的本事。
+roles.toppings.fills.hemp_seeds.note: 完全蛋白（含全部九种必需氨基酸），融进基底毫不突兀。最全能的一号选手。
+roles.toppings.fills.pumpkin_seeds.note: 植物界最好的锌来源。变软很快 — 吃前再撒。
+roles.toppings.fills.pumpkin_seeds.alias: 南瓜子
+roles.toppings.fills.ground_flaxseed.note: 必须是粉，不能是整粒 — 整粒亚麻籽会原样穿肠而过。
+roles.toppings.fills.granola.note: 看清标签上的添加糖 — 而且要最后放；见做法。
+roles.toppings.fills.walnuts.note: 欧米伽3最丰富的坚果。容易变哈喇 — 放冰箱冷藏或冷冻保存。
+roles.toppings.fills.almonds.note: 切片的比整粒或碎粒保持脆感更久。
+roles.toppings.fills.honey.note: 如果水果不够甜就淋一点 — 这里唯一的「添加糖」。
+roles.toppings.fills.cinnamon.note: 天天吃就选锡兰肉桂，别用桂皮（香豆素少得多）。
+
+# Method steps — templates for the MDX body's <Step id> elements. `{role}`
+# renders the role's chosen fills as a list join; `{role:fill}` names one fill.
+steps.soak.title: 前一晚
+steps.soak: "把{oats}和{chia}放进罐子或保鲜盒。倒入{liquid}，加{vanilla}和{salt}，搅拌均匀。盖好冷藏过夜 — 至少6小时。"
+steps.morning.title: 第二天早上
+steps.morning: "把凝固的基底舀进大碗 — 应该是浓稠绵密的。太稠了？加少量水或{liquid}调开。"
+steps.add_fruit.title: 加水果
+steps.add_fruit: "铺上{fruits}，鲜果或解冻的冷冻果都行。娇气的几种 — 香蕉、猕猴桃、树莓 — 一定要早上现加：放过夜会变色、发苦或散掉。"
+steps.finish.title: 收尾
+steps.finish: "加上{toppings}，立刻开吃 — 冰凉绵密的基底和上面配料的对比，正是这碗的精髓。"
+steps.granola_last.title: 格兰诺拉最后放
+steps.granola_last: "{toppings:granola}要等到吃第一口之前才放 — 碰到湿润的基底几分钟内就会变软。"
+steps.seeds_last.title: 籽类吃前再撒
+steps.seeds_last: "{toppings:pumpkin_seeds}吃前再撒 — 一接触基底很快就软了。"

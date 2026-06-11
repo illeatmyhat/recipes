@@ -1,0 +1,6 @@
+# zh-CN overlay for data/ingredients/kefir_plain.yaml — localizable fields only.
+names: 开菲尔（原味）
+aliases:
+  - 克非尔
+  - 发酵乳
+aisle: dairy_eggs

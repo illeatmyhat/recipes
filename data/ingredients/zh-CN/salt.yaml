@@ -1,0 +1,5 @@
+# zh-CN overlay for data/ingredients/salt.yaml — localizable fields only.
+names: 食盐
+aliases:
+  - 盐
+aisle: condiments

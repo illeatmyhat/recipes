@@ -1,0 +1,5 @@
+# zh-CN overlay for data/ingredients/pumpkin_seeds.yaml — localizable fields only.
+names: 南瓜子（去壳）
+aliases:
+  - 白瓜子
+aisle: dry_goods

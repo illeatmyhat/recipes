@@ -1,0 +1,5 @@
+# zh-CN overlay for data/ingredients/soy_sauce.yaml — localizable fields only.
+names: 低钠酱油
+aliases:
+  - 减盐生抽
+aisle: condiments

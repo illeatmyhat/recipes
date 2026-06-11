@@ -1,0 +1,5 @@
+# zh-CN overlay for data/ingredients/potato.yaml — localizable fields only.
+names: 土豆
+aliases:
+  - 马铃薯
+aisle: produce

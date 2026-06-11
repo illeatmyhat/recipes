@@ -1,0 +1,5 @@
+# zh-CN overlay for data/ingredients/peach.yaml — localizable fields only.
+names: 桃子
+aliases:
+  - 水蜜桃
+aisle: produce

@@ -1,0 +1,5 @@
+# zh-CN overlay for data/ingredients/ground_flaxseed.yaml — localizable fields only.
+names: 亚麻籽粉
+aliases:
+  - 亚麻仁粉
+aisle: dry_goods

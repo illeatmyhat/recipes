@@ -1,0 +1,5 @@
+# zh-CN overlay for data/ingredients/olive_oil.yaml — localizable fields only.
+names: 橄榄油
+aliases:
+  - 特级初榨橄榄油
+aisle: oils

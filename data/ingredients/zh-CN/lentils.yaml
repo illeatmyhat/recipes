@@ -1,0 +1,5 @@
+# zh-CN overlay for data/ingredients/lentils.yaml — localizable fields only.
+names: 小扁豆（干）
+aliases:
+  - 兵豆
+aisle: dry_goods

@@ -1,0 +1,5 @@
+# zh-CN overlay for data/ingredients/ginger.yaml — localizable fields only.
+names: 姜粉
+aliases:
+  - 生姜粉
+aisle: spices

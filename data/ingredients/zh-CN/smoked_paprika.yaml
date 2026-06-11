@@ -1,0 +1,5 @@
+# zh-CN overlay for data/ingredients/smoked_paprika.yaml — localizable fields only.
+names: 烟熏红椒粉
+aliases:
+  - 烟熏甜椒粉
+aisle: spices

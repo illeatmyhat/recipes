@@ -1,0 +1,5 @@
+# zh-CN overlay for data/ingredients/kiwi.yaml — localizable fields only.
+names: 猕猴桃
+aliases:
+  - 奇异果
+aisle: produce

@@ -1,0 +1,5 @@
+# zh-CN overlay for data/ingredients/tofu.yaml — localizable fields only.
+names: 豆腐
+aliases:
+  - 老豆腐
+aisle: tofu_soy

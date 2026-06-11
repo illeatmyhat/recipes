@@ -1,0 +1,5 @@
+# zh-CN overlay for data/ingredients/diced_tomatoes.yaml — localizable fields only.
+names: 番茄丁罐头
+aliases:
+  - 罐装番茄
+aisle: canned

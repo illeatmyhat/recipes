@@ -1,0 +1,5 @@
+# zh-CN overlay for data/ingredients/walnuts.yaml — localizable fields only.
+names: 核桃（生）
+aliases:
+  - 核桃仁
+aisle: dry_goods

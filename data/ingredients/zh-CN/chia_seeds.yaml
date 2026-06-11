@@ -1,0 +1,5 @@
+# zh-CN overlay for data/ingredients/chia_seeds.yaml — localizable fields only.
+names: 奇亚籽
+aliases:
+  - 奇雅子
+aisle: dry_goods

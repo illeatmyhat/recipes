@@ -1,0 +1,6 @@
+# zh-CN overlay for data/ingredients/chicken_breast.yaml — localizable fields only.
+names: 鸡胸肉（去皮）
+aliases:
+  - 鸡大胸
+  - 鸡脯肉
+aisle: meat_seafood

@@ -1,0 +1,99 @@
+# zh-CN catalog for weight-loss-stew. Canonical EN lives in weight-loss-stew.mdx;
+# keys are dotted paths into its frontmatter. Merged at build by src/lib/v3/i18n.ts.
+title: 高饱腹减脂炖菜
+customize_title: 定制你的一锅
+pattern: >-
+  大体积、高纤维、足量蛋白质、低热量密度。胃感知的是体积而不是热量 —
+  这样一大锅流食能让你饱好几个小时。没有哪种食材不可替代；每个角色都为这个
+  目标服务，只要守住目标，怎么换都还是这道菜。
+
+knobs.thickness.label: 浓稠度
+knobs.thickness.why: 增稠靠的是小扁豆，所以这里只缩放它。更稠也意味着每碗有更多蛋白质和纤维。
+knobs.blend.label: 打成奶油质地
+knobs.blend.why: 把锅里一部分打成泥，不加一滴奶油也能让汤变绵密 — 打开后做法会多一步。
+
+constraints.0.error: 至少保留一种咸味来源 — 盐和酱油都没有的话，这锅就真的没味道了，任何香料都救不回来。
+constraints.1.warn: 用水代替油煸炒也行 — 盯着锅，香味菜开始粘锅时就加几勺水。
+
+roles.added_fat.label: 油脂
+roles.added_fat.why: 整锅的油脂预算就这一汤匙 — 它是风味载体，不是香气来源（炖菜里挥发性香气早就煮飞了）。可以省略：用水煸炒也行。
+roles.added_fat.fills.olive_oil.note: 一汤匙 — 整锅要加的油就这些。
+
+roles.aromatics.label: 香味蔬菜
+roles.aromatics.why: 风味的地基，由几乎零热量的蔬菜搭成 — 有深度而不增加热量密度。
+roles.aromatics.fills.onion.note: 约一个大洋葱，切大块。
+roles.aromatics.fills.garlic.note: 约四瓣蒜，切大块。
+
+roles.lentils.label: 小扁豆
+roles.lentils.why: 顶梁柱 — 蛋白质、纤维和铁，还负责给汤增稠。两件事都能干的只有它，这个角色没有替代品。
+roles.lentils.fills.lentils.note: 干豆约半杯。棕色或绿色的炖煮不易散。
+roles.lentils.fills.lentils.alias: 小扁豆
+
+roles.protein.label: 蛋白质
+roles.protein.why: 饱腹感离不开蛋白质 — 但这个模式要求它是瘦的，每卡路里才扛饿。肥肉会毁掉这笔账。
+roles.protein.fills.tofu.note: 一块。沥水即可，不用压。掰碎下锅。
+roles.protein.fills.chicken_breast.why: 最瘦的肉 — 和豆腐承担同样的饱腹任务，热量相近。但鸡胸久炖会柴，所以第20分钟才下锅，不是一开始。见做法。
+roles.protein.fills.chicken_breast.note: 约一大块鸡胸，切成一口大小。
+
+roles.potato.label: 土豆
+roles.potato.why: 饱腹明星 — 实惠又压秤的体积担当。隔夜回锅会生成抗性淀粉，第二天更好。
+roles.potato.fills.potato.note: 这锅的体积主力 — 切大块，炖出来才有嚼头。
+roles.potato.fills.potato.alias: 土豆
+
+roles.vegetables.label: 蔬菜
+roles.vegetables.why: 几乎零热量地堆出体积和纤维 — 大体积思路的发动机。
+roles.vegetables.fills.carrots.note: 两三根胡萝卜，切大块。
+roles.vegetables.fills.celery.note: 约四根。咸鲜味的骨架。
+roles.vegetables.fills.mushrooms.note: 约230克。冲洗一下就行。
+roles.vegetables.fills.diced_tomatoes.note: 一罐连汁全下 — 添浓度也添一点酸。
+roles.vegetables.fills.diced_tomatoes.alias: 番茄丁
+
+roles.greens.label: 绿叶菜
+roles.greens.why: 几乎零热量的体积和微量营养素，最后下锅保留口感。
+roles.greens.fills.spinach.note: 约两杯。离火一分钟就蔫了。
+
+roles.seasonings.label: 调味料
+roles.seasonings.why: 几乎零热量的鲜味和暖意 — 这锅不像减肥餐的原因。
+roles.seasonings.fills.soy_sauce.note: 约两汤匙。约20千卡换来慢炖般的鲜味。低钠款，咸度自己掌握。
+roles.seasonings.fills.cumin.note: 约一茶匙。温暖土壤系的基调。
+roles.seasonings.fills.smoked_paprika.note: 约一茶匙。不放肉也有烟熏的厚度。
+roles.seasonings.fills.salt.note: 最后尝着加，在酱油之后。
+roles.seasonings.fills.salt.alias: 盐
+roles.seasonings.fills.black_pepper.note: 和其他调味料一起磨几下。
+
+roles.extras.label: 可选
+roles.extras.why: 想要的话来一点提亮 — 模式本身不需要它。
+roles.extras.fills.ginger.note: 一点姜粉就能让整锅亮起来。
+
+# Method steps — templates for the MDX body's <Step id> elements. `{role}`
+# renders the role's chosen fills as a list join; `{role:fill}` names one fill.
+steps.prep_aromatics.title: 备香味蔬菜
+steps.prep_aromatics: "把{aromatics}切大块 — 这是一锅有嚼头的炖菜，所有东西都保留些口感。"
+steps.start_base_oil.title: 起锅
+steps.start_base_oil: "厚底锅中火，下{added_fat}（整锅要加的油就这些）。加入{aromatics}炒软。"
+steps.start_base_dry.title: 起锅
+steps.start_base_dry: "厚底锅中火干烧，改用水煸炒：放入{aromatics}和少量水炒软，开始粘锅就再加一点水。"
+steps.add_lentils.title: 下小扁豆
+steps.add_lentils: "把{lentils}冲洗后倒入拌匀 — 炖煮过程中它们会让汤变稠。"
+steps.add_protein.title: 下蛋白质
+steps.add_protein: "{protein:tofu}沥干水（不用压），掰成大块下锅。"
+steps.hold_chicken.title: 鸡胸肉先别下
+steps.hold_chicken: "先别放{protein:chicken_breast} — 鸡胸从头炖到尾会柴。切成一口大小，第20分钟时下锅，最后10分钟正好熟透。"
+steps.season.title: 调味
+steps.season: "加入{seasonings}煮几分钟，让香味打开。"
+steps.soy_umami.title: 鲜味捷径
+steps.soy_umami: "{seasonings:soy_sauce}替时间打工 — 几分钟的炖煮就有长时间煨炖的味道。"
+steps.add_ginger.title: 提亮
+steps.add_ginger: "拌入{extras:ginger} — 一小勺就能让整锅亮起来。"
+steps.rinse_mushrooms.title: 处理蘑菇
+steps.rinse_mushrooms: "{vegetables:mushrooms}冲洗一下即可，不必搓洗或去皮。"
+steps.add_vegetables.title: 下蔬菜
+steps.add_vegetables: "加入{potato}和{vegetables}，需要动刀的都切大块 — 大块才有炖菜的样子。稍微煮一会儿。"
+steps.tomato_juice.title: 番茄连汁下
+steps.tomato_juice: "{vegetables:diced_tomatoes}连汁一起下 — 这些汁就是汤底的起点。"
+steps.simmer.title: 炖
+steps.simmer: "加水刚好没过食材。盖上锅盖转小火，炖25–30分钟，直到{lentils}变软、汤变浓稠。"
+steps.blend_half.title: 打成奶油质地
+steps.blend_half: "舀出约三分之一放进料理机（或用手持料理棒直接在锅里），打成泥后倒回锅中拌匀 — 不加奶油的绵密浓汤。"
+steps.finish_greens.title: 绿叶菜收尾
+steps.finish_greens: "离火，拌入{greens}让它们变蔫。盛进大碗 — 一份就是满满当当、吃得很饱的一大碗。"

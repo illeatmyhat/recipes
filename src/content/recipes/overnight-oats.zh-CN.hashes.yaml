@@ -1,5 +1,5 @@
 # Machine-written — do not edit. Refresh: REFRESH_CATALOG_HASHES=1 npm run build
-# Per translated key in overnight-oats.ja-JP.yaml: sha-256[0:8] of the EN source it
+# Per translated key in overnight-oats.zh-CN.yaml: sha-256[0:8] of the EN source it
 # was translated from. The build warns when the EN changes underneath (staleness).
 customize_title: "35d41d2f"
 knobs.texture.label: "e28411a3"
