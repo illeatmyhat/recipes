@@ -1,0 +1,6 @@
+# en-US ingredient data for data/ingredients/fish_sauce.yaml — locale-specific fields only.
+names: Fish sauce
+aliases:
+  - Nam pla
+  - Nuoc mam
+aisle: international

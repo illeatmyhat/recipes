@@ -1,0 +1,9 @@
+# ja-JP ingredient data for data/ingredients/sesame_oil.yaml — locale-specific fields only.
+names: ごま油
+aliases:
+  - 胡麻油
+  - 焙煎ごま油
+aisle: oils
+availability:
+  notes:
+    - 焙煎タイプ（琥珀色）を。太白ごま油（無色）は香りが立たないのでここでは不向き。

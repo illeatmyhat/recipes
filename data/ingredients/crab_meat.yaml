@@ -1,0 +1,17 @@
+id: crab_meat
+fdc_id: 171966
+nutrition:
+  per_100g:
+    calories: 83
+    fat: 0.74
+    saturated_fat: 0.201
+    trans_fat: 0.014
+    cholesterol: 97
+    sodium: 563
+    carbohydrates: 0
+    fiber: 0
+    sugars: 0
+    protein: 17.88
+    calcium: 91
+    iron: 0.5
+density_g_per_ml: null

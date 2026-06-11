@@ -1,0 +1,95 @@
+# zh-CN catalog for dried-scallop-chicken-soup. Canonical EN lives in
+# dried-scallop-chicken-soup.mdx; keys are dotted paths into its frontmatter.
+# Merged at build by src/lib/recipe/i18n.ts.
+title: 瑶柱鸡丝羹
+customize_title: 定制你的这碗羹
+pattern: >-
+  宴席高档汤的奢华，从来都在汤底里：鱼翅本身没有味道——不过是泡在别人高汤里的
+  「口感」——所以没有它，这碗羹分毫不缺。瑶柱敲碎、泡发、煸香，给出鱼翅从来
+  没有过的鲜；淀粉勾芡撑起油亮的羹身；上浆滑过的鸡丝接下鱼翅唯一的真活儿。
+  仪式感原样保留，味道更好，不伤一条鲨鱼。
+
+knobs.thickness.label: 浓稠度
+knobs.thickness.why: 老爸的规矩——芡加到「感觉对了」为止。这里只缩放芡汁：薄的像汤一样能喝，厚的就是宴席羹的领地，勺子过处留痕。
+
+constraints.0.warn: 没有淀粉这层浆，鸡丝就是白灼的口感，不是滑嫩的「velvet」——汤还是成立的，但招牌口感没了。
+constraints.1.warn: 光靠鱼露（或酱油）撑这么大一锅，味道会发飘——淡了就上桌后按碗加盐。
+
+roles.scallops.label: 瑶柱
+roles.scallops.why: 鲜味的发动机——整锅汤的海味深度全部来自这一样食材，靠三步解锁：敲碎、泡发、煸香。鲜贝代替不了：味道太淡，做出来是海鲜汤，不是这碗。老爸的裁定——无可替代。
+roles.scallops.fills.dried_scallops.note: 约40克。小粒和礼盒大粒味道一样——价钱贵在品相。
+
+roles.chicken.label: 鸡肉
+roles.chicken.why: 勺子里的「丝」——以前是鱼翅的活儿。鱼翅本就是没味道的口感担当，所以切细上浆的鸡丝不只是顶替；按老爸亲口的评价，比本尊还好。
+roles.chicken.fills.chicken_breast.note: 约一小块鸡胸——先切片，叠起来再切丝。半冻状态下好切得多。
+
+roles.marinade.label: 上浆腌料
+roles.marinade.why: 让鸡丝滑嫩而不是白灼的关键：盐从内部入味，淀粉加少量水给每根鸡丝裹上锁水的浆衣，一小撮小苏打调高肉的pH值，带来饭店那种弹牙的「脆口」。
+roles.marinade.fills.salt.note: 半茶匙，先放。
+roles.marinade.fills.cornstarch.note: 一汤匙，搅到完全融进肉里——搅不匀就结块。
+roles.marinade.fills.baking_soda.why: 口感的秘密：四分之一茶匙调高肉的pH，煮过仍然弹牙。省略也行——鸡丝照样能吃，只是更软。
+
+roles.coating_oil.label: 封油
+roles.coating_oil.why: 下锅前单独拌进腌好鸡丝里的一茶匙油——裹了油的鸡丝在锅里根根散开，不会抱成一团。
+
+roles.frying_oil.label: 煸炒油
+roles.frying_oil.why: 煸泡发瑶柱用的一茶匙。干热激出的焦香，光靠泡是永远泡不出来的。
+
+roles.broth.label: 汤底
+roles.broth.why: 画布。一罐鸡汤加热水——最要紧的是泡瑶柱的水也全倒回去，刚解锁的鲜味一滴不进下水道。
+roles.broth.fills.chicken_broth.note: 标准一罐（约400克）。其余液体是6–8杯热水，外加全部泡发水。
+
+roles.thickener.label: 芡汁
+roles.thickener.why: 招牌的羹身。鱼翅羹向来是口感的菜，那种油亮挂勺的浓度是淀粉的活儿——必须先用冷水调开，绝不能把干粉直接撒进热汤。
+roles.thickener.fills.cornstarch.note: 约7汤匙，用5汤匙冷水调开。老爸的规矩——不够稠就再调一碗。
+
+roles.salinity.label: 提鲜酱汁
+roles.salinity.why: 盐之外的发酵骨架。老爸用鱼露——咸得更干净，海味的方向和瑶柱一致；多数家庭用酱油。两派随你选。
+roles.salinity.fills.fish_sauce.why: 老爸的选择：更锐、更直接，放大瑶柱的鲜而不是盖过它。
+roles.salinity.fills.soy_sauce.why: 大众路线——更圆润、更有酱香。一茶匙鱼露的活儿，酱油得一汤匙才干得动；低钠款让咸度握在自己手里。
+
+roles.seasonings.label: 咸味与上色
+roles.seasonings.why: 配得上一大锅的盐，加上染出宴席琥珀色的老抽——本尊的颜色从来也是汤给的，不是鱼翅。
+roles.seasonings.fills.salt.note: 先一茶匙，再尝着加——老爸的标准是「不要太咸」。
+roles.seasonings.fills.dark_soy_sauce.note: 约两茶匙半，分次加——上色为主，提味为辅，让眼睛说了算。
+
+roles.finishers.label: 收尾三件
+roles.finishers.why: 广式羹汤的收尾三件套：香油提香（早放就煮飞了），一茶匙糖回甘压咸，白胡椒垫上那股安静的辣。
+roles.finishers.fills.white_pepper.note: 四分之一茶匙——几乎每碗广式汤底下都有的温柔辣意。
+
+roles.upgrade.label: 宴席升级
+roles.upgrade.why: 馆子里会往这锅羹里再加海鲜。老爸盖章的是真蟹肉——「那就真的非常、非常高级了」。（蘑菇？他的裁定：这碗里不放。）
+roles.upgrade.fills.crab_meat.note: 和鸡丝一起下，烫热即可。鲜拆或好罐头都行。
+
+# Method steps — templates for the MDX body's <Step id> elements. `{role}`
+# renders the role's chosen fills as a list join; `{role:fill}` names one fill.
+steps.crush_soak.title: 敲碎泡发
+steps.crush_soak: "用钳子把{scallops}夹碎——先敲碎是老爸缩短泡发时间的窍门——冲洗后倒入热水没过。盖上盖子微波1分钟，再焖约10分钟就软了。"
+steps.cut_chicken.title: 切鸡丝
+steps.cut_chicken: "{chicken}去筋膜，先切片，叠起来再切丝。半冻的肉切起来利落得多。"
+steps.marinate.title: 上浆
+steps.marinate: "{chicken}加{marinade}和两汤匙水，搅过「拌匀」那一步——直到腌料完全吃进肉里，一点疙瘩不剩。"
+steps.shred.title: 撕瑶柱
+steps.shred: "泡发的{scallops}在碗上方攥干——泡发水一滴都要留着，那是待会儿要倒回去的鲜味——再用手或勺子撕到没有大块为止。"
+steps.toast.title: 煸香瑶柱
+steps.toast: "汤锅里下{frying_oil}，小火，把撕好的{scallops}煸40–50秒，不停翻动防粘。这一步干煸，激出光泡发永远出不来的香气。"
+steps.build_broth.title: 兑汤
+steps.build_broth: "倒入留好的泡发水、{broth}和6–8杯（约1.5–2升）热水——提前烧开的水更省时间。大火烧开。"
+steps.steep.title: 焖出味
+steps.steep: "盖上盖子，关火，焖5分钟。{scallops}会把剩下的鲜味全部交给汤。"
+steps.mix_slurry.title: 调芡汁
+steps.mix_slurry: "{thickener}用约5汤匙冷水调到顺滑。干粉绝不能直接下热汤——会结成一整坨；调芡这步没有商量。"
+steps.thicken.title: 离火勾芡
+steps.thicken: "火调到最小——或者干脆关掉。一边沿锅底搅一边细细倒入芡汁，别让它沉底。边倒边看：薄的像汤能喝，厚的挂勺。不到位？再调一碗芡——你说了算。"
+steps.season.title: 调味
+steps.season: "重新开火，加入{seasonings}和{salinity}，每加一样就搅一搅、尝一口——在「太咸」之前停手。"
+steps.color.title: 染出琥珀色
+steps.color: "{seasonings:dark_soy_sauce}是给眼睛的，不是给舌头的：加一点，搅开，看一眼。汤色读出琥珀就停——宴席鱼翅羹的颜色，从来就出自这一瓶。"
+steps.coat.title: 鸡丝封油
+steps.coat: "鸡丝下锅前，把{coating_oil}拌进去——裹了油的鸡丝在锅里根根分开，不结团。"
+steps.add_chicken.title: 下鸡丝
+steps.add_chicken: "转小火——火大了，还没来得及拨散鸡丝就抱团定型了。{chicken}分次下锅，边下边拨散，40–50秒烫熟。"
+steps.add_crab.title: 高级版
+steps.add_crab: "{upgrade}和鸡丝一起折进汤里，烫热即可——这就是「非常、非常高级」的宴席版。"
+steps.finish.title: 收尾
+steps.finish: "离开沸腾状态，拌入{finishers}——香油的香气一煮就飞，糖把咸味的棱角磨圆，白胡椒垫上每碗广式羹汤底下那股安静的辣。最后再尝一口，盛碗。"

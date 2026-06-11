@@ -1,0 +1,9 @@
+# zh-CN ingredient data for data/ingredients/crab_meat.yaml — locale-specific fields only.
+names: 蟹肉（鲜拆或罐装）
+aliases:
+  - 蟹肉罐头
+  - 蟹腿肉
+aisle: meat_seafood
+availability:
+  notes:
+    - 鲜拆蟹肉最好，蟹肉罐头也可以。注意挑净碎壳。

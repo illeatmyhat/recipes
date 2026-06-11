@@ -1,0 +1,11 @@
+# ja-JP ingredient data for data/ingredients/dark_soy_sauce.yaml — locale-specific fields only.
+names: 老抽（ラオチョウ）
+aliases:
+  - 中国たまり醤油
+  - ダークソイソース
+  - 老抽王
+aisle: international
+availability:
+  notes:
+    - text: 日本のスーパーにはまず置いていない。中華食材店・カルディ・ネット通販で「老抽」を探す。たまり醤油で色は近づくが、塩分が高めなので量を控えて。
+      important: true

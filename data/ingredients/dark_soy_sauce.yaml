@@ -1,0 +1,21 @@
+id: dark_soy_sauce
+# Distinct from soy_sauce (the light, low-sodium bottle): dark soy is a
+# different product with a different job (color), and merging the ids would
+# collapse two different bottles into one shopping-list row. SR Legacy has no
+# dark-soy entry; regular shoyu is the closest generic.
+fdc_id: 174277
+nutrition:
+  per_100g:
+    calories: 53
+    fat: 0.57
+    saturated_fat: 0.073
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 5493
+    carbohydrates: 4.93
+    fiber: 0.8
+    sugars: 0.4
+    protein: 8.14
+    calcium: 33
+    iron: 1.45
+density_g_per_ml: 1.2

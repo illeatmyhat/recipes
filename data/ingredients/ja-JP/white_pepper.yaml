@@ -1,0 +1,6 @@
+# ja-JP ingredient data for data/ingredients/white_pepper.yaml — locale-specific fields only.
+names: 白こしょう
+aliases:
+  - ホワイトペッパー
+  - 白胡椒
+aisle: spices

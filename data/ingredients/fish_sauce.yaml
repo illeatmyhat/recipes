@@ -1,0 +1,17 @@
+id: fish_sauce
+fdc_id: 174531
+nutrition:
+  per_100g:
+    calories: 35
+    fat: 0.01
+    saturated_fat: 0.003
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 7851
+    carbohydrates: 3.64
+    fiber: 0
+    sugars: 3.64
+    protein: 5.06
+    calcium: 43
+    iron: 0.78
+density_g_per_ml: 1.18

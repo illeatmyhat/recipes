@@ -1,0 +1,6 @@
+# en-US ingredient data for data/ingredients/vegetable_oil.yaml — locale-specific fields only.
+names: Neutral oil (canola or vegetable)
+aliases:
+  - Vegetable oil
+  - Canola oil
+aisle: oils

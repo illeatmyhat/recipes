@@ -1,0 +1,11 @@
+# ja-JP ingredient data for data/ingredients/baking_soda.yaml — locale-specific fields only.
+names: 重曹（食用）
+aliases:
+  - ベーキングソーダ
+  - タンサン
+  - 炭酸水素ナトリウム
+aisle: dry_goods
+availability:
+  notes:
+    - text: 必ず「食用」表記の重曹を。掃除用の重曹も広く売られているが、食品グレードではない。
+      important: true

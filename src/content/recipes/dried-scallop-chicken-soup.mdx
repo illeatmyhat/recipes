@@ -1,0 +1,361 @@
+---
+title: Dried Scallop & Chicken Soup
+slug: dried-scallop-chicken-soup
+hero_image: ./images/dried-scallop-chicken-soup.jpg
+locales: [en-US, ja-JP, zh-CN]
+customize_title: Customize your soup
+pattern: >-
+  A banquet thick soup whose luxury was always the broth: shark fin itself was
+  flavorless — prized texture floating in someone else's stock — so the soup
+  survives its loss intact. Dried scallops, crushed, soaked, and toasted,
+  give the umami the fin never had; a cornstarch slurry builds the glossy
+  body; velveted chicken strips do the fin's one real job. Same ceremony,
+  better flavor, nothing endangered.
+servings:
+  min: 2
+  max: 8
+  default: 4
+knobs:
+  thickness:
+    kind: scalar
+    label: Thickness
+    why: >-
+      Dad's rule — add slurry until it feels right. This scales only the
+      slurry: at the low end the soup drinks like a broth, at the top it's
+      full banquet thick-soup territory where the spoon leaves a trail.
+    min: 0.5
+    max: 1.5
+    step: 0.25
+    default: 1
+constraints:
+  - when: "!has(marinade, 'cornstarch')"
+    warn: >-
+      Without its cornstarch coat the chicken cooks up plain-poached instead
+      of velvet-silky — the soup still works, but you lose the signature
+      texture.
+  - when: "!has(seasonings, 'salt')"
+    warn: >-
+      The savory sauce alone is carrying a very large pot — expect it flat,
+      and season bowl by bowl at the table.
+roles:
+  scallops:
+    label: Dried scallops
+    why: >-
+      The umami engine — the entire seafood depth of the soup comes from this
+      one ingredient, unlocked in three moves: crush, soak, toast. Fresh
+      scallops can't substitute: they're milder and make a seafood soup, not
+      this one. Dad's verdict — irreplaceable.
+    range: { min: 1, max: 1 }
+    fills:
+      - id: dried_scallops
+        amount: { value: 42, unit: g }
+        default: true
+        note: >-
+          About 1½ oz. Small ones taste the same as the big gift-box grades —
+          price follows looks, not flavor.
+  chicken:
+    label: Chicken
+    why: >-
+      The strands in the spoon — the job shark fin used to do. The fin was
+      flavorless texture, so chicken cut to fine strips and velveted doesn't
+      just stand in for it; by dad's own tasting, it beats it.
+    range: { min: 1, max: 1 }
+    fills:
+      - id: chicken_breast
+        amount: { value: 170, unit: g }
+        default: true
+        note: >-
+          About one small breast — sliced, then the slices stacked and cut
+          into strips. Partially frozen, it cuts much easier.
+  marinade:
+    label: Velvet marinade
+    why: >-
+      What makes the strips silky instead of plain-poached: salt seasons from
+      inside, cornstarch and a splash of water wrap each strip in a coat that
+      seals in moisture, and a pinch of baking soda nudges the meat's pH
+      toward that springy restaurant "bite".
+    range: { min: 0, max: 3 }
+    fills:
+      - id: salt
+        amount: { value: 3, unit: g }
+        default: true
+        note: Half a teaspoon, in first.
+      - id: cornstarch
+        amount: { value: 8, unit: g }
+        default: true
+        note: >-
+          One tablespoon, stirred until it disappears into the meat —
+          under-stirred cornstarch turns to lumps.
+      - id: baking_soda
+        amount: { value: 1, unit: g }
+        default: true
+        why: >-
+          The texture secret: a quarter teaspoon shifts the meat's pH so it
+          stays springy through the boil. Skip it and the chicken is fine —
+          just softer.
+  coating_oil:
+    label: Coating oil
+    why: >-
+      A separate teaspoon of oil, stirred through the marinated chicken right
+      before it hits the soup — oiled strips slide apart in the pot instead
+      of landing as one clump.
+    range: { min: 0, max: 1 }
+    fills:
+      - id: vegetable_oil
+        amount: { value: 5, unit: ml }
+        default: true
+  frying_oil:
+    label: Frying oil
+    why: >-
+      A teaspoon for toasting the soaked scallops — dry heat sparks a roasted
+      aroma that soaking alone never reaches.
+    range: { min: 1, max: 1 }
+    fills:
+      - id: vegetable_oil
+        amount: { value: 5, unit: ml }
+        default: true
+  broth:
+    label: Broth
+    why: >-
+      The canvas. One can of chicken broth plus hot water — and, crucially,
+      the scallop soaking water, so none of the flavor you just unlocked
+      goes down the sink.
+    range: { min: 1, max: 1 }
+    fills:
+      - id: chicken_broth
+        amount: { value: 411, unit: g }
+        default: true
+        note: >-
+          One standard 14.5-oz can. The rest of the liquid is 6–8 cups of hot
+          water plus every drop of the soaking water.
+  thickener:
+    label: Slurry
+    why: >-
+      The signature body. Shark fin soup was always a texture dish, and the
+      glossy, spoon-coating thickness is cornstarch's job — always mixed
+      into a cold-water slurry first, never sprinkled dry into hot soup.
+    range: { min: 1, max: 1 }
+    scale: { 'thickness.0.5': 0.5, 'thickness.0.75': 0.75, 'thickness.1.25': 1.25, 'thickness.1.5': 1.5 }
+    fills:
+      - id: cornstarch
+        amount: { value: 56, unit: g }
+        default: true
+        note: >-
+          About 7 tablespoons, mixed with 5 of cold water. Dad's rule — if
+          it isn't thick enough, just make more slurry.
+  salinity:
+    label: Savory sauce
+    why: >-
+      The fermented backbone behind the plain salt. Dad reaches for fish
+      sauce — a cleaner salinity whose seafood depth points the same way as
+      the scallops; most home cooks use soy sauce. Pick your school.
+    range: { min: 1, max: 1 }
+    amount: { value: 5, unit: ml }
+    fills:
+      - id: fish_sauce
+        default: true
+        why: >-
+          Dad's pick: sharper and more direct, and it amplifies the
+          dried-scallop umami instead of talking over it.
+      - id: soy_sauce
+        amount: { value: 15, unit: ml }
+        why: >-
+          The common route — rounder and more roasted. It takes about a
+          tablespoon to do what a teaspoon of fish sauce does; low-sodium
+          keeps the salt in your hands.
+  seasonings:
+    label: Season & color
+    why: >-
+      Salt scaled to a very large pot, and dark soy for the amber banquet
+      look — the original soup's color always came from the broth, never
+      the fin.
+    range: { min: 1, max: 2 }
+    fills:
+      - id: salt
+        amount: { value: 6, unit: g }
+        default: true
+        note: >-
+          A teaspoon to start, then taste — dad's bar is "we don't want it
+          too salty".
+      - id: dark_soy_sauce
+        amount: { value: 12, unit: ml }
+        default: true
+        note: >-
+          About 2½ teaspoons, added in stages — it's for color more than
+          flavor, so let your eye decide.
+  finishers:
+    label: Finishers
+    why: >-
+      The last-minute trio of every Cantonese thick soup: toasted sesame for
+      aroma (it boils away if added early), a teaspoon of sugar against the
+      salt, and white pepper for the quiet heat.
+    range: { min: 0, max: 3 }
+    fills:
+      - id: sesame_oil
+        amount: { value: 5, unit: ml }
+        default: true
+      - id: sugar
+        amount: { value: 4, unit: g }
+        default: true
+      - id: white_pepper
+        amount: { value: 0.5, unit: g }
+        default: true
+        note: A quarter teaspoon — the gentle heat under nearly every Cantonese soup.
+  upgrade:
+    label: Banquet upgrade
+    why: >-
+      Restaurants pad this soup with more seafood. Dad's endorsement is real
+      crab meat — "really, really fancy". (Mushrooms, he rules, don't belong
+      in this one.)
+    range: { min: 0 }
+    fills:
+      - id: crab_meat
+        amount: { value: 120, unit: g }
+        default: false
+        note: >-
+          Folded in with the chicken so it just warms through. Fresh-picked
+          or good canned both work.
+---
+
+import Step from '../../components/Step.astro';
+import Ref from '../../components/Ref.astro';
+
+<ol class="steps">
+
+<Step id="crush_soak" title="Crush and soak">
+  Break the <Ref of="scallops" /> into pieces with pliers — crushing first is
+  dad's trick to shorten the soak — then rinse them and cover with hot water.
+  A minute in the microwave, covered, and about ten minutes' rest gets them
+  soft.
+</Step>
+
+<Step id="cut_chicken" title="Cut the chicken">
+  Trim the <Ref of="chicken" /> and cut it into slices, then stack the slices
+  and cut into strips. Partially frozen meat cuts much more cleanly.
+</Step>
+
+<Step id="marinate" title="Velvet the chicken" when="count(marinade) > 0">
+  Mix the <Ref of="chicken" /> with the <Ref of="marinade" /> and two
+  tablespoons of water, stirring well past "combined" — the marinade should
+  disappear into the meat with no lumps left.
+</Step>
+
+<Step id="shred" title="Shred the scallops">
+  Drain the soaked <Ref of="scallops" />, squeezing them out over the bowl —
+  save every drop of the soaking water; it's flavor you'll pour back in —
+  then shred them by hand or with a spoon until no big pieces remain.
+</Step>
+
+<Step id="toast" title="Toast the scallops">
+  Heat the <Ref of="frying_oil" /> in the soup pot over gentle heat and
+  stir-fry the shredded <Ref of="scallops" /> for 40–50 seconds, keeping them
+  moving so they don't stick. This dry toasting wakes an aroma the soak alone
+  can't.
+</Step>
+
+<Step id="build_broth" title="Build the broth">
+  Pour in the saved soaking water, the <Ref of="broth" />, and 6–8 cups
+  (about 1.5–2 L) of hot water — pre-boiled water saves time. Bring it all to
+  a boil.
+</Step>
+
+<Step id="steep" title="Let it steep">
+  Lid on, heat off: let the pot rest five minutes. The <Ref of="scallops" />
+  release the rest of their flavor into the broth as it sits.
+</Step>
+
+<Step id="mix_slurry" title="Mix the slurry">
+  Stir the <Ref of="thickener" /> into about 5 tablespoons of cold water
+  until smooth. Never add it dry to hot soup — it seizes into one big lump;
+  the slurry step is non-negotiable.
+</Step>
+
+<Step id="thicken" title="Thicken off the boil">
+  Drop the heat as low as it goes — or off entirely. Pour the slurry in
+  slowly while stirring along the bottom of the pot so nothing settles.
+  Check as you go: thin drinks like a broth, thick coats the spoon. Not
+  where you want it? Mix more slurry — it's your call.
+</Step>
+
+<Step id="season" title="Season">
+  Turn the heat back on and add the <Ref of="seasonings" /> and the
+  <Ref of="salinity" />, stirring and tasting between additions — stop short
+  of "too salty".
+</Step>
+
+<Step id="color" title="Color it amber" when="has(seasonings, 'dark_soy_sauce')">
+  The <Ref of="seasonings" fill="dark_soy_sauce" /> is for the eye more than
+  the tongue: add a little, stir, look. Stop when the soup reads amber —
+  banquet shark fin soup got its color from exactly this bottle.
+</Step>
+
+<Step id="coat" title="Oil the chicken" when="has(coating_oil, 'vegetable_oil')">
+  Just before the chicken goes in, stir the <Ref of="coating_oil" /> through
+  it — oiled strips slide apart in the pot instead of clumping.
+</Step>
+
+<Step id="add_chicken" title="Add the chicken">
+  Drop to low heat — high heat sets the strips into clumps before you can
+  separate them. Add the <Ref of="chicken" /> gradually, nudging the pieces
+  apart as they land, and give it 40–50 seconds to cook through.
+</Step>
+
+<Step id="add_crab" title="The fancy version" when="has(upgrade, 'crab_meat')">
+  Fold in the <Ref of="upgrade" /> with the chicken so it just warms
+  through — this is the "really, really fancy" banquet version.
+</Step>
+
+<Step id="finish" title="Finish" when="count(finishers) > 0">
+  Off the boil, stir in the <Ref of="finishers" /> — sesame aroma fades if
+  it's boiled, the sugar rounds off the salt, and white pepper is the quiet
+  heat under every Cantonese thick soup. Taste once more and serve.
+</Step>
+
+</ol>
+
+<div class="lang-en-US">
+
+### Tips
+
+- The luxury was never the fin — it was the broth and the texture. That's why
+  this soup can replace shark fin soup outright: everything people actually
+  tasted is still here, and the umami is better.
+- Most of the sodium is structural — dried seafood, fish sauce, broth. If
+  you're watching salt, cut the added salt and season bowl by bowl; the
+  scallop umami carries more than you'd think.
+- Dried scallops have no real expiry date. Keep the box in the freezer and
+  this becomes a pantry soup: everything else is supermarket-ordinary.
+- Restaurant versions add more seafood — real crab is dad's pick. Mushrooms,
+  by his ruling, don't belong in this one.
+
+</div>
+
+<div class="lang-ja-JP">
+
+### コツ
+
+- 高級さの正体はフカヒレではなく、スープととろみだった。だからこのスープは
+  フカヒレスープの完全な代役になれる——実際に味わっていたものは全部ここにあり、
+  旨味はむしろ上。
+- 塩分の大半は構造的なもの（干し貝柱・魚醤・スープ）。塩分が気になるなら
+  足し塩を減らし、食卓で椀ごとに調整を。貝柱の旨味は思った以上に支えてくれる。
+- 干し貝柱に賞味期限はあってないようなもの。冷凍庫に常備すれば、残りは
+  どこのスーパーにもある材料だけの「常備菜スープ」になる。
+- 店ではさらに海鮮を足す。お父さんのおすすめは本物のかに身。マッシュルームは
+  「この椀には入れない」とのこと。
+
+</div>
+
+<div class="lang-zh-CN">
+
+### 小贴士
+
+- 鱼翅本身没有味道——奢华从来都在汤底和口感里。所以这碗羹能完全顶替鱼翅羹：
+  人们真正尝到的东西一样不少，鲜味还更足。
+- 钠大多是「结构性」的——瑶柱、鱼露、鸡汤自带。控盐的话就少加盐，
+  上桌后按碗调味；瑶柱的鲜比你想的更扛味。
+- 瑶柱几乎没有保质期，冷冻常备一盒，其余食材超市都有——这就成了一道
+  随时能做的「储藏室靓汤」。
+- 馆子里会再加海鲜，老爸的推荐是真蟹肉。蘑菇？他的裁定是：这碗羹里不放。
+
+</div>

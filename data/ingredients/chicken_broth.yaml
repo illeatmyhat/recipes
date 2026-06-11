@@ -1,0 +1,17 @@
+id: chicken_broth
+fdc_id: 174536
+nutrition:
+  per_100g:
+    calories: 6
+    fat: 0.21
+    saturated_fat: 0.013
+    trans_fat: 0
+    cholesterol: 2
+    sodium: 371
+    carbohydrates: 0.44
+    fiber: 0
+    sugars: 0.43
+    protein: 0.64
+    calcium: 4
+    iron: 0.07
+density_g_per_ml: 1

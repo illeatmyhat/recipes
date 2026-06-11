@@ -1,0 +1,12 @@
+# en-US ingredient data for data/ingredients/sesame_oil.yaml — locale-specific fields only.
+names: Toasted sesame oil
+aliases:
+  - Sesame oil
+  - Dark sesame oil
+aisle: international
+availability:
+  notes:
+    - text: Get the toasted (dark amber) kind, not the pale cold-pressed one — the roasted aroma is the entire point of the ingredient.
+      important: true
+  brands:
+    - Kadoya

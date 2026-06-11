@@ -1,0 +1,5 @@
+# zh-CN ingredient data for data/ingredients/fish_sauce.yaml — locale-specific fields only.
+names: 鱼露
+aliases:
+  - 虾油
+aisle: condiments

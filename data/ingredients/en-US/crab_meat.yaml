@@ -1,0 +1,9 @@
+# en-US ingredient data for data/ingredients/crab_meat.yaml — locale-specific fields only.
+names: Crab meat
+aliases:
+  - Lump crab meat
+  - Canned crab
+aisle: meat_seafood
+availability:
+  notes:
+    - Pasteurized lump from the seafood counter or good canned both work — pick through for stray shell either way.

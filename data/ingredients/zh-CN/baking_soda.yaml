@@ -1,0 +1,9 @@
+# zh-CN ingredient data for data/ingredients/baking_soda.yaml — locale-specific fields only.
+names: 小苏打（食用）
+aliases:
+  - 苏打粉
+  - 碳酸氢钠
+aisle: dry_goods
+availability:
+  notes:
+    - 选食用级小苏打。注意别买成食用碱（纯碱），碱性更强，不是一回事。

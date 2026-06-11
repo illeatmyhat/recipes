@@ -1,0 +1,13 @@
+# en-US ingredient data for data/ingredients/dried_scallops.yaml — locale-specific fields only.
+names: Dried scallops (conpoy)
+aliases:
+  - Conpoy
+  - Dried scallop
+  - 瑤柱
+aisle: online
+availability:
+  notes:
+    - text: Not a mainstream-supermarket item in the US — buy them at a Chinese grocery (look for 瑤柱 / conpoy) or from an online specialty importer, and allow shipping time.
+      important: true
+    - "Grades are about looks, not flavor: small or broken pieces cook identically to the big gift-box ones at a fraction of the price."
+    - They have no real expiry date — store them in the freezer and they keep more or less forever.

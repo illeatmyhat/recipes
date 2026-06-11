@@ -1,0 +1,9 @@
+# ja-JP ingredient data for data/ingredients/crab_meat.yaml — locale-specific fields only.
+names: かに身（缶詰可）
+aliases:
+  - カニ缶
+  - ずわいがにほぐし身
+aisle: canned
+availability:
+  notes:
+    - カニ缶（ほぐし身）で十分。生のむき身ならなお良い。殻の破片に注意。

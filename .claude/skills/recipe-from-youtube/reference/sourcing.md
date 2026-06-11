@@ -16,10 +16,19 @@ rather than reading numbers off the website.
 node .claude/skills/recipe-from-youtube/scripts/fetch-usda.mjs --search "rolled oats"
 #    -> prints  <fdcId>\t<description>  lines; pick the closest plain entry.
 
-# 2. Print the ready-to-paste YAML block for the chosen entry:
+# 2. Write the locale-neutral core file directly (preferred — no hand-copying):
+node .claude/skills/recipe-from-youtube/scripts/fetch-usda.mjs 169705 --write rolled_oats
+#    -> writes data/ingredients/rolled_oats.yaml; refuses if the file exists.
+#    Add --density <g_per_ml> for anything a recipe uses with `ml` (oils 0.91,
+#    sauces ~1.15–1.2 — see reference/units.md). Solids omit it (null).
+
+# (Or print the block for inspection without writing:)
 node .claude/skills/recipe-from-youtube/scripts/fetch-usda.mjs 169705
-#    -> fdc_id: 169705 + nutrition.per_100g: {...}  → paste into the YAML template.
 ```
+
+The per-locale companion files (`data/ingredients/<locale>/<id>.yaml`) stay
+hand-authored — names, aisles, and availability are market judgment calls, not
+fetchable data.
 
 ### API key
 

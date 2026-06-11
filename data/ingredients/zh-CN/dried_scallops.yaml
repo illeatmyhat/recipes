@@ -1,0 +1,11 @@
+# zh-CN ingredient data for data/ingredients/dried_scallops.yaml — locale-specific fields only.
+names: 瑶柱
+aliases:
+  - 干贝
+  - 江珧柱
+  - 元贝
+aisle: dry_goods
+availability:
+  notes:
+    - 南北干货店、超市干货区都有。煲汤用小粒瑶柱即可——大粒贵在品相（送礼好看），味道没有区别。
+    - 没有严格的保质期，放冷冻保存品质最好。

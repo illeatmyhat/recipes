@@ -1,0 +1,6 @@
+# zh-CN ingredient data for data/ingredients/sesame_oil.yaml — locale-specific fields only.
+names: 香油（芝麻油）
+aliases:
+  - 芝麻油
+  - 麻油
+aisle: oils

@@ -1,0 +1,8 @@
+# zh-CN ingredient data for data/ingredients/dark_soy_sauce.yaml — locale-specific fields only.
+names: 老抽
+aliases:
+  - 老抽酱油
+aisle: condiments
+availability:
+  notes:
+    - 上色用老抽，调味用生抽，两者不要混用——这锅要的是老抽。

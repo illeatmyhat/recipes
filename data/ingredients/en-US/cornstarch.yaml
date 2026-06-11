@@ -1,0 +1,6 @@
+# en-US ingredient data for data/ingredients/cornstarch.yaml — locale-specific fields only.
+names: Cornstarch
+aliases:
+  - Corn starch
+  - Cornflour
+aisle: dry_goods

@@ -1,0 +1,5 @@
+# zh-CN ingredient data for data/ingredients/white_pepper.yaml — locale-specific fields only.
+names: 白胡椒粉
+aliases:
+  - 白胡椒
+aisle: spices

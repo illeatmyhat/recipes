@@ -57,15 +57,31 @@
     nutrition: NutritionFacts;
   }
 
-  const activeIngredients = $derived.by<ActiveIngredient[]>(() =>
-    current.rows.map((r) => ({
-      id: r.id,
-      names: r.names,
-      colour: colourOf.get(r.id) ?? '#888888',
-      grams: r.grams * factor,
-      nutrition: scaleNutrition(r.nutrition, factor),
-    })),
-  );
+  // Ingredient-axis view: rows MERGE by ingredient id here — two roles may
+  // share a fill (marinade salt / seasoning salt), and the breakdown's
+  // segments are keyed by id, so each ingredient must appear once.
+  const activeIngredients = $derived.by<ActiveIngredient[]>(() => {
+    const byId = new Map<string, ActiveIngredient>();
+    for (const r of current.rows) {
+      const prev = byId.get(r.id);
+      if (prev) {
+        prev.grams += r.grams * factor;
+        prev.nutrition = sumNutrition([
+          { nutrition: prev.nutrition },
+          { nutrition: scaleNutrition(r.nutrition, factor) },
+        ]);
+      } else {
+        byId.set(r.id, {
+          id: r.id,
+          names: r.names,
+          colour: colourOf.get(r.id) ?? '#888888',
+          grams: r.grams * factor,
+          nutrition: scaleNutrition(r.nutrition, factor),
+        });
+      }
+    }
+    return [...byId.values()];
+  });
 
   const totals = $derived(sumNutrition(activeIngredients));
   const totalGrams = $derived(totalWeight(activeIngredients));

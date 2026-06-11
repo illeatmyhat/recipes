@@ -1,0 +1,17 @@
+id: vegetable_oil
+fdc_id: 172336
+nutrition:
+  per_100g:
+    calories: 884
+    fat: 100
+    saturated_fat: 7.365
+    trans_fat: 0.395
+    cholesterol: 0
+    sodium: 0
+    carbohydrates: 0
+    fiber: 0
+    sugars: 0
+    protein: 0
+    calcium: 0
+    iron: 0
+density_g_per_ml: 0.91

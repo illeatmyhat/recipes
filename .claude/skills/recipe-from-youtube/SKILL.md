@@ -51,10 +51,11 @@ Work the checklist top to bottom. Paths are relative to the project root.
 
 3. **Resolve each ingredient.** For every fill, check whether
    `data/ingredients/<id>.yaml` already exists (reuse it if so). For each
-   missing one, create the **locale-neutral core** from
-   `templates/ingredient.yaml` (id + nutrition + density ONLY — nothing
-   locale-specific), sourcing nutrition via the fetch script — **USDA SR
-   Legacy only**, see [reference/sourcing.md](reference/sourcing.md) —
+   missing one, **generate the locale-neutral core with the fetch script**
+   (`fetch-usda.mjs <fdcId> --write <id> [--density <g_per_ml>]` writes
+   `data/ingredients/<id>.yaml` itself — don't transcribe nutrition blocks
+   by hand) — **USDA SR Legacy only**, see
+   [reference/sourcing.md](reference/sourcing.md) —
    **plus one locale file per supported locale**
    (`data/ingredients/<locale>/<id>.yaml`: `names`/`aliases`/`aisle`,
    optionally `availability`; shape documented in the template). Every

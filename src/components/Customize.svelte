@@ -46,8 +46,13 @@
   const knobEntries = $derived(Object.entries(bundle.recipe.knobs ?? {}) as [string, Knob][]);
   const knobValue = (id: string, knob: Knob): KnobValue => currentP.knobs[id] ?? knob.default;
 
-  const gramsOf = (id: string): number =>
-    current.rows.filter((r) => r.id === id).reduce((s, r) => s + r.grams, 0);
+  // Scoped to the role: roles may share a fill id (marinade salt vs seasoning
+  // salt), and this card shows the DECLARATION's grams — the merged-by-
+  // ingredient total belongs to the shopping list, not here.
+  const gramsOf = (roleId: string, id: string): number =>
+    current.rows
+      .filter((r) => r.role === roleId && r.id === id)
+      .reduce((s, r) => s + r.grams, 0);
 
   function kindOf(role: RoleT<Localized>): 'base' | 'radio' | 'multi' {
     if (role.range.min >= 1 && role.fills.length === 1) return 'base'; // skeleton
@@ -216,7 +221,7 @@
               <div class="fill static">
                 <span class="fill-main">
                   <span class="fill-name">{fill.alias ? L(fill.alias) : L(role.label)}</span>
-                  {#if on}<span class="fill-amt">{Math.round(gramsOf(fill.id))} g</span>{/if}
+                  {#if on}<span class="fill-amt">{Math.round(gramsOf(id, fill.id))} g</span>{/if}
                 </span>
                 {#if fill.note}<span class="fill-note">{L(fill.note)}</span>{/if}
               </div>
@@ -235,7 +240,7 @@
                 <span class="fill-body">
                   <span class="fill-main">
                     <span class="fill-name">{fillName(fill)}</span>
-                    {#if on}<span class="fill-amt">{Math.round(gramsOf(fill.id))} g</span>{/if}
+                    {#if on}<span class="fill-amt">{Math.round(gramsOf(id, fill.id))} g</span>{/if}
                   </span>
                   {#if fill.why}<span class="fill-why">{L(fill.why)}</span>{/if}
                   {#if on && fill.note}<span class="fill-note">{L(fill.note)}</span>{/if}

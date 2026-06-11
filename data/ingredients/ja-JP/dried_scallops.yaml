@@ -1,0 +1,12 @@
+# ja-JP ingredient data for data/ingredients/dried_scallops.yaml — locale-specific fields only.
+names: 干し貝柱
+aliases:
+  - 干貝柱
+  - 乾燥ホタテ貝柱
+  - ほたて貝柱
+aisle: dry_goods
+availability:
+  notes:
+    - 北海道産の干し貝柱が乾物コーナー・百貨店・ネット通販で手に入る。
+    - 料理用なら割れ・小粒で十分。大粒は見た目（贈答用）の値段で、味は変わらない。
+    - 賞味期限はあってないようなもの。冷凍庫に入れておけば長持ちする。

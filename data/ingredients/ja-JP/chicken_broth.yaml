@@ -1,0 +1,10 @@
+# ja-JP ingredient data for data/ingredients/chicken_broth.yaml — locale-specific fields only.
+names: チキンブロス（鶏がらスープ）
+aliases:
+  - 鶏がらスープ
+  - 鶏ガラスープの素
+aisle: condiments
+availability:
+  notes:
+    - text: 缶入りチキンブロスは日本ではほぼ見かけない。鶏ガラスープの素を表示通りに湯で溶けば、同量でそのまま代用できる。
+      important: true

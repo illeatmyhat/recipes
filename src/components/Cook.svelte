@@ -48,14 +48,25 @@
       if (step.when !== undefined && !evalGuard(step.when, p)) continue;
       number += 1; // every visible step counts, so numbers match the method
       const rows: BucketRow[] = [];
-      const seen = new Set<string>();
+      const byId = new Map<string, BucketRow>();
+      const seen = new Set<string>(); // "role:id" declarations already counted
       for (const read of step.reads) {
         for (const r of res.rows) {
           if (r.role !== read.role) continue;
           if (read.fill !== undefined && r.id !== read.fill) continue;
-          if (seen.has(r.id)) continue;
-          seen.add(r.id);
-          rows.push({ id: r.id, names: r.names, grams: r.grams });
+          const pair = `${r.role}:${r.id}`;
+          if (seen.has(pair)) continue;
+          seen.add(pair);
+          // A step may read two roles sharing a fill id — merge the grams
+          // (it's one pile on the counter) but never drop a declaration.
+          const prev = byId.get(r.id);
+          if (prev) {
+            prev.grams += r.grams;
+          } else {
+            const row = { id: r.id, names: r.names, grams: r.grams };
+            byId.set(r.id, row);
+            rows.push(row);
+          }
         }
       }
       if (rows.length === 0) continue; // nothing to gather for this step

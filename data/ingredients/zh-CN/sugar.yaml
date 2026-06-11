@@ -1,0 +1,6 @@
+# zh-CN ingredient data for data/ingredients/sugar.yaml — locale-specific fields only.
+names: 白砂糖
+aliases:
+  - 白糖
+  - 砂糖
+aisle: dry_goods

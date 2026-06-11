@@ -1,0 +1,8 @@
+# ja-JP ingredient data for data/ingredients/cornstarch.yaml — locale-specific fields only.
+names: コーンスターチ
+aliases:
+  - とうもろこしでん粉
+aisle: dry_goods
+availability:
+  notes:
+    - 製菓材料コーナーにある。片栗粉でも同じようにとろみが付く（やや強めに付くので少なめから）。

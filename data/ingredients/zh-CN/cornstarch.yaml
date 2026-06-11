@@ -1,0 +1,6 @@
+# zh-CN ingredient data for data/ingredients/cornstarch.yaml — locale-specific fields only.
+names: 玉米淀粉（生粉）
+aliases:
+  - 生粉
+  - 粟粉
+aisle: dry_goods

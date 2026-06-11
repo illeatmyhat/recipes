@@ -1,0 +1,6 @@
+# ja-JP ingredient data for data/ingredients/sugar.yaml — locale-specific fields only.
+names: 砂糖
+aliases:
+  - 上白糖
+  - グラニュー糖
+aisle: dry_goods

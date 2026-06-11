@@ -1,0 +1,14 @@
+# en-US ingredient data for data/ingredients/dark_soy_sauce.yaml — locale-specific fields only.
+names: Dark soy sauce
+aliases:
+  - Lao chou
+  - 老抽
+  - Black soy sauce
+aisle: international
+availability:
+  notes:
+    - text: Dark soy ("lao chou") is thicker, darker, and less salty than regular soy sauce — the two are not interchangeable. Most mainstream supermarkets carry only the regular kind; any Chinese grocery (or online) has it.
+      important: true
+  brands:
+    - Pearl River Bridge
+    - Lee Kum Kee

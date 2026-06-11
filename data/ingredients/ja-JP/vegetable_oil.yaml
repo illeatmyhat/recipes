@@ -1,0 +1,6 @@
+# ja-JP ingredient data for data/ingredients/vegetable_oil.yaml — locale-specific fields only.
+names: サラダ油
+aliases:
+  - 菜種油
+  - キャノーラ油
+aisle: oils

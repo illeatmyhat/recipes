@@ -1,0 +1,9 @@
+# ja-JP ingredient data for data/ingredients/fish_sauce.yaml — locale-specific fields only.
+names: ナンプラー（魚醤）
+aliases:
+  - 魚醤
+  - ニョクマム
+aisle: international
+availability:
+  notes:
+    - エスニック食材コーナーで「ナンプラー」または「ニョクマム」として売られている。国産の魚醤（しょっつる・いしる）でも代用できる。

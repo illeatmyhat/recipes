@@ -1,0 +1,9 @@
+# zh-CN ingredient data for data/ingredients/chicken_broth.yaml — locale-specific fields only.
+names: 鸡汤（盒装或罐装）
+aliases:
+  - 鸡高汤
+  - 鸡上汤
+aisle: condiments
+availability:
+  notes:
+    - 盒装/罐装鸡汤（如史云生）超市有售；用浓汤宝或鸡精按说明冲调同样的量也可以。

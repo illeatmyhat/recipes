@@ -1,0 +1,6 @@
+# en-US ingredient data for data/ingredients/sugar.yaml — locale-specific fields only.
+names: Sugar
+aliases:
+  - Granulated sugar
+  - White sugar
+aisle: dry_goods

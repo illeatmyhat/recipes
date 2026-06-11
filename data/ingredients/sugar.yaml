@@ -1,0 +1,17 @@
+id: sugar
+fdc_id: 169655
+nutrition:
+  per_100g:
+    calories: 387
+    fat: 0
+    saturated_fat: 0
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 1
+    carbohydrates: 99.98
+    fiber: 0
+    sugars: 99.8
+    protein: 0
+    calcium: 1
+    iron: 0.05
+density_g_per_ml: null

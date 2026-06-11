@@ -1,0 +1,6 @@
+# en-US ingredient data for data/ingredients/chicken_broth.yaml — locale-specific fields only.
+names: Chicken broth
+aliases:
+  - Chicken stock
+  - Canned chicken broth
+aisle: canned

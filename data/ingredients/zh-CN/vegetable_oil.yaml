@@ -1,0 +1,7 @@
+# zh-CN ingredient data for data/ingredients/vegetable_oil.yaml — locale-specific fields only.
+names: 食用油（菜籽油或色拉油）
+aliases:
+  - 菜籽油
+  - 色拉油
+  - 玉米油
+aisle: oils

@@ -1,0 +1,21 @@
+id: dried_scallops
+# SR Legacy has no dried-scallop (conpoy) entry; this is the closest dried-
+# seafood profile (vs. JP standard tables for conpoy: 322 kcal / 65.7 protein /
+# 1.4 fat — this entry matches on calories, protein, fat, and cholesterol;
+# only sodium overstates, in the conservative direction).
+fdc_id: 174190
+nutrition:
+  per_100g:
+    calories: 290
+    fat: 2.37
+    saturated_fat: 0.462
+    trans_fat: 0
+    cholesterol: 152
+    sodium: 7027
+    carbohydrates: 0
+    fiber: 0
+    sugars: 0
+    protein: 62.82
+    calcium: 160
+    iron: 2.5
+density_g_per_ml: null

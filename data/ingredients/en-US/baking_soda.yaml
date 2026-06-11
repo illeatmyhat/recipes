@@ -1,0 +1,6 @@
+# en-US ingredient data for data/ingredients/baking_soda.yaml — locale-specific fields only.
+names: Baking soda
+aliases:
+  - Sodium bicarbonate
+  - Bicarbonate of soda
+aisle: dry_goods

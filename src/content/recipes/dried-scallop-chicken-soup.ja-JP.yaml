@@ -1,0 +1,97 @@
+# JA catalog for dried-scallop-chicken-soup. Canonical EN lives in
+# dried-scallop-chicken-soup.mdx; keys are dotted paths into its frontmatter.
+# Merged at build by src/lib/recipe/i18n.ts.
+title: 干し貝柱と鶏肉のとろみスープ
+customize_title: スープをカスタマイズ
+pattern: >-
+  宴席の高級スープの正体は、いつだってスープそのものだった。フカヒレ自体は
+  無味——他人のだしに浮かぶ「食感」にすぎない——だから、なくても完全に成立する。
+  砕いて、戻して、香りが立つまで炒った干し貝柱がフカヒレにはなかった旨味を与え、
+  片栗粉ならぬコーンスターチの水溶きがとろりとした艶を作り、下味をもみ込んだ
+  鶏肉の細切りがフカヒレの唯一の仕事を引き受ける。儀式はそのまま、味は上、
+  絶滅危惧種はゼロ。
+
+knobs.thickness.label: とろみ
+knobs.thickness.why: お父さんの流儀——「ちょうどいい」と感じるまで水溶き粉を足す。ここで増減するのは水溶き粉だけ。薄めはスープ感覚で飲め、濃いめはスプーンが跡を残す宴席の羹（あつもの）になる。
+
+constraints.0.warn: コーンスターチの衣がないと、鶏肉はつるんとした「ベルベット」ではなく、ただの茹で鶏になる。スープとしては成立するが、看板の食感は失われる。
+constraints.1.warn: 魚醤（またはしょうゆ）だけでこの大鍋を支えるのは荷が重い。味がぼやけたら食卓で椀ごとに塩を。
+
+roles.scallops.label: 干し貝柱
+roles.scallops.why: 旨味のエンジン——このスープの海の深みはすべてこの一つの食材から。砕く・戻す・炒る、の三手で解放する。生のホタテでは代用不可。味が穏やかすぎて「海鮮スープ」という別の料理になる。お父さんの裁定——これだけは替えが利かない。
+roles.scallops.fills.dried_scallops.note: 約40g。小粒でも味は贈答用の大粒と同じ——値段は見た目に付く。
+
+roles.chicken.label: 鶏肉
+roles.chicken.why: スプーンの中の「繊維」——かつてフカヒレがやっていた仕事。フカヒレは無味の食感係だったから、細切りにして下味をもみ込んだ鶏肉は代役どころか、お父さんの実食では本家超え。
+roles.chicken.fills.chicken_breast.note: 小さめのむね肉約1枚。薄切りにし、重ねて細切りに。半解凍だと格段に切りやすい。
+
+roles.marinade.label: ベルベット下味
+roles.marinade.why: 細切り肉を「ただの茹で鶏」ではなく絹のようにする仕掛け。塩は中から味を入れ、コーンスターチと少量の水が一本一本を水分を閉じ込める衣で包み、ひとつまみの重曹が肉のpHを動かして、あの店のような弾力（プリッとした歯ざわり）を生む。
+roles.marinade.fills.salt.note: 小さじ½。最初に入れる。
+roles.marinade.fills.cornstarch.note: 大さじ1。肉に消えるまでよく混ぜる——混ぜが足りないとダマになる。
+roles.marinade.fills.baking_soda.why: 食感の秘密。小さじ¼が肉のpHを動かし、煮ても弾力が残る。省いても大丈夫——少し柔らかめになるだけ。
+
+roles.coating_oil.label: 仕上げ油
+roles.coating_oil.why: スープに入れる直前、下味済みの鶏肉に絡める別枠の小さじ1。油をまとった細切りは鍋の中でほどけ、ひと塊にならない。
+
+roles.frying_oil.label: 炒め油
+roles.frying_oil.why: 戻した貝柱を炒るための小さじ1。乾いた熱が、浸け置きだけでは決して出ない香ばしさを呼び起こす。
+
+roles.broth.label: スープ
+roles.broth.why: 土台のキャンバス。チキンブロス1缶と湯——そして肝心なのは貝柱の戻し汁。せっかく引き出した旨味を一滴も流しに捨てない。
+roles.broth.fills.chicken_broth.note: 標準的な1缶（約400g）。残りの水分は湯6〜8カップと、戻し汁の全部。
+
+roles.thickener.label: 水溶き粉
+roles.thickener.why: 看板のとろみ。フカヒレスープは昔から食感の料理で、あの艶やかでスプーンに絡む濃度はコーンスターチの仕事——必ず冷水で溶いてから。熱いスープに粉のまま振り入れるのは厳禁。
+roles.thickener.fills.cornstarch.note: 大さじ約7を冷水大さじ5で溶く。お父さんの流儀——足りなければもっと作ればいい。
+
+roles.salinity.label: 旨味だれ
+roles.salinity.why: 塩の後ろに控える発酵の背骨。お父さんは魚醤（ナンプラー）派——切れのある塩気で、貝柱と同じ海の方向を向いている。しょうゆ派の家庭も多い。流派はお好みで。
+roles.salinity.fills.fish_sauce.why: お父さんの選択。シャープでまっすぐ、干し貝柱の旨味をかき消さずに増幅する。
+roles.salinity.fills.soy_sauce.why: 定番ルート——丸く、香ばしい。魚醤小さじ1の仕事には大さじ1ほど必要。減塩タイプなら塩加減は自分の手に。
+
+roles.seasonings.label: 塩と色
+roles.seasonings.why: 大鍋に見合う塩、そして宴席の琥珀色を出す老抽（中国たまり醤油）。本家の色も、フカヒレではなく常にスープ側のものだった。
+roles.seasonings.fills.salt.note: まず小さじ1、あとは味見で。お父さんの基準は「しょっぱくしすぎない」。
+roles.seasonings.fills.dark_soy_sauce.note: 小さじ約2½を数回に分けて。味より色のためのものなので、目で決める。
+
+roles.finishers.label: 仕上げ
+roles.finishers.why: 広東式とろみスープ定番の締めの三点：香りのごま油（早く入れると煮飛ぶ）、塩気を丸める砂糖小さじ1、そして静かな辛みの白こしょう。
+roles.finishers.fills.white_pepper.note: 小さじ¼。広東のスープのほぼすべてに潜む、やさしい辛み。
+
+roles.upgrade.label: 宴席アップグレード
+roles.upgrade.why: 店はこのスープに海鮮を足して豪華にする。お父さんのお墨付きは本物のかに身——「それは本当に、本当に豪華」。（マッシュルームは「この椀には入れない」が裁定。）
+roles.upgrade.fills.crab_meat.note: 鶏肉と一緒に折り込み、温まる程度に。鮮かに身でも良い缶詰でも。
+
+# Method steps — templates for the MDX body's <Step id> elements. `{role}`
+# renders the role's chosen fills as a list join; `{role:fill}` names one fill.
+steps.crush_soak.title: 砕いて戻す
+steps.crush_soak: "{scallops}をペンチで砕く——先に砕くのが戻し時間を縮めるお父さんの技——洗ってから熱湯をかぶるまで注ぐ。蓋をして電子レンジで1分、そのまま10分ほど置けば柔らかくなる。"
+steps.cut_chicken.title: 鶏肉を切る
+steps.cut_chicken: "{chicken}の筋と脂を除いて薄切りにし、重ねて細切りにする。半解凍の肉のほうが格段にきれいに切れる。"
+steps.marinate.title: 下味をもみ込む
+steps.marinate: "{chicken}に{marinade}と水大さじ2を加え、「混ざった」を超えてさらに混ぜる——下味が肉に消えて、ダマがなくなるまで。"
+steps.shred.title: 貝柱をほぐす
+steps.shred: "戻した{scallops}をボウルの上で絞って水気を切る——戻し汁は一滴残らず取っておく。あとでスープに戻す旨味そのものだ。手かスプーンで、大きな塊がなくなるまでほぐす。"
+steps.toast.title: 貝柱を炒る
+steps.toast: "鍋に{frying_oil}を弱めの火で熱し、ほぐした{scallops}を40〜50秒、くっつかないよう混ぜながら炒める。この乾煎りが、浸け置きだけでは出ない香りを呼び覚ます。"
+steps.build_broth.title: スープを組み立てる
+steps.build_broth: "取っておいた戻し汁、{broth}、湯6〜8カップ（約1.5〜2L）を注ぐ——沸かしておいた湯なら時短になる。全体を沸騰させる。"
+steps.steep.title: 蒸らす
+steps.steep: "蓋をして火を止め、5分置く。{scallops}が残りの旨味をスープに放つ時間。"
+steps.mix_slurry.title: 水溶き粉を作る
+steps.mix_slurry: "{thickener}を冷水大さじ約5で滑らかになるまで溶く。熱いスープに粉のまま入れるのは厳禁——ひとつの大きなダマになる。水溶きの工程は省略不可。"
+steps.thicken.title: 沸騰させずにとろみ付け
+steps.thicken: "火を最弱に——あるいは止める。鍋底をかき混ぜながら水溶き粉を細く注ぎ入れ、沈殿させない。様子を見ながら：薄めはスープ感覚、濃いめはスプーンに絡む。足りなければもう一度水溶き粉を——決めるのは自分。"
+steps.season.title: 味付け
+steps.season: "火を戻し、{seasonings}と{salinity}を加える。一品入れるごとに混ぜて味見——「しょっぱい」の手前で止める。"
+steps.color.title: 琥珀色に染める
+steps.color: "{seasonings:dark_soy_sauce}は舌より目のためのもの。少し入れて、混ぜて、眺める。スープが琥珀色に読めたら止める——宴席のフカヒレスープの色は、まさにこの瓶から来ていた。"
+steps.coat.title: 鶏肉に油を絡める
+steps.coat: "鶏肉を入れる直前に{coating_oil}を絡める。油をまとった細切りは鍋の中でほどけて、ひと塊にならない。"
+steps.add_chicken.title: 鶏肉を入れる
+steps.add_chicken: "弱火に落とす——強火だと、ほぐす間もなく細切りが塊のまま固まる。{chicken}を少しずつ加え、入れるそばから箸でほどき、40〜50秒で火を通す。"
+steps.add_crab.title: 豪華版
+steps.add_crab: "{upgrade}を鶏肉と一緒に折り込み、温める程度に——これが「本当に、本当に豪華」な宴席版。"
+steps.finish.title: 仕上げ
+steps.finish: "沸騰させずに{finishers}を混ぜ込む——ごま油の香りは煮ると飛び、砂糖が塩気の角を取り、白こしょうが広東式とろみスープの静かな辛みを敷く。最後にもう一度味見して、椀へ。"
