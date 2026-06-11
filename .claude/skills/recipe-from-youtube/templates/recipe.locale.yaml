@@ -1,0 +1,43 @@
+# src/content/recipes/<slug>.<locale>.yaml — one such catalog per locale in
+# CATALOG_LOCALES (ja-JP, zh-CN). Flat map of dotted paths into the canonical
+# EN frontmatter/body; merged at build by src/lib/v3/i18n.ts. EVERY
+# localizable key authored in the MDX needs an entry here — a recipe
+# declaring the locale with a missing key FAILS THE BUILD. Translate
+# naturally, not literally; diverge from the canonical wherever local market
+# reality differs.
+#
+# After writing or updating this file, refresh the staleness sidecars:
+#   PowerShell: $env:REFRESH_CATALOG_HASHES='1'; npm run build
+#   bash:       REFRESH_CATALOG_HASHES=1 npm run build
+# (<slug>.<locale>.hashes.yaml is machine-written — commit it, never edit it.)
+title: <localized title>
+customize_title: <localized customize heading>
+pattern: >-
+  <A natural translation of the pattern — the recipe's "why it works".>
+
+knobs.<knob_id>.label: <label>
+knobs.<knob_id>.why: <why>
+knobs.<knob_id>.optionLabels.<value_a>: <option A>
+knobs.<knob_id>.optionLabels.<value_b>: <option B>
+
+constraints.0.error: <error text>
+constraints.1.warn: <warning text>
+
+roles.<role_id>.label: <role label>
+roles.<role_id>.why: <the role's job, derived from the pattern>
+roles.<role_id>.fills.<fill_id>.note: <recipe-specific handling>
+roles.<role_id>.fills.<fill_id>.why: <what to know when choosing this fill>
+# Every fill that has an EN alias needs one here too (bare noun phrase,
+# no particles/articles — the step template owns the surrounding grammar):
+roles.<role_id>.fills.<fill_id>.alias: <prose name>
+
+# Method steps — templates for the MDX body's <Step id> elements. `{role}`
+# renders the role's chosen fills as a list join (each locale's joiner lives
+# in src/lib/v3/names.ts); `{role:fill}` names one fill. Place each read
+# where this language's grammar wants it; dropping a read the EN sentence
+# has is fine (parity lint warns for review, never blocks). Placeholders
+# must be EXACTLY {role} or {role:fill} — anything else fails the build.
+steps.<step_id>.title: <step title>
+steps.<step_id>: "<prose reading >{<role_id>}< where the grammar wants it>"
+steps.<guarded_step>.title: <step title>
+steps.<guarded_step>: "{<role>:<fill>}<this fill's specific reality>"

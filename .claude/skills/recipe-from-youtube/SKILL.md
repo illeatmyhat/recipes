@@ -1,6 +1,6 @@
 ---
 name: recipe-from-youtube
-description: Create a new recipe for this Astro recipe site from a YouTube cooking video (URL or pasted transcript). Writes a v3 recipe (pattern/roles/fills, canonical-EN MDX + Japanese sidecar catalog) plus any missing ingredient YAML files, sources nutrition from USDA SR Legacy, converts units to metric, and processes the hero image. Use when the user wants to add/create a recipe, turn a YouTube video or transcript into a recipe, or mentions importing a recipe from a video.
+description: Create a new recipe for this Astro recipe site from a YouTube cooking video (URL or pasted transcript). Writes a v3 recipe (pattern/roles/fills, canonical-EN MDX + a sidecar catalog per locale: ja-JP and zh-CN) plus any missing ingredient YAML files (incl. per-locale overlays), sources nutrition from USDA SR Legacy, converts units to metric, and processes the hero image. Use when the user wants to add/create a recipe, turn a YouTube video or transcript into a recipe, or mentions importing a recipe from a video.
 ---
 
 # Recipe from a YouTube transcript
@@ -44,17 +44,21 @@ Work the checklist top to bottom. Paths are relative to the project root.
      or a guarded `<Step>`, fitted to *this* dish, never a generic caution.
 
 2. **Pick a slug** (kebab-case). Files become
-   `src/content/recipes/<slug>.mdx`, `<slug>.ja.yaml`,
-   `<slug>.ja.hashes.yaml` (machine-written), and
+   `src/content/recipes/<slug>.mdx`, one `<slug>.<locale>.yaml` per catalog
+   locale (`ja-JP`, `zh-CN` — see `CATALOG_LOCALES` in `src/lib/types.ts`),
+   their machine-written `.hashes.yaml` sidecars, and
    `src/content/recipes/images/<slug>.jpg`.
 
 3. **Resolve each ingredient.** For every fill, check whether
    `data/ingredients/<id>.yaml` already exists (reuse it if so). For each
-   missing one, create it from `templates/ingredient.yaml`, sourcing nutrition
-   via the fetch script — **USDA SR Legacy only**. See
-   [reference/sourcing.md](reference/sourcing.md). Fill **both locales'
-   `aisle`** sections. Only fill `brands` when buyers commonly get the wrong
-   form; don't invent brand names.
+   missing one, create it from `templates/ingredient.yaml` (inline
+   en-US/ja-JP), sourcing nutrition via the fetch script — **USDA SR Legacy
+   only**, see [reference/sourcing.md](reference/sourcing.md) — **plus one
+   overlay file per remaining locale** (`data/ingredients/zh-CN/<id>.yaml`:
+   `names`/`aliases`/`aisle`). Every supported locale needs a name and an
+   `aisle` (its OWN market's store geography — soy sauce: international in
+   the US, condiments in JP/CN) or the build fails. Only fill `brands` when
+   buyers commonly get the wrong form; don't invent brand names.
 
 4. **Convert all amounts to metric** (`g`/`ml`; `ml` needs a non-null
    `density_g_per_ml`). See [reference/units.md](reference/units.md).
@@ -90,25 +94,27 @@ Work the checklist top to bottom. Paths are relative to the project root.
      lower-cases and strips parentheticals/comma-clauses — check what's left)
      gets an `alias`: a bare noun phrase, no article, no connective.
 
-6. **Write the JA catalog** `src/content/recipes/<slug>.ja.yaml` from
-   `templates/recipe.ja.yaml`: one flat dotted key per localizable string —
-   `title`, `pattern`, `customize_title`, every `roles.<r>.label/.why`, every
-   authored fill `note`/`why`/`alias`, every knob `label`/`why`/
-   `optionLabels.<v>`, every `constraints.<i>.warn/.error`, and per step
-   `steps.<id>` (+ `steps.<id>.title`). Step templates are the JA surface of
-   the EN body: `{role}` / `{role:fill}` placeholders, placed where Japanese
-   grammar wants them (dropping a read EN needs is fine — the parity lint is
-   a warning, not an error). Translate naturally, not literally. **Every
-   localizable EN string needs its JA key — a missing key fails the build**
-   (a recipe declaring `ja` owes it a complete catalog).
+6. **Write one catalog per locale** (`<slug>.ja-JP.yaml`, `<slug>.zh-CN.yaml`)
+   from `templates/recipe.locale.yaml`: one flat dotted key per localizable
+   string — `title`, `pattern`, `customize_title`, every
+   `roles.<r>.label/.why`, every authored fill `note`/`why`/`alias`, every
+   knob `label`/`why`/`optionLabels.<v>`, every `constraints.<i>.warn/.error`,
+   and per step `steps.<id>` (+ `steps.<id>.title`). Step templates are that
+   locale's surface of the EN body: `{role}` / `{role:fill}` placeholders,
+   placed where the language's grammar wants them (dropping a read EN needs
+   is fine — the parity lint is a warning, not an error). Translate
+   naturally, not literally; where local reality differs (market quirks), a
+   locale's `note` may diverge from the canonical — catalogs are authored
+   statements, not forced 1:1 translations. **Every localizable EN string
+   needs its key in every declared locale — a missing key fails the build.**
 
 7. **Process the hero image** (run from the project root):
    `node .claude/skills/recipe-from-youtube/scripts/process-hero.mjs <source> <slug>`
    Then add a credit line to `README.md` matching the existing hero credit.
 
-8. **Generate the hashes sidecar**: `$env:REFRESH_CATALOG_HASHES='1'; npm run build`
-   (bash: `REFRESH_CATALOG_HASHES=1 npm run build`). This writes
-   `<slug>.ja.hashes.yaml` — commit it; never edit it by hand.
+8. **Generate the hashes sidecars**: `$env:REFRESH_CATALOG_HASHES='1'; npm run build`
+   (bash: `REFRESH_CATALOG_HASHES=1 npm run build`). This writes one
+   `<slug>.<locale>.hashes.yaml` per catalog — commit them; never edit by hand.
 
 9. **Verify — the gate.** `npm run check` (must be **0/0/0**) and a plain
    `npm run build` whose output shows **no v3 lint warnings** for your recipe
@@ -116,14 +122,16 @@ Work the checklist top to bottom. Paths are relative to the project root.
    catalog keys, boundness violations, and malformed placeholders fail the
    build outright. The recipe auto-appears on the index and at
    `/recipes/<slug>/`. Spot-check in the browser (see CLAUDE.md → Browser
-   testing): default SSR point, knob behavior, guarded steps, JA surface.
+   testing): default SSR point, knob behavior, guarded steps, and each
+   locale's surface via the switcher.
 
 ## Hard rules (do not violate)
 
 - Nutrition comes **exclusively from USDA SR Legacy** — the fetch script
   enforces this; never hand-enter package-label numbers or other FDC datasets.
-- **Canonical EN + sidecar JA catalog.** No inline `{ en, ja }` pairs in
-  recipe frontmatter; an incomplete catalog fails the build.
+- **Canonical EN + one sidecar catalog per locale** (`ja-JP`, `zh-CN`). No
+  inline localized pairs in recipe frontmatter; an incomplete catalog or a
+  missing ingredient overlay fails the build.
 - **No role/knob/fill without a stateable `why`.**
 - **Metric is the source of truth.** Never store tsp/tbsp/cups.
 - All files are **LF**, no CRLF. TypeScript is strict, no `any`.
@@ -131,8 +139,9 @@ Work the checklist top to bottom. Paths are relative to the project root.
 ## Files in this skill
 
 - `templates/recipe.mdx` — v3 recipe skeleton (frontmatter + Step/Ref method).
-- `templates/recipe.ja.yaml` — matching JA catalog skeleton.
-- `templates/ingredient.yaml` — ingredient DB entry (nutrition + aisle).
+- `templates/recipe.locale.yaml` — per-locale catalog skeleton (one per catalog locale).
+- `templates/ingredient.yaml` — ingredient DB entry (nutrition + aisle); pair
+  with an overlay file per non-inline locale (see the template's footer note).
 - `scripts/fetch-usda.mjs` — SR-Legacy-only nutrition lookup (search + by-id).
 - `scripts/process-hero.mjs` — crop any photo to the 1280×720 16:9 hero.
 - `reference/sourcing.md` — USDA SR Legacy rules + fetch script usage.

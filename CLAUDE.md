@@ -22,8 +22,9 @@ A static **Astro 6 + MDX + Svelte 5** recipe site. Pages pre-render to plain HTM
 
 Recipes are the **v3 model** — a *pattern* (the dish's thesis) instantiated by *roles* (jobs, each with a required `why`), filled by *ingredients* — see `docs/recipe-model.md` (the governing design). **Ingredient nutrition lives in a separate database and is merged into recipes at build time**:
 
-- `data/ingredients/*.yaml` — one file per ingredient: per-100g nutrition + `density_g_per_ml` + bilingual names/aliases/availability + per-locale `aisle`.
-- `src/content/recipes/<slug>.mdx` — canonical-EN frontmatter (pattern/servings/knobs/roles/constraints, validated by the Zod schema in `src/content.config.ts`) + the method body as `<Step id when? title?>` / `<Ref of fill?/>` components. The Japanese lives in a flat sidecar catalog `<slug>.ja.yaml` (dotted keys + `steps.<id>` templates) with a machine-written `<slug>.ja.hashes.yaml` for the staleness lint (refresh: `$env:REFRESH_CATALOG_HASHES='1'; npm run build`).
+- **Locales are BCP-47 tags** — `en-US` (canonical) / `ja-JP` / `zh-CN`, configured in `src/lib/types.ts` (`LOCALES`/`CANONICAL_LOCALE`/`CATALOG_LOCALES`) — route locale assumptions through those constants, never literals (the long-term goal is an open-source SSG whose adopters may pick other locales and another canonical language).
+- `data/ingredients/*.yaml` — one file per ingredient: per-100g nutrition + `density_g_per_ml` + inline en-US/ja-JP names/aliases + per-locale `aisle`. Other locales are **overlay folders** mirroring the filenames (`data/ingredients/zh-CN/<id>.yaml`: names/aliases/aisle), merged at load; every supported locale needs a name + aisle or the build fails.
+- `src/content/recipes/<slug>.mdx` — canonical-EN frontmatter (pattern/servings/knobs/roles/constraints, validated by the Zod schema in `src/content.config.ts`) + the method body as `<Step id when? title?>` / `<Ref of fill?/>` components. Each catalog locale lives in a flat sidecar `<slug>.<locale>.yaml` (dotted keys + `steps.<id>` templates) with a machine-written `<slug>.<locale>.hashes.yaml` for the staleness lint (refresh: `$env:REFRESH_CATALOG_HASHES='1'; npm run build`). A recipe declaring a locale owes it a complete catalog — missing keys fail the build.
 - `src/lib/v3/` — the engine. `bundle.ts` builds a serializable `RecipeBundle` (hydrated recipe + ingredient data + defaults + extracted step metadata) at build time; `resolve.ts` is the pure order-independent resolver shared by SSR and the islands; `guards.ts` the step/constraint expression language; `i18n.ts`/`staleness.ts`/`steps.ts`/`Step.astro` carry the build-time lint suite (catalog completeness = build **error** for declared locales; read-set parity, staleness, orphans, role-read-by-no-step = warnings; boundness = error).
 - `src/pages/recipes/[...slug].astro` enumerates the content collection and hands each bundle to `RecipePageV3.astro`.
 
@@ -37,15 +38,15 @@ Each bundle-holding component calls `initV3(bundle)` (or `initLocale()` for loca
 
 ### Document-level UI state: theme, locale, stage
 
-Three concerns are reflected onto `<html>` attributes so CSS can drive them: `data-theme` (dark mode), `data-locale` (EN/JA), `data-stage` (the Customize/Shop/Cook stage tabs). `data-theme` and `data-locale` are resolved **before first paint** by `is:inline` scripts in `RecipeLayout.astro` (stored choice → system/browser → default) to avoid a flash; the matching island then mirrors that attribute into its store. Theme and locale persist to `localStorage` and sync across open tabs via the `storage` event. The shared `SiteControls.astro` bundles `ThemeToggle` + `LocaleSwitcher` for both the recipe pages and the index.
+Three concerns are reflected onto `<html>` attributes so CSS can drive them: `data-theme` (dark mode), `data-locale` (a BCP-47 tag), `data-stage` (the Customize/Shop/Cook stage tabs). `data-theme` and `data-locale` are resolved **before first paint** by `is:inline` scripts in `RecipeLayout.astro` (stored choice → system/browser → default) to avoid a flash; the matching island then mirrors that attribute into its store. Theme and locale persist to `localStorage` and sync across open tabs via the `storage` event. The shared `SiteControls.astro` bundles `ThemeToggle` + `LocaleSwitcher` for both the recipe pages and the index.
 
-### Localization (EN/JA)
+### Localization (en-US / ja-JP / zh-CN)
 
 Three systems, all driven by the `locale` store:
 
-- **Islands** read UI strings reactively from `src/lib/i18n.ts` via `t(key, locale)`.
-- **Recipe content** is canonical EN in the MDX, hydrated with the per-recipe JA catalog at build time into `Localized` (`{ en, ja }`) values the islands render by locale.
-- **Static prose** (tips, method surfaces) is emitted twice (`.lang-en` / `.lang-ja` siblings, see `Bilingual.astro` and the `.lang-*` rules in `global.css`); the `locale` store flips `<html data-locale>` so the right copy shows. This keeps content localized with JS disabled (defaults to EN).
+- **UI chrome** lives in per-locale site catalogs `src/locales/<locale>.yaml` (flat dotted keys: `ui.*`, `nutrients.*`, `sections.*`); `src/lib/i18n.ts` is a typed facade over them (`t(key, locale)`) whose completeness gate fails the build on any key-set drift.
+- **Recipe content** is canonical EN in the MDX, hydrated with each per-recipe locale catalog at build time into `Localized` (`Record<Locale, string>`) values the islands render by locale.
+- **Static prose** (tips, method surfaces) is emitted once per locale (`.lang-<locale>` siblings, see `Bilingual.astro` and the `.lang-*` rules in `global.css`); the `locale` store flips `<html data-locale>` so the right copy shows. This keeps content localized with JS disabled (defaults to the canonical locale). Cost: ~9–17 KB HTML per extra locale per page.
 
 ## Browser testing (Chrome)
 

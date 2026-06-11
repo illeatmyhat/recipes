@@ -66,9 +66,13 @@ The v2 principle survives with one amendment:
 2. **Nutrition exclusively from USDA SR Legacy**, per-100g in the ingredient DB.
 3. **Everything human-facing is localizable** — *amended*: localized content
    lives in **per-locale message catalogs** keyed by stable IDs, with one
-   canonical source language (EN) in the recipe file itself. (Previously:
-   inline `{ en, ja }` pairs — see *Localization*.) The site remains fully
-   bilingual EN/JA; the storage shape now scales to N locales.
+   canonical source language in the recipe file itself. (Previously: inline
+   `{ en, ja }` pairs — see *Localization*.) Locales are **BCP-47 tags**
+   (`en-US` / `ja-JP` / `zh-CN` today), region-qualified on purpose: a locale
+   covers language AND market (store geography). The locale set and the
+   canonical language are *instance configuration*
+   (`LOCALES`/`CANONICAL_LOCALE` in `src/lib/types.ts`) — an adopting site of
+   the future open-source SSG may choose different ones.
 4. **The default parameter point renders statically** — JS-off readable.
 5. **`servings` is just the first scalar parameter.**
 6. **Resolution is order-independent** — a function of the final `Params`
@@ -374,29 +378,41 @@ Build-time checks:
   entry stores a hash of the source string it translated; source changed ⇒
   entry flagged stale. Stays a warning — it needs human review by design.
 
-**Ingredient-DB localization (decided 2026-06-10): inline + overlay folders.**
-The DB keeps inline `en`/`ja` fields (stable reference data, low churn). A
-future locale does NOT edit the 37+ canonical files: it arrives as an
+**Ingredient-DB localization (decided AND implemented 2026-06-10): inline +
+overlay folders.** The DB keeps the locales it was authored with inline
+(`en-US`/`ja-JP` today — stable reference data, low churn). Any other
+supported locale does NOT edit the 38+ canonical files: it arrives as an
 **overlay folder mirroring the canonical filenames** —
-`data/ingredients/fr/<id>.yaml` overlaying `data/ingredients/<id>.yaml` with
-the same localizable fields (`names`, `aliases`, `aisle`, availability note) —
-merged at load. Folder-of-small-files over one-big-file-per-locale because
+`data/ingredients/zh-CN/<id>.yaml` overlaying `data/ingredients/<id>.yaml`
+with just the localizable fields (`names`, `aliases`, `aisle`) — merged at
+load (`db.ts`). Folder-of-small-files over one-big-file-per-locale because
 authorship here is agent-first: per-file work units bound context, avoid
-write contention, and coverage is a directory-listing diff (missing overlay
-file for a declared locale = build error, consistent with completeness).
-Build the loader when a third locale is real — no speculative machinery. No
+write contention, and coverage is a listing diff. **Every supported locale
+must end up with a name + aisle, inline or overlay, or the build fails**;
+a broken overlay fails loudly rather than degrading to a placeholder. zh-CN
+is the first consumer (38 overlays), and its aisles carry genuinely
+divergent market data (soy sauce/salt → condiments, tofu → tofu_soy). No
 external i18n format (PO/XLIFF/Fluent) is adopted: the flat-YAML catalogs
 already are the standard per-locale key-value pattern, and interchange
 formats only pay off if human/community translators enter the loop.
+
+**Site-level UI strings are catalogs too** (decided 2026-06-10): the UI
+chrome (labels, nutrient names, store-section names) lives in
+`src/locales/<locale>.yaml` — flat dotted keys, one file per supported
+locale including the canonical one (chrome has no canonical source document,
+so all locales are peers). `src/lib/i18n.ts` is a typed facade whose
+completeness gate throws on any key-set drift, in any locale, at build.
 
 The lint splits accordingly: catalogs are flat YAML (trivial loops); only the
 canonical body needs MDX walking, and only to *extract* step ids and refs —
 no cross-language correlation inside JSX. This removes most of what made v2's
 linter its riskiest component.
 
-**Rendering strategy is orthogonal and deferred** (Open question #6): today's
-both-languages-in-one-page + `data-locale` flip works at 2 locales; Astro's
-built-in i18n routing (per-locale routes) is the standard at 3+.
+**Rendering strategy is orthogonal and still the `data-locale` flip** (Open
+question #6, re-measured at 3 locales, 2026-06-10): carrying all languages in
+one page costs ~9–17 KB of HTML per page at three locales — comfortable.
+Astro's per-locale i18n routes remain the fallback when the flip's cost is
+actually felt (more locales, or much longer recipes), not before.
 
 ---
 
@@ -689,14 +705,32 @@ this dish's context rather than copying generic facts.
    the same number as a token amount with extra machinery. *Portion hints for
    staged additions remain carried* — shape them when a recipe actually
    stages an addition.
-6. **Rendering at 3+ locales** — `data-locale` flip (today) vs Astro i18n
-   routes. Orthogonal to the catalog format; decide when a third locale is
-   real.
+6. **Rendering at 3+ locales** — *re-measured with zh-CN live (2026-06-10)*:
+   the `data-locale` flip costs ~9–17 KB HTML per page at three locales —
+   kept. Astro i18n routes remain the fallback when the cost is actually
+   felt, not before.
 7. **Partition proportions** — equal split among chosen fills for now;
    author-tunable weights only when a real recipe demands them.
 8. **Localized list-join grammar.** A multi-fill `<Ref>` renders a list of
    names ("tofu and chicken" / 「豆腐と鶏むね肉」). Conjunction differs by
    language (English Oxford-comma + "and"; Japanese と/や; others have dual
-   forms, gendered connectors). Likely a per-locale `join(names[])` function;
-   whether that suffices for all target locales is unproven. To be exercised by
-   the prototype.
+   forms, gendered connectors). A per-locale `join(names[])` function
+   (`joinNames`, names.ts) has now carried three locales — zh-CN added 顿号 +
+   和 ("草莓、蓝莓和树莓") with no model change. Holding; revisit only if a
+   locale needs context-dependent joins.
+9. **Market-divergent content (`availability`) — shape decided, surface
+   pending (2026-06-10).** Some ingredient data cannot be a 1:1 translation:
+   brands, buying guidance, and market-specific warnings differ by country,
+   not just language. The region-qualified locale decision already models
+   this: `availability` should become **per-locale** (each locale's entry
+   *authored for that market in that language*, never translated from the
+   canonical; overlay files carry it for overlay locales; the "don't invent
+   brands" rule applies per market). The recipe layer needs no change —
+   catalog surfaces are independently *authored statements* (the parity lint
+   already legitimizes divergence), so a locale's `note`/`why` may diverge
+   from the canonical wherever local reality differs. Deliberately **not
+   restructured yet**: the legacy `availability` block (keyed by market
+   `us`/`ja`, language tangled inside) is rendered by NO v3 surface — dormant
+   data. Restructure it together with the surface that will show it (a
+   "where to buy" disclosure in the Shop stage is the natural candidate), so
+   the shape is built against a real consumer.

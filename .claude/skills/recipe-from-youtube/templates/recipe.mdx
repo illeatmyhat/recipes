@@ -1,12 +1,13 @@
 ---
 # src/content/recipes/<slug>.mdx — validated by the Zod schema in
 # src/content.config.ts (v3: pattern / roles / fills, docs/recipe-model.md).
-# Every string here is the CANONICAL (EN) text; the Japanese lives in the
-# sidecar catalog <slug>.ja.yaml, keyed by dotted paths into this frontmatter.
+# Every string here is the CANONICAL (EN) text; each other locale lives in a
+# sidecar catalog <slug>.<locale>.yaml (ja-JP, zh-CN), keyed by dotted paths
+# into this frontmatter.
 title: <English title>
 slug: <kebab-case-slug>            # MUST match the filename <slug>.mdx
 hero_image: ./images/<slug>.jpg    # produced by scripts/process-hero.mjs
-locales: [en, ja]
+locales: [en-US, ja-JP, zh-CN]
 # customize_title is OPTIONAL — set only when recipe-specific phrasing reads
 # better than the generic label. Delete the line if not used.
 customize_title: Customize your <dish>
@@ -58,7 +59,8 @@ roles:
         note: <Recipe-specific handling — the causal version, not a bare "don't".>
         # alias — OPTIONAL: bare noun phrase for step prose when the DB name
         # reads badly there ("Pumpkin and squash seed kernels, dried" ->
-        # "pumpkin seeds"). No article, no connective. Needs a JA catalog key.
+        # "pumpkin seeds"). No article, no connective. Needs a catalog key in
+        # EVERY declared locale.
         # alias: <prose name>
   # SUBSTITUTIVE role: the role owns the amount; chosen fills partition it.
   # A fill's own amount overrides its full-equivalent (tofu 396g ≡ chicken 250g).
@@ -95,7 +97,8 @@ import Ref from '../../components/Ref.astro';
     fills as a localized list join; <Ref of="role" fill="x"/> names one fill.
     Refs never own quantity. Guards (`when`) use src/lib/v3/guards.ts grammar.
     BOUNDNESS: a step reading a min:0 role MUST have a positive
-    has(role, '…') conjunct in its `when` — build error otherwise.
+    has(role, '…') or count(role) > 0 conjunct in its `when` — build error
+    otherwise.
     REACH: every role should be read by some step (mise en place buckets by
     step; the build warns otherwise). */}
 
@@ -117,7 +120,7 @@ import Ref from '../../components/Ref.astro';
 
 </ol>
 
-<div class="lang-en">
+<div class="lang-en-US">
 
 ### Tips
 
@@ -125,10 +128,18 @@ import Ref from '../../components/Ref.astro';
 
 </div>
 
-<div class="lang-ja">
+<div class="lang-ja-JP">
 
 ### コツ
 
 - 材料メモに入りきらなかったコツ。
+
+</div>
+
+<div class="lang-zh-CN">
+
+### 小贴士
+
+- 放不进食材备注里的小技巧。
 
 </div>

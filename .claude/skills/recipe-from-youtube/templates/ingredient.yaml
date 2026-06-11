@@ -5,13 +5,16 @@ id: <id>
 # USDA FoodData Central id. MUST be an SR Legacy entry — get it (and the
 # per_100g block below) from scripts/fetch-usda.mjs.
 fdc_id: 0
+# Inline locales: en-US (canonical) + ja-JP. Every OTHER supported locale
+# (zh-CN today) gets an overlay file data/ingredients/<locale>/<id>.yaml with
+# `names` / `aliases` / `aisle` for that locale — see the note at the bottom.
 names:
-  en: <English name>
-  ja: <Japanese name>
+  en-US: <English name>
+  ja-JP: <Japanese name>
 aliases:
-  en:
+  en-US:
     - <other English name the transcript / shoppers might use>
-  ja:
+  ja-JP:
     - <other Japanese name>
 # availability: shopping guidance. Only worth detailing when buyers commonly get
 # the WRONG form (e.g. rolled vs quick oats, low-sodium vs regular soy sauce,
@@ -46,11 +49,16 @@ nutrition:
 # with unit `ml`; otherwise null. See reference/units.md for common values.
 density_g_per_ml: null
 # Which supermarket section carries this food, PER LOCALE — store geography
-# differs by country (tofu: dairy_eggs in the US, tofu_soy in Japan; soy
-# sauce: international in the US, condiments in Japan). Fill BOTH. Valid
+# differs by country (tofu: dairy_eggs in the US, tofu_soy in Japan/China;
+# soy sauce: international in the US, condiments in Japan/China). Valid
 # sections (see StoreSection in src/lib/types.ts): produce, meat_seafood,
 # tofu_soy, dairy_eggs, dry_goods, canned, condiments, spices, oils,
 # international, other.
 aisle:
-  en: <section id>
-  ja: <section id>
+  en-US: <section id>
+  ja-JP: <section id>
+# REQUIRED COMPANION — one overlay file per non-inline locale, e.g.
+# data/ingredients/zh-CN/<id>.yaml (the build fails without it):
+#   names: <zh name>
+#   aliases: [<zh alias>]
+#   aisle: <section id for that market>
