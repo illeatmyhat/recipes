@@ -742,37 +742,32 @@ this dish's context rather than copying generic facts.
    `<details>`) that renders only when there is more to reveal. The recipe
    layer needed no change — catalog surfaces remain independently *authored
    statements* (the parity lint already legitimizes divergence).
-10. **Market unavailability — direction decided (2026-06-10), implementation
-    deferred.** Two tiers. (a) *Not on shelves but orderable* ('nduja in the
-    US): the `online` store section — outside the physical walk, sorted
-    FIRST (lead time), paired with an `important` availability note.
-    Shipped. (b) *Truly unobtainable*, including a **base** role's only fill
-    (no tofu ⇒ no mapo tofu): the invariant is that **locale stays a view
-    dimension — resolution is locale-independent, so viability is advisory,
-    never structural**. Design when needed: an ingredient locale file may
-    declare `unavailable: true` in place of `aisle` (the all-or-nothing
-    aisle gate becomes "aisle or unavailable, per locale"); build-time
-    derivation flags a recipe non-viable in locale L when some min ≥ 1 role
-    has every fill unavailable in L → per-locale banner + index badge via
-    the `.lang-*` machinery; a non-base unavailable fill gets an advisory
-    "not sold in your market" line on its Customize button but stays
-    selectable (never functionally disabled — that would make selection
-    locale-dependent). Substituting a BASE fill is out of scope by
-    doctrine: that is a different dish, i.e. a separate recipe.
-    **Compiler semantics** (follows the lint taxonomy — dishonest =
-    error, needs-judgment = warning): fill unavailable in L but role has
-    an L-viable alternative → advisory UI only; the shared DEFAULT
-    selection includes an L-unavailable fill → warning (defaults are
-    locale-independent by architecture, the author should reconsider);
-    min ≥ 1 role with every fill unavailable in L → warning + banner in
-    L's view + index badge (publish-vs-fork is a human call); non-viable
-    in EVERY supported locale → build error (the site would publish a
-    dish none of its markets can cook). The canonical locale gets no
-    special case — it is just another market (ingredient-DB symmetry),
-    and viability is orthogonal to the `locales:` translation
-    declaration. Badge-not-removal on the index follows from the
-    one-index architecture; per-locale removal only becomes possible if
-    Astro i18n routes (#6) ever land. Deferred until the DB contains a
-    truly unobtainable ingredient — `online` covers the orderable tail,
-    and nothing in the current 38 qualifies (build the shape against a
-    real consumer, as with Q9).
+10. **Market scarcity — REVISED 2026-06-10 (same day; was "market
+    unavailability").** (a) *Not on this market's shelves but orderable*
+    ('nduja in the US): the `online` store section — outside the physical
+    walk, sorted FIRST (lead time), paired with an `important`
+    availability note. Shipped. (b) *Extremely difficult to obtain* — the
+    revision: an ingredient is **never declared unobtainable**. That is a
+    temporal, falsifiable absolute (today's import ban or supply gap is
+    next year's shelf item), and the cook with a local source outranks
+    the database. Scarcity is **authored guidance, not derived fact**: an
+    `important` availability note in that locale's language carries the
+    warning and the why ('nduja: "specialty importers only — allow
+    shipping time"; dried scallops/瑶柱 for imitation shark fin soup:
+    "expensive; specialty groceries or online"). The previously specified
+    `unavailable: true` flag and its compiler ladder (non-viability
+    banner, index badge, non-viable-everywhere build error,
+    default-selection warning) are **retired before implementation**:
+    with no absolute in the data there is nothing sound to derive, and
+    the *advisory-never-structural* invariant (locale stays a view
+    dimension; resolution is locale-independent) now holds by
+    construction — the data cannot express impossibility at all.
+    Optional future piece, deferred until a real dish wants it: a
+    machine-readable note kind (`scarce: true` alongside `important`) so
+    a dish-level *caution* — never a verdict — can be derived per locale
+    from base-role fills and echoed on Customize fill buttons. Standing
+    doctrine unchanged: substituting a BASE fill is a different dish,
+    i.e. a separate recipe. Recorded for later: "unobtainable as a
+    product, makeable from obtainable parts" (injera from teff, youtiao)
+    is an acquisition mode that points at sub-recipe composition — out
+    of scope, noted so it isn't rediscovered.
