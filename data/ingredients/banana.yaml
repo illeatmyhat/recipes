@@ -11,19 +11,20 @@ aliases:
     - 生バナナ
     - 完熟バナナ
 availability:
-  us:
+  en-US:
     brands:
       - Dole
       - Chiquita
       - Del Monte
-    note_en: Sold loose by the bunch in any grocery produce section.
-  ja:
+    notes:
+      - Sold loose by the bunch in any grocery produce section.
+  ja-JP:
     brands:
       - Dole
       - Chiquita
       - 甘熟王
-    note_en: Available year-round at all supermarkets and convenience stores.
-    note_ja: 全国のスーパー・コンビニで通年入手可能。
+    notes:
+      - 全国のスーパー・コンビニで通年入手可能。
 nutrition:
   per_100g:
     calories: 89

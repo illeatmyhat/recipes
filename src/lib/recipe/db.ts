@@ -23,15 +23,42 @@ import { join } from 'node:path';
 import { load } from 'js-yaml';
 import { emptyNutrition } from '../nutrition';
 import { fallbackNames } from './names';
-import { CATALOG_LOCALES, LOCALES, perLocale, type StoreSection } from '../types';
+import {
+  CATALOG_LOCALES,
+  LOCALES,
+  perLocale,
+  type Locale,
+  type MarketGuidance,
+  type MarketNote,
+  type StoreSection,
+} from '../types';
 import type { IngredientData } from '../types';
 import type { IngredientLookup, LoadedIngredient } from './types';
+
+/** A note as authored in YAML: a bare string is a non-important note. */
+type RawNote = string | MarketNote;
+
+/** {@link MarketGuidance} as authored: notes may be bare strings. */
+interface RawGuidance {
+  brands?: string[];
+  notes?: RawNote[];
+}
 
 /** The localizable fields an overlay file may carry. */
 interface OverlayData {
   names?: string;
   aliases?: string[];
   aisle?: StoreSection;
+  /** The overlay locale's market guidance (authored in that language). */
+  availability?: RawGuidance;
+}
+
+/** Normalize authored guidance: bare-string notes become MarketNote objects. */
+function normalizeGuidance(raw: RawGuidance): MarketGuidance {
+  return {
+    brands: raw.brands,
+    notes: raw.notes?.map((n) => (typeof n === 'string' ? { text: n } : n)),
+  };
 }
 
 const INGREDIENT_DIR = join(process.cwd(), 'data', 'ingredients');
@@ -43,10 +70,6 @@ function placeholderIngredient(id: string): IngredientData {
     fdc_id: 0,
     names: fallbackNames(id),
     aliases: perLocale<string[]>(() => []),
-    availability: {
-      us: { brands: [], note_en: 'Nutrition data pending.' },
-      ja: { brands: [], note_en: 'Nutrition data pending.', note_ja: '栄養データは準備中です。' },
-    },
     nutrition: { per_100g: emptyNutrition() },
     density_g_per_ml: 1,
   };
@@ -66,6 +89,9 @@ function applyOverlays(id: string, data: IngredientData): IngredientData {
       if (overlay.names !== undefined) data.names[locale] = overlay.names;
       if (overlay.aliases !== undefined) data.aliases[locale] = overlay.aliases;
       if (overlay.aisle !== undefined && data.aisle) data.aisle[locale] = overlay.aisle;
+      if (overlay.availability !== undefined) {
+        (data.availability ??= {})[locale] = normalizeGuidance(overlay.availability);
+      }
     }
     data.aliases[locale] ??= [];
   }
@@ -99,6 +125,12 @@ export const loadIngredient: IngredientLookup = (id: string): LoadedIngredient =
     const data = load(readFileSync(file, 'utf8')) as IngredientData;
     if (!data || data.id !== id) {
       throw new Error(`recipe db: ${file} has id "${data?.id}" but was loaded as "${id}".`);
+    }
+    // Inline guidance is authored with the bare-string note shorthand too.
+    if (data.availability) {
+      for (const loc of Object.keys(data.availability) as Locale[]) {
+        data.availability[loc] = normalizeGuidance(data.availability[loc] as RawGuidance);
+      }
     }
     result = { data, placeholder: false };
   } catch (err) {

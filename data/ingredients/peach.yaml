@@ -11,19 +11,20 @@ aliases:
     - 桃
     - ピーチ
 availability:
-  us:
+  en-US:
     brands:
       - Sun World
       - 365 Whole Foods
       - local orchard
-    note_en: Seasonal summer fruit; sold loose in the produce section.
-  ja:
+    notes:
+      - Seasonal summer fruit; sold loose in the produce section.
+  ja-JP:
     brands:
       - 白桃
       - 黄桃
       - あかつき
-    note_en: Prized summer fruit; sold at supermarkets and fruit shops in season.
-    note_ja: 夏の果物として旬にスーパー・果物店で入手可能。
+    notes:
+      - 夏の果物として旬にスーパー・果物店で入手可能。
 nutrition:
   per_100g:
     calories: 39

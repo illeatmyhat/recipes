@@ -11,13 +11,12 @@ aliases:
     - エキストラバージンオリーブオイル
     - オリーブ油
 availability:
-  us:
-    brands: []
-    note_en: Any plain olive oil works; extra virgin for the most flavor.
-  ja:
-    brands: []
-    note_en: Sold in every supermarket.
-    note_ja: スーパーで一般的に入手可能。
+  en-US:
+    notes:
+      - Any plain olive oil works; extra virgin for the most flavor.
+  ja-JP:
+    notes:
+      - スーパーで一般的に入手可能。
 nutrition:
   per_100g:
     calories: 884

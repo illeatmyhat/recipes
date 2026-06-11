@@ -11,13 +11,12 @@ aliases:
     - 木綿豆腐
     - とうふ
 availability:
-  us:
-    brands: []
-    note_en: Refrigerated tubs near the produce or dairy section. Firm or extra-firm works best.
-  ja:
-    brands: []
-    note_en: Sold everywhere; use momen (firm) tofu.
-    note_ja: スーパーで一般的に入手可能。木綿豆腐がおすすめ。
+  en-US:
+    notes:
+      - Refrigerated tubs near the produce or dairy section. Firm or extra-firm works best.
+  ja-JP:
+    notes:
+      - スーパーで一般的に入手可能。木綿豆腐がおすすめ。
 nutrition:
   per_100g:
     calories: 76

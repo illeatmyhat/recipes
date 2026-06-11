@@ -11,13 +11,12 @@ aliases:
     - ニンニク
     - ガーリック
 availability:
-  us:
-    brands: []
-    note_en: Sold as whole bulbs in the produce section.
-  ja:
-    brands: []
-    note_en: Sold as whole bulbs in every supermarket.
-    note_ja: スーパーの野菜売り場で球のまま入手可能。
+  en-US:
+    notes:
+      - Sold as whole bulbs in the produce section.
+  ja-JP:
+    notes:
+      - スーパーの野菜売り場で球のまま入手可能。
 nutrition:
   per_100g:
     calories: 149

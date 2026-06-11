@@ -9,13 +9,12 @@ aliases:
   ja-JP:
     - セロリー
 availability:
-  us:
-    brands: []
-    note_en: Sold as whole bunches in the produce section.
-  ja:
-    brands: []
-    note_en: Sold as bunches in every supermarket.
-    note_ja: スーパーの野菜売り場で入手可能。
+  en-US:
+    notes:
+      - Sold as whole bunches in the produce section.
+  ja-JP:
+    notes:
+      - スーパーの野菜売り場で入手可能。
 nutrition:
   per_100g:
     calories: 14

@@ -10,13 +10,12 @@ aliases:
     - ジャガイモ
     - 馬鈴薯
 availability:
-  us:
-    brands: []
-    note_en: Any all-purpose potato (russet, Yukon, or white).
-  ja:
-    brands: []
-    note_en: Any all-purpose potato.
-    note_ja: 男爵やメークインなど一般的なじゃがいも。
+  en-US:
+    notes:
+      - Any all-purpose potato (russet, Yukon, or white).
+  ja-JP:
+    notes:
+      - 男爵やメークインなど一般的なじゃがいも。
 nutrition:
   per_100g:
     calories: 77

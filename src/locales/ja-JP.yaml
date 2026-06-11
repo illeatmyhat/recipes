@@ -43,6 +43,8 @@ ui.optionBlocked: 現在の選択では選べません。
 ui.miseEnPlace: 下ごしらえ
 ui.miseHint: 各ステップに用意するもの。作り方は下にあります。
 ui.shopHint: 材料ごとに1行 — 買い物しながらチェック。
+ui.moreNotes: その他のメモ
+ui.brandExamples: ブランド例
 ui.swap: 変更
 ui.required: 必須
 ui.pickUpTo: 最大

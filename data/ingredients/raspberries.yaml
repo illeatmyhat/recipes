@@ -11,18 +11,20 @@ aliases:
     - 木いちご
     - フランボワーズ
 availability:
-  us:
+  en-US:
     brands:
       - Driscoll's
       - 365 Whole Foods
       - Naturipe
-    note_en: Sold fresh in clamshells; also widely available frozen.
-  ja:
+    notes:
+      - Sold fresh in clamshells; also widely available frozen.
+  ja-JP:
     brands:
       - 冷凍ラズベリー
       - 輸入生ラズベリー
-    note_en: Fresh is seasonal and pricey; frozen is common at supermarkets.
-    note_ja: 生は高価で季節限定、冷凍が一般的。
+    notes:
+      - text: 生は高価で季節限定、冷凍が一般的。
+        important: true
 nutrition:
   per_100g:
     calories: 52

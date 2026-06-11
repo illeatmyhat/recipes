@@ -80,9 +80,9 @@ counts as the first); a package API frozen against one consumer is guesswork.
   locale pairs by hand; the only engine file a new locale currently touches.
   Fine at 3 locales (n×(n−1) hidden-rules); generate it from `LOCALES` at
   build if the set grows or at phase-2 release.
-- **`availability` / Q9** — per-market sourcing data still has the legacy
-  `us`/`ja` shape; restructures to per-locale market content together with
-  the Shop-stage surface (issue #6, Q9).
+- ~~`availability` / Q9~~ — resolved 2026-06-10: per-locale
+  `MarketGuidance` (optional, no gate), rendered by the Shop stage's
+  pinned-warning + "More tips" disclosure surface.
 - **Astro's own i18n routing** — per-locale URLs (`/ja/...`) would replace
   the `data-locale` CSS flip if page weight or SEO demands it; re-measured
   2026-06 and deliberately not adopted (~9–17 KB HTML per locale per page is

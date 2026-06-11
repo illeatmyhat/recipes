@@ -11,18 +11,20 @@ aliases:
     - パンプキンシード
     - ペピータ
 availability:
-  us:
+  en-US:
     brands:
       - Bob's Red Mill
       - 365 Whole Foods
       - Go Raw
-    note_en: Sold raw or roasted, in bulk and bagged; "pepitas" are the hulled kernels.
-  ja:
+    notes:
+      - Sold raw or roasted, in bulk and bagged; "pepitas" are the hulled kernels.
+  ja-JP:
     brands:
       - カルディ パンプキンシード
       - 素焼きかぼちゃの種
-    note_en: Available at import food stores and natural food shops.
-    note_ja: 輸入食品店・自然食品店で入手可能。
+    notes:
+      - text: 輸入食品店・自然食品店で入手可能。
+        important: true
 nutrition:
   per_100g:
     calories: 559

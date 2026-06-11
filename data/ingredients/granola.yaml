@@ -11,18 +11,19 @@ aliases:
     - グラノラ
     - オーツグラノーラ
 availability:
-  us:
+  en-US:
     brands:
       - Nature Valley
       - Bob's Red Mill
       - 365 Whole Foods
-    note_en: Sold plain or with honey and nuts; sugar content varies by brand.
-  ja:
+    notes:
+      - Sold plain or with honey and nuts; sugar content varies by brand.
+  ja-JP:
     brands:
       - カルビー フルグラ
       - 日清シスコ ごろグラ
-    note_en: Widely sold at supermarkets; fruit granola is the popular style.
-    note_ja: スーパーで一般的に入手可能。
+    notes:
+      - スーパーで一般的に入手可能。
 nutrition:
   per_100g:
     calories: 489

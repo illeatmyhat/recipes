@@ -11,13 +11,12 @@ aliases:
     - たまねぎ
     - オニオン
 availability:
-  us:
-    brands: []
-    note_en: Yellow or brown onions, sold loose in the produce section.
-  ja:
-    brands: []
-    note_en: Sold loose in every supermarket.
-    note_ja: スーパーの野菜売り場で入手可能。
+  en-US:
+    notes:
+      - Yellow or brown onions, sold loose in the produce section.
+  ja-JP:
+    notes:
+      - スーパーの野菜売り場で入手可能。
 nutrition:
   per_100g:
     calories: 40

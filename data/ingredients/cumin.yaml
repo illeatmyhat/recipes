@@ -11,13 +11,12 @@ aliases:
     - クミンパウダー
     - クミンシード
 availability:
-  us:
-    brands: []
-    note_en: Ground cumin from the spice aisle.
-  ja:
-    brands: []
-    note_en: Sold ground in the spice aisle.
-    note_ja: スーパーの調味料売り場で入手可能。
+  en-US:
+    notes:
+      - Ground cumin from the spice aisle.
+  ja-JP:
+    notes:
+      - スーパーの調味料売り場で入手可能。
 nutrition:
   per_100g:
     calories: 375

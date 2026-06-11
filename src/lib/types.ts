@@ -86,18 +86,26 @@ export interface NutritionFacts {
 export type NutrientKey = keyof NutritionFacts;
 
 /**
- * Per-market sourcing guidance for an ingredient.
- *
- * KNOWN INSTANCE LEAK: the `us`/`ja` market keys and `note_en`/`note_ja`
- * fields predate the configurable locale set. The data is dormant (no
- * surface renders it); Q9 (issue #6) restructures it into per-locale
- * market-authored content together with the Shop-stage "where to buy"
- * surface. Don't extend this shape — fix it there.
+ * One sourcing note for a market. `important: true` pins the note to the
+ * shopping row (scarcity warnings, recipe-correctness picks); everything
+ * else waits behind the row's disclosure. In ingredient YAML a bare string
+ * is shorthand for a non-important note (normalized at load, db.ts).
  */
-export interface Availability {
-  brands: string[];
-  note_en: string;
-  note_ja?: string;
+export interface MarketNote {
+  text: string;
+  important?: boolean;
+}
+
+/**
+ * Sourcing guidance for one market, authored in that locale's language —
+ * original per-market content, never a translation of a canonical note
+ * (Q9, docs/recipe-model.md). Per-locale and OPTIONAL with no completeness
+ * gate: absence means "no guidance for this market", and the Shop surface
+ * simply renders nothing. The don't-invent-brands rule applies per market.
+ */
+export interface MarketGuidance {
+  brands?: string[];
+  notes?: MarketNote[];
 }
 
 /**
@@ -127,10 +135,8 @@ export interface IngredientData {
   fdc_id: number;
   names: Localized;
   aliases: Record<Locale, string[]>;
-  availability: {
-    us: Availability;
-    ja: Availability;
-  };
+  /** Per-market sourcing guidance, keyed by locale. Optional everywhere. */
+  availability?: Partial<Record<Locale, MarketGuidance>>;
   nutrition: {
     per_100g: NutritionFacts;
   };

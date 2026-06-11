@@ -11,18 +11,19 @@ aliases:
     - 蜂蜜
     - 純粋はちみつ
 availability:
-  us:
+  en-US:
     brands:
       - Nature Nate's
       - Local Hive
       - 365 Whole Foods
-    note_en: Sold raw or filtered; choose 100% pure honey.
-  ja:
+    notes:
+      - Sold raw or filtered; choose 100% pure honey.
+  ja-JP:
     brands:
       - サクラ印はちみつ
       - 国産はちみつ
-    note_en: Widely sold at supermarkets; domestic and imported types available.
-    note_ja: スーパーで一般的に入手可能。
+    notes:
+      - スーパーで一般的に入手可能。
 nutrition:
   per_100g:
     calories: 304

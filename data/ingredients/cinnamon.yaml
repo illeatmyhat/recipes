@@ -11,18 +11,19 @@ aliases:
     - シナモンパウダー
     - 桂皮
 availability:
-  us:
+  en-US:
     brands:
       - McCormick
       - Simply Organic
       - 365 Whole Foods
-    note_en: Sold ground in the spice aisle; Ceylon and cassia types are both common.
-  ja:
+    notes:
+      - Sold ground in the spice aisle; Ceylon and cassia types are both common.
+  ja-JP:
     brands:
       - GABAN シナモンパウダー
       - S&B シナモン
-    note_en: Sold ground at all supermarkets in the spice section.
-    note_ja: スーパーの香辛料売り場で入手可能。
+    notes:
+      - スーパーの香辛料売り場で入手可能。
 nutrition:
   per_100g:
     calories: 247

@@ -718,19 +718,23 @@ this dish's context rather than copying generic facts.
    (`joinNames`, names.ts) has now carried three locales — zh-CN added 顿号 +
    和 ("草莓、蓝莓和树莓") with no model change. Holding; revisit only if a
    locale needs context-dependent joins.
-9. **Market-divergent content (`availability`) — shape decided, surface
-   pending (2026-06-10).** Some ingredient data cannot be a 1:1 translation:
-   brands, buying guidance, and market-specific warnings differ by country,
-   not just language. The region-qualified locale decision already models
-   this: `availability` should become **per-locale** (each locale's entry
-   *authored for that market in that language*, never translated from the
-   canonical; overlay files carry it for overlay locales; the "don't invent
-   brands" rule applies per market). The recipe layer needs no change —
-   catalog surfaces are independently *authored statements* (the parity lint
-   already legitimizes divergence), so a locale's `note`/`why` may diverge
-   from the canonical wherever local reality differs. Deliberately **not
-   restructured yet**: the legacy `availability` block (keyed by market
-   `us`/`ja`, language tangled inside) is rendered by NO v3 surface — dormant
-   data. Restructure it together with the surface that will show it (a
-   "where to buy" disclosure in the Shop stage is the natural candidate), so
-   the shape is built against a real consumer.
+9. **Market-divergent content (`availability`) — DECIDED and implemented
+   (2026-06-10).** Some ingredient data cannot be a 1:1 translation: brands,
+   buying guidance, and market-specific warnings differ by country, not just
+   language. `availability` is now **per-locale**
+   (`Partial<Record<Locale, MarketGuidance>>`, types.ts): each entry is
+   original content *authored for that market in that language* — never
+   translated from a canonical (there is no canonical; the legacy
+   market-keyed `us`/`ja` shape with `note_en`/`note_ja` tangled language
+   into markets and forced near-duplicate cells). Carried inline or by the
+   locale's overlay file; the "don't invent brands" rule applies per market.
+   **Optional with no completeness gate** — unlike names/catalogs (which
+   translate canonical content), absence here means "no guidance for this
+   market" and the surface renders nothing; zh-CN starts empty until someone
+   authors for that market. Notes carry an `important` flag: scarcity
+   warnings ("カルディや輸入食品店で入手可能") and recipe-correctness picks
+   ("use low-sodium soy sauce") pin to the Shop row; everything else, plus
+   brand examples, waits behind a per-row "More tips" disclosure (native
+   `<details>`) that renders only when there is more to reveal. The recipe
+   layer needed no change — catalog surfaces remain independently *authored
+   statements* (the parity lint already legitimizes divergence).

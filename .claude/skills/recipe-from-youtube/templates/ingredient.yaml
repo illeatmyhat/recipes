@@ -16,20 +16,24 @@ aliases:
     - <other English name the transcript / shoppers might use>
   ja-JP:
     - <other Japanese name>
-# availability: shopping guidance. Only worth detailing when buyers commonly get
-# the WRONG form (e.g. rolled vs quick oats, low-sodium vs regular soy sauce,
-# smoked vs plain paprika). For basic produce and pantry staples that are hard to
-# get wrong (oil, garlic, onion, lentils, tofu, pepper, celery, carrots,
-# mushrooms, spinach, potatoes), leave `brands: []` and keep the note generic —
-# don't invent brand names. brands is string[]; [] is valid.
+# availability: OPTIONAL per-locale market guidance, keyed by BCP-47 locale.
+# Each entry is original content authored FOR that market IN that language —
+# never a translation of another locale's note. Omit a locale (or the whole
+# block) when there is nothing useful to say; the Shop stage then shows
+# nothing. A bare string is a regular note (revealed behind the row's "More
+# tips" disclosure). Mark a note `important: true` ONLY when every cook needs
+# it before shopping: the wrong form breaks the recipe (rolled vs quick oats,
+# low-sodium vs regular soy sauce) or the item is scarce in that market
+# (import/specialty stores only). List brands ONLY when the form is easy to
+# get wrong — don't invent brand names; omit `brands` instead of writing [].
 availability:
-  us:
-    brands: []                         # list brands ONLY when the form is easy to get wrong
-    note_en: <where/how to buy it in the US>
-  ja:
-    brands: []
-    note_en: <English note for the JA market>
-    note_ja: <Japanese note (optional but preferred)>
+  en-US:
+    notes:
+      - <where/how to buy it in the US>
+  ja-JP:
+    notes:
+      - text: <Japanese note, e.g. カルディ・輸入食品店で入手可能>
+        important: true                # scarcity / wrong-form warnings only
 # Paste the next two keys verbatim from: node scripts/fetch-usda.mjs <fdcId>
 nutrition:
   per_100g:
@@ -62,3 +66,5 @@ aisle:
 #   names: <zh name>
 #   aliases: [<zh alias>]
 #   aisle: <section id for that market>
+#   availability:                      # optional, that locale's market guidance
+#     notes: [<zh note>]

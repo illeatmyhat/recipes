@@ -12,18 +12,21 @@ aliases:
     - クラシックオーツ
     - オールドファッションドオーツ
 availability:
-  us:
+  en-US:
     brands:
       - Quaker
       - Bob's Red Mill
       - Kodiak
-    note_en: Look for "old fashioned" or "classic" on the label.
-  ja:
+    notes:
+      - text: Look for "old fashioned" or "classic" on the label.
+        important: true
+  ja-JP:
     brands:
       - 日食オーツ
       - Bob's Red Mill ロールドオーツ
-    note_en: Available at Kaldi, Costco, and import food stores.
-    note_ja: カルディ・コストコ・輸入食品店で入手可能。
+    notes:
+      - text: カルディ・コストコ・輸入食品店で入手可能。
+        important: true
 nutrition:
   per_100g:
     calories: 389

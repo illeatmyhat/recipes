@@ -10,13 +10,12 @@ aliases:
     - ニンジン
     - 人参
 availability:
-  us:
-    brands: []
-    note_en: Sold loose or bagged in the produce section.
-  ja:
-    brands: []
-    note_en: Sold loose or bagged in every supermarket.
-    note_ja: スーパーの野菜売り場で入手可能。
+  en-US:
+    notes:
+      - Sold loose or bagged in the produce section.
+  ja-JP:
+    notes:
+      - スーパーの野菜売り場で入手可能。
 nutrition:
   per_100g:
     calories: 41

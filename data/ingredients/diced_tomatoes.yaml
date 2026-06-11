@@ -11,13 +11,12 @@ aliases:
     - カットトマト
     - トマト缶
 availability:
-  us:
-    brands: []
-    note_en: One standard can (about 14–15 oz), diced, used with its juice.
-  ja:
-    brands: []
-    note_en: One standard can of diced tomatoes, used with its juice.
-    note_ja: カットトマト缶1個（約400g）、汁ごと使用。
+  en-US:
+    notes:
+      - One standard can (about 14–15 oz), diced, used with its juice.
+  ja-JP:
+    notes:
+      - カットトマト缶1個（約400g）、汁ごと使用。
 nutrition:
   per_100g:
     calories: 16

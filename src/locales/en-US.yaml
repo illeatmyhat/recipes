@@ -45,6 +45,8 @@ ui.optionBlocked: Not possible with the current choices.
 ui.miseEnPlace: Mise en place
 ui.miseHint: What to have ready for each step — the method is below.
 ui.shopHint: One line per item — tick them off as you go.
+ui.moreNotes: More tips
+ui.brandExamples: Brands to look for
 ui.swap: Swap
 ui.required: Required
 ui.pickUpTo: up to

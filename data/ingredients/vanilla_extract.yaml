@@ -11,18 +11,20 @@ aliases:
     - バニラエッセンス
     - 天然バニラ
 availability:
-  us:
+  en-US:
     brands:
       - McCormick
       - Nielsen-Massey
       - Simply Organic
-    note_en: Sold in the baking aisle; choose "pure", not imitation vanilla.
-  ja:
+    notes:
+      - Sold in the baking aisle; choose "pure", not imitation vanilla.
+  ja-JP:
     brands:
       - 私の台所
       - GABAN
-    note_en: Available at import food stores and online; baking shops carry pure extract.
-    note_ja: 輸入食品店・製菓材料店で入手可能。
+    notes:
+      - text: 輸入食品店・製菓材料店で入手可能。
+        important: true
 nutrition:
   per_100g:
     calories: 288

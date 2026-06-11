@@ -49,10 +49,6 @@ function placeholder(id: string): LoadedIngredient {
       fdc_id: 0,
       names: fallbackNames(id),
       aliases: perLocale<string[]>(() => []),
-      availability: {
-        us: { brands: [], note_en: '' },
-        ja: { brands: [], note_en: '' },
-      },
       nutrition: { per_100g: emptyNutrition() },
       density_g_per_ml: 1,
     },

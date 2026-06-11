@@ -10,13 +10,12 @@ aliases:
     - 生姜パウダー
     - ショウガ
 availability:
-  us:
-    brands: []
-    note_en: Ground ginger from the spice aisle.
-  ja:
-    brands: []
-    note_en: Ground ginger.
-    note_ja: スーパーの調味料売り場で入手可能。
+  en-US:
+    notes:
+      - Ground ginger from the spice aisle.
+  ja-JP:
+    notes:
+      - スーパーの調味料売り場で入手可能。
 nutrition:
   per_100g:
     calories: 335

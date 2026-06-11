@@ -11,19 +11,21 @@ aliases:
     - ヘンプハーツ
     - 麻の実ナッツ
 availability:
-  us:
+  en-US:
     brands:
       - Manitoba Harvest
       - Bob's Red Mill
       - Nutiva
-    note_en: Usually labeled "hemp hearts"; keep refrigerated after opening.
-  ja:
+    notes:
+      - Usually labeled "hemp hearts"; keep refrigerated after opening.
+  ja-JP:
     brands:
       - ヘンプフーズジャパン
       - Nutiva
       - 麻の実ナッツ
-    note_en: Sold as "asa no mi" at natural food stores, iHerb, and Amazon; food-grade is legal.
-    note_ja: 麻の実として自然食品店・iHerb・Amazonで入手可能。食品用は合法。
+    notes:
+      - text: 麻の実として自然食品店・iHerb・Amazonで入手可能。食品用は合法。
+        important: true
 nutrition:
   per_100g:
     calories: 553

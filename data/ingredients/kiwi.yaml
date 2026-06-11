@@ -11,18 +11,19 @@ aliases:
     - キウイ
     - グリーンキウイ
 availability:
-  us:
+  en-US:
     brands:
       - Zespri
       - Sunkist
       - 365 Whole Foods
-    note_en: Sold year-round in the produce section, individually or by the bag.
-  ja:
+    notes:
+      - Sold year-round in the produce section, individually or by the bag.
+  ja-JP:
     brands:
       - ゼスプリ
       - 国産キウイ
-    note_en: Widely available at supermarkets; Zespri is the dominant brand.
-    note_ja: スーパーで通年入手可能。
+    notes:
+      - スーパーで通年入手可能。
 nutrition:
   per_100g:
     calories: 61

@@ -11,17 +11,19 @@ aliases:
     - 黒いちご
     - 生ブラックベリー
 availability:
-  us:
+  en-US:
     brands:
       - Driscoll's
       - 365 Whole Foods
       - Naturipe
-    note_en: Sold fresh in clamshells; frozen also widely available.
-  ja:
+    notes:
+      - Sold fresh in clamshells; frozen also widely available.
+  ja-JP:
     brands:
       - 冷凍ブラックベリー
-    note_en: Fresh is rare; frozen is sold at supermarkets and import stores.
-    note_ja: 生は入手困難、冷凍が中心。
+    notes:
+      - text: 生は入手困難、冷凍が中心。
+        important: true
 nutrition:
   per_100g:
     calories: 43

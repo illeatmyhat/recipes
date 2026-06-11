@@ -43,6 +43,8 @@ ui.optionBlocked: 当前选择下不可选。
 ui.miseEnPlace: 备料
 ui.miseHint: 每一步需要准备的食材，做法见下方。
 ui.shopHint: 每样食材一行 — 边买边勾选。
+ui.moreNotes: 更多提示
+ui.brandExamples: 推荐品牌
 ui.swap: 更换
 ui.required: 必选
 ui.pickUpTo: 最多

@@ -14,13 +14,12 @@ aliases:
     - パプリカ
     - 燻製パプリカ
 availability:
-  us:
-    brands: []
-    note_en: Spanish smoked paprika (pimentón). Plain paprika works but loses the smoke.
-  ja:
-    brands: []
-    note_en: Smoked (Spanish) paprika; plain paprika is a milder substitute.
-    note_ja: スモークパプリカ（燻製）。普通のパプリカでも代用可だが燻製の風味は出ない。
+  en-US:
+    notes:
+      - Spanish smoked paprika (pimentón). Plain paprika works but loses the smoke.
+  ja-JP:
+    notes:
+      - スモークパプリカ（燻製）。普通のパプリカでも代用可だが燻製の風味は出ない。
 nutrition:
   per_100g:
     calories: 282

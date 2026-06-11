@@ -13,15 +13,18 @@ aliases:
     - 醤油
     - 減塩醤油
 availability:
-  us:
+  en-US:
     brands:
       - Kikkoman Less Sodium
-    note_en: Use a low-sodium / "less sodium" soy sauce so you control the salt.
-  ja:
+    notes:
+      - text: Use a low-sodium / "less sodium" soy sauce so you control the salt.
+        important: true
+  ja-JP:
     brands:
       - キッコーマン 減塩しょうゆ
-    note_en: Low-sodium soy sauce, so the salt can be controlled separately.
-    note_ja: 減塩タイプのしょうゆ。塩分を自分で調整できる。
+    notes:
+      - text: 減塩タイプのしょうゆ。塩分を自分で調整できる。
+        important: true
 nutrition:
   per_100g:
     calories: 57

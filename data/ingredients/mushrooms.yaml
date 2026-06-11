@@ -11,13 +11,12 @@ aliases:
     - ホワイトマッシュルーム
     - ブラウンマッシュルーム
 availability:
-  us:
-    brands: []
-    note_en: Sold whole or pre-sliced in the produce section.
-  ja:
-    brands: []
-    note_en: Sold whole or sliced in supermarkets.
-    note_ja: スーパーの野菜売り場で入手可能。
+  en-US:
+    notes:
+      - Sold whole or pre-sliced in the produce section.
+  ja-JP:
+    notes:
+      - スーパーの野菜売り場で入手可能。
 nutrition:
   per_100g:
     calories: 22

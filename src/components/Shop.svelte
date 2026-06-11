@@ -75,12 +75,35 @@
         <ul class="list">
           {#each section.lines as line (line.id)}
             {@const on = checked[line.id] === true}
+            {@const guidance = bundle.ingredients[line.id]?.data.availability?.[$locale]}
+            {@const pinned = guidance?.notes?.filter((n) => n.important) ?? []}
+            {@const rest = guidance?.notes?.filter((n) => !n.important) ?? []}
+            {@const brands = guidance?.brands ?? []}
             <li>
               <button type="button" class="row" class:on aria-pressed={on} onclick={() => toggle(line.id)}>
                 <span class="check" aria-hidden="true">{on ? '✓' : ''}</span>
                 <span class="name">{L(line.names)}</span>
                 <span class="amt">{Math.round(line.grams)} g</span>
               </button>
+              <!-- Market guidance (viewer locale): important notes pin to the
+                   row; the rest (and brands) wait behind a native disclosure
+                   that only exists when there is more to reveal. -->
+              {#each pinned as note (note.text)}
+                <p class="warn">{note.text}</p>
+              {/each}
+              {#if rest.length > 0 || brands.length > 0}
+                <details class="more">
+                  <summary>{t('moreNotes', $locale)}</summary>
+                  {#each rest as note (note.text)}
+                    <p class="tip">{note.text}</p>
+                  {/each}
+                  {#if brands.length > 0}
+                    <ul class="brands" aria-label={t('brandExamples', $locale)}>
+                      {#each brands as brand (brand)}<li>{brand}</li>{/each}
+                    </ul>
+                  {/if}
+                </details>
+              {/if}
             </li>
           {/each}
         </ul>
@@ -101,4 +124,11 @@
   .row.on .check { background: var(--pick); border-color: var(--pick); }
   .name { flex: 1; font-weight: 600; }
   .amt { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .warn { margin: 0.25rem 0 0; padding-left: 0.8rem; font-size: 0.82rem; color: var(--accent); }
+  .more { margin: 0.2rem 0 0; padding-left: 0.8rem; }
+  .more summary { font-size: 0.78rem; color: var(--ink-soft); cursor: pointer; width: fit-content; }
+  .more summary:hover { color: var(--ink); }
+  .tip { margin: 0.3rem 0 0; font-size: 0.82rem; color: var(--ink-soft); }
+  .brands { list-style: none; margin: 0.35rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .brands li { font-size: 0.75rem; padding: 0.15rem 0.55rem; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--ink-soft); }
 </style>

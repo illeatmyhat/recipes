@@ -11,13 +11,13 @@ aliases:
     - レンティル
     - 乾燥レンズ豆
 availability:
-  us:
-    brands: []
-    note_en: Sold dry in the bean or bulk aisle. Brown or green hold their shape in stew.
-  ja:
-    brands: []
-    note_en: Available at import food stores and online.
-    note_ja: カルディや輸入食品店、通販で入手可能。
+  en-US:
+    notes:
+      - Sold dry in the bean or bulk aisle. Brown or green hold their shape in stew.
+  ja-JP:
+    notes:
+      - text: カルディや輸入食品店、通販で入手可能。
+        important: true
 nutrition:
   per_100g:
     calories: 352

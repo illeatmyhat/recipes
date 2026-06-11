@@ -11,13 +11,12 @@ aliases:
     - ホウレンソウ
     - ベビースピナッチ
 availability:
-  us:
-    brands: []
-    note_en: Fresh bunches or bagged baby spinach in the produce section.
-  ja:
-    brands: []
-    note_en: Sold in bunches or bags in every supermarket.
-    note_ja: スーパーの野菜売り場で入手可能。
+  en-US:
+    notes:
+      - Fresh bunches or bagged baby spinach in the produce section.
+  ja-JP:
+    notes:
+      - スーパーの野菜売り場で入手可能。
 nutrition:
   per_100g:
     calories: 23

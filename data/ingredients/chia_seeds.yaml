@@ -10,19 +10,21 @@ aliases:
   ja-JP:
     - 乾燥チアシード
 availability:
-  us:
+  en-US:
     brands:
       - Bob's Red Mill
       - Nutiva
       - Viva Naturals
-    note_en: Sold as black or white chia; nutrition is essentially identical.
-  ja:
+    notes:
+      - Sold as black or white chia; nutrition is essentially identical.
+  ja-JP:
     brands:
       - NICHIGA
       - オーガニックチアシード
       - Nutiva
-    note_en: Available at Kaldi, Costco, and iHerb.
-    note_ja: カルディ・コストコ・iHerbで入手可能。
+    notes:
+      - text: カルディ・コストコ・iHerbで入手可能。
+        important: true
 nutrition:
   per_100g:
     calories: 486

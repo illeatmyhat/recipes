@@ -11,19 +11,20 @@ aliases:
     - 塩
     - 精製塩
 availability:
-  us:
+  en-US:
     brands:
       - Morton
       - Diamond Crystal
       - 365 Whole Foods
-    note_en: Sold as iodized or plain table salt in every grocery store.
-  ja:
+    notes:
+      - Sold as iodized or plain table salt in every grocery store.
+  ja-JP:
     brands:
       - 伯方の塩
       - 食卓塩
       - 赤穂の天塩
-    note_en: Sold in all supermarkets.
-    note_ja: スーパーで一般的に入手可能。
+    notes:
+      - スーパーで一般的に入手可能。
 nutrition:
   per_100g:
     calories: 0

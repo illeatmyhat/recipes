@@ -86,6 +86,8 @@ const UI_KEYS = [
   'miseEnPlace',
   'miseHint',
   'shopHint',
+  'moreNotes',
+  'brandExamples',
   'swap',
   'required',
   'pickUpTo',

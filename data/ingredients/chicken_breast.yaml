@@ -11,13 +11,14 @@ aliases:
     - 鶏胸肉
     - とりむね
 availability:
-  us:
-    brands: []
-    note_en: Any skinless, boneless breast. Skip pre-brined ("with added solution") packs — they carry extra sodium.
-  ja:
-    brands: []
-    note_en: Sold everywhere as 鶏むね肉; pick skinless (皮なし) or remove the skin.
-    note_ja: どこのスーパーでも「鶏むね肉」として入手可。皮なしを選ぶか、皮を外す。
+  en-US:
+    notes:
+      - text: Any skinless, boneless breast. Skip pre-brined ("with added solution") packs — they carry extra sodium.
+        important: true
+  ja-JP:
+    notes:
+      - text: どこのスーパーでも「鶏むね肉」として入手可。皮なしを選ぶか、皮を外す。
+        important: true
 nutrition:
   per_100g:
     calories: 120

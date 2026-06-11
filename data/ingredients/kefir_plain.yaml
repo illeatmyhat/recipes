@@ -11,19 +11,22 @@ aliases:
     - ミルクケフィア
     - 飲むヨーグルト（ケフィア）
 availability:
-  us:
+  en-US:
     brands:
       - Lifeway
       - Green Valley
       - Maple Hill
-    note_en: Use plain, unflavored — check the yogurt-drink section. Full-fat is creamier.
-  ja:
+    notes:
+      - text: Use plain, unflavored — check the yogurt-drink section. Full-fat is creamier.
+        important: true
+  ja-JP:
     brands:
       - ケフラン
       - オハヨー
       - Lifeway
-    note_en: Available at large supermarkets, Seijo Ishii, and Kaldi; check the drinkable-yogurt section.
-    note_ja: 大型スーパーや成城石井・カルディで入手可能。ヨーグルト飲料コーナーを確認。
+    notes:
+      - text: 大型スーパーや成城石井・カルディで入手可能。ヨーグルト飲料コーナーを確認。
+        important: true
 nutrition:
   per_100g:
     calories: 43

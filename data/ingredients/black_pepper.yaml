@@ -11,13 +11,12 @@ aliases:
     - ブラックペッパー
     - こしょう
 availability:
-  us:
-    brands: []
-    note_en: Ground or whole peppercorns, in every spice aisle.
-  ja:
-    brands: []
-    note_en: Sold ground or as whole peppercorns everywhere.
-    note_ja: スーパーの調味料売り場で入手可能。
+  en-US:
+    notes:
+      - Ground or whole peppercorns, in every spice aisle.
+  ja-JP:
+    notes:
+      - スーパーの調味料売り場で入手可能。
 nutrition:
   per_100g:
     calories: 251

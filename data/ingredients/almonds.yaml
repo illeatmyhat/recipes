@@ -11,18 +11,19 @@ aliases:
     - 生アーモンド
     - スライスアーモンド
 availability:
-  us:
+  en-US:
     brands:
       - Blue Diamond
       - Fisher
       - 365 Whole Foods
-    note_en: Sold raw whole, sliced, or slivered; nutrition is the same.
-  ja:
+    notes:
+      - Sold raw whole, sliced, or slivered; nutrition is the same.
+  ja-JP:
     brands:
       - 素焼きアーモンド
       - カリフォルニアアーモンド
-    note_en: Widely available at supermarkets and import food stores.
-    note_ja: スーパー・輸入食品店で入手可能。
+    notes:
+      - スーパー・輸入食品店で入手可能。
 nutrition:
   per_100g:
     calories: 579

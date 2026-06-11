@@ -11,19 +11,20 @@ aliases:
     - マンゴ
     - 生マンゴー
 availability:
-  us:
+  en-US:
     brands:
       - Champagne (Ataulfo)
       - Tommy Atkins
       - 365 Whole Foods
-    note_en: Sold loose year-round; ripeness varies, choose slightly soft fruit.
-  ja:
+    notes:
+      - Sold loose year-round; ripeness varies, choose slightly soft fruit.
+  ja-JP:
     brands:
       - 宮崎マンゴー
       - アップルマンゴー
       - フィリピン産マンゴー
-    note_en: Imported mangos year-round; premium domestic mangos in summer.
-    note_ja: 輸入品は通年、国産高級品は夏に入手可能。
+    notes:
+      - 輸入品は通年、国産高級品は夏に入手可能。
 nutrition:
   per_100g:
     calories: 60

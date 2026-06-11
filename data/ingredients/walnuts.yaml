@@ -11,18 +11,19 @@ aliases:
     - クルミ
     - 生くるみ
 availability:
-  us:
+  en-US:
     brands:
       - Diamond
       - Fisher
       - 365 Whole Foods
-    note_en: Sold as halves or pieces; buy raw, not candied.
-  ja:
+    notes:
+      - Sold as halves or pieces; buy raw, not candied.
+  ja-JP:
     brands:
       - 素焼きくるみ
       - カリフォルニアくるみ
-    note_en: Available at supermarkets and import food stores.
-    note_ja: スーパー・輸入食品店で入手可能。
+    notes:
+      - スーパー・輸入食品店で入手可能。
 nutrition:
   per_100g:
     calories: 654

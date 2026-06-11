@@ -11,17 +11,19 @@ aliases:
     - フラックスシード
     - 亜麻仁粉
 availability:
-  us:
+  en-US:
     brands:
       - Bob's Red Mill
       - Spectrum
-    note_en: Sold as whole seed or pre-ground meal; refrigerate ground flax.
-  ja:
+    notes:
+      - Sold as whole seed or pre-ground meal; refrigerate ground flax.
+  ja-JP:
     brands:
       - 日本製粉 アマニ
       - カルディ アマニ
-    note_en: Available at Kaldi and natural food stores as flaxseed powder.
-    note_ja: 亜麻仁（粉末）としてカルディ・自然食品店で入手可能。
+    notes:
+      - text: 亜麻仁（粉末）としてカルディ・自然食品店で入手可能。
+        important: true
 nutrition:
   per_100g:
     calories: 534
