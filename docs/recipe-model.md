@@ -758,7 +758,21 @@ this dish's context rather than copying generic facts.
     "not sold in your market" line on its Customize button but stays
     selectable (never functionally disabled — that would make selection
     locale-dependent). Substituting a BASE fill is out of scope by
-    doctrine: that is a different dish, i.e. a separate recipe. Deferred
-    until the DB contains a truly unobtainable ingredient — `online`
-    covers the orderable tail, and nothing in the current 38 qualifies
-    (build the shape against a real consumer, as with Q9).
+    doctrine: that is a different dish, i.e. a separate recipe.
+    **Compiler semantics** (follows the lint taxonomy — dishonest =
+    error, needs-judgment = warning): fill unavailable in L but role has
+    an L-viable alternative → advisory UI only; the shared DEFAULT
+    selection includes an L-unavailable fill → warning (defaults are
+    locale-independent by architecture, the author should reconsider);
+    min ≥ 1 role with every fill unavailable in L → warning + banner in
+    L's view + index badge (publish-vs-fork is a human call); non-viable
+    in EVERY supported locale → build error (the site would publish a
+    dish none of its markets can cook). The canonical locale gets no
+    special case — it is just another market (ingredient-DB symmetry),
+    and viability is orthogonal to the `locales:` translation
+    declaration. Badge-not-removal on the index follows from the
+    one-index architecture; per-locale removal only becomes possible if
+    Astro i18n routes (#6) ever land. Deferred until the DB contains a
+    truly unobtainable ingredient — `online` covers the orderable tail,
+    and nothing in the current 38 qualifies (build the shape against a
+    real consumer, as with Q9).
