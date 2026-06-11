@@ -13,6 +13,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { LOCALES } from './lib/types';
 
 const amount = z.object({
   value: z.number().positive(),
@@ -90,7 +91,7 @@ const recipes = defineCollection({
       slug: z.string(),
       hero_image: image(),
       customize_title: z.string().optional(),
-      locales: z.array(z.enum(['en-US', 'ja-JP', 'zh-CN'])).nonempty(),
+      locales: z.array(z.enum(LOCALES)).nonempty(),
       pattern: z.string(),
       servings,
       knobs: z.record(z.string(), knob).optional(),

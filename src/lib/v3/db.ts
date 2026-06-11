@@ -22,7 +22,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { load } from 'js-yaml';
 import { emptyNutrition } from '../nutrition';
-import { humanizeId, localizeAll } from './names';
+import { humanizeId, localizeAll, perLocale } from './names';
 import { CATALOG_LOCALES, LOCALES, type StoreSection } from '../types';
 import type { IngredientData } from '../types';
 import type { IngredientLookup, LoadedIngredient } from './types';
@@ -42,7 +42,7 @@ function placeholderIngredient(id: string): IngredientData {
     id,
     fdc_id: 0,
     names: localizeAll(humanizeId(id)),
-    aliases: { 'en-US': [], 'ja-JP': [], 'zh-CN': [] },
+    aliases: perLocale<string[]>(() => []),
     availability: {
       us: { brands: [], note_en: 'Nutrition data pending.' },
       ja: { brands: [], note_en: 'Nutrition data pending.', note_ja: '栄養データは準備中です。' },

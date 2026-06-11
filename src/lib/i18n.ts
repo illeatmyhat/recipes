@@ -8,22 +8,38 @@
  * completeness gate: every locale must carry exactly the canonical key set,
  * and every key this module knows must exist — any drift throws at module
  * init, which fails the build. Adding a locale = adding one YAML file and the
- * `LOCALES` entry; no code edits here.
+ * `site.config.ts` entry; no code edits here (catalogs are discovered by
+ * filename via import.meta.glob).
  */
 import { LOCALES, type Locale, type NutrientKey, type StoreSection } from './types';
 import { NUTRIENT_KEYS } from './nutrition';
-import enUS from '../locales/en-US.yaml';
-import jaJP from '../locales/ja-JP.yaml';
-import zhCN from '../locales/zh-CN.yaml';
 
 /** A phrase in every supported locale. */
 export type Phrase = Record<Locale, string>;
 
-const CATALOGS: Record<Locale, Record<string, string>> = {
-  'en-US': enUS,
-  'ja-JP': jaJP,
-  'zh-CN': zhCN,
-};
+// Discover the catalogs from the folder, keyed by filename, so the file set —
+// not this module — tracks the configured locale set. Both directions of
+// drift are an error: a configured locale with no catalog file, and a stray
+// catalog file for an unconfigured locale.
+const catalogFiles = import.meta.glob<Record<string, string>>('../locales/*.yaml', {
+  eager: true,
+  import: 'default',
+});
+const CATALOGS = {} as Record<Locale, Record<string, string>>;
+for (const [path, catalog] of Object.entries(catalogFiles)) {
+  const tag = path.slice(path.lastIndexOf('/') + 1).replace(/\.yaml$/, '');
+  if (!(LOCALES as readonly string[]).includes(tag)) {
+    throw new Error(
+      `i18n: stray site catalog src/locales/${tag}.yaml — "${tag}" is not in site.config.ts locales.`,
+    );
+  }
+  CATALOGS[tag as Locale] = catalog;
+}
+for (const locale of LOCALES) {
+  if (CATALOGS[locale] === undefined) {
+    throw new Error(`i18n: missing site catalog src/locales/${locale}.yaml.`);
+  }
+}
 
 /** Every UI-chrome key (the `ui.` namespace of the catalogs). */
 const UI_KEYS = [
@@ -68,6 +84,10 @@ const UI_KEYS = [
   'swap',
   'required',
   'pickUpTo',
+  'listSeparator',
+  'listFinalSeparator',
+  'listPairSeparator',
+  'pageTitle',
 ] as const;
 
 /** Key of a known UI phrase. */

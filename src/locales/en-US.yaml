@@ -49,6 +49,13 @@ ui.swap: Swap
 ui.required: Required
 ui.pickUpTo: up to
 
+# Prose list join: A<sep>B<sep>…<finalSep>Z; exactly two items use pairSep.
+ui.listSeparator: ', '
+ui.listFinalSeparator: ', and '
+ui.listPairSeparator: ' and '
+# Browser-tab title of a recipe page.
+ui.pageTitle: '{title} — {site}'
+
 nutrients.calories: Calories
 nutrients.fat: Total Fat
 nutrients.saturated_fat: Saturated Fat

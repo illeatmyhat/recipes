@@ -29,8 +29,12 @@ const { Content } = await render(entry);
 
 const bundle = buildBundle(entry.data);
 const title = bundle.recipe.title;
+// The tab-title shape (separator and order) is per-locale catalog data.
 const pageTitle = Object.fromEntries(
-  LOCALES.map((l) => [l, `${title[l]} — ${t('siteTitle', l)}`]),
+  LOCALES.map((l) => [
+    l,
+    t('pageTitle', l).replace('{title}', title[l]).replace('{site}', t('siteTitle', l)),
+  ]),
 ) as Localized;
 ---
 

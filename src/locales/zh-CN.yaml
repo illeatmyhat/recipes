@@ -47,6 +47,13 @@ ui.swap: 更换
 ui.required: 必选
 ui.pickUpTo: 最多
 
+# Prose list join: A<sep>B<sep>…<finalSep>Z; exactly two items use pairSep.
+ui.listSeparator: 、
+ui.listFinalSeparator: 和
+ui.listPairSeparator: 和
+# Browser-tab title of a recipe page.
+ui.pageTitle: '{title}｜{site}'
+
 nutrients.calories: 热量
 nutrients.fat: 脂肪
 nutrients.saturated_fat: 饱和脂肪

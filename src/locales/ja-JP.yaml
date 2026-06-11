@@ -47,6 +47,13 @@ ui.swap: 変更
 ui.required: 必須
 ui.pickUpTo: 最大
 
+# Prose list join: A<sep>B<sep>…<finalSep>Z; exactly two items use pairSep.
+ui.listSeparator: と
+ui.listFinalSeparator: と
+ui.listPairSeparator: と
+# Browser-tab title of a recipe page.
+ui.pageTitle: '{title}｜{site}'
+
 nutrients.calories: エネルギー
 nutrients.fat: 脂質
 nutrients.saturated_fat: 飽和脂肪酸

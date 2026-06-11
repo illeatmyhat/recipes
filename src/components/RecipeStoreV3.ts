@@ -14,7 +14,7 @@
 import { writable, derived, type Readable } from 'svelte/store';
 import { resolve } from '../lib/v3/resolve';
 import { emptyNutrition } from '../lib/nutrition';
-import { humanizeId, localizeAll } from '../lib/v3/names';
+import { humanizeId, localizeAll, perLocale } from '../lib/v3/names';
 import { initLocale } from './RecipeStore';
 import type {
   KnobValue,
@@ -46,7 +46,7 @@ function placeholder(id: string): LoadedIngredient {
       id,
       fdc_id: 0,
       names: localizeAll(humanizeId(id)),
-      aliases: { 'en-US': [], 'ja-JP': [], 'zh-CN': [] },
+      aliases: perLocale<string[]>(() => []),
       availability: {
         us: { brands: [], note_en: '' },
         ja: { brands: [], note_en: '' },

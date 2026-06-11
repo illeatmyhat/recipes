@@ -49,7 +49,7 @@ export function refText(
     return nameOf(fill);
   }
   const picked = selection[roleId] ?? [];
-  return joinNames[loc](role.fills.filter((f) => picked.includes(f.id)).map(nameOf));
+  return joinNames(role.fills.filter((f) => picked.includes(f.id)).map(nameOf), loc);
 }
 
 // ── catalog step templates ({role} / {role:fill} placeholders) ────────────────

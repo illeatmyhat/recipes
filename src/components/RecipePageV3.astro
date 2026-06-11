@@ -17,7 +17,7 @@ import RecipeApp from './RecipeApp.svelte';
 import { UI } from '../lib/i18n';
 import { recipeCatalog } from '../lib/v3/i18n';
 import { setMethodContext } from '../lib/v3/methodContext';
-import { CATALOG_LOCALES } from '../lib/types';
+import { CANONICAL_LOCALE, CATALOG_LOCALES } from '../lib/types';
 import type { RecipeBundle } from '../lib/v3/types';
 
 interface Props {
@@ -48,7 +48,7 @@ setMethodContext(Astro.locals, {
   <Image
     class="hero"
     src={heroImage}
-    alt={recipe.title['en-US']}
+    alt={recipe.title[CANONICAL_LOCALE]}
     widths={[320, 640, 960, 1280]}
     sizes="(min-width: 1080px) 1040px, 100vw"
     format="webp"

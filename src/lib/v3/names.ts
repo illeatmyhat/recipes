@@ -13,12 +13,18 @@
  * Surrounding grammar (articles, connectives) belongs to the step template and
  * the list-join, never the name.
  */
+import { t } from '../i18n';
 import { LOCALES, type Locale, type Localized } from '../types';
 import type { Fill } from './types';
 
+/** Build a per-locale record from the configured locale set. */
+export function perLocale<T>(value: (loc: Locale) => T): Record<Locale, T> {
+  return Object.fromEntries(LOCALES.map((l) => [l, value(l)])) as Record<Locale, T>;
+}
+
 /** The same string in every locale — the fallback shape for unlocalized values. */
 export function localizeAll(value: string): Localized {
-  return Object.fromEntries(LOCALES.map((l) => [l, value])) as Localized;
+  return perLocale(() => value);
 }
 
 /**
@@ -50,20 +56,21 @@ export function proseName(fill: Fill | undefined, dbNames: Localized, loc: Local
 }
 
 /**
- * Localized list-join. Defends against an empty list (returns '') so a caller's
- * surrounding connective can collapse rather than dangle ("…and ." / "…と").
+ * Localized list-join. The separators are catalog data
+ * (`ui.listSeparator` / `ui.listFinalSeparator` / `ui.listPairSeparator`),
+ * so the shape is one rule for every locale: A<sep>B<sep>…<finalSep>Z, with
+ * exactly two items joined by pairSep (English wants "A and B" with no
+ * comma, but ", and" before the last of three or more).
+ * Defends against an empty list (returns '') so a caller's surrounding
+ * connective can collapse rather than dangle ("…and ." / "…と").
  */
-export const joinNames: Record<Locale, (xs: string[]) => string> = {
-  'en-US': (xs) => {
-    if (xs.length === 0) return '';
-    if (xs.length === 1) return xs[0] as string;
-    if (xs.length === 2) return `${xs[0]} and ${xs[1]}`;
-    return `${xs.slice(0, -1).join(', ')}, and ${xs[xs.length - 1]}`;
-  },
-  'ja-JP': (xs) => xs.join('と'),
-  // 顿号-separated list with 和 before the last item: A、B和C.
-  'zh-CN': (xs) => {
-    if (xs.length <= 1) return xs[0] ?? '';
-    return `${xs.slice(0, -1).join('、')}和${xs[xs.length - 1]}`;
-  },
-};
+export function joinNames(xs: string[], loc: Locale): string {
+  if (xs.length === 0) return '';
+  if (xs.length === 1) return xs[0] as string;
+  if (xs.length === 2) return `${xs[0]}${t('listPairSeparator', loc)}${xs[1]}`;
+  return (
+    xs.slice(0, -1).join(t('listSeparator', loc)) +
+    t('listFinalSeparator', loc) +
+    xs[xs.length - 1]
+  );
+}
