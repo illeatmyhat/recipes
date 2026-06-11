@@ -1,13 +1,13 @@
 # ja-JP ingredient data for data/ingredients/soy_sauce.yaml — locale-specific fields only.
-names: 減塩しょうゆ
+names: しょうゆ
 aliases:
-  - しょうゆ
   - 醤油
+  - 減塩しょうゆ
   - 減塩醤油
 aisle: condiments
 availability:
   brands:
     - キッコーマン 減塩しょうゆ
   notes:
-    - text: 減塩タイプのしょうゆ。塩分を自分で調整できる。
+    - text: 減塩タイプのしょうゆを。塩分を自分で調整できる。
       important: true

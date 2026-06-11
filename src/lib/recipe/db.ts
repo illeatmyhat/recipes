@@ -79,6 +79,24 @@ function normalizeGuidance(raw: RawGuidance): MarketGuidance {
 const INGREDIENT_DIR = join(process.cwd(), 'data', 'ingredients');
 const cache = new Map<string, LoadedIngredient>();
 
+// One SR Legacy entry may back several shopping-distinct cores (light vs dark
+// soy sauce — see reference/sourcing.md). Their numbers must then be identical:
+// a divergence means one core was re-sourced and the other silently left behind.
+const coresByFdc = new Map<number, { id: string; per100gJson: string }>();
+
+function checkSharedFdc(id: string, core: IngredientCore): void {
+  const per100gJson = JSON.stringify(core.nutrition.per_100g);
+  const prior = coresByFdc.get(core.fdc_id);
+  if (prior && prior.id !== id && prior.per100gJson !== per100gJson) {
+    throw new Error(
+      `recipe db: "${id}" and "${prior.id}" share fdc_id ${core.fdc_id} but ` +
+        `their per_100g blocks differ — re-source one of them (they must be ` +
+        `byte-identical to share an SR Legacy entry).`,
+    );
+  }
+  if (!prior) coresByFdc.set(core.fdc_id, { id, per100gJson });
+}
+
 function placeholderIngredient(id: string): IngredientData {
   return {
     id,
@@ -147,6 +165,7 @@ export const loadIngredient: IngredientLookup = (id: string): LoadedIngredient =
     if (!parsed || parsed.id !== id) {
       throw new Error(`recipe db: ${file} has id "${parsed?.id}" but was loaded as "${id}".`);
     }
+    checkSharedFdc(id, parsed);
     core = parsed;
   } catch (err) {
     // A genuine parse/id error should be loud; a missing core file degrades.

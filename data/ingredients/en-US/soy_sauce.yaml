@@ -1,7 +1,7 @@
 # en-US ingredient data for data/ingredients/soy_sauce.yaml — locale-specific fields only.
-names: Low-sodium soy sauce
+names: Soy sauce
 aliases:
-  - Soy sauce
+  - Low-sodium soy sauce
   - Shoyu
   - Reduced-sodium soy sauce
 aisle: international

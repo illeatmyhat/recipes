@@ -1,8 +1,6 @@
 # Machine-written — do not edit. Refresh: REFRESH_CATALOG_HASHES=1 npm run build
 # Per translated key in dried-scallop-chicken-soup.zh-CN.yaml: sha-256[0:8] of the canonical source it
 # was translated from. The build warns when the canonical text changes underneath (staleness).
-constraints.0.warn: "1d5a8e73"
-constraints.1.warn: "721118a1"
 customize_title: "c9ea3bf8"
 knobs.thickness.label: "7b594414"
 knobs.thickness.why: "318d4be5"
@@ -56,9 +54,9 @@ steps.crush_soak: "61d733da"
 steps.crush_soak.title: "88b5d124"
 steps.cut_chicken: "2c3723b9"
 steps.cut_chicken.title: "1cdecc66"
-steps.finish: "d2360c88"
+steps.finish: "62e3cff5"
 steps.finish.title: "a6c7a84b"
-steps.marinate: "f6362102"
+steps.marinate: "d2fcce06"
 steps.marinate.title: "069f4270"
 steps.mix_slurry: "2ff9e377"
 steps.mix_slurry.title: "c349c16c"

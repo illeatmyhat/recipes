@@ -1,5 +1,11 @@
 # zh-CN ingredient data for data/ingredients/soy_sauce.yaml — locale-specific fields only.
-names: 低钠酱油
+names: 酱油（生抽）
 aliases:
+  - 生抽
+  - 低钠酱油
   - 减盐生抽
 aisle: condiments
+availability:
+  notes:
+    - text: 选低钠／减盐款，咸度自己把控。
+      important: true

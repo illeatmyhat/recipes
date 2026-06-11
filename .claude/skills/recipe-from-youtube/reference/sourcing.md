@@ -51,24 +51,30 @@ Sign up at https://fdc.nal.usda.gov/api-key-signup.html.
 
 ## One ingredient file, or several? (varieties)
 
-Keep **one** ingredient YAML per nutritionally-distinct food. When an ingredient
-comes in varieties that differ only in **flavor or intended use** — not nutrition
-— do NOT make a file per variety; they would carry identical SR Legacy numbers
-and just fragment the database. Examples: olive oil "extra light tasting" (high
-smoke point, for frying) vs "robust"/extra-virgin (for dressings and finishing);
-light vs dark soy sauce.
+Keep **one** ingredient YAML per **shopping-distinct product** (revised
+2026-06-11; see recipe-model.md Q16). The test is the store shelf, not the
+nutrition label: if a shopper following two recipes (or one recipe twice)
+must put **two different bottles in the cart**, those are two ingredients —
+even when their nutrition is identical — because the shopping list merges
+rows by ingredient id and would otherwise collapse them into one wrong line.
+Light vs dark soy sauce is the precedent: same SR Legacy family, different
+bottle, different job (seasoning vs color), and one pot can need both.
 
-Instead, with the single shared ingredient:
+Several cores may cite the **same SR Legacy `fdc_id`** (use the closest
+generic entry for each); the build enforces that cores sharing an `fdc_id`
+carry identical `per_100g` blocks, so the duplicated numbers can't drift.
 
-- Steer the variety **per recipe** with the ingredient ref's `warnings`
-  (avoid/good) and/or `notes` — because the right choice depends on that recipe's
-  method (e.g. a deep-fry recipe wants the high-smoke-point oil; a dressing wants
-  the robust one). This is the same mechanism the rolled-oats recipe uses.
-- List the variety names in the ingredient's `aliases` so shoppers recognize them.
+When varieties are the *same* purchase steered by taste — olive oil "extra
+light" vs "robust", rolled oats brands — keep ONE file and steer per recipe:
 
-Split into separate files only when the varieties differ **materially in
-nutrition** and each has its own SR Legacy entry (e.g. raw vs roasted nuts,
-whole vs nonfat milk).
+- Use the fill's `note`/`why` for recipe-specific steering (a deep-fry wants
+  the high-smoke-point oil; a dressing wants the robust one).
+- List variety names in the ingredient's `aliases` so shoppers recognize them.
+- A wrong-form trap that holds in EVERY recipe (quick vs rolled oats) belongs
+  in the locale file's `availability` important note, not duplicated per recipe.
+
+Also split when varieties differ **materially in nutrition** with their own
+SR Legacy entries (raw vs roasted nuts, whole vs nonfat milk).
 
 ## If no SR Legacy entry exists
 

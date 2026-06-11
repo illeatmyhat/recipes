@@ -12,9 +12,6 @@ pattern: >-
 knobs.thickness.label: 浓稠度
 knobs.thickness.why: 老爸的规矩——芡加到「感觉对了」为止。这里只缩放芡汁：薄的像汤一样能喝，厚的就是宴席羹的领地，勺子过处留痕。
 
-constraints.0.warn: 没有淀粉这层浆，鸡丝就是白灼的口感，不是滑嫩的「velvet」——汤还是成立的，但招牌口感没了。
-constraints.1.warn: 光靠鱼露（或酱油）撑这么大一锅，味道会发飘——淡了就上桌后按碗加盐。
-
 roles.scallops.label: 瑶柱
 roles.scallops.why: 鲜味的发动机——整锅汤的海味深度全部来自这一样食材，靠三步解锁：敲碎、泡发、煸香。鲜贝代替不了：味道太淡，做出来是海鲜汤，不是这碗。老爸的裁定——无可替代。
 roles.scallops.fills.dried_scallops.note: 约40克。小粒和礼盒大粒味道一样——价钱贵在品相。

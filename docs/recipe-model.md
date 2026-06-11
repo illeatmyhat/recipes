@@ -1,10 +1,13 @@
 # Recipe model v3 — pattern, roles, fills
 
-**Status:** implemented and live — both recipes are v3 and the v1 code path
+**Status:** implemented and live — all recipes are v3 and the v1 code path
 is removed (2026-06-10). Supersedes the v2 param-centric model after the
 2026-06-10 design session re-grounded the project's purpose. Decisions and
 rationale from that session are inline; remaining forks are in *Open
-questions*. This document remains the governing design.
+questions*. A second design session (2026-06-11, after the first import
+stress-tested the pipeline) added questions 11–16 — fidelity/provenance of
+choices, intermediates, graph-evaluated nutrition, step apportionment, the
+shopping store dimension. This document remains the governing design.
 
 ## Purpose (this governs everything)
 
@@ -706,8 +709,7 @@ this dish's context rather than copying generic facts.
    the nutrient that matters most (sodium) — "adding zero of something in a
    nutrition tool is shirking responsibility." A token estimate sentinel is
    the same number as a token amount with extra machinery. *Portion hints for
-   staged additions remain carried* — shape them when a recipe actually
-   stages an addition.
+   staged additions* — **settled 2026-06-11 by step apportionment (Q14)**.
 6. **Rendering at 3+ locales** — *re-measured with zh-CN live (2026-06-10)*:
    the `data-locale` flip costs ~9–17 KB HTML per page at three locales —
    kept. Astro i18n routes remain the fallback when the cost is actually
@@ -771,3 +773,85 @@ this dish's context rather than copying generic facts.
     product, makeable from obtainable parts" (injera from teff, youtiao)
     is an acquisition mode that points at sub-recipe composition — out
     of scope, noted so it isn't rediscovered.
+11. **Fidelity to the source + provenance of choices — DECIDED 2026-06-11.**
+    A customization exists only where the source narrated one (a
+    substitution, an add-on, a texture choice the cook offered); everything
+    else is authored **fixed** — no fabricated toggles. (The first import
+    violated this — marinade/finisher on-off switches the video never
+    sanctioned — and was re-authored the same day.) Some recipes are
+    *definitively* fixed: certified Italian recipes are the anchor case —
+    deviation is legal, but it forfeits the name. Knowledge the source
+    didn't sanction MAY still become an interactive choice, but it must
+    wear its provenance: an inline label distinguishing the cook's options
+    from "our addition", plus a **page-state badge** — a recipe opens as
+    the cook's exact version ("As taught by …") and flips to "Your
+    variation (based on …)" the moment any choice departs from the source
+    point; flipping back restores it. Servings scaling and source-narrated
+    knobs never trip the badge. Showcase plan: **carbonara** (certified
+    pole: the official recipe, with labeled pancetta/parmesan/cream
+    heresies — pick cream and the page stops calling it carbonara) before
+    **okonomiyaki** (framework pole: opens already in "make it yours").
+    Badge + labels are pending implementation; until then imports author
+    narrated-only choices and park editorial knowledge in prose.
+12. **Named intermediates — DECIDED 2026-06-11 (direction).** The model
+    gains "things you make along the way" (soaking water, slurry, the
+    marinated chicken): declared with an id and a one-line description,
+    produced by one step, used by later ones. Never shoppable — they
+    surface in the Cook/gather view ("from step 4: the reserved soaking
+    water") and enable a use-before-make build check; step-dependency
+    facts ("the soak and the knife work are independent") become derivable
+    later for parallelism hints. A full method DSL was considered and
+    **rejected**: it tangles language into code (each step is one flat
+    sentence per locale — the property that keeps translation tractable)
+    and turns adopting cooks into programmers. *Bought* water is
+    orthogonal and approved as an ordinary core ingredient (zero
+    nutrition, density 1.0) — queued with the Q15 shop work, which owns
+    the aisle-less display rules. Sub-recipes stay out of scope; an
+    intermediate "big enough to have its own page" is the natural bridge
+    when they arrive.
+13. **Graph-evaluated nutrition + discard fractions — DECIDED 2026-06-11.**
+    Mostly-discarded uses (marinades, brines, frying oil, poaching
+    liquids) overstate the panel — the model's single worst credibility
+    risk. The surviving fraction is authored **on the step where the
+    discard happens** (locality: the discard is an event; one number
+    covers the whole marinade; change the step — "reduce it into the
+    sauce instead" — and the nutrition follows). Uniform across nutrients
+    (per-nutrient absorption would be false precision), stated basis
+    required, default = everything survives (pay-as-you-go: simple
+    recipes author nothing). This **supersedes the implicit rule that
+    nutrition never reads the method**; the invariant is restated as:
+    *nutrition is a pure function of the reader's choices, evaluated over
+    the recipe's declared graph* — still deterministic and
+    order-independent at every parameter point. The shopping list always
+    shows full amounts: "what do I buy" and "what do I eat" are different
+    questions, each answered honestly.
+14. **Step apportionment — DECIDED 2026-06-11; settles Q5's carried
+    portion hints.** A step may declare how much of a declared total it
+    uses ("toast the scallops: 5 ml of the oil; coat the chicken: the
+    other 5"), and the build verifies the portions sum to the
+    declaration. This *amends* "references never own quantity": references
+    may now **apportion** a declared quantity — the amount is still
+    declared exactly once, so the invariant's actual point (no drift, no
+    double-counting) survives. Same annotation channel as Q13: one
+    mechanism covers staged additions and discards. Kills timing-only
+    role splits (the soup's two oil roles merge when this lands).
+15. **Store dimension for shopping — DECIDED 2026-06-11; extends Q10.**
+    The shop list today is one walk through one imaginary store, with
+    `online` bolted on as a pseudo-section — but for a scarce ingredient
+    the truthful instruction was never "look in the online aisle", it was
+    "this is at a *different store*". Per-locale aisle gains an optional
+    store ∈ { primary (default), specialty, online } and the list groups
+    store-first — *Order ahead / Your supermarket / Specialty shop* —
+    each store keeping its own section walk. Display-only: resolution
+    never reads it, so advisory-never-structural holds by construction.
+    Store labels are site-catalog data; each market names its own second
+    stop (Asian grocery / 中華食材店 / 南北干货店). Un-fudges en-US dried
+    scallops and dark soy.
+16. **Shopping-distinct cores + shared-nutrition lint — DECIDED and
+    implemented 2026-06-11.** `sourcing.md`'s "one file per
+    nutritionally-distinct food" becomes "one file per **shopping-distinct
+    product**" (the dark-soy precedent: two bottles in one pot cannot
+    share an id, because the shop list merges by id). Several cores may
+    cite the same SR Legacy entry; the loader now enforces that cores
+    sharing an `fdc_id` carry identical `per_100g` blocks, so duplicated
+    nutrition cannot silently drift.

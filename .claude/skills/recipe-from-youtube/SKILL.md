@@ -36,6 +36,14 @@ Work the checklist top to bottom. Paths are relative to the project root.
      chicken instead of tofu") is a second **fill** of the same role. **If you
      cannot state why a role/knob/fill matters, you may not introduce it** —
      that's a quality filter, not bureaucracy.
+   - **Fidelity: a CHOICE exists only where the cook narrated one.** A
+     substitution, optional add-on, or knob must come from the source
+     ("you could use…", "what else can you add?", "thick or thin, up to
+     you"). Everything else is authored **fixed**: `min` = the fill count,
+     no advisory `max`, no fabricated toggles. Good cooking knowledge the
+     source didn't sanction goes in prose (`why`/`note`/tips) — it becomes
+     an interactive, provenance-labeled choice only once the editorial
+     label machinery exists (recipe-model.md, Q11).
    - **Knobs.** A narrated texture/style choice that adds no ingredient
      ("blend half for creaminess", "extra thick") is a knob (`bool` / `enum` /
      `scalar`) driving `scale` tables and step guards.

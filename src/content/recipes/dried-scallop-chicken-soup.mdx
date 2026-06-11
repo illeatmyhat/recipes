@@ -27,16 +27,6 @@ knobs:
     max: 1.5
     step: 0.25
     default: 1
-constraints:
-  - when: "!has(marinade, 'cornstarch')"
-    warn: >-
-      Without its cornstarch coat the chicken cooks up plain-poached instead
-      of velvet-silky — the soup still works, but you lose the signature
-      texture.
-  - when: "!has(seasonings, 'salt')"
-    warn: >-
-      The savory sauce alone is carrying a very large pot — expect it flat,
-      and season bowl by bowl at the table.
 roles:
   scallops:
     label: Dried scallops
@@ -74,7 +64,7 @@ roles:
       inside, cornstarch and a splash of water wrap each strip in a coat that
       seals in moisture, and a pinch of baking soda nudges the meat's pH
       toward that springy restaurant "bite".
-    range: { min: 0, max: 3 }
+    range: { min: 3 }
     fills:
       - id: salt
         amount: { value: 3, unit: g }
@@ -99,7 +89,7 @@ roles:
       A separate teaspoon of oil, stirred through the marinated chicken right
       before it hits the soup — oiled strips slide apart in the pot instead
       of landing as one clump.
-    range: { min: 0, max: 1 }
+    range: { min: 1, max: 1 }
     fills:
       - id: vegetable_oil
         amount: { value: 5, unit: ml }
@@ -169,7 +159,7 @@ roles:
       Salt scaled to a very large pot, and dark soy for the amber banquet
       look — the original soup's color always came from the broth, never
       the fin.
-    range: { min: 1, max: 2 }
+    range: { min: 2 }
     fills:
       - id: salt
         amount: { value: 6, unit: g }
@@ -189,7 +179,7 @@ roles:
       The last-minute trio of every Cantonese thick soup: toasted sesame for
       aroma (it boils away if added early), a teaspoon of sugar against the
       salt, and white pepper for the quiet heat.
-    range: { min: 0, max: 3 }
+    range: { min: 3 }
     fills:
       - id: sesame_oil
         amount: { value: 5, unit: ml }
@@ -234,7 +224,7 @@ import Ref from '../../components/Ref.astro';
   and cut into strips. Partially frozen meat cuts much more cleanly.
 </Step>
 
-<Step id="marinate" title="Velvet the chicken" when="count(marinade) > 0">
+<Step id="marinate" title="Velvet the chicken">
   Mix the <Ref of="chicken" /> with the <Ref of="marinade" /> and two
   tablespoons of water, stirring well past "combined" — the marinade should
   disappear into the meat with no lumps left.
@@ -283,13 +273,13 @@ import Ref from '../../components/Ref.astro';
   of "too salty".
 </Step>
 
-<Step id="color" title="Color it amber" when="has(seasonings, 'dark_soy_sauce')">
+<Step id="color" title="Color it amber">
   The <Ref of="seasonings" fill="dark_soy_sauce" /> is for the eye more than
   the tongue: add a little, stir, look. Stop when the soup reads amber —
   banquet shark fin soup got its color from exactly this bottle.
 </Step>
 
-<Step id="coat" title="Oil the chicken" when="has(coating_oil, 'vegetable_oil')">
+<Step id="coat" title="Oil the chicken">
   Just before the chicken goes in, stir the <Ref of="coating_oil" /> through
   it — oiled strips slide apart in the pot instead of clumping.
 </Step>
@@ -305,7 +295,7 @@ import Ref from '../../components/Ref.astro';
   through — this is the "really, really fancy" banquet version.
 </Step>
 
-<Step id="finish" title="Finish" when="count(finishers) > 0">
+<Step id="finish" title="Finish">
   Off the boil, stir in the <Ref of="finishers" /> — sesame aroma fades if
   it's boiled, the sugar rounds off the salt, and white pepper is the quiet
   heat under every Cantonese thick soup. Taste once more and serve.
