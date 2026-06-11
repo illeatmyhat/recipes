@@ -4,23 +4,23 @@
  * boundary is described here.
  */
 
+import { siteConfig } from '../../site.config';
+
 /**
  * Site locale configuration. This is *instance* configuration, not a model
- * invariant — the long-term goal is an open-source recipe SSG, and an
- * adopting site may support a different locale set and even a different
- * canonical language. Keep locale assumptions routed through these constants
- * rather than scattered literals.
- *
- * Locales are BCP-47 tags (the form `html lang`, `navigator.language`, and
- * the Intl APIs speak — hyphens, not POSIX underscores). Region-qualified on
- * purpose: a locale here covers language AND market (store geography, aisle
- * sections), and bare `zh` would be ambiguous between scripts anyway.
+ * invariant — it lives in `site.config.ts` at the repo root (the file an
+ * adopting site edits); these re-exports are how engine code reaches it.
+ * Keep locale assumptions routed through these constants rather than
+ * scattered literals.
  */
-export const LOCALES = ['en-US', 'ja-JP', 'zh-CN'] as const;
+export const LOCALES = siteConfig.locales;
 export type Locale = (typeof LOCALES)[number];
 
-/** The canonical authoring language: recipe MDX and the DB's inline text. */
-export const CANONICAL_LOCALE: Locale = 'en-US';
+/**
+ * The canonical authoring language: recipe MDX and the DB's inline text.
+ * The `Locale` annotation type-checks that it is a member of the locale set.
+ */
+export const CANONICAL_LOCALE: Locale = siteConfig.canonicalLocale;
 
 /**
  * The locales translated via sidecar catalogs and ingredient overlays —
