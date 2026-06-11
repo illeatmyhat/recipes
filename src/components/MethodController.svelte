@@ -7,11 +7,12 @@
   // Fill-scoped refs (`data-ref-fill`) name one fixed fill, so they are
   // excluded from the query; only their step's visibility ever changes.
   //
-  // Deliberately prop-less: the page already embeds the bundle in every
-  // control island's serialized props, so this one reads it back from the
-  // shared store (getBundle) instead of shipping a further ~34 KB copy.
-  // Until a bundle-holding island hydrates and seeds the store, params cannot
-  // have left the SSR defaults, so skipping the patch is exact.
+  // Deliberately prop-less: the RecipeApp island already serializes the
+  // bundle once, so this reads it back from the shared store (getBundle)
+  // instead of shipping a further ~34 KB copy. As a child of RecipeApp it
+  // mounts after its bundle-holding siblings have run initV3; and until the
+  // store is seeded, params cannot have left the SSR defaults, so skipping
+  // the patch is exact.
   import { onMount } from 'svelte';
   import { params, getBundle } from './RecipeStoreV3';
   import { evalGuard } from '../lib/v3/guards';
