@@ -234,10 +234,13 @@ or    := and ('||' and)*
 and   := cmp ('&&' cmp)*
 cmp   := unary (('==' | '!=' | '<' | '>' | '<=' | '>=') unary)?
 unary := '!' unary | atom
-atom  := roleOrKnob | literal | 'has(' role ',' string ')' | '(' expr ')'
+atom  := roleOrKnob | literal | 'has(' role ',' string ')'
+       | 'count(' role ')' | '(' expr ')'
 ```
 
-`has(protein, 'chicken_breast')` tests fill membership; `liquid == oat_milk`
+`has(protein, 'chicken_breast')` tests fill membership; `count(toppings)` is
+the selection's size (added 2026-06-10 so a step can read an optional
+multi-fill role generally — `when="count(toppings) > 0"`); `liquid == oat_milk`
 is sugar for `has()` on a `min:1,max:1` role.
 
 ---
@@ -360,13 +363,31 @@ steps.hold_chicken: "{protein}は後入れ。20分経過時に加え、最後の
 
 Build-time checks:
 
-- **Completeness is an error**: every key present in every declared locale.
+- **Completeness is an error** (implemented 2026-06-10): every key present in
+  every locale the recipe declares; an untranslated string blocks deploy
+  rather than silently shipping English. An EN-only recipe (locales without
+  `ja`) skips the gate.
 - **Read-set parity is a warning, not an error**: Japanese legitimately drops
   arguments English requires (「混ぜて一晩冷蔵する」 needn't re-mention the
   liquid). The lint flags asymmetric reads for review; it does not block.
 - **Staleness via source-hash** (the gettext "fuzzy" mechanism): each catalog
   entry stores a hash of the source string it translated; source changed ⇒
-  entry flagged stale.
+  entry flagged stale. Stays a warning — it needs human review by design.
+
+**Ingredient-DB localization (decided 2026-06-10): inline + overlay folders.**
+The DB keeps inline `en`/`ja` fields (stable reference data, low churn). A
+future locale does NOT edit the 37+ canonical files: it arrives as an
+**overlay folder mirroring the canonical filenames** —
+`data/ingredients/fr/<id>.yaml` overlaying `data/ingredients/<id>.yaml` with
+the same localizable fields (`names`, `aliases`, `aisle`, availability note) —
+merged at load. Folder-of-small-files over one-big-file-per-locale because
+authorship here is agent-first: per-file work units bound context, avoid
+write contention, and coverage is a directory-listing diff (missing overlay
+file for a declared locale = build error, consistent with completeness).
+Build the loader when a third locale is real — no speculative machinery. No
+external i18n format (PO/XLIFF/Fluent) is adopted: the flat-YAML catalogs
+already are the standard per-locale key-value pattern, and interchange
+formats only pay off if human/community translators enter the loop.
 
 The lint splits accordingly: catalogs are flat YAML (trivial loops); only the
 canonical body needs MDX walking, and only to *extract* step ids and refs —
@@ -659,9 +680,15 @@ this dish's context rather than copying generic facts.
    the swap *eats* roughly equivalently ("one package of tofu ≈ N chicken
    breasts"); precision isn't required, and the resulting nutrition cascade is
    a consequence the eater is *meant* to notice (the teaching, not a defect).
-5. **Amount-less ingredients** — `to_taste` sentinel folds 0 nutrition vs a
-   token estimate; portion hints for staged additions. (Carried; the
-   two-purposes-vs-staged boundary is now settled, see Roles.)
+5. ~~**Amount-less ingredients**~~ **— SETTLED (2026-06-10): no sentinel.**
+   To-taste ingredients are authored with a realistic **token amount** plus a
+   `note` carrying the "to taste" guidance (the shipped salt fills are the
+   worked examples). Folding 0 for a real ingredient would lie about exactly
+   the nutrient that matters most (sodium) — "adding zero of something in a
+   nutrition tool is shirking responsibility." A token estimate sentinel is
+   the same number as a token amount with extra machinery. *Portion hints for
+   staged additions remain carried* — shape them when a recipe actually
+   stages an addition.
 6. **Rendering at 3+ locales** — `data-locale` flip (today) vs Astro i18n
    routes. Orthogonal to the catalog format; decide when a third locale is
    real.

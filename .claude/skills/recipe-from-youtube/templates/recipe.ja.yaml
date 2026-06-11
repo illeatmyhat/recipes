@@ -1,7 +1,7 @@
 # src/content/recipes/<slug>.ja.yaml — JA catalog for <slug>.mdx. Flat map of
 # dotted paths into the canonical EN frontmatter/body; merged at build by
 # src/lib/v3/i18n.ts. EVERY localizable key authored in the MDX needs an entry
-# here (missing keys fall back to EN with a build warning).
+# here — a recipe declaring ja with a missing key FAILS THE BUILD.
 #
 # After writing or updating this file, refresh the staleness sidecar:
 #   PowerShell: $env:REFRESH_CATALOG_HASHES='1'; npm run build

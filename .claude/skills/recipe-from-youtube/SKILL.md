@@ -72,12 +72,15 @@ Work the checklist top to bottom. Paths are relative to the project root.
      fill-level amounts only ⇒ additive (each chosen fill adds its own).
    - **Method** is `<Step id title? when?>` / `<Ref of="role" fill?/>` inside
      `<ol class="steps">`. Guards use the grammar in `src/lib/v3/guards.ts`
-     (`has(role, 'fill')`, knob names, `&&`/`||`/`!`, comparisons — there is
-     **no count()**).
+     (`has(role, 'fill')`, `count(role)`, knob names, `&&`/`||`/`!`,
+     comparisons).
    - **Boundness (build error)**: a step reading a `min: 0` role must carry a
-     positive `has(role, …)` conjunct in its `when`. Practical consequence:
-     a role that an *unguarded* step must read (e.g. "add the toppings")
-     needs `min ≥ 1` — there is no way to guard "any of 8 fills chosen".
+     `when` that proves it bound — a positive `has(role, '…')` conjunct, or
+     `count(role) > 0` for the general case ("add the toppings", whatever was
+     chosen, hidden when nothing is).
+   - **To-taste amounts**: never zero, never amount-less. Author a realistic
+     token amount and put "to taste" in the `note` — folding 0 would lie
+     about sodium, the nutrient people actually check.
    - **Reach every ingredient**: the Cook stage buckets ingredients by the
      steps that read them, with **no catch-all** — a chosen fill read by no
      step silently vanishes from mise en place (and the build warns when a
@@ -95,8 +98,9 @@ Work the checklist top to bottom. Paths are relative to the project root.
    `steps.<id>` (+ `steps.<id>.title`). Step templates are the JA surface of
    the EN body: `{role}` / `{role:fill}` placeholders, placed where Japanese
    grammar wants them (dropping a read EN needs is fine — the parity lint is
-   a warning, not an error). Translate naturally, not literally. **Every EN
-   alias needs a JA alias key** or the completeness lint warns.
+   a warning, not an error). Translate naturally, not literally. **Every
+   localizable EN string needs its JA key — a missing key fails the build**
+   (a recipe declaring `ja` owes it a complete catalog).
 
 7. **Process the hero image** (run from the project root):
    `node .claude/skills/recipe-from-youtube/scripts/process-hero.mjs <source> <slug>`
@@ -108,8 +112,8 @@ Work the checklist top to bottom. Paths are relative to the project root.
 
 9. **Verify — the gate.** `npm run check` (must be **0/0/0**) and a plain
    `npm run build` whose output shows **no v3 lint warnings** for your recipe
-   (missing catalog keys, read-set parity, stale/orphaned entries, roles read
-   by no step). Boundness violations and malformed placeholders fail the
+   (read-set parity, stale/orphaned entries, roles read by no step). Missing
+   catalog keys, boundness violations, and malformed placeholders fail the
    build outright. The recipe auto-appears on the index and at
    `/recipes/<slug>/`. Spot-check in the browser (see CLAUDE.md → Browser
    testing): default SSR point, knob behavior, guarded steps, JA surface.
@@ -119,8 +123,7 @@ Work the checklist top to bottom. Paths are relative to the project root.
 - Nutrition comes **exclusively from USDA SR Legacy** — the fetch script
   enforces this; never hand-enter package-label numbers or other FDC datasets.
 - **Canonical EN + sidecar JA catalog.** No inline `{ en, ja }` pairs in
-  recipe frontmatter; no untranslated catalog (EN fallback is a lint warning,
-  not a license).
+  recipe frontmatter; an incomplete catalog fails the build.
 - **No role/knob/fill without a stateable `why`.**
 - **Metric is the source of truth.** Never store tsp/tbsp/cups.
 - All files are **LF**, no CRLF. TypeScript is strict, no `any`.
