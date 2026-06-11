@@ -11,14 +11,9 @@
  *
  * No I/O and no DOM — safe in the browser and at build time alike.
  */
-import type { Locale, Localized } from '../types';
-import { humanizeId, joinNames, localizeAll, proseName } from './names';
+import type { Locale } from '../types';
+import { fallbackNames, joinNames, proseName } from './names';
 import type { Fill, LoadedIngredient, RecipeV3 } from './types';
-
-/** Defensive names for an ingredient id missing from the bundle (should not happen). */
-function fallbackNames(id: string): Localized {
-  return localizeAll(humanizeId(id));
-}
 
 /**
  * The prose text of a ref at a selection point. Role-scoped (`fillId`

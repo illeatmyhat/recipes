@@ -14,13 +14,8 @@
  * the list-join, never the name.
  */
 import { t } from '../i18n';
-import { LOCALES, type Locale, type Localized } from '../types';
+import { perLocale, type Locale, type Localized } from '../types';
 import type { Fill } from './types';
-
-/** Build a per-locale record from the configured locale set. */
-export function perLocale<T>(value: (loc: Locale) => T): Record<Locale, T> {
-  return Object.fromEntries(LOCALES.map((l) => [l, value(l)])) as Record<Locale, T>;
-}
 
 /** The same string in every locale — the fallback shape for unlocalized values. */
 export function localizeAll(value: string): Localized {
@@ -37,6 +32,11 @@ export function localizeAll(value: string): Localized {
 export function humanizeId(id: string): string {
   const words = id.replace(/_/g, ' ').trim();
   return words.charAt(0).toUpperCase() + words.slice(1);
+}
+
+/** Defensive names for an ingredient id missing from the DB or bundle. */
+export function fallbackNames(id: string): Localized {
+  return localizeAll(humanizeId(id));
 }
 
 /** Strip a parenthetical, a trailing comma-clause, and case from a canonical name. */

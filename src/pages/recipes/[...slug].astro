@@ -14,7 +14,7 @@ import RecipeLayout from '../../layouts/RecipeLayout.astro';
 import RecipePageV3 from '../../components/RecipePageV3.astro';
 import { buildBundle } from '../../lib/v3/bundle';
 import { t } from '../../lib/i18n';
-import { CANONICAL_LOCALE, LOCALES, type Localized } from '../../lib/types';
+import { CANONICAL_LOCALE, perLocale } from '../../lib/types';
 
 export const getStaticPaths = (async () => {
   const recipes = await getCollection('recipes');
@@ -30,12 +30,9 @@ const { Content } = await render(entry);
 const bundle = buildBundle(entry.data);
 const title = bundle.recipe.title;
 // The tab-title shape (separator and order) is per-locale catalog data.
-const pageTitle = Object.fromEntries(
-  LOCALES.map((l) => [
-    l,
-    t('pageTitle', l).replace('{title}', title[l]).replace('{site}', t('siteTitle', l)),
-  ]),
-) as Localized;
+const pageTitle = perLocale((l) =>
+  t('pageTitle', l).replace('{title}', title[l]).replace('{site}', t('siteTitle', l)),
+);
 ---
 
 <RecipeLayout title={pageTitle} description={title[CANONICAL_LOCALE]}>

@@ -11,11 +11,16 @@
  * `site.config.ts` entry; no code edits here (catalogs are discovered by
  * filename via import.meta.glob).
  */
-import { LOCALES, type Locale, type NutrientKey, type StoreSection } from './types';
+import {
+  isLocale,
+  LOCALES,
+  perLocale,
+  type Locale,
+  type Localized,
+  type NutrientKey,
+  type StoreSection,
+} from './types';
 import { NUTRIENT_KEYS } from './nutrition';
-
-/** A phrase in every supported locale. */
-export type Phrase = Record<Locale, string>;
 
 // Discover the catalogs from the folder, keyed by filename, so the file set —
 // not this module — tracks the configured locale set. Both directions of
@@ -28,12 +33,12 @@ const catalogFiles = import.meta.glob<Record<string, string>>('../locales/*.yaml
 const CATALOGS = {} as Record<Locale, Record<string, string>>;
 for (const [path, catalog] of Object.entries(catalogFiles)) {
   const tag = path.slice(path.lastIndexOf('/') + 1).replace(/\.yaml$/, '');
-  if (!(LOCALES as readonly string[]).includes(tag)) {
+  if (!isLocale(tag)) {
     throw new Error(
       `i18n: stray site catalog src/locales/${tag}.yaml — "${tag}" is not in site.config.ts locales.`,
     );
   }
-  CATALOGS[tag as Locale] = catalog;
+  CATALOGS[tag] = catalog;
 }
 for (const locale of LOCALES) {
   if (CATALOGS[locale] === undefined) {
@@ -133,14 +138,14 @@ const SECTION_ORDER: readonly StoreSection[] = [
 }
 
 /** The catalog entry at `path`, in every locale (validated above, so total). */
-function phraseAt(path: string): Phrase {
-  return Object.fromEntries(LOCALES.map((l) => [l, CATALOGS[l][path] as string])) as Phrase;
+function phraseAt(path: string): Localized {
+  return perLocale((l) => CATALOGS[l][path] as string);
 }
 
 /** Every UI phrase, localized — for surfaces that render all locales at once. */
-export const UI: Record<UIKey, Phrase> = Object.fromEntries(
+export const UI: Record<UIKey, Localized> = Object.fromEntries(
   UI_KEYS.map((k) => [k, phraseAt(`ui.${k}`)]),
-) as Record<UIKey, Phrase>;
+) as Record<UIKey, Localized>;
 
 /** Resolve a UI phrase for a locale. */
 export function t(key: UIKey, locale: Locale): string {
@@ -148,14 +153,14 @@ export function t(key: UIKey, locale: Locale): string {
 }
 
 /** FDA-style nutrient labels, localized. */
-export const NUTRIENT_LABELS: Record<NutrientKey, Phrase> = Object.fromEntries(
+export const NUTRIENT_LABELS: Record<NutrientKey, Localized> = Object.fromEntries(
   NUTRIENT_KEYS.map((k) => [k, phraseAt(`nutrients.${k}`)]),
-) as Record<NutrientKey, Phrase>;
+) as Record<NutrientKey, Localized>;
 
 /**
  * Supermarket section labels in store-walk order — the shopping list renders
  * its groups in this sequence. One shared id space; which section a food sits
  * in is per-locale data on the ingredient (`aisle`, see src/lib/types.ts).
  */
-export const STORE_SECTIONS: ReadonlyArray<{ id: StoreSection; label: Phrase }> =
+export const STORE_SECTIONS: ReadonlyArray<{ id: StoreSection; label: Localized }> =
   SECTION_ORDER.map((id) => ({ id, label: phraseAt(`sections.${id}`) }));

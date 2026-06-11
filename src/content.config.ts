@@ -7,8 +7,9 @@
  * `buildBundle` — see src/lib/v3/bundle.ts.
  *
  * Frontmatter is the v3 shape (pattern/roles/fills, docs/recipe-model.md):
- * localizable fields hold the CANONICAL (EN) string; JA lives in the per-locale
- * sidecar catalog `<slug>.ja.yaml` and is merged at build time (src/lib/v3/i18n.ts).
+ * localizable fields hold the CANONICAL string; translations live in the
+ * per-locale sidecar catalogs `<slug>.<locale>.yaml`, merged at build time
+ * (src/lib/v3/i18n.ts).
  */
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';

@@ -31,6 +31,16 @@ export const CATALOG_LOCALES: readonly Locale[] = LOCALES.filter(
   (l) => l !== CANONICAL_LOCALE,
 );
 
+/** Whether a runtime string is one of the configured locales (type guard). */
+export function isLocale(value: unknown): value is Locale {
+  return (LOCALES as readonly unknown[]).includes(value);
+}
+
+/** Build a per-locale record from the configured locale set. */
+export function perLocale<T>(value: (loc: Locale) => T): Record<Locale, T> {
+  return Object.fromEntries(LOCALES.map((l) => [l, value(l)])) as Record<Locale, T>;
+}
+
 /** Colour theme. Resolved from a stored choice or the OS preference. */
 export type Theme = 'light' | 'dark';
 

@@ -14,10 +14,10 @@
   import { onMount } from 'svelte';
   import { locale } from './RecipeStore';
   import { params, resolved, resolveBundle, initV3, setFill, toggleFill, setKnob } from './RecipeStoreV3';
-  import { t } from '../lib/i18n';
+  import { t, UI } from '../lib/i18n';
   import { proseName } from '../lib/v3/names';
   import type { FillT, Knob, KnobValue, Params, RecipeBundle, RoleT } from '../lib/v3/types';
-  import { LOCALES, type Localized } from '../lib/types';
+  import type { Localized } from '../lib/types';
 
   let { bundle }: { bundle: RecipeBundle } = $props();
 
@@ -81,9 +81,7 @@
     const result = resolveBundle(bundle, withClick(currentP, roleId, fillId, kind));
     if (!result.blocked) return null;
     const notice = result.notices.find((n) => n.kind === 'constraint-error');
-    return notice && 'text' in notice
-      ? notice.text
-      : (Object.fromEntries(LOCALES.map((l) => [l, t('optionBlocked', l)])) as Localized);
+    return notice && 'text' in notice ? notice.text : UI.optionBlocked;
   }
 
   // A fill's control label: its recipe alias, else the prose-normalized DB

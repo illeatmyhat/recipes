@@ -14,7 +14,7 @@
     fmt,
   } from '../lib/nutrition';
   import { NUTRIENT_LABELS, t } from '../lib/i18n';
-  import type { NutrientKey, NutritionFacts, Locale } from '../lib/types';
+  import type { NutrientKey, NutritionFacts, Localized } from '../lib/types';
   import type { RecipeBundle } from '../lib/v3/types';
 
   let { bundle }: { bundle: RecipeBundle } = $props();
@@ -51,7 +51,7 @@
 
   interface ActiveIngredient {
     id: string;
-    names: Record<Locale, string>;
+    names: Localized;
     colour: string;
     grams: number;
     nutrition: NutritionFacts;
@@ -91,7 +91,7 @@
 
   interface Segment {
     id: string;
-    names: Record<Locale, string>;
+    names: Localized;
     colour: string;
     value: number;
     share: number;
