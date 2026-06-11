@@ -33,6 +33,8 @@ roles.lentils.fills.lentils.alias: レンズ豆
 roles.protein.label: タンパク質
 roles.protein.why: 満腹感にはタンパク質が必要。ただしパターン上は低脂肪であること。脂の多い部位はカロリー計算を崩す。
 roles.protein.fills.tofu.note: 1丁。水切りのみでよく、押す必要はない。崩しながら加える。
+roles.protein.fills.chicken_breast.why: 最も脂肪の少ない肉。豆腐と同じ満腹の仕事を同程度のカロリーでこなす。ただしむね肉は煮込みすぎるとパサつくので、最初からではなく20分経過時に加える。作り方参照。
+roles.protein.fills.chicken_breast.note: 大きめのむね肉約1枚を一口大に。
 
 roles.potato.label: じゃがいも
 roles.potato.why: 満腹感の主役。安価でかさのある食材。翌日温め直すとレジスタントスターチができ、さらに良い。
@@ -76,6 +78,8 @@ steps.add_lentils.title: レンズ豆を加える
 steps.add_lentils: "{lentils}を洗って加える。煮込むうちに煮汁にとろみがつく。"
 steps.add_protein.title: タンパク質を加える
 steps.add_protein: "{protein:tofu}は水気を切り（押す必要はない）、大きく崩しながら鍋に入れる。"
+steps.hold_chicken.title: 鶏むね肉は後入れ
+steps.hold_chicken: "{protein:chicken_breast}はまだ入れない。むね肉は長く煮込むとパサつく。一口大に切り、20分経過時に加えて最後の10分で火を通す。"
 steps.season.title: 味付け
 steps.season: "{seasonings}を加えて数分煮て、香りを立たせる。"
 steps.soy_umami.title: 旨味の近道

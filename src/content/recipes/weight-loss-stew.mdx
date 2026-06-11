@@ -90,6 +90,13 @@ roles:
       - id: tofu
         default: true
         note: One block. Just drain — no need to press. Crumble it into the pot.
+      - id: chicken_breast
+        amount: { value: 250, unit: g }
+        why: >-
+          The leanest meat option — the same satiety job as the tofu at
+          similar calories. But breast dries out when over-simmered, so it
+          joins at the 20-minute mark, not the start. See the method.
+        note: About one large breast, cut bite-size.
   potato:
     label: Potatoes
     why: >-
@@ -199,6 +206,12 @@ import Ref from '../../components/Ref.astro';
 <Step id="add_protein" title="Add the protein" when="has(protein, 'tofu')">
   Drain the <Ref of="protein" fill="tofu" /> — no need to press it — and break
   it into the pot in big chunks.
+</Step>
+
+<Step id="hold_chicken" title="Hold the chicken back" when="has(protein, 'chicken_breast')">
+  Don't add the <Ref of="protein" fill="chicken_breast" /> yet — breast dries
+  out over a full simmer. Cut it bite-size and stir it in at the 20-minute
+  mark; it cooks through in the last 10 minutes.
 </Step>
 
 <Step id="season" title="Season">

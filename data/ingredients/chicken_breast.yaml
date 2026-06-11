@@ -1,0 +1,38 @@
+id: chicken_breast
+fdc_id: 171077
+names:
+  en: Chicken, broiler or fryers, breast, skinless, boneless, meat only, raw
+  ja: 鶏むね肉（皮なし）
+aliases:
+  en:
+    - Skinless boneless chicken breast
+    - Chicken breast fillet
+  ja:
+    - 鶏胸肉
+    - とりむね
+availability:
+  us:
+    brands: []
+    note_en: Any skinless, boneless breast. Skip pre-brined ("with added solution") packs — they carry extra sodium.
+  ja:
+    brands: []
+    note_en: Sold everywhere as 鶏むね肉; pick skinless (皮なし) or remove the skin.
+    note_ja: どこのスーパーでも「鶏むね肉」として入手可。皮なしを選ぶか、皮を外す。
+nutrition:
+  per_100g:
+    calories: 120
+    fat: 2.62
+    saturated_fat: 0.563
+    trans_fat: 0.007
+    cholesterol: 73
+    sodium: 45
+    carbohydrates: 0
+    fiber: 0
+    sugars: 0
+    protein: 22.5
+    calcium: 5
+    iron: 0.37
+density_g_per_ml: null
+aisle:
+  en: meat_seafood
+  ja: meat_seafood
