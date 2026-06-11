@@ -7,7 +7,8 @@ id: <id>
 fdc_id: 0
 # Inline locales: en-US (canonical) + ja-JP. Every OTHER supported locale
 # (zh-CN today) gets an overlay file data/ingredients/<locale>/<id>.yaml with
-# `names` / `aliases` / `aisle` for that locale — see the note at the bottom.
+# `names` / `aliases` / `aisle` (and optionally `availability`) for that
+# locale — see the note at the bottom.
 names:
   en-US: <English name>
   ja-JP: <Japanese name>
@@ -16,16 +17,19 @@ aliases:
     - <other English name the transcript / shoppers might use>
   ja-JP:
     - <other Japanese name>
-# availability: OPTIONAL per-locale market guidance, keyed by BCP-47 locale.
-# Each entry is original content authored FOR that market IN that language —
-# never a translation of another locale's note. Omit a locale (or the whole
-# block) when there is nothing useful to say; the Shop stage then shows
-# nothing. A bare string is a regular note (revealed behind the row's "More
-# tips" disclosure). Mark a note `important: true` ONLY when every cook needs
-# it before shopping: the wrong form breaks the recipe (rolled vs quick oats,
-# low-sodium vs regular soy sauce) or the item is scarce in that market
-# (import/specialty stores only). List brands ONLY when the form is easy to
-# get wrong — don't invent brand names; omit `brands` instead of writing [].
+# availability: OPTIONAL per-locale market guidance. THIS inline block may
+# only carry the inline locales (en-US/ja-JP), keyed by BCP-47 tag; every
+# other locale's guidance lives in that locale's OVERLAY file instead,
+# UNKEYED (`availability: {notes: [...]}` — the overlay file already is one
+# locale). Each entry is original content authored FOR that market IN that
+# language — never a translation of another locale's note. Omit a locale (or
+# the whole block) when there is nothing useful to say; the Shop stage then
+# shows nothing. A bare string is a regular note (revealed behind the row's
+# "More tips" disclosure). Mark a note `important: true` ONLY when every
+# cook needs it before shopping: the wrong form breaks the recipe (rolled vs
+# quick oats, low-sodium vs regular soy sauce) or the item is scarce in that
+# market (import/specialty stores only). List brands ONLY when the form is
+# easy to get wrong — don't invent brand names; omit `brands` over [].
 availability:
   en-US:
     notes:
@@ -66,5 +70,8 @@ aisle:
 #   names: <zh name>
 #   aliases: [<zh alias>]
 #   aisle: <section id for that market>
-#   availability:                      # optional, that locale's market guidance
-#     notes: [<zh note>]
+#   availability:                      # optional — that locale's market guidance,
+#     notes:                           # NOT keyed by locale (the file is the locale)
+#       - <zh note, e.g. 在进口食品店或网购平台可买到>
+#       - text: <zh scarcity / wrong-form warning>
+#         important: true
