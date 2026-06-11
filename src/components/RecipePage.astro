@@ -1,6 +1,6 @@
 ---
 /**
- * Static shell for a v3 recipe page.
+ * Static shell for a recipe page.
  *
  * The always-on frame (title, pattern, hero) renders here; everything
  * interactive lives in the single RecipeApp island, which receives the bundle
@@ -15,10 +15,10 @@ import Bilingual from './Bilingual.astro';
 import SiteControls from './SiteControls.astro';
 import RecipeApp from './RecipeApp.svelte';
 import { UI } from '../lib/i18n';
-import { recipeCatalog } from '../lib/v3/i18n';
-import { setMethodContext } from '../lib/v3/methodContext';
+import { recipeCatalog } from '../lib/recipe/i18n';
+import { setMethodContext } from '../lib/recipe/methodContext';
 import { CANONICAL_LOCALE, CATALOG_LOCALES } from '../lib/types';
-import type { RecipeBundle } from '../lib/v3/types';
+import type { RecipeBundle } from '../lib/recipe/types';
 
 interface Props {
   bundle: RecipeBundle;

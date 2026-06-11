@@ -6,12 +6,12 @@
   // does); the store update flips <html data-locale>, so both the Svelte
   // islands and the CSS-localized static content react instantly.
   import { onMount } from 'svelte';
-  import { locale, initLocale, setLocale } from './RecipeStore';
+  import { locale, initLocale, setLocale } from './LocaleStore';
   import { t } from '../lib/i18n';
   import { LOCALES, type Locale } from '../lib/types';
 
   // Locale switching needs no recipe data, so this works on any page (the
-  // index included). Recipe-page islands also call initLocale (via initV3) —
+  // index included). Recipe-page islands also call initLocale (via initRecipe) —
   // all idempotent, so whichever hydrates first wins.
   onMount(() => initLocale());
 </script>

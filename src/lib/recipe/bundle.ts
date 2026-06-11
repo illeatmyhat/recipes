@@ -1,5 +1,5 @@
 /**
- * Build-time recipe bundle (v3).
+ * Build-time recipe bundle.
  *
  * Packages everything a client island needs to re-resolve a recipe as the user
  * changes parameters: the hydrated recipe, every referenced ingredient's data
@@ -20,7 +20,7 @@ import { defaultParams } from './resolve';
 import { lintCatalogStaleness } from './staleness';
 import { extractSteps, readKey } from './steps';
 import { CATALOG_LOCALES } from '../types';
-import type { CanonicalRecipeFrontmatterV3, RecipeBundle, StepMeta, StepRead } from './types';
+import type { CanonicalRecipeFrontmatter, RecipeBundle, StepMeta, StepRead } from './types';
 
 const RECIPE_DIR = join(process.cwd(), 'src', 'content', 'recipes');
 
@@ -31,8 +31,8 @@ function recipeBody(slug: string): string {
   return fence < 0 ? raw : raw.slice(fence + 4);
 }
 
-/** Build the serializable bundle for one v3 recipe from its canonical frontmatter. */
-export function buildBundle(fm: CanonicalRecipeFrontmatterV3): RecipeBundle {
+/** Build the serializable bundle for one recipe from its canonical frontmatter. */
+export function buildBundle(fm: CanonicalRecipeFrontmatter): RecipeBundle {
   // Canonical EN source per catalog path — fed by hydration (frontmatter) and
   // step extraction (method body) below, then handed to the staleness lint.
   const sources: Record<string, string> = {};
@@ -79,17 +79,17 @@ export function buildBundle(fm: CanonicalRecipeFrontmatterV3): RecipeBundle {
           locOnly.length > 0 ? `${locale}-only: ${locOnly.join(', ')}` : '',
         ].filter(Boolean);
         console.warn(
-          `v3 bundle: recipe "${fm.slug}" step "${s.id}" reads differ between canonical and ${locale} (${parts.join('; ')}) — fine if intentional.`,
+          `recipe bundle: recipe "${fm.slug}" step "${s.id}" reads differ between canonical and ${locale} (${parts.join('; ')}) — fine if intentional.`,
         );
       }
     }
     for (const read of reads) {
       const role = recipe.roles[read.role];
       if (!role) {
-        throw new Error(`v3 bundle: step "${s.id}" reads unknown role "${read.role}".`);
+        throw new Error(`recipe bundle: step "${s.id}" reads unknown role "${read.role}".`);
       }
       if (read.fill !== undefined && !role.fills.some((f) => f.id === read.fill)) {
-        throw new Error(`v3 bundle: step "${s.id}" reads unknown fill "${read.role}:${read.fill}".`);
+        throw new Error(`recipe bundle: step "${s.id}" reads unknown fill "${read.role}:${read.fill}".`);
       }
     }
     let title;
@@ -112,7 +112,7 @@ export function buildBundle(fm: CanonicalRecipeFrontmatterV3): RecipeBundle {
   const readRoles = new Set(steps.flatMap((s) => s.reads.map((r) => r.role)));
   for (const roleId of Object.keys(recipe.roles)) {
     if (!readRoles.has(roleId)) {
-      console.warn(`v3 bundle: recipe "${fm.slug}" role "${roleId}" is read by no step — it will be missing from the Cook stage.`);
+      console.warn(`recipe bundle: recipe "${fm.slug}" role "${roleId}" is read by no step — it will be missing from the Cook stage.`);
     }
   }
 

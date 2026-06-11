@@ -1,6 +1,6 @@
 /**
  * Pure nutrition math. No I/O, no framework imports — safe to use at build
- * time (v3 resolve/bundle) and at runtime (Svelte islands).
+ * time (recipe resolve/bundle) and at runtime (Svelte islands).
  */
 import type { NutritionFacts, NutrientKey } from './types';
 

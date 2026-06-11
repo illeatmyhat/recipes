@@ -1,20 +1,20 @@
 ---
 /**
- * `<Ref of="role" fill?/>` — a live ingredient reference in method prose (v3).
+ * `<Ref of="role" fill?/>` — a live ingredient reference in method prose.
  *
  * Role-scoped: renders the role's currently-chosen fills as a localized list
  * join; the MethodController island re-fills the span as the selection
  * changes. Fill-scoped (`fill="id"`): names exactly that fill — for steps
  * whose guard already scopes them to one fill ("hold the chicken back"), where
  * naming the whole selection would be wrong. Names are prose names (recipe
- * `alias`, else normalized DB name) — see src/lib/v3/names.ts.
+ * `alias`, else normalized DB name) — see src/lib/recipe/names.ts.
  *
  * Appears only in the canonical EN MDX body, so it renders the EN surface; the
  * JA surface comes from the catalog template via Step.astro. SSR fills the
  * default parameter point, keeping the page readable with JS off.
  */
-import { getMethodContext } from '../lib/v3/methodContext';
-import { refSpan, refText } from '../lib/v3/method';
+import { getMethodContext } from '../lib/recipe/methodContext';
+import { refSpan, refText } from '../lib/recipe/method';
 import { CANONICAL_LOCALE } from '../lib/types';
 
 interface Props {

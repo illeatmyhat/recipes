@@ -11,8 +11,8 @@
 import type { GetStaticPaths } from 'astro';
 import { getCollection, render } from 'astro:content';
 import RecipeLayout from '../../layouts/RecipeLayout.astro';
-import RecipePageV3 from '../../components/RecipePageV3.astro';
-import { buildBundle } from '../../lib/v3/bundle';
+import RecipePage from '../../components/RecipePage.astro';
+import { buildBundle } from '../../lib/recipe/bundle';
 import { t } from '../../lib/i18n';
 import { CANONICAL_LOCALE, perLocale } from '../../lib/types';
 
@@ -36,7 +36,7 @@ const pageTitle = perLocale((l) =>
 ---
 
 <RecipeLayout title={pageTitle} description={title[CANONICAL_LOCALE]}>
-  <RecipePageV3 bundle={bundle} heroImage={entry.data.hero_image}>
+  <RecipePage bundle={bundle} heroImage={entry.data.hero_image}>
     <Content />
-  </RecipePageV3>
+  </RecipePage>
 </RecipeLayout>

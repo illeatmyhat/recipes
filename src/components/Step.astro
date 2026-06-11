@@ -1,6 +1,6 @@
 ---
 /**
- * `<Step id when? title?>` — one method step in a v3 recipe's MDX body.
+ * `<Step id when? title?>` — one method step in a recipe's MDX body.
  *
  * The body (the slot) is the canonical prose, with `<Ref/>` components for
  * ingredient reads; each catalog locale's surface is its template
@@ -11,19 +11,19 @@
  * params change.
  *
  * Build-time lints:
- * - `when` must parse (guard grammar, src/lib/v3/guards.ts);
+ * - `when` must parse (guard grammar, src/lib/recipe/guards.ts);
  * - boundness: a step reading a `min: 0` role must carry a `when` that proves
  *   it bound — a positive `has(role, …)` or `count(role) > 0` conjunct
  *   (docs/recipe-model.md);
  * - unknown role/fill reads throw (via refText);
  * - missing `steps.<id>` catalog keys fail the build for every locale the
  *   recipe declares, mirroring the frontmatter completeness gate in
- *   src/lib/v3/i18n.ts; an undeclared locale falls back to the canonical
+ *   src/lib/recipe/i18n.ts; an undeclared locale falls back to the canonical
  *   surface.
  */
-import { collectPositiveHas, evalGuard, parseGuard } from '../lib/v3/guards';
-import { htmlRefReads, renderStepTemplate, templateReads } from '../lib/v3/method';
-import { getMethodContext } from '../lib/v3/methodContext';
+import { collectPositiveHas, evalGuard, parseGuard } from '../lib/recipe/guards';
+import { htmlRefReads, renderStepTemplate, templateReads } from '../lib/recipe/method';
+import { getMethodContext } from '../lib/recipe/methodContext';
 import { CANONICAL_LOCALE, type Locale } from '../lib/types';
 
 interface Props {
@@ -41,7 +41,7 @@ const { recipe, ingredients, defaults } = bundle;
 // canonical prose lives in the MDX body, never in a catalog).
 const canonicalHtml = ((await Astro.slots.render('default')) ?? '').trim();
 if (canonicalHtml === '') {
-  throw new Error(`v3 method: step "${id}" has no body — write the canonical prose as its children.`);
+  throw new Error(`recipe method: step "${id}" has no body — write the canonical prose as its children.`);
 }
 
 // One surface per catalog locale: template + title from its catalog.
@@ -58,7 +58,7 @@ const surfaces: Surface[] = catalogs.map(({ locale, cat }) => {
   if (title !== undefined && locTitle === undefined) missing.push(`steps.${id}.title`);
   if (missing.length > 0 && recipe.locales.includes(locale)) {
     throw new Error(
-      `v3 method: recipe "${recipe.slug}" declares ${locale} but is missing catalog ` +
+      `recipe method: recipe "${recipe.slug}" declares ${locale} but is missing catalog ` +
         `key(s): ${missing.join(', ')}`,
     );
   }
@@ -85,11 +85,11 @@ const bound = when === undefined ? new Set<string>() : collectPositiveHas(parseG
 for (const r of reads) {
   const role = recipe.roles[r];
   if (!role) {
-    throw new Error(`v3 method: step "${id}" reads unknown role "${r}".`);
+    throw new Error(`recipe method: step "${id}" reads unknown role "${r}".`);
   }
   if (role.range.min === 0 && !bound.has(r)) {
     throw new Error(
-      `v3 method: step "${id}" reads min:0 role "${r}" without a positive ` +
+      `recipe method: step "${id}" reads min:0 role "${r}" without a positive ` +
         `has(${r}, …) or count(${r}) > 0 guard — an unchosen role would leave the prose dangling.`,
     );
   }
@@ -100,12 +100,12 @@ for (const r of reads) {
 // its reads, the by-step mise en place would silently desync from the method.
 const meta = bundle.steps.find((s) => s.id === id);
 if (!meta) {
-  throw new Error(`v3 method: step "${id}" rendered but is missing from the extracted bundle.steps.`);
+  throw new Error(`recipe method: step "${id}" rendered but is missing from the extracted bundle.steps.`);
 }
 const metaRoles = new Set(meta.reads.map((r) => r.role));
 if (metaRoles.size !== reads.size || [...reads].some((r) => !metaRoles.has(r))) {
   throw new Error(
-    `v3 method: step "${id}" reads {${[...reads].join(', ')}} when rendered but ` +
+    `recipe method: step "${id}" reads {${[...reads].join(', ')}} when rendered but ` +
       `{${[...metaRoles].join(', ')}} when extracted — steps.ts has a parser gap.`,
   );
 }

@@ -1,7 +1,8 @@
 /**
- * Recipe model v3 — types (pattern / roles / fills).
+ * Recipe model — types (pattern / roles / fills).
  *
- * The deterministic core of the v3 model from `docs/recipe-model.md`. These
+ * The deterministic core of the model in `docs/recipe-model.md`. Design
+ * version: **v3** (the one place code records it, for posterity). These
  * types describe a recipe as a pattern instantiated by roles, filled by
  * ingredients, plus the `Params` that drive resolution and the resolved output.
  *
@@ -9,7 +10,7 @@
  * `T = string` is the *canonical* (authored EN) form that lives in the MDX
  * frontmatter; `T = Localized` is the *hydrated* form (merged with the per-locale
  * catalog — see i18n.ts) that the engine consumes. The `…T<T>` interfaces are
- * the general shape; the bare `Role` / `Fill` / `RecipeV3` aliases are the
+ * the general shape; the bare `Role` / `Fill` / `Recipe` aliases are the
  * `Localized` instantiation the engine uses, so engine code is unchanged. No `any`.
  */
 import type { Locale, Localized, Unit, NutritionFacts, IngredientData } from '../types';
@@ -109,7 +110,7 @@ export interface ServingsSpec {
   default: number;
 }
 
-/** A v3 recipe's structured data, generic over the localizable slot `T`. */
+/** A recipe's structured data, generic over the localizable slot `T`. */
 export interface RecipeT<T> {
   title: T;
   slug: string;
@@ -130,23 +131,23 @@ export type BoolKnob = BoolKnobT<Localized>;
 export type ScalarKnob = ScalarKnobT<Localized>;
 export type Knob = KnobT<Localized>;
 export type Constraint = ConstraintT<Localized>;
-export type RecipeV3 = RecipeT<Localized>;
+export type Recipe = RecipeT<Localized>;
 
 // ── Canonical (authored EN) forms — what the MDX frontmatter holds ────────────
-export type CanonicalRecipeV3 = RecipeT<string>;
+export type CanonicalRecipe = RecipeT<string>;
 
 /**
- * Parsed v3 MDX frontmatter (canonical EN): a {@link CanonicalRecipeV3} plus the
- * optional Customize-tab heading. Hydrated to {@link RecipeFrontmatterV3} by
+ * Parsed MDX frontmatter (canonical EN): a {@link CanonicalRecipe} plus the
+ * optional Customize-tab heading. Hydrated to {@link RecipeFrontmatter} by
  * merging the per-locale catalog (i18n.ts). (`hero_image` is resolved by Astro
  * and handled by the page, not the resolver.)
  */
-export interface CanonicalRecipeFrontmatterV3 extends CanonicalRecipeV3 {
+export interface CanonicalRecipeFrontmatter extends CanonicalRecipe {
   customize_title?: string;
 }
 
-/** The hydrated v3 frontmatter the resolver/bridge consume. */
-export interface RecipeFrontmatterV3 extends RecipeV3 {
+/** The hydrated frontmatter the resolver/bridge consume. */
+export interface RecipeFrontmatter extends Recipe {
   customize_title?: Localized;
 }
 
@@ -194,7 +195,7 @@ export type ResolvedNotice =
   | { kind: 'unknown-fill'; role: string; fill: string };
 
 /** The full result of resolving a recipe at a parameter point. */
-export interface ResolvedV3 {
+export interface Resolved {
   rows: ResolvedRow[];
   /** Fold of `per_100g · grams/100` over every row. */
   nutrition: NutritionFacts;
@@ -233,14 +234,14 @@ export interface StepMetaT<T> {
 export type StepMeta = StepMetaT<Localized>;
 
 /**
- * Everything an island needs to re-resolve a v3 recipe on the client: the
+ * Everything an island needs to re-resolve a recipe on the client: the
  * hydrated recipe, every referenced ingredient's data (so the pure `resolve`
  * can run without filesystem access), the default parameter point, and the
  * method's step metadata (by-step projection). Built at build time
  * (`bundle.ts`), serialized as an island prop. Fully plain data.
  */
 export interface RecipeBundle {
-  recipe: RecipeFrontmatterV3;
+  recipe: RecipeFrontmatter;
   ingredients: Record<string, LoadedIngredient>;
   defaults: Params;
   steps: StepMeta[];

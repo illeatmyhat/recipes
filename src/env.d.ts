@@ -1,9 +1,9 @@
 /// <reference types="astro/client" />
 
 declare namespace App {
-  // The v3 method components read their recipe through the per-render locals
-  // object — see src/lib/v3/methodContext.ts.
-  interface Locals extends import('./lib/v3/methodContext').MethodContextLocals {}
+  // The method components read their recipe through the per-render locals
+  // object — see src/lib/recipe/methodContext.ts.
+  interface Locals extends import('./lib/recipe/methodContext').MethodContextLocals {}
 }
 
 // Site-level locale catalogs (src/locales/<locale>.yaml) import as flat

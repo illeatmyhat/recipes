@@ -1,7 +1,7 @@
 /**
- * v3 catalog localization (build time).
+ * Recipe catalog localization (build time).
  *
- * A v3 recipe's MDX frontmatter holds the **canonical** (EN) text; the JA (and
+ * A recipe's MDX frontmatter holds the **canonical** (EN) text; the JA (and
  * any future locale) strings live in a per-locale sidecar catalog
  * `src/content/recipes/<slug>.<locale>.yaml`, a flat map keyed by dotted paths
  * (e.g. `roles.protein.why`, `roles.protein.fills.tofu.alias`). `hydrateRecipe`
@@ -12,7 +12,7 @@
  * rather than silently shipping English. (Staleness stays a warning; it needs
  * human review.) Touches the filesystem — build time only.
  *
- * Scope note: this localizes the v3 **frontmatter** content. The method *body*
+ * Scope note: this localizes the **frontmatter** content. The method *body*
  * moves to canonical-EN + catalog with the `<Step id>` components (#3); the
  * ingredient DB stays inline bilingual reference data for now.
  */
@@ -22,11 +22,11 @@ import { load } from 'js-yaml';
 import { CATALOG_LOCALES, type Locale, type Localized } from '../types';
 import { localizeAll } from './names';
 import type {
-  CanonicalRecipeFrontmatterV3,
+  CanonicalRecipeFrontmatter,
   ConstraintT,
   FillT,
   KnobT,
-  RecipeFrontmatterV3,
+  RecipeFrontmatter,
   RoleT,
 } from './types';
 
@@ -48,7 +48,7 @@ function loadCatalog(slug: string, locale: Locale): Record<string, string> {
     // syntax error) must fail the build — silently dropping a whole locale is
     // worse than a red build.
     if ((err as { code?: string }).code !== 'ENOENT') throw err;
-    console.warn(`v3 i18n: recipe "${slug}" has no ${slug}.${locale}.yaml — all ${locale} text falls back to EN.`);
+    console.warn(`recipe i18n: recipe "${slug}" has no ${slug}.${locale}.yaml — all ${locale} text falls back to EN.`);
     result = {};
   }
   catalogCache.set(key, result);
@@ -177,7 +177,7 @@ function hydrateConstraint(c: ConstraintT<string>, i: number, ctx: Ctx): Constra
 }
 
 /**
- * Merge a canonical v3 frontmatter with its per-locale catalogs into the
+ * Merge a canonical frontmatter with its per-locale catalogs into the
  * `Localized` frontmatter the resolver consumes — one catalog per
  * `CATALOG_LOCALES` entry, each falling back to the canonical text when a
  * key is absent (an error when the recipe declares that locale).
@@ -185,9 +185,9 @@ function hydrateConstraint(c: ConstraintT<string>, i: number, ctx: Ctx): Constra
  * (feeds the staleness lint — see staleness.ts).
  */
 export function hydrateRecipe(
-  fm: CanonicalRecipeFrontmatterV3,
+  fm: CanonicalRecipeFrontmatter,
   sources?: Record<string, string>,
-): RecipeFrontmatterV3 {
+): RecipeFrontmatter {
   const ctx: Ctx = {
     cats: CATALOG_LOCALES.map((locale) => ({
       locale,
@@ -207,7 +207,7 @@ export function hydrateRecipe(
     roles[id] = hydrateRole(id, role, ctx);
   }
 
-  const hydrated: RecipeFrontmatterV3 = {
+  const hydrated: RecipeFrontmatter = {
     title: loc(fm.title, 'title', ctx),
     slug: fm.slug,
     pattern: loc(fm.pattern, 'pattern', ctx),
@@ -224,7 +224,7 @@ export function hydrateRecipe(
   for (const c of ctx.cats) {
     if (c.required && c.missing.length > 0) {
       throw new Error(
-        `v3 i18n: recipe "${fm.slug}" declares ${c.locale} but is missing ${c.missing.length} ` +
+        `recipe i18n: recipe "${fm.slug}" declares ${c.locale} but is missing ${c.missing.length} ` +
           `catalog key(s) in ${fm.slug}.${c.locale}.yaml: ${c.missing.join(', ')}`,
       );
     }

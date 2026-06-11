@@ -1,10 +1,10 @@
 /**
- * Build-time ingredient loader for v3.
+ * Build-time ingredient loader.
  *
  * Reads `/data/ingredients/<id>.yaml` and returns an {@link IngredientLookup}.
- * Mirrors the v1 loader's graceful degradation: a missing file becomes a
- * zero-nutrition placeholder (so totals stay honest) with a loud warning, and
- * the `placeholder` flag is surfaced so the UI can mark it.
+ * Degrades gracefully: a missing file becomes a zero-nutrition placeholder
+ * (so totals stay honest) with a loud warning, and the `placeholder` flag is
+ * surfaced so the UI can mark it.
  *
  * **Locale overlays.** The canonical file carries the locales it was authored
  * with inline (en-US/ja-JP today); any other supported locale arrives as an
@@ -74,13 +74,13 @@ function applyOverlays(id: string, data: IngredientData): IngredientData {
   for (const locale of LOCALES) {
     if (data.names[locale] === undefined) {
       throw new Error(
-        `v3 db: ingredient "${id}" has no ${locale} name — add names.${locale} inline ` +
+        `recipe db: ingredient "${id}" has no ${locale} name — add names.${locale} inline ` +
           `or the overlay data/ingredients/${locale}/${id}.yaml.`,
       );
     }
     if (data.aisle && data.aisle[locale] === undefined) {
       throw new Error(
-        `v3 db: ingredient "${id}" has no ${locale} aisle — add aisle.${locale} inline ` +
+        `recipe db: ingredient "${id}" has no ${locale} aisle — add aisle.${locale} inline ` +
           `or to the overlay data/ingredients/${locale}/${id}.yaml.`,
       );
     }
@@ -98,14 +98,14 @@ export const loadIngredient: IngredientLookup = (id: string): LoadedIngredient =
   try {
     const data = load(readFileSync(file, 'utf8')) as IngredientData;
     if (!data || data.id !== id) {
-      throw new Error(`v3 db: ${file} has id "${data?.id}" but was loaded as "${id}".`);
+      throw new Error(`recipe db: ${file} has id "${data?.id}" but was loaded as "${id}".`);
     }
     result = { data, placeholder: false };
   } catch (err) {
     // A genuine parse/id error should be loud; a missing file degrades.
-    if (err instanceof Error && err.message.startsWith('v3 db:')) throw err;
+    if (err instanceof Error && err.message.startsWith('recipe db:')) throw err;
     console.warn(
-      `v3 db: ingredient "${id}" has no ${file} — using a zero-nutrition ` +
+      `recipe db: ingredient "${id}" has no ${file} — using a zero-nutrition ` +
         `placeholder. Add /data/ingredients/${id}.yaml (or fix a typo'd id).`,
     );
     result = { data: placeholderIngredient(id), placeholder: true };

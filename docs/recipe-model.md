@@ -470,8 +470,8 @@ a regression to fix.
 ## Customize UX (design pass — decided 2026-06-10)
 
 How the model is *presented and driven*. The one fixed point: the **Nutrition
-Facts panel is sacred** — always visible, always folding honest numbers from
-the resolved list. Every customize interaction is "change a control → watch the
+Facts panel is non-negotiable** — always visible, always folding honest
+numbers from the resolved list. Every customize interaction is "change a control → watch the
 nutrition pane (and the live method) respond." The pane is a feedback surface,
 never an error channel.
 

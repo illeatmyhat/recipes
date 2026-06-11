@@ -1,5 +1,5 @@
 /**
- * Guard / constraint expression language for v3 (no `eval`).
+ * Guard / constraint expression language (no `eval`).
  *
  * A small, safe boolean language over the `Params` record, shared by step
  * `when`, `constraint.when`, and (via `collectPositiveHas`) the build-time

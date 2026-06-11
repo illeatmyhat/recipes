@@ -1,6 +1,6 @@
 ---
 # src/content/recipes/<slug>.mdx — validated by the Zod schema in
-# src/content.config.ts (v3: pattern / roles / fills, docs/recipe-model.md).
+# src/content.config.ts (pattern / roles / fills, docs/recipe-model.md).
 # Every string here is the CANONICAL (EN) text; each other locale lives in a
 # sidecar catalog <slug>.<locale>.yaml (ja-JP, zh-CN), keyed by dotted paths
 # into this frontmatter.
@@ -95,7 +95,7 @@ import Ref from '../../components/Ref.astro';
 
 {/* Method: canonical EN prose. <Ref of="role"/> renders the role's chosen
     fills as a localized list join; <Ref of="role" fill="x"/> names one fill.
-    Refs never own quantity. Guards (`when`) use src/lib/v3/guards.ts grammar.
+    Refs never own quantity. Guards (`when`) use src/lib/recipe/guards.ts grammar.
     BOUNDNESS: a step reading a min:0 role MUST have a positive
     has(role, '…') or count(role) > 0 conjunct in its `when` — build error
     otherwise.

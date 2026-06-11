@@ -9,7 +9,7 @@ boundary clean instead of discovering it later.
 
 **Engine** — everything an adopting site runs but never edits:
 
-- `src/lib/` — the v3 model, resolver, guards, i18n facades, lint suite
+- `src/lib/` — the recipe model, resolver, guards, i18n facades, lint suite
 - `src/components/`, `src/layouts/`, `src/pages/` — rendering and islands
 - `src/styles/global.css` — theme + locale CSS machinery
 - `scripts/` — hero processing, USDA fetch

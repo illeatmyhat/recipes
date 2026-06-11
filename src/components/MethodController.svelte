@@ -1,5 +1,5 @@
 <script lang="ts">
-  // The live-method island (v3). Renders nothing itself: SSR already produced
+  // The live-method island. Renders nothing itself: SSR already produced
   // the method at the default parameter point (Step.astro / Ref.astro). This
   // island subscribes to the shared `params` store and patches that DOM in
   // place as the user customizes — re-evaluating each step's `data-when` guard
@@ -10,15 +10,15 @@
   // Deliberately prop-less: the RecipeApp island already serializes the
   // bundle once, so this reads it back from the shared store (getBundle)
   // instead of shipping a further ~34 KB copy. As a child of RecipeApp it
-  // mounts after its bundle-holding siblings have run initV3; and until the
+  // mounts after its bundle-holding siblings have run initRecipe; and until the
   // store is seeded, params cannot have left the SSR defaults, so skipping
   // the patch is exact.
   import { onMount } from 'svelte';
-  import { params, getBundle } from './RecipeStoreV3';
-  import { evalGuard } from '../lib/v3/guards';
-  import { refText } from '../lib/v3/method';
+  import { params, getBundle } from './RecipeStore';
+  import { evalGuard } from '../lib/recipe/guards';
+  import { refText } from '../lib/recipe/method';
   import type { Locale } from '../lib/types';
-  import type { Params } from '../lib/v3/types';
+  import type { Params } from '../lib/recipe/types';
 
   onMount(() => {
     const body = document.getElementById('method-body');

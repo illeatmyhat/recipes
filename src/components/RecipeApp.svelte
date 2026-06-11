@@ -1,5 +1,5 @@
 <script lang="ts">
-  // The single interactive island of a v3 recipe page: the layout grid with
+  // The single interactive island of a recipe page: the layout grid with
   // every stage control (scaler, tabs, the three stage panels, nutrition) as
   // plain child components and the method (the MDX body, server-rendered) as
   // its slot. One island ⇒ the ~34 KB bundle is serialized into the page
@@ -7,39 +7,39 @@
   // as an ordinary prop, which costs nothing.
   //
   // SSR renders the whole tree at the default parameter point (readable
-  // JS-off); each child keeps its own initV3/mounted handoff, so this
+  // JS-off); each child keeps its own initRecipe/mounted handoff, so this
   // component adds no state of its own.
   import type { Snippet } from 'svelte';
-  import ServingsScalerV3 from './ServingsScalerV3.svelte';
-  import TabBarV3 from './TabBarV3.svelte';
-  import CustomizeV3 from './CustomizeV3.svelte';
-  import ShopV3 from './ShopV3.svelte';
-  import CookV3 from './CookV3.svelte';
-  import NutritionPanelV3 from './NutritionPanelV3.svelte';
+  import ServingsScaler from './ServingsScaler.svelte';
+  import TabBar from './TabBar.svelte';
+  import Customize from './Customize.svelte';
+  import Shop from './Shop.svelte';
+  import Cook from './Cook.svelte';
+  import NutritionPanel from './NutritionPanel.svelte';
   import MethodController from './MethodController.svelte';
   import { UI } from '../lib/i18n';
   import { LOCALES } from '../lib/types';
-  import type { RecipeBundle } from '../lib/v3/types';
+  import type { RecipeBundle } from '../lib/recipe/types';
 
   let { bundle, children }: { bundle: RecipeBundle; children?: Snippet } = $props();
 </script>
 
 <div class="layout">
   <div class="scaler-area">
-    <ServingsScalerV3 {bundle} />
+    <ServingsScaler {bundle} />
   </div>
 
   <div class="main">
-    <TabBarV3 />
+    <TabBar />
 
     <div class="stage-panel" data-stage-panel="customize">
-      <CustomizeV3 {bundle} />
+      <Customize {bundle} />
     </div>
     <div class="stage-panel" data-stage-panel="shop">
-      <ShopV3 {bundle} />
+      <Shop {bundle} />
     </div>
     <div class="stage-panel" data-stage-panel="cook">
-      <CookV3 {bundle} />
+      <Cook {bundle} />
     </div>
 
     <section class="method" aria-labelledby="method-heading">
@@ -53,7 +53,7 @@
 
   <aside class="nutrition-area">
     <div class="sticky">
-      <NutritionPanelV3 {bundle} />
+      <NutritionPanel {bundle} />
     </div>
   </aside>
 </div>

@@ -1,5 +1,5 @@
 /**
- * v3 resolution — the deterministic core.
+ * Resolution — the deterministic core.
  *
  * `resolve(recipe, lookup, P)` is a pure function of the final parameter record
  * `P` (not a fold of mutations), so it is order-independent by construction. It
@@ -17,10 +17,10 @@ import type {
   Amount,
   IngredientLookup,
   Params,
-  RecipeV3,
+  Recipe,
   ResolvedNotice,
   ResolvedRow,
-  ResolvedV3,
+  Resolved,
 } from './types';
 
 /** Convert a metric amount to grams (`ml` via density, which must then exist). */
@@ -28,18 +28,18 @@ function toGrams(amount: Amount, data: IngredientData): number {
   if (amount.unit === 'g') return amount.value;
   if (data.density_g_per_ml == null) {
     throw new Error(
-      `v3 resolve: ingredient "${data.id}" is used with "ml" but density_g_per_ml is null.`,
+      `recipe resolve: ingredient "${data.id}" is used with "ml" but density_g_per_ml is null.`,
     );
   }
   return amount.value * data.density_g_per_ml;
 }
 
 /** The default value of a scalar parameter (`servings` or a scalar knob). */
-function scalarDefault(recipe: RecipeV3, name: string): number {
+function scalarDefault(recipe: Recipe, name: string): number {
   if (name === 'servings') return recipe.servings.default;
   const knob = recipe.knobs?.[name];
   if (!knob || knob.kind !== 'scalar') {
-    throw new Error(`v3 resolve: proportionalTo "${name}" is not a scalar parameter.`);
+    throw new Error(`recipe resolve: proportionalTo "${name}" is not a scalar parameter.`);
   }
   return knob.default;
 }
@@ -68,7 +68,7 @@ function scaleMultiplier(scale: Record<string, number> | undefined, p: Params): 
 /**
  * Resolve a recipe at a parameter point. Pure: all I/O is behind `lookup`.
  */
-export function resolve(recipe: RecipeV3, lookup: IngredientLookup, p: Params): ResolvedV3 {
+export function resolve(recipe: Recipe, lookup: IngredientLookup, p: Params): Resolved {
   const rows: ResolvedRow[] = [];
   const notices: ResolvedNotice[] = [];
 
@@ -102,7 +102,7 @@ export function resolve(recipe: RecipeV3, lookup: IngredientLookup, p: Params): 
       } else {
         if (!fill.amount) {
           throw new Error(
-            `v3 resolve: additive role "${roleId}" fill "${fillId}" has no amount.`,
+            `recipe resolve: additive role "${roleId}" fill "${fillId}" has no amount.`,
           );
         }
         base = fill.amount;
@@ -146,7 +146,7 @@ export function resolve(recipe: RecipeV3, lookup: IngredientLookup, p: Params): 
 }
 
 /** The default parameter point: servings/knob/role defaults. Renders statically (SSR). */
-export function defaultParams(recipe: RecipeV3): Params {
+export function defaultParams(recipe: Recipe): Params {
   const knobs: Record<string, string | number | boolean> = {};
   for (const [name, knob] of Object.entries(recipe.knobs ?? {})) {
     knobs[name] = knob.default;

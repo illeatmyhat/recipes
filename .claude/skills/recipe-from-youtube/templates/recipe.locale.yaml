@@ -1,6 +1,6 @@
 # src/content/recipes/<slug>.<locale>.yaml — one such catalog per locale in
 # CATALOG_LOCALES (ja-JP, zh-CN). Flat map of dotted paths into the canonical
-# EN frontmatter/body; merged at build by src/lib/v3/i18n.ts. EVERY
+# EN frontmatter/body; merged at build by src/lib/recipe/i18n.ts. EVERY
 # localizable key authored in the MDX needs an entry here — a recipe
 # declaring the locale with a missing key FAILS THE BUILD. Translate
 # naturally, not literally; diverge from the canonical wherever local market
@@ -33,7 +33,7 @@ roles.<role_id>.fills.<fill_id>.alias: <prose name>
 
 # Method steps — templates for the MDX body's <Step id> elements. `{role}`
 # renders the role's chosen fills as a list join (each locale's joiner lives
-# in src/lib/v3/names.ts); `{role:fill}` names one fill. Place each read
+# in src/lib/recipe/names.ts); `{role:fill}` names one fill. Place each read
 # where this language's grammar wants it; dropping a read the EN sentence
 # has is fine (parity lint warns for review, never blocks). Placeholders
 # must be EXACTLY {role} or {role:fill} — anything else fails the build.

@@ -1,5 +1,5 @@
 # zh-CN catalog for weight-loss-stew. Canonical EN lives in weight-loss-stew.mdx;
-# keys are dotted paths into its frontmatter. Merged at build by src/lib/v3/i18n.ts.
+# keys are dotted paths into its frontmatter. Merged at build by src/lib/recipe/i18n.ts.
 title: 高饱腹减脂炖菜
 customize_title: 定制你的一锅
 pattern: >-

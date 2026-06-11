@@ -1,11 +1,11 @@
 ---
 name: recipe-from-youtube
-description: Create a new recipe for this Astro recipe site from a YouTube cooking video (URL or pasted transcript). Writes a v3 recipe (pattern/roles/fills, canonical-EN MDX + a sidecar catalog per locale: ja-JP and zh-CN) plus any missing ingredient YAML files (incl. per-locale overlays), sources nutrition from USDA SR Legacy, converts units to metric, and processes the hero image. Use when the user wants to add/create a recipe, turn a YouTube video or transcript into a recipe, or mentions importing a recipe from a video.
+description: Create a new recipe for this Astro recipe site from a YouTube cooking video (URL or pasted transcript). Writes a recipe (pattern/roles/fills, canonical-EN MDX + a sidecar catalog per locale: ja-JP and zh-CN) plus any missing ingredient YAML files (incl. per-locale overlays), sources nutrition from USDA SR Legacy, converts units to metric, and processes the hero image. Use when the user wants to add/create a recipe, turn a YouTube video or transcript into a recipe, or mentions importing a recipe from a video.
 ---
 
 # Recipe from a YouTube transcript
 
-Turns a cooking video into a fully-resolved **v3 recipe** in this repo. Read
+Turns a cooking video into a fully-resolved recipe in this repo. Read
 `CLAUDE.md` first for the data pipeline and
 [docs/recipe-model.md](../../../docs/recipe-model.md) for the model this
 authors against (pattern / roles / fills — it governs every choice below).
@@ -75,7 +75,7 @@ Work the checklist top to bottom. Paths are relative to the project root.
      fills partition it; a fill's own `amount` overrides its full-equivalent);
      fill-level amounts only ⇒ additive (each chosen fill adds its own).
    - **Method** is `<Step id title? when?>` / `<Ref of="role" fill?/>` inside
-     `<ol class="steps">`. Guards use the grammar in `src/lib/v3/guards.ts`
+     `<ol class="steps">`. Guards use the grammar in `src/lib/recipe/guards.ts`
      (`has(role, 'fill')`, `count(role)`, knob names, `&&`/`||`/`!`,
      comparisons).
    - **Boundness (build error)**: a step reading a `min: 0` role must carry a
@@ -117,7 +117,7 @@ Work the checklist top to bottom. Paths are relative to the project root.
    `<slug>.<locale>.hashes.yaml` per catalog — commit them; never edit by hand.
 
 9. **Verify — the gate.** `npm run check` (must be **0/0/0**) and a plain
-   `npm run build` whose output shows **no v3 lint warnings** for your recipe
+   `npm run build` whose output shows **no recipe lint warnings** for your recipe
    (read-set parity, stale/orphaned entries, roles read by no step). Missing
    catalog keys, boundness violations, and malformed placeholders fail the
    build outright. The recipe auto-appears on the index and at
@@ -138,7 +138,7 @@ Work the checklist top to bottom. Paths are relative to the project root.
 
 ## Files in this skill
 
-- `templates/recipe.mdx` — v3 recipe skeleton (frontmatter + Step/Ref method).
+- `templates/recipe.mdx` — recipe skeleton (frontmatter + Step/Ref method).
 - `templates/recipe.locale.yaml` — per-locale catalog skeleton (one per catalog locale).
 - `templates/ingredient.yaml` — ingredient DB entry (nutrition + aisle); pair
   with an overlay file per non-inline locale (see the template's footer note).

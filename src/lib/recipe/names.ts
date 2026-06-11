@@ -1,5 +1,5 @@
 /**
- * Names in prose (v3).
+ * Names in prose.
  *
  * The catalog/DB name is a *canonical* name, not a *sentence* name: USDA names
  * are Title-Cased and some carry commas/parentheticals ("Salt, table";
@@ -25,7 +25,7 @@ export function localizeAll(value: string): Localized {
 /**
  * Humanize an ingredient id for fallback display: `smoked_paprika` →
  * `Smoked paprika`. The single source for every missing-ingredient name
- * (db.ts, RecipeStoreV3.ts, method.ts) — prose contexts run
+ * (db.ts, RecipeStore.ts, method.ts) — prose contexts run
  * the result through {@link normalizeProse}, so display stays capitalized and
  * prose stays lower-case from one definition.
  */

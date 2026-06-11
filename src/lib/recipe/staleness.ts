@@ -1,5 +1,5 @@
 /**
- * Catalog staleness lint (v3, #4) — the gettext "fuzzy" mechanism.
+ * Catalog staleness lint (#4) — the gettext "fuzzy" mechanism.
  *
  * A catalog is keyed by stable IDs, so when the canonical EN text changes the
  * old translation keeps matching its key and ships silently. To catch that,
@@ -56,7 +56,7 @@ export function lintCatalogStaleness(
   const orphans = Object.keys(catalog).filter((k) => sources[k] === undefined);
   if (orphans.length > 0) {
     console.warn(
-      `v3 i18n: recipe "${slug}" ${locale} catalog key(s) match no canonical source ` +
+      `recipe i18n: recipe "${slug}" ${locale} catalog key(s) match no canonical source ` +
         `(typo'd path, or the EN text was removed): ${orphans.join(', ')}`,
     );
   }
@@ -71,13 +71,13 @@ export function lintCatalogStaleness(
       ...keys.map((k) => `${k}: "${hashSource(sources[k] as string)}"`),
     ];
     writeFileSync(file, lines.join('\n') + '\n');
-    console.warn(`v3 i18n: refreshed ${keys.length} source hashes → ${slug}.${locale}.hashes.yaml`);
+    console.warn(`recipe i18n: refreshed ${keys.length} source hashes → ${slug}.${locale}.hashes.yaml`);
     return;
   }
 
   if (!existsSync(file)) {
     console.warn(
-      `v3 i18n: recipe "${slug}" has no ${slug}.${locale}.hashes.yaml — translation staleness ` +
+      `recipe i18n: recipe "${slug}" has no ${slug}.${locale}.hashes.yaml — translation staleness ` +
         `cannot be checked. Generate it: REFRESH_CATALOG_HASHES=1 npm run build`,
     );
     return;
@@ -90,13 +90,13 @@ export function lintCatalogStaleness(
   const unhashed = keys.filter((k) => stored[k] === undefined);
   if (stale.length > 0) {
     console.warn(
-      `v3 i18n: recipe "${slug}" ${locale} translation(s) STALE — the EN source changed ` +
+      `recipe i18n: recipe "${slug}" ${locale} translation(s) STALE — the EN source changed ` +
         `underneath: ${stale.join(', ')}. Re-review the ${locale} text, then refresh the hashes.`,
     );
   }
   if (unhashed.length > 0) {
     console.warn(
-      `v3 i18n: recipe "${slug}" ${locale} translation(s) have no source hash yet: ` +
+      `recipe i18n: recipe "${slug}" ${locale} translation(s) have no source hash yet: ` +
         `${unhashed.join(', ')}. Refresh: REFRESH_CATALOG_HASHES=1 npm run build`,
     );
   }

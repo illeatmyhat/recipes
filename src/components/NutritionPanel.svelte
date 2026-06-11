@@ -1,10 +1,10 @@
 <script lang="ts">
-  // The sacred nutrition panel, v3. Same FDA layout and per-ingredient
-  // breakdown as v1, but driven by the live client-resolved store: swapping a
-  // fill or turning a knob re-resolves and these numbers move in real time.
+  // The nutrition panel: FDA layout with a per-ingredient breakdown, driven
+  // by the live client-resolved store — swapping a fill or turning a knob
+  // re-resolves and these numbers move in real time.
   import { onMount } from 'svelte';
-  import { locale } from './RecipeStore';
-  import { params, resolved, resolveBundle, initV3 } from './RecipeStoreV3';
+  import { locale } from './LocaleStore';
+  import { params, resolved, resolveBundle, initRecipe } from './RecipeStore';
   import {
     NUTRIENT_UNITS,
     scaleNutrition,
@@ -15,13 +15,13 @@
   } from '../lib/nutrition';
   import { NUTRIENT_LABELS, t } from '../lib/i18n';
   import type { NutrientKey, NutritionFacts, Localized } from '../lib/types';
-  import type { RecipeBundle } from '../lib/v3/types';
+  import type { RecipeBundle } from '../lib/recipe/types';
 
   let { bundle }: { bundle: RecipeBundle } = $props();
 
   let mounted = $state(false);
   onMount(() => {
-    initV3(bundle);
+    initRecipe(bundle);
     mounted = true;
   });
 

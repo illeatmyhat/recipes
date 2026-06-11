@@ -1,30 +1,30 @@
 <script lang="ts">
-  // The stage tabs: Customize | Shop | Cook. Sets the shared activeTabV3, which
-  // reflects onto <html data-stage> so RecipePageV3's CSS swaps panels.
+  // The stage tabs: Customize | Shop | Cook. Sets the shared activeTab, which
+  // reflects onto <html data-stage> so RecipePage's CSS swaps panels.
   import { onMount } from 'svelte';
-  import { locale } from './RecipeStore';
-  import { activeTabV3, initV3Tabs, TABS_V3, type TabV3 } from './RecipeStoreV3';
+  import { locale } from './LocaleStore';
+  import { activeTab, initTabs, TABS, type Tab } from './RecipeStore';
   import { t, type UIKey } from '../lib/i18n';
 
   let mounted = $state(false);
   onMount(() => {
-    initV3Tabs();
+    initTabs();
     mounted = true;
   });
 
-  const active = $derived(mounted ? $activeTabV3 : 'customize');
-  const labelKey: Record<TabV3, UIKey> = { customize: 'customizeStage', shop: 'shopStage', cook: 'cookStage' };
+  const active = $derived(mounted ? $activeTab : 'customize');
+  const labelKey: Record<Tab, UIKey> = { customize: 'customizeStage', shop: 'shopStage', cook: 'cookStage' };
 </script>
 
 <div class="tabbar" role="tablist" aria-label={t('stages', $locale)}>
-  {#each TABS_V3 as tab (tab)}
+  {#each TABS as tab (tab)}
     <button
       type="button"
       role="tab"
       class="tab"
       class:active={active === tab}
       aria-selected={active === tab}
-      onclick={() => activeTabV3.set(tab)}
+      onclick={() => activeTab.set(tab)}
     >
       {t(labelKey[tab], $locale)}
     </button>

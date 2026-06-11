@@ -1,5 +1,5 @@
 # zh-CN catalog for overnight-oats. Canonical EN lives in overnight-oats.mdx;
-# keys are dotted paths into its frontmatter. Merged at build by src/lib/v3/i18n.ts.
+# keys are dotted paths into its frontmatter. Merged at build by src/lib/recipe/i18n.ts.
 title: 隔夜燕麦奇亚籽碗
 customize_title: 定制你的碗
 pattern: >-

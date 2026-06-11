@@ -7,17 +7,17 @@
   // store-walk order (STORE_SECTIONS); ingredients without aisle data fall
   // back to "other".
   import { onMount } from 'svelte';
-  import { locale } from './RecipeStore';
-  import { params, resolved, resolveBundle, initV3 } from './RecipeStoreV3';
+  import { locale } from './LocaleStore';
+  import { params, resolved, resolveBundle, initRecipe } from './RecipeStore';
   import { t, STORE_SECTIONS } from '../lib/i18n';
-  import type { RecipeBundle } from '../lib/v3/types';
+  import type { RecipeBundle } from '../lib/recipe/types';
   import type { Locale, Localized, StoreSection } from '../lib/types';
 
   let { bundle }: { bundle: RecipeBundle } = $props();
 
   let mounted = $state(false);
   onMount(() => {
-    initV3(bundle);
+    initRecipe(bundle);
     mounted = true;
   });
 

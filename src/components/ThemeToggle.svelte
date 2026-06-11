@@ -7,7 +7,7 @@
   // localStorage. While no explicit choice exists, the switch keeps following
   // the OS live (the `change` listener below).
   import { onMount } from 'svelte';
-  import { locale } from './RecipeStore';
+  import { locale } from './LocaleStore';
   import { t } from '../lib/i18n';
   import type { Theme } from '../lib/types';
 

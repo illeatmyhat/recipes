@@ -1,17 +1,17 @@
 <script lang="ts">
-  // Servings stepper for v3 — drives params.servings; the resolved store (and
+  // Servings stepper — drives params.servings; the resolved store (and
   // so the whole page) rescales live.
   import { onMount } from 'svelte';
-  import { locale } from './RecipeStore';
-  import { params, initV3, setServings } from './RecipeStoreV3';
+  import { locale } from './LocaleStore';
+  import { params, initRecipe, setServings } from './RecipeStore';
   import { t } from '../lib/i18n';
-  import type { RecipeBundle } from '../lib/v3/types';
+  import type { RecipeBundle } from '../lib/recipe/types';
 
   let { bundle }: { bundle: RecipeBundle } = $props();
 
   let mounted = $state(false);
   onMount(() => {
-    initV3(bundle);
+    initRecipe(bundle);
     mounted = true;
   });
 

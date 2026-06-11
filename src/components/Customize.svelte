@@ -12,18 +12,18 @@
   // Params never-blocked inductively from the valid default. The nutrition
   // pane is never the error channel.
   import { onMount } from 'svelte';
-  import { locale } from './RecipeStore';
-  import { params, resolved, resolveBundle, initV3, setFill, toggleFill, setKnob } from './RecipeStoreV3';
+  import { locale } from './LocaleStore';
+  import { params, resolved, resolveBundle, initRecipe, setFill, toggleFill, setKnob } from './RecipeStore';
   import { t, UI } from '../lib/i18n';
-  import { proseName } from '../lib/v3/names';
-  import type { FillT, Knob, KnobValue, Params, RecipeBundle, RoleT } from '../lib/v3/types';
+  import { proseName } from '../lib/recipe/names';
+  import type { FillT, Knob, KnobValue, Params, RecipeBundle, RoleT } from '../lib/recipe/types';
   import type { Localized } from '../lib/types';
 
   let { bundle }: { bundle: RecipeBundle } = $props();
 
   let mounted = $state(false);
   onMount(() => {
-    initV3(bundle);
+    initRecipe(bundle);
     mounted = true;
   });
 

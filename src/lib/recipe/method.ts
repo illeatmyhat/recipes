@@ -1,5 +1,5 @@
 /**
- * Method rendering (v3) — pure helpers shared by SSR and the client island.
+ * Method rendering — pure helpers shared by SSR and the client island.
  *
  * A step's prose reads roles through refs: `<Ref of="role" fill?/>` in the
  * canonical EN MDX body, and `{role}` / `{role:fill}` placeholders in the
@@ -13,7 +13,7 @@
  */
 import type { Locale } from '../types';
 import { fallbackNames, joinNames, proseName } from './names';
-import type { Fill, LoadedIngredient, RecipeV3 } from './types';
+import type { Fill, LoadedIngredient, Recipe } from './types';
 
 /**
  * The prose text of a ref at a selection point. Role-scoped (`fillId`
@@ -23,7 +23,7 @@ import type { Fill, LoadedIngredient, RecipeV3 } from './types';
  * Unknown role/fill ids throw — at build time this fails loudly on a typo.
  */
 export function refText(
-  recipe: RecipeV3,
+  recipe: Recipe,
   ingredients: Record<string, LoadedIngredient>,
   selection: Record<string, string[]>,
   roleId: string,
@@ -32,14 +32,14 @@ export function refText(
 ): string {
   const role = recipe.roles[roleId];
   if (!role) {
-    throw new Error(`v3 method: ref reads unknown role "${roleId}".`);
+    throw new Error(`recipe method: ref reads unknown role "${roleId}".`);
   }
   const nameOf = (fill: Fill): string =>
     proseName(fill, ingredients[fill.id]?.data.names ?? fallbackNames(fill.id), loc);
   if (fillId !== undefined) {
     const fill = role.fills.find((f) => f.id === fillId);
     if (!fill) {
-      throw new Error(`v3 method: ref reads unknown fill "${roleId}:${fillId}".`);
+      throw new Error(`recipe method: ref reads unknown fill "${roleId}:${fillId}".`);
     }
     return nameOf(fill);
   }
@@ -97,7 +97,7 @@ export function refSpan(roleId: string, fillId: string | undefined, loc: Locale,
  */
 export function renderStepTemplate(
   template: string,
-  recipe: RecipeV3,
+  recipe: Recipe,
   ingredients: Record<string, LoadedIngredient>,
   selection: Record<string, string[]>,
   loc: Locale,
@@ -108,7 +108,7 @@ export function renderStepTemplate(
   const leftover = template.replace(TOKEN, '');
   if (leftover.includes('{') || leftover.includes('}')) {
     throw new Error(
-      `v3 method: malformed placeholder in step template "${template}" — ` +
+      `recipe method: malformed placeholder in step template "${template}" — ` +
         `placeholders must be exactly {role} or {role:fill}.`,
     );
   }

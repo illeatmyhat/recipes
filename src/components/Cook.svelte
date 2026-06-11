@@ -8,19 +8,19 @@
   // appears under each (correct for mise en place — reads don't own
   // quantity, so nutrition is untouched).
   import { onMount } from 'svelte';
-  import { locale } from './RecipeStore';
-  import { params, resolved, resolveBundle, initV3 } from './RecipeStoreV3';
-  import { evalGuard } from '../lib/v3/guards';
+  import { locale } from './LocaleStore';
+  import { params, resolved, resolveBundle, initRecipe } from './RecipeStore';
+  import { evalGuard } from '../lib/recipe/guards';
   import { t } from '../lib/i18n';
-  import { localizeAll } from '../lib/v3/names';
-  import type { Params, RecipeBundle, ResolvedV3 } from '../lib/v3/types';
+  import { localizeAll } from '../lib/recipe/names';
+  import type { Params, RecipeBundle, Resolved } from '../lib/recipe/types';
   import type { Localized } from '../lib/types';
 
   let { bundle }: { bundle: RecipeBundle } = $props();
 
   let mounted = $state(false);
   onMount(() => {
-    initV3(bundle);
+    initRecipe(bundle);
     mounted = true;
   });
 
@@ -41,7 +41,7 @@
     rows: BucketRow[];
   }
 
-  function bucketsFor(p: Params, res: ResolvedV3): Bucket[] {
+  function bucketsFor(p: Params, res: Resolved): Bucket[] {
     const out: Bucket[] = [];
     let number = 0;
     for (const step of bundle.steps) {

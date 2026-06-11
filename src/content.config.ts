@@ -4,12 +4,12 @@
  * Recipes live in `src/content/recipes/*.mdx` so that MDX bodies, frontmatter,
  * and relative hero images all work natively. Ingredient data lives separately
  * under `/data/ingredients/*.yaml` and is merged in at build time by
- * `buildBundle` — see src/lib/v3/bundle.ts.
+ * `buildBundle` — see src/lib/recipe/bundle.ts.
  *
- * Frontmatter is the v3 shape (pattern/roles/fills, docs/recipe-model.md):
+ * Frontmatter is the recipe-model shape (pattern/roles/fills, docs/recipe-model.md):
  * localizable fields hold the CANONICAL string; translations live in the
  * per-locale sidecar catalogs `<slug>.<locale>.yaml`, merged at build time
- * (src/lib/v3/i18n.ts).
+ * (src/lib/recipe/i18n.ts).
  */
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
