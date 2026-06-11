@@ -13,7 +13,7 @@ import { getCollection, render } from 'astro:content';
 import RecipeLayout from '../../layouts/RecipeLayout.astro';
 import RecipePage from '../../components/RecipePage.astro';
 import { buildBundle } from '../../lib/recipe/bundle';
-import { t } from '../../lib/i18n';
+import { fmt, t } from '../../lib/i18n';
 import { CANONICAL_LOCALE, perLocale } from '../../lib/types';
 
 export const getStaticPaths = (async () => {
@@ -31,7 +31,7 @@ const bundle = buildBundle(entry.data);
 const title = bundle.recipe.title;
 // The tab-title shape (separator and order) is per-locale catalog data.
 const pageTitle = perLocale((l) =>
-  t('pageTitle', l).replace('{title}', title[l]).replace('{site}', t('siteTitle', l)),
+  fmt(t('pageTitle', l), { title: title[l], site: t('siteTitle', l) }),
 );
 ---
 

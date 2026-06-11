@@ -44,16 +44,26 @@ const fill = z
     message: 'an editorial fill cannot be default: true — the default point IS the source point',
   });
 
-const role = z.object({
-  label: z.string(),
-  why: z.string(),
-  range,
-  amount: amount.optional(),
-  proportionalTo: z.string().optional(),
-  fixed: z.boolean().optional(),
-  scale: z.record(z.string(), z.number()).optional(),
-  fills: z.array(fill).nonempty(),
-});
+const role = z
+  .object({
+    label: z.string(),
+    why: z.string(),
+    range,
+    amount: amount.optional(),
+    proportionalTo: z.string().optional(),
+    fixed: z.boolean().optional(),
+    scale: z.record(z.string(), z.number()).optional(),
+    fills: z.array(fill).nonempty(),
+  })
+  // A zero-freedom role (min covers every fill) renders static, with no
+  // toggles — so a non-default fill would be permanently unselectable:
+  // absent from the default selection and from every surface, with only an
+  // unrendered below-min notice to show for it. (Corollary: an editorial
+  // fill, which can never be default, cannot sit in a zero-freedom role.)
+  .refine((r) => r.range.min < r.fills.length || r.fills.every((f) => f.default === true), {
+    message:
+      'a role whose min covers every fill is zero-freedom — every fill must be default: true',
+  });
 
 const knob = z.discriminatedUnion('kind', [
   z.object({

@@ -146,6 +146,17 @@ export function t(key: UIKey, locale: Locale): string {
   return CATALOGS[locale][`ui.${key}`] as string;
 }
 
+/**
+ * Fill `{token}` placeholders in a catalog phrase. The one sanctioned way to
+ * interpolate content into a phrase: the replacement is a function, so `$`
+ * sequences in CONTENT (a recipe title, an attribution name) are never
+ * expanded as String.replace patterns, and inserted values are not re-scanned
+ * for tokens. An unknown token stays visible — a catalog typo should be seen.
+ */
+export function fmt(phrase: string, vars: Record<string, string>): string {
+  return phrase.replace(/\{(\w+)\}/g, (m, k: string) => vars[k] ?? m);
+}
+
 /** FDA-style nutrient labels, localized. */
 export const NUTRIENT_LABELS: Record<NutrientKey, Localized> = Object.fromEntries(
   NUTRIENT_KEYS.map((k) => [k, phraseAt(`nutrients.${k}`)]),

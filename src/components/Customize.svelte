@@ -14,7 +14,7 @@
   import { onMount } from 'svelte';
   import { locale } from './LocaleStore';
   import { params, resolved, resolveBundle, initRecipe, setFill, toggleFill, setKnob } from './RecipeStore';
-  import { t, UI } from '../lib/i18n';
+  import { fmt, t, UI } from '../lib/i18n';
   import { proseName } from '../lib/recipe/names';
   import type { FillT, Knob, KnobValue, Params, RecipeBundle, RoleT } from '../lib/recipe/types';
   import type { Localized } from '../lib/types';
@@ -215,7 +215,7 @@
       </summary>
       <p class="why">{L(role.why)}</p>
       {#if over !== null}
-        <p class="advisory">{t('aboveMax', $locale).replace('{n}', String(over))}</p>
+        <p class="advisory">{fmt(t('aboveMax', $locale), { n: String(over) })}</p>
       {/if}
 
       <ul class="fills" class:base={kind === 'base'}>

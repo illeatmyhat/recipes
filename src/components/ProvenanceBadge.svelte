@@ -8,7 +8,7 @@
   // source point. Locale switching is CSS-only (`.lang-*` siblings under
   // <html data-locale>), so the badge stays correct with JS disabled.
   import { departs } from './RecipeStore';
-  import { UI } from '../lib/i18n';
+  import { fmt, UI } from '../lib/i18n';
   import { LOCALES, type Localized } from '../lib/types';
 
   let { source }: { source: Localized } = $props();
@@ -17,7 +17,7 @@
 <p class="badge" class:departed={$departs} aria-live="polite">
   {#each LOCALES as loc (loc)}
     <span class={`lang-${loc}`}>
-      {($departs ? UI.yourVariation[loc] : UI.asTaughtBy[loc]).replace('{name}', source[loc])}
+      {fmt($departs ? UI.yourVariation[loc] : UI.asTaughtBy[loc], { name: source[loc] })}
     </span>
   {/each}
 </p>
