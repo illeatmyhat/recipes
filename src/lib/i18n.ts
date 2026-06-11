@@ -18,6 +18,7 @@ import {
   type Locale,
   type Localized,
   type NutrientKey,
+  type Store,
   type StoreSection,
 } from './types';
 import { NUTRIENT_KEYS } from './nutrition';
@@ -101,12 +102,15 @@ const UI_KEYS = [
 export type UIKey = (typeof UI_KEYS)[number];
 
 /**
- * Store-walk order of the shopping-list sections (labels live in the
- * catalogs). `online` leads: order-ahead items need lead time, so they
- * surface before the physical walk begins.
+ * Errand order of the shopping list's stores (Q15; labels live in the
+ * catalogs). Order-ahead leads: its defining property is lead time, so the
+ * cook must see it before any trip begins; the everyday supermarket comes
+ * before the specialty stop.
  */
+const STORE_ORDER: readonly Store[] = ['online', 'primary', 'specialty'];
+
+/** Store-walk order of the shopping-list sections (labels live in the catalogs). */
 const SECTION_ORDER: readonly StoreSection[] = [
-  'online',
   'produce',
   'meat_seafood',
   'tofu_soy',
@@ -128,6 +132,7 @@ const SECTION_ORDER: readonly StoreSection[] = [
   const expected = [
     ...UI_KEYS.map((k) => `ui.${k}`),
     ...NUTRIENT_KEYS.map((k) => `nutrients.${k}`),
+    ...STORE_ORDER.map((k) => `stores.${k}`),
     ...SECTION_ORDER.map((k) => `sections.${k}`),
   ].sort();
   for (const locale of LOCALES) {
@@ -163,6 +168,16 @@ export function t(key: UIKey, locale: Locale): string {
 export const NUTRIENT_LABELS: Record<NutrientKey, Localized> = Object.fromEntries(
   NUTRIENT_KEYS.map((k) => [k, phraseAt(`nutrients.${k}`)]),
 ) as Record<NutrientKey, Localized>;
+
+/**
+ * Store labels in errand order — the shopping list's top-level groups (Q15).
+ * Each locale's catalog names its own stores (the specialty stop especially:
+ * what it is differs by market); which store carries a food is per-locale
+ * data on the ingredient (`aisle`, see src/lib/types.ts).
+ */
+export const STORES: ReadonlyArray<{ id: Store; label: Localized }> = STORE_ORDER.map(
+  (id) => ({ id, label: phraseAt(`stores.${id}`) }),
+);
 
 /**
  * Supermarket section labels in store-walk order — the shopping list renders

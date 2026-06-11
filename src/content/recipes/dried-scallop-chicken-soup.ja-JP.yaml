@@ -36,7 +36,8 @@ roles.frying_oil.why: 戻した貝柱を炒るための小さじ1。乾いた熱
 
 roles.broth.label: スープ
 roles.broth.why: 土台のキャンバス。チキンブロス1缶と湯——そして肝心なのは貝柱の戻し汁。せっかく引き出した旨味を一滴も流しに捨てない。
-roles.broth.fills.chicken_broth.note: 標準的な1缶（約400g）。残りの水分は湯6〜8カップと、戻し汁の全部。
+roles.broth.fills.chicken_broth.note: 標準的な1缶（約400g）。
+roles.broth.fills.water.note: 湯6〜8カップ——沸かしておくと時短——それに貝柱の戻し汁を一滴残らず。
 
 roles.thickener.label: 水溶き粉
 roles.thickener.why: 看板のとろみ。フカヒレスープは昔から食感の料理で、あの艶やかでスプーンに絡む濃度はコーンスターチの仕事——必ず冷水で溶いてから。熱いスープに粉のまま振り入れるのは厳禁。
@@ -67,17 +68,17 @@ steps.crush_soak: "{scallops}をペンチで砕く——先に砕くのが戻し
 steps.cut_chicken.title: 鶏肉を切る
 steps.cut_chicken: "{chicken}の筋と脂を除いて薄切りにし、重ねて細切りにする。半解凍の肉のほうが格段にきれいに切れる。"
 steps.marinate.title: 下味をもみ込む
-steps.marinate: "{chicken}に{marinade}と水大さじ2を加え、「混ざった」を超えてさらに混ぜる——下味が肉に消えて、ダマがなくなるまで。"
+steps.marinate: "{chicken}に{marinade}を加え——水は大さじ2ほど——「混ざった」を超えてさらに混ぜる：下味が肉に消えて、ダマがなくなるまで。"
 steps.shred.title: 貝柱をほぐす
 steps.shred: "戻した{scallops}をボウルの上で絞って水気を切る——戻し汁は一滴残らず取っておく。あとでスープに戻す旨味そのものだ。手かスプーンで、大きな塊がなくなるまでほぐす。"
 steps.toast.title: 貝柱を炒る
 steps.toast: "鍋に{frying_oil}を弱めの火で熱し、ほぐした{scallops}を40〜50秒、くっつかないよう混ぜながら炒める。この乾煎りが、浸け置きだけでは出ない香りを呼び覚ます。"
 steps.build_broth.title: スープを組み立てる
-steps.build_broth: "取っておいた戻し汁、{broth}、湯6〜8カップ（約1.5〜2L）を注ぐ——沸かしておいた湯なら時短になる。全体を沸騰させる。"
+steps.build_broth: "取っておいた戻し汁、{broth:chicken_broth}、それに熱い{broth:water}6〜8カップ（約1.5〜2L）を注ぐ——沸かしておいた湯なら時短になる。全体を沸騰させる。"
 steps.steep.title: 蒸らす
 steps.steep: "蓋をして火を止め、5分置く。{scallops}が残りの旨味をスープに放つ時間。"
 steps.mix_slurry.title: 水溶き粉を作る
-steps.mix_slurry: "{thickener}を冷水大さじ約5で滑らかになるまで溶く。熱いスープに粉のまま入れるのは厳禁——ひとつの大きなダマになる。水溶きの工程は省略不可。"
+steps.mix_slurry: "{thickener:cornstarch}を冷たい{thickener:water}大さじ約5で滑らかになるまで溶く。熱いスープに粉のまま入れるのは厳禁——ひとつの大きなダマになる。水溶きの工程は省略不可。"
 steps.thicken.title: 沸騰させずにとろみ付け
 steps.thicken: "火を最弱に——あるいは止める。鍋底をかき混ぜながら水溶き粉を細く注ぎ入れ、沈殿させない。様子を見ながら：薄めはスープ感覚、濃いめはスプーンに絡む。足りなければもう一度水溶き粉を——決めるのは自分。"
 steps.season.title: 味付け

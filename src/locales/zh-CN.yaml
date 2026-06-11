@@ -69,7 +69,11 @@ nutrients.protein: 蛋白质
 nutrients.calcium: 钙
 nutrients.iron: 铁
 
-sections.online: 网上购买
+# 购物的「行程」分组（Q15）。
+stores.online: 提前网购
+stores.primary: 常去的超市
+stores.specialty: 专门店
+
 sections.produce: 蔬果
 sections.meat_seafood: 肉类与海鲜
 sections.tofu_soy: 豆制品

@@ -69,7 +69,11 @@ nutrients.protein: たんぱく質
 nutrients.calcium: カルシウム
 nutrients.iron: 鉄分
 
-sections.online: 通販で注文
+# 買い物の「行き先」グループ（Q15）。
+stores.online: お取り寄せ
+stores.primary: いつものスーパー
+stores.specialty: 専門店
+
 sections.produce: 青果
 sections.meat_seafood: 精肉・鮮魚
 sections.tofu_soy: 豆腐・大豆製品

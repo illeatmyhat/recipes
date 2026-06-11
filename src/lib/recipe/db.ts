@@ -32,6 +32,7 @@ import { fallbackNames } from './names';
 import {
   LOCALES,
   perLocale,
+  type AislePlacement,
   type Locale,
   type Localized,
   type MarketGuidance,
@@ -59,13 +60,25 @@ interface IngredientCore {
   density_g_per_ml: number | null;
 }
 
+/**
+ * `aisle` as authored: a bare section is shorthand for the primary store
+ * (Q15) — `aisle: canned` and `aisle: { store: specialty, section: canned }`
+ * are both valid, and every pre-store file keeps meaning what it meant.
+ */
+type RawAisle = StoreSection | AislePlacement;
+
 /** A per-locale file `data/ingredients/<locale>/<id>.yaml`. */
 interface IngredientLocaleData {
   names?: string;
   aliases?: string[];
-  aisle?: StoreSection;
+  aisle?: RawAisle;
   /** This locale's market guidance (authored in its language, unkeyed). */
   availability?: RawGuidance;
+}
+
+/** Normalize an authored aisle: bare section ⇒ the primary store. */
+function normalizeAisle(raw: RawAisle): AislePlacement {
+  return typeof raw === 'string' ? { store: 'primary', section: raw } : raw;
 }
 
 /** Normalize authored guidance: bare-string notes become MarketNote objects. */
@@ -133,14 +146,14 @@ function assemble(id: string, core: IngredientCore): IngredientData {
     names[locale] = loc.names;
     if (loc.aliases !== undefined) data.aliases[locale] = loc.aliases;
     if (loc.aisle !== undefined) {
-      (data.aisle ??= {} as Record<Locale, StoreSection>)[locale] = loc.aisle;
+      (data.aisle ??= {} as Record<Locale, AislePlacement>)[locale] = normalizeAisle(loc.aisle);
     }
     if (loc.availability !== undefined) {
       (data.availability ??= {})[locale] = normalizeGuidance(loc.availability);
     }
   }
   // Aisle is all-or-nothing across locales: store geography either exists for
-  // every market or the shopping list groups the food under "other" everywhere.
+  // every market or the food is a not-bought ingredient (tap water) everywhere.
   if (data.aisle) {
     const missing = LOCALES.filter((l) => data.aisle?.[l] === undefined);
     if (missing.length > 0) {

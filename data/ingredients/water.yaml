@@ -1,0 +1,21 @@
+id: water
+# The Q12/Q15 decision says "zero nutrition", but the SR-Legacy-only hard
+# rule wins: SR's tap-water entry carries trace minerals (sodium 4 mg,
+# calcium 3 mg per 100 g) and they are kept as sourced — still effectively
+# zero at soup scale, and honest about where every number comes from.
+fdc_id: 173647
+nutrition:
+  per_100g:
+    calories: 0
+    fat: 0
+    saturated_fat: 0
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 4
+    carbohydrates: 0
+    fiber: 0
+    sugars: 0
+    protein: 0
+    calcium: 3
+    iron: 0
+density_g_per_ml: 1

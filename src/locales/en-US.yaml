@@ -71,7 +71,11 @@ nutrients.protein: Protein
 nutrients.calcium: Calcium
 nutrients.iron: Iron
 
-sections.online: Order online
+# Errand groups (Q15): the stores a shopping trip is split across.
+stores.online: Order ahead
+stores.primary: Your supermarket
+stores.specialty: Specialty shop
+
 sections.produce: Produce
 sections.meat_seafood: Meat & seafood
 sections.tofu_soy: Tofu & soy

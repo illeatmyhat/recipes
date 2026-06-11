@@ -4,7 +4,9 @@ aliases:
   - Lao chou
   - 老抽
   - Black soy sauce
-aisle: international
+# A Chinese-grocery bottle, not a mainstream-supermarket one — a specialty
+# errand, no longer fudged as an "international" shelf of the primary store.
+aisle: { store: specialty, section: condiments }
 availability:
   notes:
     - text: Dark soy ("lao chou") is thicker, darker, and less salty than regular soy sauce — the two are not interchangeable. Most mainstream supermarkets carry only the regular kind; any Chinese grocery (or online) has it.

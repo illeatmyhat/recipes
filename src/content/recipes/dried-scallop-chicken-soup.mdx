@@ -64,7 +64,7 @@ roles:
       inside, cornstarch and a splash of water wrap each strip in a coat that
       seals in moisture, and a pinch of baking soda nudges the meat's pH
       toward that springy restaurant "bite".
-    range: { min: 3 }
+    range: { min: 4 }
     fills:
       - id: salt
         amount: { value: 3, unit: g }
@@ -76,6 +76,9 @@ roles:
         note: >-
           One tablespoon, stirred until it disappears into the meat —
           under-stirred cornstarch turns to lumps.
+      - id: water
+        amount: { value: 30, unit: ml }
+        default: true
       - id: baking_soda
         amount: { value: 1, unit: g }
         default: true
@@ -110,21 +113,25 @@ roles:
       The canvas. One can of chicken broth plus hot water — and, crucially,
       the scallop soaking water, so none of the flavor you just unlocked
       goes down the sink.
-    range: { min: 1, max: 1 }
+    range: { min: 2, max: 2 }
     fills:
       - id: chicken_broth
         amount: { value: 411, unit: g }
         default: true
+        note: One standard 14.5-oz can.
+      - id: water
+        amount: { value: 1900, unit: ml }
+        default: true
         note: >-
-          One standard 14.5-oz can. The rest of the liquid is 6–8 cups of hot
-          water plus every drop of the soaking water.
+          6–8 cups of hot water — pre-boiled saves time — plus every drop of
+          the scallop soaking water.
   thickener:
     label: Slurry
     why: >-
       The signature body. Shark fin soup was always a texture dish, and the
       glossy, spoon-coating thickness is cornstarch's job — always mixed
       into a cold-water slurry first, never sprinkled dry into hot soup.
-    range: { min: 1, max: 1 }
+    range: { min: 2, max: 2 }
     scale: { 'thickness.0.5': 0.5, 'thickness.0.75': 0.75, 'thickness.1.25': 1.25, 'thickness.1.5': 1.5 }
     fills:
       - id: cornstarch
@@ -133,6 +140,9 @@ roles:
         note: >-
           About 7 tablespoons, mixed with 5 of cold water. Dad's rule — if
           it isn't thick enough, just make more slurry.
+      - id: water
+        amount: { value: 75, unit: ml }
+        default: true
   salinity:
     label: Savory sauce
     why: >-
@@ -225,8 +235,8 @@ import Ref from '../../components/Ref.astro';
 </Step>
 
 <Step id="marinate" title="Velvet the chicken">
-  Mix the <Ref of="chicken" /> with the <Ref of="marinade" /> and two
-  tablespoons of water, stirring well past "combined" — the marinade should
+  Mix the <Ref of="chicken" /> with the <Ref of="marinade" /> — the water is
+  about two tablespoons — stirring well past "combined": the marinade should
   disappear into the meat with no lumps left.
 </Step>
 
@@ -244,9 +254,9 @@ import Ref from '../../components/Ref.astro';
 </Step>
 
 <Step id="build_broth" title="Build the broth">
-  Pour in the saved soaking water, the <Ref of="broth" />, and 6–8 cups
-  (about 1.5–2 L) of hot water — pre-boiled water saves time. Bring it all to
-  a boil.
+  Pour in the saved soaking water, the <Ref of="broth" fill="chicken_broth" />,
+  and 6–8 cups (about 1.5–2 L) of hot <Ref of="broth" fill="water" /> —
+  pre-boiled water saves time. Bring it all to a boil.
 </Step>
 
 <Step id="steep" title="Let it steep">
@@ -255,9 +265,10 @@ import Ref from '../../components/Ref.astro';
 </Step>
 
 <Step id="mix_slurry" title="Mix the slurry">
-  Stir the <Ref of="thickener" /> into about 5 tablespoons of cold water
-  until smooth. Never add it dry to hot soup — it seizes into one big lump;
-  the slurry step is non-negotiable.
+  Stir the <Ref of="thickener" fill="cornstarch" /> into about 5 tablespoons
+  of cold <Ref of="thickener" fill="water" /> until smooth. Never add it dry
+  to hot soup — it seizes into one big lump; the slurry step is
+  non-negotiable.
 </Step>
 
 <Step id="thicken" title="Thicken off the boil">

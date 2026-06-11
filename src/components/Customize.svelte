@@ -38,8 +38,7 @@
   // Order: Base tier first, then substitutable required roles, then add-ons.
   const ordered = $derived.by<Entry[]>(() => {
     const all: Entry[] = Object.entries(bundle.recipe.roles).map(([id, role]) => ({ id, role }));
-    const isBase = (r: RoleT<Localized>) => r.range.min >= 1 && r.fills.length === 1;
-    const rank = (e: Entry) => (isBase(e.role) ? 0 : e.role.range.min >= 1 ? 1 : 2);
+    const rank = (e: Entry) => (kindOf(e.role) === 'base' ? 0 : e.role.range.min >= 1 ? 1 : 2);
     return all.sort((a, b) => rank(a) - rank(b));
   });
 
@@ -54,8 +53,11 @@
       .filter((r) => r.role === roleId && r.id === id)
       .reduce((s, r) => s + r.grams, 0);
 
+  // 'base' = zero degrees of freedom: the floor admits every fill, so nothing
+  // is a choice (single-fill skeletons AND all-mandatory multi-fill roles like
+  // a slurry's cornstarch + water) — rendered static, no fake toggles.
   function kindOf(role: RoleT<Localized>): 'base' | 'radio' | 'multi' {
-    if (role.range.min >= 1 && role.fills.length === 1) return 'base'; // skeleton
+    if (role.range.min >= role.fills.length) return 'base'; // skeleton
     if (role.range.min === 0) return 'multi'; // add-on: toggle on/off
     return (role.range.max ?? Infinity) === 1 ? 'radio' : 'multi'; // pick-one vs pick-many
   }
@@ -108,7 +110,7 @@
 
   function cardinalityHint(role: RoleT<Localized>): string {
     const max = role.range.max;
-    if (role.range.min >= 1 && role.fills.length === 1) return t('required', $locale);
+    if (kindOf(role) === 'base') return t('required', $locale);
     if (max === 1) return '';
     if (max === undefined) return '';
     return `${t('pickUpTo', $locale)} ${max}`;
@@ -218,11 +220,14 @@
           {@const on = picked(id, fill.id)}
           <li>
             {#if kind === 'base'}
+              <!-- Single-fill skeletons keep the role label as the row name;
+                   a multi-fill base role names each mandatory ingredient. -->
               <div class="fill static">
                 <span class="fill-main">
-                  <span class="fill-name">{fill.alias ? L(fill.alias) : L(role.label)}</span>
+                  <span class="fill-name">{fill.alias ? L(fill.alias) : role.fills.length === 1 ? L(role.label) : fillName(fill)}</span>
                   {#if on}<span class="fill-amt">{Math.round(gramsOf(id, fill.id))} g</span>{/if}
                 </span>
+                {#if fill.why}<span class="fill-why">{L(fill.why)}</span>{/if}
                 {#if fill.note}<span class="fill-note">{L(fill.note)}</span>{/if}
               </div>
             {:else}

@@ -4,7 +4,9 @@ aliases:
   - Conpoy
   - Dried scallop
   - 瑤柱
-aisle: online
+# Not on US supermarket shelves — an order-ahead errand (the note also points
+# at Chinese groceries; the store dimension records the honest default).
+aisle: { store: online, section: dry_goods }
 availability:
   notes:
     - text: Not a mainstream-supermarket item in the US — buy them at a Chinese grocery (look for 瑤柱 / conpoy) or from an online specialty importer, and allow shipping time.

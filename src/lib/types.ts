@@ -111,21 +111,26 @@ export interface MarketGuidance {
 }
 
 /**
+ * Which STORE an errand belongs to (Q15, docs/recipe-model.md). The shopping
+ * list is errands, not one walk through one imaginary store: `primary` is
+ * the everyday supermarket (the default), `specialty` the market's second
+ * stop (a Chinese grocery, an Italian deli — each locale's catalog names
+ * it), and `online` is order-ahead — not on any local shelf. Stores render
+ * in `STORE_ORDER` (src/lib/i18n.ts): online FIRST (its defining property
+ * is lead time, so the cook must see it before the trip), then primary,
+ * then specialty. Display-only: resolution never reads it.
+ */
+export type Store = 'online' | 'primary' | 'specialty';
+
+/**
  * Supermarket sections the shopping list can group by. One shared id space;
  * each locale's stores pick from it independently (store geography is not an
  * invariant fact about a food — tofu is its own refrigerated soy section in
  * Japan, dairy-adjacent in the US; soy sauce is a major aisle in Japan, an
  * international shelf-slice in the US). Labels live in `STORE_SECTIONS`
  * (src/lib/i18n.ts), in store-walk order.
- *
- * `online` sits OUTSIDE the physical walk: the food is not on that market's
- * shelves and must be ordered ahead ('nduja in the US). It sorts FIRST —
- * its defining property is lead time, so the cook must see it before the
- * trip, not after the produce. Pair it with an `important` availability
- * note when the lead time matters.
  */
 export type StoreSection =
-  | 'online'
   | 'produce'
   | 'meat_seafood'
   | 'tofu_soy'
@@ -137,6 +142,16 @@ export type StoreSection =
   | 'oils'
   | 'international'
   | 'other';
+
+/**
+ * Where one locale buys a food: a store plus that store's section. In the
+ * YAML a bare section string is shorthand for the primary store (normalized
+ * at load, db.ts) — every pre-store ingredient file stays valid as-is.
+ */
+export interface AislePlacement {
+  store: Store;
+  section: StoreSection;
+}
 
 /**
  * An ingredient as assembled at load (src/lib/recipe/db.ts). On disk it is a
@@ -159,10 +174,11 @@ export interface IngredientData {
   /** Grams per millilitre. Required to weigh `ml` ingredients; null for solids. */
   density_g_per_ml: number | null;
   /**
-   * Which supermarket section carries this food, per viewer locale.
-   * All-or-nothing across locales (gated at load); when absent entirely the
-   * shopping list groups the food under "other".
+   * Where this food is bought (store + section), per viewer locale.
+   * All-or-nothing across locales (gated at load). Absent entirely means the
+   * food is NOT bought (water from the tap): it is excluded from the
+   * shopping list while remaining a real ingredient everywhere else.
    */
-  aisle?: Record<Locale, StoreSection>;
+  aisle?: Record<Locale, AislePlacement>;
 }
 

@@ -1,0 +1,7 @@
+# ja-JP ingredient data for data/ingredients/water.yaml — locale-specific fields only.
+# aisle は意図的になし（Q15）：水は「買い物」ではないので買い物リストには
+# 出さない。Cook の分量と栄養・重量計算にはそのまま登場する。
+names: 水
+aliases:
+  - 水道水
+  - お湯

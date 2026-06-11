@@ -1,0 +1,7 @@
+# zh-CN ingredient data for data/ingredients/water.yaml — locale-specific fields only.
+# 故意不写 aisle（Q15）：水不用买，所以不进购物清单；
+# 但在 Cook 的分量和营养、重量计算里照常出现。
+names: 水
+aliases:
+  - 清水
+  - 开水

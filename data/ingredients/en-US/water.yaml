@@ -1,0 +1,8 @@
+# en-US ingredient data for data/ingredients/water.yaml — locale-specific fields only.
+# No aisle ON PURPOSE: water is not bought (Q15's aisle-less rule) — it is
+# excluded from the shopping list while staying a real ingredient in Cook
+# and the nutrition/weight math.
+names: Water
+aliases:
+  - Tap water
+  - Hot water
