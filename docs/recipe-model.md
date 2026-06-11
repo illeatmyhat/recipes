@@ -742,3 +742,23 @@ this dish's context rather than copying generic facts.
    `<details>`) that renders only when there is more to reveal. The recipe
    layer needed no change — catalog surfaces remain independently *authored
    statements* (the parity lint already legitimizes divergence).
+10. **Market unavailability — direction decided (2026-06-10), implementation
+    deferred.** Two tiers. (a) *Not on shelves but orderable* ('nduja in the
+    US): the `online` store section — outside the physical walk, sorted
+    FIRST (lead time), paired with an `important` availability note.
+    Shipped. (b) *Truly unobtainable*, including a **base** role's only fill
+    (no tofu ⇒ no mapo tofu): the invariant is that **locale stays a view
+    dimension — resolution is locale-independent, so viability is advisory,
+    never structural**. Design when needed: an ingredient locale file may
+    declare `unavailable: true` in place of `aisle` (the all-or-nothing
+    aisle gate becomes "aisle or unavailable, per locale"); build-time
+    derivation flags a recipe non-viable in locale L when some min ≥ 1 role
+    has every fill unavailable in L → per-locale banner + index badge via
+    the `.lang-*` machinery; a non-base unavailable fill gets an advisory
+    "not sold in your market" line on its Customize button but stays
+    selectable (never functionally disabled — that would make selection
+    locale-dependent). Substituting a BASE fill is out of scope by
+    doctrine: that is a different dish, i.e. a separate recipe. Deferred
+    until the DB contains a truly unobtainable ingredient — `online`
+    covers the orderable tail, and nothing in the current 38 qualifies
+    (build the shape against a real consumer, as with Q9).

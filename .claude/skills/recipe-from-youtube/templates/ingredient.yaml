@@ -41,9 +41,11 @@ density_g_per_ml: null
 #                                  # (tofu: dairy_eggs in the US, tofu_soy in JP/CN;
 #                                  # soy sauce: international in the US, condiments in
 #                                  # JP/CN). Valid ids (StoreSection, src/lib/types.ts):
-#                                  # produce, meat_seafood, tofu_soy, dairy_eggs,
-#                                  # dry_goods, canned, condiments, spices, oils,
-#                                  # international, other.
+#                                  # online, produce, meat_seafood, tofu_soy,
+#                                  # dairy_eggs, dry_goods, canned, condiments,
+#                                  # spices, oils, international, other.
+#                                  # `online` = not on this market's shelves, order
+#                                  # ahead — add an important note re: lead time.
 #   availability:                  # OPTIONAL market guidance — original content for
 #     notes:                       # this market, never a translation of another
 #       - <plain shopping note>    # locale's note. Omit when nothing useful to say.

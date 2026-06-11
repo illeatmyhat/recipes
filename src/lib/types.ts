@@ -117,8 +117,15 @@ export interface MarketGuidance {
  * Japan, dairy-adjacent in the US; soy sauce is a major aisle in Japan, an
  * international shelf-slice in the US). Labels live in `STORE_SECTIONS`
  * (src/lib/i18n.ts), in store-walk order.
+ *
+ * `online` sits OUTSIDE the physical walk: the food is not on that market's
+ * shelves and must be ordered ahead ('nduja in the US). It sorts FIRST —
+ * its defining property is lead time, so the cook must see it before the
+ * trip, not after the produce. Pair it with an `important` availability
+ * note when the lead time matters.
  */
 export type StoreSection =
+  | 'online'
   | 'produce'
   | 'meat_seafood'
   | 'tofu_soy'

@@ -100,8 +100,13 @@ const UI_KEYS = [
 /** Key of a known UI phrase. */
 export type UIKey = (typeof UI_KEYS)[number];
 
-/** Store-walk order of the shopping-list sections (labels live in the catalogs). */
+/**
+ * Store-walk order of the shopping-list sections (labels live in the
+ * catalogs). `online` leads: order-ahead items need lead time, so they
+ * surface before the physical walk begins.
+ */
 const SECTION_ORDER: readonly StoreSection[] = [
+  'online',
   'produce',
   'meat_seafood',
   'tofu_soy',
