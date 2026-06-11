@@ -4,6 +4,8 @@
 # Recipe CONTENT is localized separately, per recipe (<slug>.<locale>.yaml).
 ui.siteTitle: Recipes
 ui.siteTagline: Build-time nutrition, scaled to any serving.
+ui.languageLabel: 🇺🇸 English
+ui.siteDescription: A small collection of recipes.
 ui.recipeKicker: Recipe
 
 ui.servings: Servings

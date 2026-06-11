@@ -2,6 +2,8 @@
 # a missing key fails the build (src/lib/i18n.ts).
 ui.siteTitle: レシピ
 ui.siteTagline: 栄養成分はビルド時に算出。何食分にもスケールします。
+ui.languageLabel: 🇯🇵 日本語
+ui.siteDescription: 小さなレシピ集。
 ui.recipeKicker: レシピ
 
 ui.servings: 食数

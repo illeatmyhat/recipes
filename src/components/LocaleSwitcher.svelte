@@ -1,18 +1,14 @@
 <script lang="ts">
-  // Small island: 🇺🇸 / 🇯🇵 flag buttons. setLocale writes the shared `locale`
-  // store and remembers the choice in localStorage (the same way the theme
-  // toggle does); the store update flips <html data-locale>, so both the
-  // Svelte islands and the CSS-localized static content react instantly.
+  // Small island: a language dropdown (a native <select> — keyboard, screen
+  // reader, and mobile behavior for free, and it scales past the two-locale
+  // button row this used to be). setLocale writes the shared `locale` store
+  // and remembers the choice in localStorage (the same way the theme toggle
+  // does); the store update flips <html data-locale>, so both the Svelte
+  // islands and the CSS-localized static content react instantly.
   import { onMount } from 'svelte';
   import { locale, initLocale, setLocale } from './RecipeStore';
   import { t } from '../lib/i18n';
-  import type { Locale } from '../lib/types';
-
-  const OPTIONS: ReadonlyArray<{ code: Locale; flag: string; label: string }> = [
-    { code: 'en-US', flag: '🇺🇸', label: 'English' },
-    { code: 'ja-JP', flag: '🇯🇵', label: '日本語' },
-    { code: 'zh-CN', flag: '🇨🇳', label: '中文' },
-  ];
+  import { LOCALES, type Locale } from '../lib/types';
 
   // Locale switching needs no recipe data, so this works on any page (the
   // index included). Recipe-page islands also call initLocale (via initV3) —
@@ -20,52 +16,48 @@
   onMount(() => initLocale());
 </script>
 
-<div class="locale" role="group" aria-label={t('language', $locale)}>
-  {#each OPTIONS as opt (opt.code)}
-    <button
-      type="button"
-      class="flag"
-      class:active={$locale === opt.code}
-      aria-pressed={$locale === opt.code}
-      onclick={() => setLocale(opt.code)}
-    >
-      <span class="emoji" aria-hidden="true">{opt.flag}</span>
-      <span class="text">{opt.label}</span>
-    </button>
-  {/each}
-</div>
+<span class="locale">
+  <select
+    class="picker"
+    aria-label={t('language', $locale)}
+    value={$locale}
+    onchange={(e) => setLocale(e.currentTarget.value as Locale)}
+  >
+    {#each LOCALES as code (code)}
+      <!-- Each language named in itself (the endonym a lost reader can find):
+           every catalog carries its OWN ui.languageLabel. -->
+      <option value={code}>{t('languageLabel', code)}</option>
+    {/each}
+  </select>
+  <span class="chevron" aria-hidden="true">▾</span>
+</span>
 
 <style>
   .locale {
+    position: relative;
     display: inline-flex;
-    gap: 0.35rem;
-    padding: 0.25rem;
+    align-items: center;
+  }
+  .picker {
+    appearance: none;
+    padding: 0.45rem 1.9rem 0.45rem 0.9rem;
     border: 1px solid var(--line);
     border-radius: 999px;
     background: var(--surface);
-  }
-  .flag {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.35rem 0.8rem;
-    border: none;
-    border-radius: 999px;
-    background: transparent;
-    cursor: pointer;
-    color: var(--ink-soft);
-    font-size: 0.85rem;
-    transition: background 0.15s ease, color 0.15s ease;
-  }
-  .flag:hover {
     color: var(--ink);
+    font: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
   }
-  .flag.active {
-    background: var(--accent);
-    color: var(--on-accent);
+  .picker:hover {
+    border-color: var(--accent);
   }
-  .emoji {
-    font-size: 1.05rem;
-    line-height: 1;
+  .chevron {
+    position: absolute;
+    right: 0.8rem;
+    pointer-events: none;
+    font-size: 0.7rem;
+    color: var(--ink-soft);
   }
 </style>

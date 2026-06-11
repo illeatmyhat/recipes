@@ -2,6 +2,8 @@
 # a missing key fails the build (src/lib/i18n.ts).
 ui.siteTitle: 食谱
 ui.siteTagline: 营养成分在构建时计算，可按任意份数缩放。
+ui.languageLabel: 🇨🇳 中文
+ui.siteDescription: 一份小小的食谱集。
 ui.recipeKicker: 食谱
 
 ui.servings: 份数

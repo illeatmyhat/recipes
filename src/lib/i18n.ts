@@ -29,6 +29,8 @@ const CATALOGS: Record<Locale, Record<string, string>> = {
 const UI_KEYS = [
   'siteTitle',
   'siteTagline',
+  'siteDescription',
+  'languageLabel',
   'recipeKicker',
   'servings',
   'serving',

@@ -18,7 +18,7 @@ const recipes = (await getCollection('recipes'))
   .sort((a, b) => a.title[CANONICAL_LOCALE].localeCompare(b.title[CANONICAL_LOCALE]));
 ---
 
-<RecipeLayout title={UI.siteTitle} description="A small collection of recipes.">
+<RecipeLayout title={UI.siteTitle} description={UI.siteDescription[CANONICAL_LOCALE]}>
   <header class="head">
     <div class="head-bar">
       <h1><Bilingual text={UI.siteTitle} /></h1>
