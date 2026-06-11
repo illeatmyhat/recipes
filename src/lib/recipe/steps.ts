@@ -16,9 +16,12 @@
  */
 import type { StepMetaT, StepRead } from './types';
 
-const STEP = /<Step\b([^>]*)>([\s\S]*?)<\/Step>/g;
+// The attribute span must not stop at a `>` INSIDE a quoted value — guards
+// like when="count(toppings) > 0" are legal — so it consumes quoted strings
+// whole and only ends on a bare `>`.
+const STEP = /<Step\b((?:"[^"]*"|[^>"])*)>([\s\S]*?)<\/Step>/g;
 const ATTR = /([A-Za-z][\w-]*)="([^"]*)"/g;
-const REF = /<Ref\b([^>]*?)\/?>/g;
+const REF = /<Ref\b((?:"[^"]*"|[^>"])*?)\/?>/g;
 
 function parseAttrs(src: string): Record<string, string> {
   const out: Record<string, string> = {};
