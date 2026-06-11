@@ -1,0 +1,5 @@
+# zh-CN ingredient data for data/ingredients/egg.yaml — locale-specific fields only.
+names: 鸡蛋
+aliases:
+  - 蛋
+aisle: dairy_eggs

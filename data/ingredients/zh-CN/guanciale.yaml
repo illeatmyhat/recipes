@@ -1,0 +1,11 @@
+# zh-CN ingredient data for data/ingredients/guanciale.yaml — locale-specific fields only.
+names: 意式风干猪颊肉
+aliases:
+  - Guanciale
+  - 腌猪颊肉
+aisle: { store: online, section: meat_seafood }
+availability:
+  notes:
+    - text: 超市基本买不到——在电商平台搜「guanciale 猪颊肉」从进口食材店下单，留出配送时间；买不到可用意式培根（pancetta）代替。
+      important: true
+    - 冷藏可放数周，冷冻更久——多买一点不浪费。

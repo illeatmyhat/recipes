@@ -1,0 +1,20 @@
+id: parmigiano_reggiano
+# SR Legacy's generic hard parmesan entry. The id is the protected name on
+# purpose: the recipe's lesson (Pasta Grammar) is that the DOP name is the
+# quality guarantee -- generic "parmesan" is exactly what not to buy.
+fdc_id: 170848
+nutrition:
+  per_100g:
+    calories: 392
+    fat: 25
+    saturated_fat: 14.85
+    trans_fat: 0
+    cholesterol: 68
+    sodium: 1175
+    carbohydrates: 3.22
+    fiber: 0
+    sugars: 0.11
+    protein: 35.75
+    calcium: 1184
+    iron: 0.82
+density_g_per_ml: null

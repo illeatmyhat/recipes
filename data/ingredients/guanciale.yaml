@@ -1,0 +1,23 @@
+id: guanciale
+# PROXY: SR Legacy has no guanciale (cured pork jowl). "Pork, cured, salt
+# pork, raw" is the same food family -- salt-cured pork fat -- and errs on
+# the conservative side for the nutrient that matters in a cured meat
+# (sodium 2684 vs guanciale's typical ~1600 mg/100g; fat 80% vs ~70%). The
+# alternative, fresh uncured jowl (168269), nails the macros but reports
+# sodium 25 mg -- a ~98% lie. Salty-side honesty wins.
+fdc_id: 168287
+nutrition:
+  per_100g:
+    calories: 748
+    fat: 80.5
+    saturated_fat: 29.38
+    trans_fat: 0
+    cholesterol: 86
+    sodium: 2684
+    carbohydrates: 0
+    fiber: 0
+    sugars: 0
+    protein: 5.05
+    calcium: 6
+    iron: 0.44
+density_g_per_ml: null

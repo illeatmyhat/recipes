@@ -1,0 +1,6 @@
+# ja-JP ingredient data for data/ingredients/spaghetti.yaml — locale-specific fields only.
+names: スパゲッティ
+aliases:
+  - スパゲティ
+  - パスタ（乾麺）
+aisle: dry_goods

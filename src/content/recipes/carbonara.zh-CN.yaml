@@ -1,0 +1,68 @@
+# zh-CN catalog for carbonara. Canonical EN lives in carbonara.mdx; keys are
+# dotted paths into its frontmatter. Merged at build by src/lib/recipe/i18n.ts.
+title: 罗马卡邦尼拉意面
+customize_title: 定制你的卡邦尼拉
+source.name: 意大利烹饪学院
+pattern: >-
+  四样寻常食材，加一点胆量：生蛋液和擦碎的奶酪，只靠面条的余温就乳化成丝绸。
+  卡邦尼拉里没有奶油，也没有任何买来就能解决问题的工具——所有失败只有两个
+  原因：温度太高，或奶酪化不开。所以本页原样刊印认证食谱，并只为这两种失败
+  上保险。
+
+knobs.insurance.label: 超市奶酪保险
+knobs.insurance.why: 在意大利之外，「pecorino」是个谁都能用的名字——常常咸得像盐块，还掺着抗结剂；带添加剂的奶酪遇上滚烫的面，正是结块的原因。打开后会加入 Pasta Grammar 的两步傻瓜方法：先离火歇一歇，再把酱一点点加、间或滴几滴煮面水。用普通超市奶酪也几乎不会失手。
+
+roles.pasta.label: 意大利直面
+roles.pasta.why: 学院的指定。粗一点的面条挂得住乳化的酱，煮面时释出的淀粉是这碗酱的安全网——那锅浑浊的煮面水是食材，不是废水。
+
+roles.pork.label: 风干猪颊肉
+roles.pork.why: 风味的发动机，也是唯一要紧的油脂：这道菜所有的咸香都靠这点炼出的油运载。Guanciale——腌制风干的猪颊肉，「卡邦尼拉之王」——是认证食谱点名的那一样，其余都是替身。
+roles.pork.fills.guanciale.note: 切细条。官方分量很诚实——这是调味品级别的奢侈，不是一道肉菜。
+roles.pork.fills.pancetta.why: 公认的替身：同样的腌法、同样的丰腴、不带烟熏味——超市能买到的里面最接近猪颊肉的。
+roles.pork.fills.bacon.why: 最后的退路。能做，但烟熏不是卡邦尼拉的味道——做出来更像美式餐馆的另一道菜。
+
+roles.eggs.label: 鸡蛋
+roles.eggs.why: 酱汁的全部。只靠余温变熟的蛋，就是人人误以为是奶油的那层丝滑。全蛋三个，是学院的定数。
+roles.eggs.fills.egg.note: 三个大号鸡蛋，和奶酪、一小撮盐一起打散。
+roles.eggs.fills.egg_yolk.why: 只用蛋黄是当代罗马餐馆的做法——更稠、更黄、更像蛋奶冻。可以只用蛋黄，也可以和全蛋搭配，得到许多厨师最后选定的折中口感。
+
+roles.cheese.label: 罗马羊奶酪
+roles.cheese.why: 咸度、锋利感，以及酱体本身。陈年的羊奶 Pecorino 融进蛋液里——成丝绸还是结块，就看这一样食材的品质。
+roles.cheese.fills.pecorino_romano.note: 自己擦，尽量擦细——像一朵云。预擦丝罐装奶酪里的添加剂正是酱汁结块的元凶。
+roles.cheese.fills.parmigiano_reggiano.why: 救场配比：买不到真正DOP佩科里诺时，一半佩科里诺、一半帕玛森，味道更深、不再是一口咸——而且受保护的名称保证这块奶酪真的能化开。两样都选时，分量自动对半分。
+
+roles.aromatics.label: 大蒜与橄榄油
+roles.aromatics.why: 认证食谱安静的彩蛋：学院在一勺橄榄油里放一瓣拍碎的蒜，垫在猪颊肉下面煎到上色就捞出——香气留在油里，蒜本身不上桌。互联网正统说「加蒜是异端」，官方食谱不同意。
+roles.aromatics.fills.garlic.note: 一瓣，拍到脱皮即可——上色就捞出来。
+
+roles.seasoning.label: 盐与黑胡椒
+roles.seasoning.why: 咸味大半由奶酪和腌肉自带，所以下手要轻——你加的盐只属于煮面水和蛋液碗。胡椒是这道菜的另一位主角：粗磨、现磨、放足。
+roles.seasoning.fills.salt.note: 只计入最终留在盘子里的量。煮面水要放一小把，但几乎全部流进下水道。
+roles.seasoning.fills.black_pepper.note: 现磨，比「礼貌」的量再多一点。
+
+roles.cream.label: 奶油
+roles.cream.why: 不是卡邦尼拉的食材——是本页为了诚实而列出的菜单之外的选项。奶油零技术就能保证丝滑，同时也做出另一道菜。
+roles.cream.fills.heavy_cream.why: 世界上大半地方说的「卡邦尼拉」就是它。选了它，页面顶部的徽章就不再称这是学院的食谱——这不是故障，是设计。
+
+# Method steps — templates for the MDX body's <Step id> elements. `{role}`
+# renders the role's chosen fills as a list join; `{role:fill}` names one fill.
+steps.boil.title: 烧水
+steps.boil: "烧一大锅水，用{seasoning:salt}的大部分给水调味——尝起来「舒服地像海水」即可，反正这些盐几乎全要流走。"
+steps.render.title: 炼猪颊肉
+steps.render: "{pork}切细条。宽口锅中火温热{aromatics}——{aromatics:garlic}拍碎整瓣下锅——再下肉条，让油脂慢慢炼出、肉条上色。蒜一上色就捞出：香气已经进了油，蒜本身从来就不打算吃。"
+steps.sauce.title: 打酱
+steps.sauce: "找一个装得下整道菜的大碗，把{eggs}和擦得极细的{cheese}、一小撮{seasoning:salt}打到看不见纹路。卡邦尼拉真正诞生的地方是这个碗——离一切火源。"
+steps.cook_pasta.title: 煮面
+steps.cook_pasta: "{pasta}下入沸水，煮到弹牙。沥水前舀出一杯煮面水——那杯被淀粉染浊的水，是稀释和黏合酱汁的工具。"
+steps.insurance_rest.title: 保险：散热
+steps.insurance_rest: "趁面还在煮，关掉锅下的火，让锅歇两三分钟。奶酪结块是温度的伤——你不需要温度计，你需要一个停顿。像意大利人说的：把火关了，就成了。"
+steps.combine.title: 面与油相会
+steps.combine: "面沥水，倒进盛着{pork}和油的锅里——火保持关闭——翻拌到每根面条都油亮。"
+steps.mantecare.title: 出丝绸
+steps.mantecare: "把所有东西移进蛋液碗里，快速搅拌。仅靠余温，蛋和奶酪就稠成一层有光泽的奶酱，裹住每根面条——太紧就淋一点留好的煮面水。锅永远不再回到火上：直火加热正是卡邦尼拉变成「炒蛋拌面」的原理。"
+steps.insurance_gradual.title: 保险：一点一点来
+steps.insurance_gradual: "用超市奶酪时，别一次倒完——交替着来。一点蛋酱、几滴煮面水、搅拌；再来一轮，直到全部加完。少量多次，是让含添加剂的奶酪持续融化而不抱团的诀窍。"
+steps.add_cream.title: 奶油变奏
+steps.add_cream: "拌入{cream}，酱汁立刻变得浅色而可靠。次次丝滑、无需胆量——同时，正如顶部徽章所说，这已不再是学院的卡邦尼拉。"
+steps.serve.title: 撒胡椒上桌
+steps.serve: "立刻装盘，最后撒{seasoning:black_pepper}——粗磨、现磨、比礼貌的量更多。卡邦尼拉不等人：丝滑的窗口只有几分钟，请让餐桌迁就这盘面。"

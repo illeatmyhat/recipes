@@ -1,0 +1,8 @@
+# en-US ingredient data for data/ingredients/egg_yolk.yaml — locale-specific fields only.
+names: Egg yolks
+aliases:
+  - Yolks
+aisle: dairy_eggs
+availability:
+  notes:
+    - Sold inside whole eggs — separate them yourself and save the whites for something else.

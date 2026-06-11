@@ -1,0 +1,68 @@
+# JA catalog for carbonara. Canonical EN lives in carbonara.mdx; keys are
+# dotted paths into its frontmatter. Merged at build by src/lib/recipe/i18n.ts.
+title: スパゲッティ・カルボナーラ
+customize_title: カルボナーラをカスタマイズ
+source.name: イタリア料理アカデミー
+pattern: >-
+  ありふれた食材4つと、ひとつの度胸。生卵とおろしチーズが、パスタの余熱だけで
+  絹のクリームになる。カルボナーラに生クリームは入らないし、買えば解決する道具も
+  ない——失敗の原因は「熱しすぎ」か「溶けないチーズ」の2つだけ。だからこのページは
+  認定レシピをそのまま掲げ、その2つの失敗にだけ保険をかける。
+
+knobs.insurance.label: スーパーのチーズ保険
+knobs.insurance.why: イタリア国外では「ペコリーノ」は何でも名乗れる名前——塩の塊のような品や、固結防止剤入りの品も多く、添加物入りのチーズが熱いパスタに出会うことこそダマの原因。ONにするとPasta Grammar直伝の2工程が加わる：火を止めて少し休ませ、ソースはパスタの茹で汁を数滴ずつ挟みながら少しずつ。普通のスーパーのチーズでもほぼ失敗しなくなる。
+
+roles.pasta.label: スパゲッティ
+roles.pasta.why: アカデミーの指定。太めの麺は乳化したソースをよくまとい、茹でながら放つでんぷんがソースの安全網になる——あの白濁した茹で汁は廃棄物ではなく材料。
+
+roles.pork.label: グアンチャーレ
+roles.pork.why: 風味のエンジンであり、意味のある脂はこれだけ。この料理の旨味はすべて、溶け出たこの脂に乗って運ばれる。グアンチャーレ——豚ほほ肉の塩漬け、「カルボナーラの王様」——が認定レシピの指名。ほかは全部代役。
+roles.pork.fills.guanciale.note: 細切りにする。公式の分量は正直——これは肉料理ではなく、調味料サイズの贅沢。
+roles.pork.fills.pancetta.why: 公認の代役。同じ塩漬け、同じ豊かさ、燻製なし——スーパーで手に入るものの中では一番グアンチャーレに近い。
+roles.pork.fills.bacon.why: 最後の手段。作れはするが、燻製の香りはカルボナーラの味ではない——アメリカのダイナー寄りの、別の料理になると思って。
+
+roles.eggs.label: 卵
+roles.eggs.why: ソースの全部。余熱だけで火が入った卵が、誰もが生クリームと勘違いする絹になる。全卵3個がアカデミーの指定。
+roles.eggs.fills.egg.note: 大きめの卵3個。チーズとひとつまみの塩と一緒に溶きほぐす。
+roles.eggs.fills.egg_yolk.why: 卵黄のみは現代ローマのレストラン流——より濃く、より黄色く、よりカスタード。単独でも、全卵と組み合わせて中間のソースにしても。
+
+roles.cheese.label: ペコリーノ・ロマーノ
+roles.cheese.why: 塩気と鋭さ、そしてソースの body。熟成した羊乳のペコリーノが溶き卵に溶け込む——絹になるかダマになるかは、この材料の質で決まる。
+roles.cheese.fills.pecorino_romano.note: 自分で、できる限り細かく——雲のように——おろす。市販の粉チーズの添加物こそがダマの元凶。
+roles.cheese.fills.parmigiano_reggiano.why: 救済ブレンド：本物のDOPペコリーノが手に入らないとき、ペコリーノ半分＋パルミジャーノ・レッジャーノ半分は塩の塊味から離れて深い味になる——しかも保護名称が「ちゃんと溶けるチーズ」を保証してくれる。両方選ぶと分量は等分される。
+
+roles.aromatics.label: にんにくとオリーブオイル
+roles.aromatics.why: 認定レシピの静かなサプライズ：アカデミーはオリーブオイル大さじ1につぶしたにんにく一片を入れ、グアンチャーレの下で色づけてから取り出す——香りは脂に、にんにく本体は皿に残らない。ネットの正統派は「にんにくは異端」と言うが、公式レシピは違う。
+roles.aromatics.fills.garlic.note: 一片。皮がむける程度につぶすだけ——色づいたら取り出す。
+
+roles.seasoning.label: 塩と黒こしょう
+roles.seasoning.why: 塩気の大半はチーズと塩漬け肉が連れてくるので、手は軽く——足すのは茹で湯と卵のボウルの分だけ。こしょうはこの料理のもう一つの主役：粗挽き、挽きたて、たっぷり。
+roles.seasoning.fills.salt.note: 皿に残る分だけを数えた量。茹で湯にはひとつかみ入れるが、ほぼ全部排水口行き。
+roles.seasoning.fills.black_pepper.note: 挽きたてを、上品と思う量より多めに。
+
+roles.cream.label: 生クリーム
+roles.cream.why: カルボナーラの材料ではない——ページが正直でいられるように載せた、メニュー外の選択肢。生クリームは技術ゼロで絹の仕上がりを保証する。そして別の料理を作る。
+roles.cream.fills.heavy_cream.why: 世界の多くが「カルボナーラ」と呼んでいるもの。選ぶと、ページ上部のバッジはこれをアカデミーのレシピと呼ばなくなる——それはバグではなく仕様。
+
+# Method steps — templates for the MDX body's <Step id> elements. `{role}`
+# renders the role's chosen fills as a list join; `{role:fill}` names one fill.
+steps.boil.title: 湯を沸かす
+steps.boil: "大鍋に湯を沸かし、{seasoning:salt}の大半で塩をする——「心地よく海の味」が目安。その塩のほぼ全部が流しに消えると知った上で。"
+steps.render.title: グアンチャーレを焼く
+steps.render: "{pork}を細切りにする。広いフライパンで{aromatics}を中火で温め——{aromatics:garlic}はつぶして丸ごと——細切りを加えて、脂をゆっくり溶かしながら色づくまで。にんにくは色づいたら取り出す：香りは脂に移り、にんにく本体はもともと食べる予定がない。"
+steps.sauce.title: ソースを溶く
+steps.sauce: "完成品が全部入る大きさのボウルで、{eggs}を細かくおろした{cheese}とひとつまみの{seasoning:salt}と一緒に、筋が消えるまで溶きほぐす。カルボナーラが実際に作られるのはこのボウルの中——火の上ではない。"
+steps.cook_pasta.title: スパゲッティを茹でる
+steps.cook_pasta: "{pasta}を沸騰した湯に入れ、アルデンテに茹でる。湯を切る前に茹で汁をカップ1杯取っておく——でんぷんで白濁したあの湯が、ソースをゆるめ、つなぐ道具。"
+steps.insurance_rest.title: 保険：熱を逃がす
+steps.insurance_rest: "パスタが茹で上がるまでの2〜3分、フライパンの火を消して休ませる。チーズのダマは温度の事故——温度計ではなく、間が必要。イタリアで言うように：火を止めれば、それで終わり。"
+steps.combine.title: パスタと脂を和える
+steps.combine: "スパゲッティの湯を切り、{pork}と脂のフライパンへ——火は消したまま——全部の麺がつやつやになるまで和える。"
+steps.mantecare.title: 絹を作る
+steps.mantecare: "すべてを卵液のボウルに移し、素早く混ぜる。余熱だけで卵とチーズがとろりとしたクリームになり、麺の一本一本を包む——締まりすぎたら取っておいた茹で汁をひと垂らし。フライパンは二度と火に戻さない：直火こそ、カルボナーラが「炒り卵スパゲッティ」になる仕組み。"
+steps.insurance_gradual.title: 保険：少しずつ
+steps.insurance_gradual: "スーパーのチーズなら、一気に注がず交互に。卵液を少し、茹で汁を数滴、混ぜる——また少し、全部入るまで。少しずつ加えることが、添加物入りのチーズを固まらせずに溶かし続けるコツ。"
+steps.add_cream.title: クリームの変奏
+steps.add_cream: "{cream}を混ぜ込むと、ソースは淡い色の「絶対に失敗しない」何かになる。毎回シルキー、度胸不要——そして上のバッジが言う通り、もうアカデミーのカルボナーラではない。"
+steps.serve.title: こしょうをかけて出す
+steps.serve: "すぐに皿へ。{seasoning:black_pepper}で仕上げる——粗挽き、挽きたて、上品と思う量より多めに。カルボナーラは誰も待たない：絹の窓は数分しかないので、食卓のほうがパスタに合わせること。"

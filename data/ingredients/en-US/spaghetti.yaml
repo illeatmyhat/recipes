@@ -1,0 +1,6 @@
+# en-US ingredient data for data/ingredients/spaghetti.yaml — locale-specific fields only.
+names: Spaghetti
+aliases:
+  - Dry spaghetti
+  - Pasta
+aisle: dry_goods

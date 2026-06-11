@@ -1,0 +1,5 @@
+# ja-JP ingredient data for data/ingredients/heavy_cream.yaml — locale-specific fields only.
+names: 生クリーム（動物性）
+aliases:
+  - 純生クリーム
+aisle: dairy_eggs

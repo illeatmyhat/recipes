@@ -1,0 +1,8 @@
+# en-US ingredient data for data/ingredients/pancetta.yaml — locale-specific fields only.
+names: Pancetta
+aliases:
+  - Italian bacon (unsmoked)
+aisle: meat_seafood
+availability:
+  notes:
+    - Most supermarket delis carry it, often pre-diced. Unsmoked — a much closer stand-in for guanciale than bacon is.

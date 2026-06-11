@@ -1,0 +1,8 @@
+# ja-JP ingredient data for data/ingredients/egg_yolk.yaml — locale-specific fields only.
+names: 卵黄
+aliases:
+  - 黄身
+aisle: dairy_eggs
+availability:
+  notes:
+    - 全卵を割って分けるだけ。残った卵白は別の料理に。

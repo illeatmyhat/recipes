@@ -1,0 +1,14 @@
+# en-US ingredient data for data/ingredients/guanciale.yaml — locale-specific fields only.
+names: Guanciale
+aliases:
+  - Cured pork jowl
+  - Pork cheek (cured)
+aisle: { store: specialty, section: meat_seafood }
+availability:
+  notes:
+    - text: Not a supermarket item in the US — find it at an Italian deli or specialty grocer, or order from an online cured-meat shop (allow shipping time). Pancetta is the accepted fallback.
+      important: true
+    - It keeps for weeks refrigerated and freezes well — buying more than one recipe's worth is no waste.
+  brands:
+    - La Quercia
+    - Volpi

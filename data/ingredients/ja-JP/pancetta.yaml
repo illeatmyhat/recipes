@@ -1,0 +1,8 @@
+# ja-JP ingredient data for data/ingredients/pancetta.yaml — locale-specific fields only.
+names: パンチェッタ
+aliases:
+  - 生ベーコン
+aisle: { store: specialty, section: meat_seafood }
+availability:
+  notes:
+    - カルディ・成城石井など輸入食品店で入手しやすい。非燻製なので、ベーコンよりグアンチャーレに近い。

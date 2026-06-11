@@ -1,0 +1,10 @@
+# en-US ingredient data for data/ingredients/parmigiano_reggiano.yaml — locale-specific fields only.
+names: Parmigiano-Reggiano
+aliases:
+  - Parmigiano
+  - Real parmesan
+aisle: dairy_eggs
+availability:
+  notes:
+    - text: The protected name is the quality guarantee — if the rind stamp says Parmigiano-Reggiano it is the real thing, made the right way. Plain "parmesan" (especially shelf-stable shakers) can be anything.
+      important: true

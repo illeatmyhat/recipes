@@ -1,0 +1,6 @@
+# ja-JP ingredient data for data/ingredients/bacon.yaml — locale-specific fields only.
+names: ベーコン（厚切り）
+aliases:
+  - 厚切りベーコン
+  - ブロックベーコン
+aisle: meat_seafood

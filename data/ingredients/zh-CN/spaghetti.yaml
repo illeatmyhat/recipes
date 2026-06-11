@@ -1,0 +1,6 @@
+# zh-CN ingredient data for data/ingredients/spaghetti.yaml — locale-specific fields only.
+names: 意大利直面
+aliases:
+  - 意面
+  - 意粉
+aisle: dry_goods

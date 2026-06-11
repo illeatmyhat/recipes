@@ -1,0 +1,14 @@
+# en-US ingredient data for data/ingredients/pecorino_romano.yaml — locale-specific fields only.
+names: Pecorino Romano
+aliases:
+  - Pecorino
+  - Romano cheese
+aisle: dairy_eggs
+availability:
+  notes:
+    - text: '"Pecorino" alone is a catch-all name in the US, and domestic "romano" is often mostly salt. For a sauce that melts instead of clumping, buy a wedge labeled Pecorino Romano DOP (imported, sheep''s milk) and check the ingredient list — no anti-caking agents or stabilizers.'
+      important: true
+    - Grate it yourself, as finely as you can — pre-grated tubs carry the very additives that make sauces clump.
+  brands:
+    - Locatelli
+    - Fulvi

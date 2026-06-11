@@ -1,0 +1,10 @@
+# zh-CN ingredient data for data/ingredients/parmigiano_reggiano.yaml — locale-specific fields only.
+names: 帕玛森干酪
+aliases:
+  - Parmigiano-Reggiano
+  - 帕马臣芝士
+aisle: { store: online, section: dairy_eggs }
+availability:
+  notes:
+    - text: 认准外皮烙印的保护名称 Parmigiano-Reggiano——这是品质保证；不要买叫「parmesan」的罐装粉。
+      important: true

@@ -1,0 +1,5 @@
+# en-US ingredient data for data/ingredients/heavy_cream.yaml — locale-specific fields only.
+names: Heavy cream
+aliases:
+  - Heavy whipping cream
+aisle: dairy_eggs

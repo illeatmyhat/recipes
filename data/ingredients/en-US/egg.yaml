@@ -1,0 +1,5 @@
+# en-US ingredient data for data/ingredients/egg.yaml — locale-specific fields only.
+names: Eggs (large)
+aliases:
+  - Whole eggs
+aisle: dairy_eggs

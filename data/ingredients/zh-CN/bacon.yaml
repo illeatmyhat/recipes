@@ -1,0 +1,5 @@
+# zh-CN ingredient data for data/ingredients/bacon.yaml — locale-specific fields only.
+names: 培根（厚切）
+aliases:
+  - 厚切培根
+aisle: meat_seafood

@@ -1,0 +1,17 @@
+id: heavy_cream
+fdc_id: 170859
+nutrition:
+  per_100g:
+    calories: 340
+    fat: 36.08
+    saturated_fat: 23.032
+    trans_fat: 1.236
+    cholesterol: 113
+    sodium: 27
+    carbohydrates: 2.84
+    fiber: 0
+    sugars: 2.92
+    protein: 2.84
+    calcium: 66
+    iron: 0.1
+density_g_per_ml: 0.994

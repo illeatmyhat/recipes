@@ -1,0 +1,11 @@
+# ja-JP ingredient data for data/ingredients/guanciale.yaml — locale-specific fields only.
+names: グアンチャーレ
+aliases:
+  - グァンチャーレ
+  - 豚ほほ肉の塩漬け
+aisle: { store: online, section: meat_seafood }
+availability:
+  notes:
+    - text: 一般のスーパーにはまず置いていない。イタリア食材店か、ネット通販でのお取り寄せが確実（届くまでの時間を見込んで）。パンチェッタで代用可。
+      important: true
+    - 冷蔵で数週間、冷凍も可。一度に多めに買っても無駄にならない。

@@ -1,0 +1,9 @@
+# zh-CN ingredient data for data/ingredients/pancetta.yaml — locale-specific fields only.
+names: 意式培根
+aliases:
+  - Pancetta
+  - 意式咸肉
+aisle: { store: online, section: meat_seafood }
+availability:
+  notes:
+    - 进口超市或电商有售；选未烟熏的，比普通培根更接近猪颊肉。

@@ -1,0 +1,296 @@
+---
+title: Spaghetti alla Carbonara
+slug: carbonara
+hero_image: ./images/carbonara.jpg
+locales: [en-US, ja-JP, zh-CN]
+customize_title: Customize your carbonara
+source:
+  name: the Accademia Italiana della Cucina
+pattern: >-
+  Four pantry staples and one act of nerve: raw egg and grated cheese,
+  emulsified into silk by nothing but the pasta's residual heat. There is no
+  cream in carbonara and nothing to buy that fixes it — every failure is one
+  of two things, too much heat or cheese that can't melt — so this page
+  prints the certified recipe exactly, and offers insurance against exactly
+  those two failures.
+servings:
+  min: 2
+  max: 6
+  default: 4
+knobs:
+  insurance:
+    kind: bool
+    label: Supermarket-cheese insurance
+    provenance: editorial
+    why: >-
+      Outside Italy, "pecorino" is a catch-all name — often salt-heavy, often
+      carrying anti-caking agents — and additive-laden cheese meeting hot
+      pasta is how sauces clump. ON adds two steps borrowed from Pasta
+      Grammar's foolproof method: a short off-heat rest, then the sauce added
+      gradually with drops of pasta water. Near fail-proof with ordinary
+      supermarket cheese.
+    default: false
+roles:
+  pasta:
+    label: Spaghetti
+    why: >-
+      The Academy's choice. Thick strands carry a clinging emulsion, and the
+      starch they shed into the pot is the sauce's safety net — that cloudy
+      water is an ingredient, not waste.
+    range: { min: 1, max: 1 }
+    fills:
+      - id: spaghetti
+        amount: { value: 350, unit: g }
+        default: true
+  pork:
+    label: Guanciale
+    why: >-
+      The flavor engine and the only added fat that matters: everything
+      savory in the dish rides on this rendered fat. Guanciale — cured pork
+      jowl, "the king of carbonara" — is what the certified recipe names;
+      everything else is a stand-in.
+    range: { min: 1, max: 1 }
+    amount: { value: 120, unit: g }
+    fills:
+      - id: guanciale
+        default: true
+        note: >-
+          Cut into thin strips. The official quantity is honest — this is a
+          condiment-sized luxury, not a meat course.
+      - id: pancetta
+        provenance: editorial
+        why: >-
+          The accepted fallback: same cure, same richness, no smoke — closer
+          to guanciale than anything else a supermarket deli carries.
+      - id: bacon
+        provenance: editorial
+        why: >-
+          The last resort. It works, but smoke is not a carbonara flavor —
+          expect a noticeably different, American-diner-adjacent dish.
+  eggs:
+    label: Eggs
+    why: >-
+      The sauce — all of it. Eggs alone, cooked only by residual heat,
+      become the silk everyone mistakes for cream. Three whole eggs is the
+      Academy's call.
+    range: { min: 1, max: 2 }
+    amount: { value: 150, unit: g }
+    fills:
+      - id: egg
+        default: true
+        note: Three large eggs, beaten with the cheese and a pinch of salt.
+      - id: egg_yolk
+        amount: { value: 100, unit: g }
+        provenance: editorial
+        why: >-
+          Yolks-only is the modern Roman restaurant move — thicker, yellower,
+          more custard. Pick it alone, or alongside whole eggs for the
+          in-between sauce many cooks land on.
+  cheese:
+    label: Pecorino Romano
+    why: >-
+      Salt, sharpness, and the body of the sauce. Aged sheep's-milk pecorino
+      melts into the beaten eggs — this is the ingredient where quality
+      decides whether you get silk or clumps.
+    range: { min: 1, max: 2 }
+    amount: { value: 50, unit: g }
+    fills:
+      - id: pecorino_romano
+        default: true
+        note: >-
+          Grate it yourself, as finely as you can — like a cloud. Pre-grated
+          tubs carry the additives that make sauces clump.
+      - id: parmigiano_reggiano
+        provenance: editorial
+        why: >-
+          The rescue blend: when real DOP pecorino isn't available, half
+          pecorino, half Parmigiano-Reggiano tastes deeper and less like
+          straight salt — and the protected name guarantees a cheese that
+          actually melts. Pick both and the quantity splits evenly.
+  aromatics:
+    label: Garlic & olive oil
+    why: >-
+      The certified recipe's quiet surprise: the Academy starts the guanciale
+      in a spoonful of olive oil with one crushed clove, browned and then
+      fished out — perfume in the fat, never garlic in the dish. Internet
+      orthodoxy calls garlic heresy; the official recipe disagrees.
+    range: { min: 2 }
+    fills:
+      - id: olive_oil
+        amount: { value: 15, unit: ml }
+        default: true
+      - id: garlic
+        amount: { value: 3, unit: g }
+        default: true
+        note: One clove, crushed just enough to slip its skin — it comes out
+          once browned.
+  seasoning:
+    label: Salt & black pepper
+    why: >-
+      Most of the salt arrives in the cheese and the cure, so the hand stays
+      light — what you add salts the pasta water and the egg bowl. The
+      pepper is the dish's other name-ingredient: coarse, fresh, generous.
+    range: { min: 2 }
+    fills:
+      - id: salt
+        amount: { value: 4, unit: g }
+        default: true
+        note: >-
+          Counts only what ends up in the dish — the pasta water takes a
+          small handful, but nearly all of it goes down the drain.
+      - id: black_pepper
+        amount: { value: 2, unit: g }
+        default: true
+        note: Freshly ground, and more than feels polite.
+  cream:
+    label: Cream
+    why: >-
+      Not an ingredient of carbonara — an off-menu option this page includes
+      so it can be honest about it. Cream guarantees a silky result with
+      zero technique; it also makes a different dish.
+    range: { min: 0 }
+    fills:
+      - id: heavy_cream
+        amount: { value: 60, unit: ml }
+        provenance: editorial
+        why: >-
+          What much of the world means by "carbonara". Pick it and the badge
+          at the top of the page stops calling this the Academy's recipe —
+          that's not a bug.
+---
+
+import Step from '../../components/Step.astro';
+import Ref from '../../components/Ref.astro';
+
+<ol class="steps">
+
+<Step id="boil" title="Boil the water">
+  Bring a large pot of water to a boil and salt it with most of the
+  <Ref of="seasoning" fill="salt" /> — the water should taste pleasantly of
+  the sea, knowing almost all of that salt drains away.
+</Step>
+
+<Step id="render" title="Render the guanciale">
+  Cut the <Ref of="pork" /> into thin strips. Warm the
+  <Ref of="aromatics" /> in a wide pan over medium heat — the
+  <Ref of="aromatics" fill="garlic" /> goes in crushed and whole — then add
+  the strips and let the fat render slowly until they brown. Fish the garlic
+  out once it has colored: its perfume stays in the fat, the clove itself
+  was never going to be eaten.
+</Step>
+
+<Step id="sauce" title="Beat the sauce">
+  In a bowl big enough to hold the finished dish, beat the
+  <Ref of="eggs" /> with the finely grated <Ref of="cheese" /> and a small
+  pinch of the <Ref of="seasoning" fill="salt" /> until no streaks remain.
+  This bowl is where the carbonara will actually be made — off any flame.
+</Step>
+
+<Step id="cook_pasta" title="Cook the spaghetti">
+  Drop the <Ref of="pasta" /> into the boiling water and cook it al dente.
+  Before draining, save a cup of the cooking water — cloudy with starch,
+  it's the tool that loosens and binds the sauce.
+</Step>
+
+<Step id="insurance_rest" title="Insurance: let the heat fade" when="insurance">
+  Kill the flame under the pan and let it sit two or three minutes while
+  the pasta finishes. Clumped cheese is a temperature wound — you don't
+  need a thermometer, you need a pause. As they say in Italy: just turn
+  off the heat, it's done.
+</Step>
+
+<Step id="combine" title="Marry pasta and fat">
+  Drain the spaghetti and tumble it into the pan with the <Ref of="pork" />
+  and its fat, heat OFF, tossing until every strand is glossy.
+</Step>
+
+<Step id="mantecare" title="Make the silk">
+  Now move everything into the bowl with the egg mixture and stir fast.
+  Residual heat alone thickens egg and cheese into a glossy cream that
+  coats each strand — a splash of the saved pasta water loosens it if it
+  tightens. The pan never goes back on the flame: direct heat is how
+  carbonara becomes spaghetti with scrambled eggs.
+</Step>
+
+<Step id="insurance_gradual" title="Insurance: go gradual" when="insurance">
+  With supermarket cheese, don't pour — alternate. A little egg-and-cheese
+  mixture, a few drops of pasta water, stir; again, until it's all in.
+  Gradual addition is what keeps an additive-laden cheese melting instead
+  of seizing.
+</Step>
+
+<Step id="add_cream" title="The cream variation" when="has(cream, 'heavy_cream')">
+  Stir in the <Ref of="cream" /> until the sauce turns pale and dependable.
+  Silky every time, no nerve required — and, as the badge above now says,
+  no longer the Academy's carbonara.
+</Step>
+
+<Step id="serve" title="Pepper and serve">
+  Plate immediately and finish with the
+  <Ref of="seasoning" fill="black_pepper" /> — coarse, fresh, more than
+  feels polite. Carbonara waits for no one: the silk window is minutes
+  long, so the table comes to the pasta.
+</Step>
+
+</ol>
+
+<div class="lang-en-US">
+
+### Tips
+
+- The certified recipe is itself heretical by internet standards: the
+  Accademia Italiana della Cucina's deposited version uses whole eggs, olive
+  oil, and a browned-and-removed garlic clove. If a purist objects, the
+  badge at the top of the page is on your side.
+- The internet's "foolproof" carbonara methods — double boilers, temperature
+  charts, cornstarch, blenders — are chef technique imported on top of a
+  four-ingredient dish. They work; they're also workarounds for the two real
+  failure points this page handles directly: heat (rest the pan) and cheese
+  quality (buy DOP, or blend with Parmigiano-Reggiano).
+- The cheese lesson, learned from Pasta Grammar: in Italy, even cheap
+  pecorino melts properly; abroad, "pecorino" is a catch-all name and the
+  additives in pre-grated cheese are exactly what makes sauces clump. Buy a
+  DOP wedge, grate it fine, and the dish gets dramatically easier.
+- If eating lightly cooked egg worries you, the serving-bowl method here
+  keeps temperatures gentle — stir longer over the warm pasta and the sauce
+  pasteurizes in practice; pregnant or immunocompromised cooks should use
+  pasteurized eggs.
+
+</div>
+
+<div class="lang-ja-JP">
+
+### コツ
+
+- この「公式レシピ」自体が、ネットの常識からすれば異端：イタリア料理アカデミーの
+  登録版は全卵を使い、オリーブオイルを敷き、にんにく一片を色づくまで炒めて
+  取り出す。純粋主義者に何か言われたら、ページ上部のバッジが味方になってくれる。
+- ネットの「失敗しない」カルボナーラ——湯煎、温度チャート、コーンスターチ、
+  ブレンダー——は、材料4つの料理に持ち込まれたシェフの技術。効果はあるが、
+  本当の失敗要因は2つだけ：熱（フライパンを休ませる）とチーズの質（DOPを買うか、
+  パルミジャーノとブレンドする）。このページはそこに直接手を打つ。
+- チーズの教訓（Pasta Grammarより）：イタリアでは安いペコリーノでもきちんと
+  溶ける。国外では「ペコリーノ」は何でも名乗れる名前で、粉チーズの添加物こそが
+  ソースがダマになる元凶。DOPの塊を買って細かくおろせば、料理は劇的に楽になる。
+- 半生の卵が気になる場合：この器あえ方式は温度が穏やかに保たれる。温かいパスタの
+  上で長めに混ぜれば実用上は低温殺菌になる。妊娠中・免疫の弱い方は殺菌済み卵を。
+
+</div>
+
+<div class="lang-zh-CN">
+
+### 小贴士
+
+- 这份「官方食谱」本身就违反互联网正统：意大利烹饪学院的注册版本用全蛋、
+  橄榄油，还有一瓣煎到上色就捞出的大蒜。被原教旨主义者指点时，页面顶部的
+  徽章站在你这边。
+- 网上的「万无一失」卡邦尼拉——隔水加热、温度曲线、玉米淀粉、料理机——是把
+  大厨技术叠在一道四样食材的菜上。有效，但真正的失败原因只有两个：温度
+  （让锅歇一歇）和奶酪品质（买DOP，或掺帕玛森）。本页直接解决这两个。
+- 奶酪的教训（来自 Pasta Grammar）：在意大利，便宜的佩科里诺也能化得顺滑；
+  在国外，「pecorino」是个谁都能用的名字，预擦丝奶酪里的抗结剂正是酱汁结块的
+  元凶。买整块DOP、自己擦细，这道菜会容易得多。
+- 担心蛋未全熟：碗中拌和的做法温度很温和，在热面上多搅一会儿实际上就完成了
+  巴氏消毒；孕期或免疫力低的人请用杀菌蛋。
+
+</div>

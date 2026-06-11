@@ -1,0 +1,17 @@
+id: egg
+fdc_id: 171287
+nutrition:
+  per_100g:
+    calories: 143
+    fat: 9.51
+    saturated_fat: 3.126
+    trans_fat: 0.038
+    cholesterol: 372
+    sodium: 142
+    carbohydrates: 0.72
+    fiber: 0
+    sugars: 0.37
+    protein: 12.56
+    calcium: 56
+    iron: 1.75
+density_g_per_ml: null

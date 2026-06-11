@@ -1,0 +1,6 @@
+# ja-JP ingredient data for data/ingredients/egg.yaml — locale-specific fields only.
+names: 卵
+aliases:
+  - 鶏卵
+  - たまご
+aisle: dairy_eggs

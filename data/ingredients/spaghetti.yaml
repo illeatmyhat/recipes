@@ -1,0 +1,20 @@
+id: spaghetti
+# "Enriched" deliberately: US-milled dry pasta (the canonical market's
+# normal purchase) is enriched by FDA standard of identity. Italian-made
+# imports are typically unenriched -- iron/B-vitamins differ slightly.
+fdc_id: 169736
+nutrition:
+  per_100g:
+    calories: 371
+    fat: 1.51
+    saturated_fat: 0.277
+    trans_fat: 0
+    cholesterol: 0
+    sodium: 6
+    carbohydrates: 74.67
+    fiber: 3.2
+    sugars: 2.67
+    protein: 13.04
+    calcium: 21
+    iron: 3.3
+density_g_per_ml: null

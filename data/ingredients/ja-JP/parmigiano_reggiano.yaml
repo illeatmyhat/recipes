@@ -1,0 +1,9 @@
+# ja-JP ingredient data for data/ingredients/parmigiano_reggiano.yaml — locale-specific fields only.
+names: パルミジャーノ・レッジャーノ
+aliases:
+  - パルミジャーノ
+aisle: { store: specialty, section: dairy_eggs }
+availability:
+  notes:
+    - text: 「パルメザンチーズ」（粉）とは別物。外皮にDOP刻印のある塊を選んで、その場ですりおろす。
+      important: true

@@ -1,0 +1,10 @@
+# ja-JP ingredient data for data/ingredients/pecorino_romano.yaml — locale-specific fields only.
+names: ペコリーノ・ロマーノ
+aliases:
+  - ペコリーノ
+  - 羊乳チーズ
+aisle: { store: specialty, section: dairy_eggs }
+availability:
+  notes:
+    - text: 成城石井・カルディ・デパ地下のチーズ売り場で。粉チーズではなくDOP表示のある塊を選び、すりおろして使う——加工された粉はソースがダマになる原因。
+      important: true

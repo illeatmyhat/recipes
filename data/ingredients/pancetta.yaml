@@ -1,0 +1,21 @@
+id: pancetta
+# PROXY: SR Legacy has no pancetta. It IS unsmoked bacon -- same cut (pork
+# belly), same cure -- so "Pork, cured, bacon, unprepared" carries the
+# numbers. Shopping-distinct from bacon (different product at the counter),
+# hence its own id; the loader's shared-fdc lint keeps the two in lockstep.
+fdc_id: 168277
+nutrition:
+  per_100g:
+    calories: 393
+    fat: 37.13
+    saturated_fat: 12.615
+    trans_fat: 0.147
+    cholesterol: 66
+    sodium: 751
+    carbohydrates: 0
+    fiber: 0
+    sugars: 0.35
+    protein: 13.66
+    calcium: 6
+    iron: 0.38
+density_g_per_ml: null

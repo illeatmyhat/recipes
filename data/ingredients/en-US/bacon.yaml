@@ -1,0 +1,5 @@
+# en-US ingredient data for data/ingredients/bacon.yaml — locale-specific fields only.
+names: Bacon (thick-cut)
+aliases:
+  - Thick-cut bacon
+aisle: meat_seafood

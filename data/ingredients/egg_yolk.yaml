@@ -1,0 +1,17 @@
+id: egg_yolk
+fdc_id: 172184
+nutrition:
+  per_100g:
+    calories: 322
+    fat: 26.54
+    saturated_fat: 9.551
+    trans_fat: 0
+    cholesterol: 1085
+    sodium: 48
+    carbohydrates: 3.59
+    fiber: 0
+    sugars: 0.56
+    protein: 15.86
+    calcium: 129
+    iron: 2.73
+density_g_per_ml: null

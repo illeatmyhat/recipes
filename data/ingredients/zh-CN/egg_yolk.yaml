@@ -1,0 +1,8 @@
+# zh-CN ingredient data for data/ingredients/egg_yolk.yaml — locale-specific fields only.
+names: 蛋黄
+aliases:
+  - 鸡蛋黄
+aisle: dairy_eggs
+availability:
+  notes:
+    - 用整蛋自己分离即可，蛋白留作他用。

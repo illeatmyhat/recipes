@@ -1,0 +1,10 @@
+# zh-CN ingredient data for data/ingredients/pecorino_romano.yaml — locale-specific fields only.
+names: 罗马羊奶酪
+aliases:
+  - Pecorino Romano
+  - 佩科里诺奶酪
+aisle: { store: online, section: dairy_eggs }
+availability:
+  notes:
+    - text: 电商搜「Pecorino Romano DOP」买整块——认准DOP标志；不要买配料表里有抗结剂的预擦丝款，那正是酱汁结块的元凶。
+      important: true

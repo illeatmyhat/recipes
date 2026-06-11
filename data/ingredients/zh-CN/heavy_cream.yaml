@@ -1,0 +1,6 @@
+# zh-CN ingredient data for data/ingredients/heavy_cream.yaml — locale-specific fields only.
+names: 淡奶油
+aliases:
+  - 稀奶油
+  - 动物性淡奶油
+aisle: dairy_eggs
