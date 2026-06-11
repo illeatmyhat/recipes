@@ -1,80 +1,131 @@
 ---
 # src/content/recipes/<slug>.mdx — validated by the Zod schema in
-# src/content.config.ts. Every human string is bilingual { en, ja }.
-title:
-  en: <English title>
-  ja: <Japanese title>
+# src/content.config.ts (v3: pattern / roles / fills, docs/recipe-model.md).
+# Every string here is the CANONICAL (EN) text; the Japanese lives in the
+# sidecar catalog <slug>.ja.yaml, keyed by dotted paths into this frontmatter.
+title: <English title>
 slug: <kebab-case-slug>            # MUST match the filename <slug>.mdx
 hero_image: ./images/<slug>.jpg    # produced by scripts/process-hero.mjs
 locales: [en, ja]
-servings_default: 1                # positive integer; the recipe's base yield
 # customize_title is OPTIONAL — set only when recipe-specific phrasing reads
-# better than the generic i18n label. Delete these 3 lines if not used.
-customize_title:
-  en: Customize your bowl
-  ja: ボウルをカスタマイズ
-# base_ingredients: always included. Non-empty. Metric only (g | ml).
-# For a long base list, give each item a `group:` heading (e.g. Protein,
-# Seasonings, Vegetables) so it renders as labelled clusters instead of one flat
-# list; keep grouped items adjacent and in cooking order. Omit `group` entirely
-# (as a short recipe can) and everything renders under one generic "Base" heading.
-base_ingredients:
-  - id: <ingredient-id>            # needs data/ingredients/<id>.yaml
-    amount: 35
-    unit: g                        # `ml` requires density_g_per_ml in the YAML
-    # group is OPTIONAL — a localized sub-heading for the base list. Delete if unused.
-    group:
-      en: Protein
-      ja: タンパク質
-    notes:
-      en: <short why/how note>
-      ja: <same note in Japanese>
-    # warnings is OPTIONAL — omit the whole key if there are none. Also use
-    # avoid/good warnings to steer the right VARIETY for this recipe's method
-    # when one ingredient has several (e.g. high-smoke-point vs robust olive oil).
-    warnings:
-      - type: avoid                # avoid | good
-        en: "⚠️ <what to avoid>"
-        ja: "⚠️ <Japanese>"
-      - type: good
-        en: "✓ <what to use instead>"
-        ja: "✓ <Japanese>"
-# optional_ingredients: author-defined categories shown in the Customize tab.
-# Use [] if the recipe has none. Each category needs a non-empty ingredient list.
-optional_ingredients:
-  - id: toppings
-    label:
-      en: Toppings
-      ja: トッピング
-    ingredients:
+# better than the generic label. Delete the line if not used.
+customize_title: Customize your <dish>
+# pattern — REQUIRED. The thesis: why this combination works. Every role's
+# `why` derives from it; every substitution is judged against it.
+pattern: >-
+  <The one- to three-sentence thesis of the dish.>
+servings:
+  min: 1
+  max: 4                           # keep low — everything scales linearly
+  default: 1
+# knobs — OPTIONAL. Cross-role parameters that add no ingredient: a narrated
+# texture/style choice. Each needs a why. Delete the block if unused.
+knobs:
+  <knob_id>:
+    kind: enum                     # enum | bool | scalar
+    label: <Label>
+    why: >-
+      <What this trades off, in the pattern's terms.>
+    values: [<a>, <b>]
+    default: <a>
+    optionLabels: { <a>: <Label A>, <b>: <Label B> }
+  # bool:   { kind: bool, label: …, why: …, default: false }
+  # scalar: { kind: scalar, label: …, why: …, min: 0.75, max: 1.5, step: 0.25, default: 1 }
+# constraints — OPTIONAL. Annotate the parameter space, don't forbid it:
+# `warn` is a soft caution; `error` disallows the combination in the UI.
+constraints:
+  - when: "!has(<role>, '<fill>') && !has(<role>, '<other_fill>')"
+    error: >-
+      <Why this combination genuinely breaks the dish.>
+  - when: "!has(<role>, '<fill>')"
+    warn: >-
+      <What to watch for when cooking it this way.>
+roles:
+  # One role per JOB the pattern needs done. `min` is structural (the dish
+  # stops being the dish below it), `max` is advisory (exceeding warns).
+  # A min>=1 role with exactly one fill renders as Base automatically.
+  <role_id>:
+    label: <Label>                 # heading in the Customize stage
+    why: >-
+      <REQUIRED. The job, derived from the pattern — the lesson.>
+    range: { min: 1, max: 1 }
+    # scale — OPTIONAL: declarative "<knob>.<value>" -> multiplier table.
+    # scale: { '<knob_id>.<value>': 1.5 }
+    fills:
+      - id: <ingredient-id>        # needs data/ingredients/<id>.yaml
+        amount: { value: 35, unit: g }   # ml requires density_g_per_ml
+        default: true
+        note: <Recipe-specific handling — the causal version, not a bare "don't".>
+        # alias — OPTIONAL: bare noun phrase for step prose when the DB name
+        # reads badly there ("Pumpkin and squash seed kernels, dried" ->
+        # "pumpkin seeds"). No article, no connective. Needs a JA catalog key.
+        # alias: <prose name>
+  # SUBSTITUTIVE role: the role owns the amount; chosen fills partition it.
+  # A fill's own amount overrides its full-equivalent (tofu 396g ≡ chicken 250g).
+  <substitutive_role>:
+    label: <Label>
+    why: >-
+      <Why the pattern needs this job — and what disqualifies look-alikes.>
+    range: { min: 1, max: 2 }
+    amount: { value: 396, unit: g }
+    fills:
+      - id: <default-fill>
+        default: true
+        why: <Why it fits / what to know when choosing it.>
+      - id: <alternative-fill>
+        amount: { value: 250, unit: g }
+        why: <The tradeoff — pair a quirk with a guarded step in the method.>
+  # ADDITIVE role: no role-level amount; each chosen fill adds its own.
+  <additive_role>:
+    label: <Label>
+    why: >-
+      <Why the dish wants at least `min` of these.>
+    range: { min: 1, max: 3 }      # max 3 is advisory — a 4th pick warns
+    fills:
       - id: <ingredient-id>
-        amount: 15
-        unit: g
-        default: true             # true = pre-selected in the Customize tab
-        notes:
-          en: <note>
-          ja: <Japanese note>
+        amount: { value: 15, unit: g }
+        default: true
+        note: <note>
 ---
+
+import Step from '../../components/Step.astro';
+import Ref from '../../components/Ref.astro';
+
+{/* Method: canonical EN prose. <Ref of="role"/> renders the role's chosen
+    fills as a localized list join; <Ref of="role" fill="x"/> names one fill.
+    Refs never own quantity. Guards (`when`) use src/lib/v3/guards.ts grammar.
+    BOUNDNESS: a step reading a min:0 role MUST have a positive
+    has(role, '…') conjunct in its `when` — build error otherwise.
+    REACH: every role should be read by some step (mise en place buckets by
+    step; the build warns otherwise). */}
+
+<ol class="steps">
+
+<Step id="<step_id>" title="<Step title>">
+  <Prose reading roles like> the <Ref of="<role_id>" /> <— big pieces, why,
+  what to watch for.>
+</Step>
+
+<Step id="<guarded_step>" title="<Title>" when="has(<role>, '<fill>')">
+  <A fill-specific reality: why this fill changes the method.> The
+  <Ref of="<role>" fill="<fill>" /> <…>.
+</Step>
+
+<Step id="<knob_step>" title="<Title>" when="<bool_knob_id>">
+  <A step that exists only when a knob is on.>
+</Step>
+
+</ol>
 
 <div class="lang-en">
 
-<ol class="steps">
-<li><strong>Step name</strong><p>Step instructions. One sentence or two.</p></li>
-<li><strong>Next step</strong><p>...</p></li>
-</ol>
-
 ### Tips
 
-- A tip that didn't fit in an ingredient note.
+- A tip that didn't fit a role's why or a fill's note.
 
 </div>
 
 <div class="lang-ja">
-
-<ol class="steps">
-<li><strong>手順名</strong><p>手順の説明。</p></li>
-<li><strong>次の手順</strong><p>...</p></li>
-</ol>
 
 ### コツ
 

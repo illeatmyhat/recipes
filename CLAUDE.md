@@ -20,31 +20,32 @@ A static **Astro 6 + MDX + Svelte 5** recipe site. Pages pre-render to plain HTM
 
 ### Build-time data pipeline
 
-The core idea is that **ingredient nutrition lives in a separate database and is merged into recipes at build time**:
+Recipes are the **v3 model** — a *pattern* (the dish's thesis) instantiated by *roles* (jobs, each with a required `why`), filled by *ingredients* — see `docs/recipe-model.md` (the governing design). **Ingredient nutrition lives in a separate database and is merged into recipes at build time**:
 
-- `data/ingredients/*.yaml` — one file per ingredient: per-100g nutrition + `density_g_per_ml` + bilingual names/aliases/availability.
-- `src/content/recipes/*.mdx` — recipe frontmatter (ingredient refs, amounts, notes, warnings) + the method body. Frontmatter is validated by the Zod schema in `src/content.config.ts`.
-- `src/lib/resolveRecipe.ts` — runs at build time only (touches the filesystem). Merges the ingredient DB with a recipe's frontmatter, scales each ingredient's nutrition from the per-100g basis to the recipe amount, and converts `ml` amounts to grams via density. Returns a fully typed `ResolvedRecipe` (`src/lib/types.ts`).
-- `src/pages/recipes/[...slug].astro` enumerates the content collection and hands each `ResolvedRecipe` to `RecipePage.astro`.
+- `data/ingredients/*.yaml` — one file per ingredient: per-100g nutrition + `density_g_per_ml` + bilingual names/aliases/availability + per-locale `aisle`.
+- `src/content/recipes/<slug>.mdx` — canonical-EN frontmatter (pattern/servings/knobs/roles/constraints, validated by the Zod schema in `src/content.config.ts`) + the method body as `<Step id when? title?>` / `<Ref of fill?/>` components. The Japanese lives in a flat sidecar catalog `<slug>.ja.yaml` (dotted keys + `steps.<id>` templates) with a machine-written `<slug>.ja.hashes.yaml` for the staleness lint (refresh: `$env:REFRESH_CATALOG_HASHES='1'; npm run build`).
+- `src/lib/v3/` — the engine. `bundle.ts` builds a serializable `RecipeBundle` (hydrated recipe + ingredient data + defaults + extracted step metadata) at build time; `resolve.ts` is the pure order-independent resolver shared by SSR and the islands; `guards.ts` the step/constraint expression language; `i18n.ts`/`staleness.ts`/`steps.ts`/`Step.astro` carry the build-time lint suite (catalog completeness, read-set parity, staleness, orphans, boundness, role-read-by-no-step).
+- `src/pages/recipes/[...slug].astro` enumerates the content collection and hands each bundle to `RecipePageV3.astro`.
 
-**Metric (`g`/`ml`) is the single source of truth** for amounts and all nutrition math. `tsp`/`tbsp` rendering in `src/lib/units.ts` is a display-only approximate hint and never feeds back into data.
+**Metric (`g`/`ml`) is the single source of truth** for amounts and all nutrition math (`ml` → grams via density at resolve time).
 
 ### Islands and shared state
 
-`RecipePage.astro` is a static shell; the interactive parts are Svelte islands in `src/components/*.svelte` (`ServingsScaler`, `IngredientList`, `NutritionPanel`, `LocaleSwitcher`, `ThemeToggle`, `TabBar`, plus `CustomizePanel` which is `client:idle` because it starts inside a `display:none` tab). They share mutable state — servings, ingredient selections, locale — through the writable stores in `RecipeStore.ts`, not props. `RecipeStore` ends up in a single shared build chunk, so the stores are true cross-island singletons (verified: every island bundle in `dist/_astro/` imports it from the same chunk). Static recipe data is still passed as props since it never changes.
+`RecipePageV3.astro` is a static shell rendering the default parameter point (readable JS-off); the interactive parts are Svelte islands in `src/components/*.svelte` (`ServingsScalerV3`, `TabBarV3`, `CustomizeV3`, `ShopV3`, `CookV3`, `NutritionPanelV3`, the prop-less `MethodController`, plus the shared `LocaleSwitcher`/`ThemeToggle`). They share mutable state through stores, not props: `RecipeStoreV3.ts` (params, resolved output, stage tab) and `RecipeStore.ts` (locale only). Both land in shared build chunks, so the stores are true cross-island singletons. Static recipe data (the bundle) is still passed as props since it never changes — currently embedded once per island prop; the single-shared-payload refactor is the biggest remaining page-weight win.
 
-Each island calls `initStore()` (or `initLocale()` for locale-only islands) in `onMount` — idempotent, the first to hydrate wins — and uses a `mounted` flag so SSR renders the recipe's defaults and the store takes over only after hydration.
+Each island calls `initV3(bundle)` (or `initLocale()` for locale-only islands) in `onMount` — idempotent, the first to hydrate wins — and uses a `mounted` flag so SSR renders the recipe's defaults and the store takes over only after hydration.
 
-### Document-level UI state: theme, locale, tabs
+### Document-level UI state: theme, locale, stage
 
-Three concerns are reflected onto `<html>` attributes so CSS can drive them: `data-theme` (dark mode), `data-locale` (EN/JA), `data-tab` (Recipe/Customize tab). `data-theme` and `data-locale` are resolved **before first paint** by `is:inline` scripts in `RecipeLayout.astro` (stored choice → system/browser → default) to avoid a flash; the matching island then mirrors that attribute into its store. Theme and locale persist to `localStorage` and sync across open tabs via the `storage` event. The shared `SiteControls.astro` bundles `ThemeToggle` + `LocaleSwitcher` for both the recipe pages and the index.
+Three concerns are reflected onto `<html>` attributes so CSS can drive them: `data-theme` (dark mode), `data-locale` (EN/JA), `data-stage` (the Customize/Shop/Cook stage tabs). `data-theme` and `data-locale` are resolved **before first paint** by `is:inline` scripts in `RecipeLayout.astro` (stored choice → system/browser → default) to avoid a flash; the matching island then mirrors that attribute into its store. Theme and locale persist to `localStorage` and sync across open tabs via the `storage` event. The shared `SiteControls.astro` bundles `ThemeToggle` + `LocaleSwitcher` for both the recipe pages and the index.
 
 ### Localization (EN/JA)
 
-Two parallel systems, both driven by the `locale` store:
+Three systems, all driven by the `locale` store:
 
 - **Islands** read UI strings reactively from `src/lib/i18n.ts` via `t(key, locale)`.
-- **Static content** is emitted twice (`.lang-en` / `.lang-ja` siblings, see `Bilingual.astro` and the `.lang-*` rules in `global.css`); the `locale` store flips `<html data-locale>` so the right copy shows. This keeps content localized with JS disabled (defaults to EN).
+- **Recipe content** is canonical EN in the MDX, hydrated with the per-recipe JA catalog at build time into `Localized` (`{ en, ja }`) values the islands render by locale.
+- **Static prose** (tips, method surfaces) is emitted twice (`.lang-en` / `.lang-ja` siblings, see `Bilingual.astro` and the `.lang-*` rules in `global.css`); the `locale` store flips `<html data-locale>` so the right copy shows. This keeps content localized with JS disabled (defaults to EN).
 
 ## Browser testing (Chrome)
 

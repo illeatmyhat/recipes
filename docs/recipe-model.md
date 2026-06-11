@@ -1,9 +1,10 @@
 # Recipe model v3 — pattern, roles, fills
 
-**Status:** design proposal (not yet implemented). Supersedes the v2
-param-centric model after the 2026-06-10 design session re-grounded the
-project's purpose. Decisions and rationale from that session are inline;
-remaining forks are in *Open questions*.
+**Status:** implemented and live — both recipes are v3 and the v1 code path
+is removed (2026-06-10). Supersedes the v2 param-centric model after the
+2026-06-10 design session re-grounded the project's purpose. Decisions and
+rationale from that session are inline; remaining forks are in *Open
+questions*. This document remains the governing design.
 
 ## Purpose (this governs everything)
 
