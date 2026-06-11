@@ -2,7 +2,7 @@
  * Method rendering — pure helpers shared by SSR and the client island.
  *
  * A step's prose reads roles through refs: `<Ref of="role" fill?/>` in the
- * canonical EN MDX body, and `{role}` / `{role:fill}` placeholders in the
+ * canonical MDX body, and `{role}` / `{role:fill}` placeholders in the
  * per-locale catalog templates (`steps.<id>`). Both surfaces render to
  * `<span data-ref …>` markers: SSR fills them at the default parameter point
  * (Step.astro / Ref.astro), and the MethodController island re-fills the
@@ -78,7 +78,7 @@ function escapeHtml(s: string): string {
 /**
  * The `<span data-ref …>` marker both ref surfaces render to — the SINGLE
  * definition of the marker contract that MethodController's selectors, the
- * `.m-ref` CSS, and {@link htmlRefReads} all consume. Ref.astro (EN) emits
+ * `.m-ref` CSS, and {@link htmlRefReads} all consume. Ref.astro (the canonical surface) emits
  * this via `set:html`; {@link renderStepTemplate} (catalog locales) emits it
  * directly.
  */
@@ -104,7 +104,7 @@ export function renderStepTemplate(
 ): string {
   // A brace the TOKEN regex doesn't match is a malformed placeholder ("{role: fill}",
   // "{role }") — it would ship as literal braces in prose, so fail the build
-  // as loudly as an unknown <Ref> role does on the EN surface.
+  // as loudly as an unknown <Ref> role does on the canonical surface.
   const leftover = template.replace(TOKEN, '');
   if (leftover.includes('{') || leftover.includes('}')) {
     throw new Error(
@@ -125,7 +125,7 @@ export function renderStepTemplate(
 }
 
 /**
- * The roles read by an already-rendered ref surface (SSR HTML from the EN MDX
+ * The roles read by an already-rendered ref surface (SSR HTML from the canonical MDX
  * body) — extracted from its `data-ref` markers for the boundness lint and the
  * step's `data-reads` projection.
  */

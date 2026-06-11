@@ -11,7 +11,7 @@
  */
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-import Bilingual from './Bilingual.astro';
+import LocaleText from './LocaleText.astro';
 import SiteControls from './SiteControls.astro';
 import RecipeApp from './RecipeApp.svelte';
 import { UI } from '../lib/i18n';
@@ -38,12 +38,12 @@ setMethodContext(Astro.locals, {
 
 <article class="recipe">
   <div class="topbar">
-    <p class="kicker"><Bilingual text={UI.recipeKicker} /></p>
+    <p class="kicker"><LocaleText text={UI.recipeKicker} /></p>
     <SiteControls />
   </div>
 
-  <h1 class="title"><Bilingual text={recipe.title} /></h1>
-  <p class="pattern"><Bilingual text={recipe.pattern} /></p>
+  <h1 class="title"><LocaleText text={recipe.title} /></h1>
+  <p class="pattern"><LocaleText text={recipe.pattern} /></p>
 
   <Image
     class="hero"

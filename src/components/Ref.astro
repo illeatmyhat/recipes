@@ -9,9 +9,10 @@
  * naming the whole selection would be wrong. Names are prose names (recipe
  * `alias`, else normalized DB name) — see src/lib/recipe/names.ts.
  *
- * Appears only in the canonical EN MDX body, so it renders the EN surface; the
- * JA surface comes from the catalog template via Step.astro. SSR fills the
- * default parameter point, keeping the page readable with JS off.
+ * Appears only in the canonical MDX body, so it renders the canonical
+ * surface; catalog-locale surfaces come from the step templates via
+ * Step.astro. SSR fills the default parameter point, keeping the page
+ * readable with JS off.
  */
 import { getMethodContext } from '../lib/recipe/methodContext';
 import { refSpan, refText } from '../lib/recipe/method';

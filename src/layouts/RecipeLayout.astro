@@ -3,8 +3,8 @@
  * Base layout for recipe pages. Intentionally minimal — no sidebar, no header
  * chrome — just the document shell, global styles, and a centered <main>.
  *
- * `data-locale="en"` is set statically so the page is fully localized (to
- * English) with JavaScript disabled; the locale store flips it on hydration.
+ * `data-locale` starts at the canonical locale so the page is fully
+ * localized with JavaScript disabled; the locale store flips it on hydration.
  */
 import '../styles/global.css';
 import { CANONICAL_LOCALE, LOCALES, type Localized } from '../lib/types';
@@ -59,7 +59,7 @@ const { title, description } = Astro.props;
     <script is:inline>
       // Resolve the UI locale before first paint, the same way as the theme:
       // a remembered choice in localStorage wins, then the browser language
-      // (matched on its primary subtag — "ja" finds "ja-JP"), then the
+      // (matched on its primary subtag), then the
       // canonical locale (the initial data-locale value). The supported set
       // rides in as data-locales JSON, so this script stays config-free.
       (() => {

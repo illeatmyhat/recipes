@@ -5,14 +5,14 @@
  */
 import { getCollection } from 'astro:content';
 import RecipeLayout from '../layouts/RecipeLayout.astro';
-import Bilingual from '../components/Bilingual.astro';
+import LocaleText from '../components/LocaleText.astro';
 import SiteControls from '../components/SiteControls.astro';
 import { recipeTitle } from '../lib/recipe/i18n';
 import { UI } from '../lib/i18n';
 import { CANONICAL_LOCALE } from '../lib/types';
 
-// title is a canonical EN string; recipeTitle merges the JA from the
-// recipe's sidecar catalog for sorting and display.
+// title is the canonical string; recipeTitle merges each catalog locale's
+// translation from the recipe's sidecar catalogs for sorting and display.
 const recipes = (await getCollection('recipes'))
   .map((entry) => ({ slug: entry.data.slug, title: recipeTitle(entry.data) }))
   .sort((a, b) => a.title[CANONICAL_LOCALE].localeCompare(b.title[CANONICAL_LOCALE]));
@@ -21,11 +21,11 @@ const recipes = (await getCollection('recipes'))
 <RecipeLayout title={UI.siteTitle} description={UI.siteDescription[CANONICAL_LOCALE]}>
   <header class="head">
     <div class="head-bar">
-      <h1><Bilingual text={UI.siteTitle} /></h1>
+      <h1><LocaleText text={UI.siteTitle} /></h1>
       <SiteControls />
     </div>
     <p class="sub">
-      <Bilingual text={UI.siteTagline} />
+      <LocaleText text={UI.siteTagline} />
     </p>
   </header>
   <ul class="list">
@@ -33,7 +33,7 @@ const recipes = (await getCollection('recipes'))
       recipes.map((entry) => (
         <li>
           <a href={`${import.meta.env.BASE_URL}/recipes/${entry.slug}`.replace(/\/+/g, '/')}>
-            <Bilingual text={entry.title} />
+            <LocaleText text={entry.title} />
           </a>
         </li>
       ))

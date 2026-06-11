@@ -86,7 +86,7 @@
 
   // A fill's control label: its recipe alias, else the prose-normalized DB
   // name in the viewer's locale — the same resolution the method's refs use
-  // (a raw id would read as English in every locale).
+  // (a raw id would be unlocalized prose in every locale).
   function fillName(fill: FillT<Localized>): string {
     const names = bundle.ingredients[fill.id]?.data.names;
     return names

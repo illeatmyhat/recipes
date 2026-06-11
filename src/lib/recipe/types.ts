@@ -7,7 +7,7 @@
  * ingredients, plus the `Params` that drive resolution and the resolved output.
  *
  * **Localizable slot `T`.** Every human-facing string is a type parameter:
- * `T = string` is the *canonical* (authored EN) form that lives in the MDX
+ * `T = string` is the *canonical* authored form that lives in the MDX
  * frontmatter; `T = Localized` is the *hydrated* form (merged with the per-locale
  * catalog — see i18n.ts) that the engine consumes. The `…T<T>` interfaces are
  * the general shape; the bare `Role` / `Fill` / `Recipe` aliases are the
@@ -44,7 +44,7 @@ export interface FillT<T> {
 
 /** A job the pattern needs done; filled by one or more ingredients. */
 export interface RoleT<T> {
-  /** Display heading for the by-role projection (e.g. "Protein" / "タンパク質"). */
+  /** Display heading for the by-role projection (e.g. "Protein"). */
   label: T;
   why: T;
   range: Range;
@@ -133,11 +133,11 @@ export type Knob = KnobT<Localized>;
 export type Constraint = ConstraintT<Localized>;
 export type Recipe = RecipeT<Localized>;
 
-// ── Canonical (authored EN) forms — what the MDX frontmatter holds ────────────
+// ── Canonical (authored) forms — what the MDX frontmatter holds ────────────
 export type CanonicalRecipe = RecipeT<string>;
 
 /**
- * Parsed MDX frontmatter (canonical EN): a {@link CanonicalRecipe} plus the
+ * Parsed MDX frontmatter (canonical text): a {@link CanonicalRecipe} plus the
  * optional Customize-tab heading. Hydrated to {@link RecipeFrontmatter} by
  * merging the per-locale catalog (i18n.ts). (`hero_image` is resolved by Astro
  * and handled by the page, not the resolver.)
@@ -220,7 +220,7 @@ export interface StepRead {
 /**
  * Step metadata extracted from the MDX body at build time (steps.ts): what
  * each step is called, when it shows, and which roles/fills it reads. The
- * union of both surfaces' refs (EN `<Ref>`s + catalog-template placeholders).
+ * union of both surfaces' refs (canonical `<Ref>`s + catalog-template placeholders).
  * Drives the Cook stage's by-step mise en place. `T` is the localizable slot.
  */
 export interface StepMetaT<T> {

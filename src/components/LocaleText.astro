@@ -17,6 +17,6 @@ interface Props {
 const { text, as: Tag = 'span', class: className } = Astro.props;
 ---
 
-<Tag class:list={['bilingual', className]}>
+<Tag class:list={['locale-text', className]}>
   {LOCALES.map((loc) => <span class={`lang-${loc}`}>{text[loc]}</span>)}
 </Tag>

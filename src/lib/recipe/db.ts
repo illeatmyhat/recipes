@@ -7,7 +7,7 @@
  * surfaced so the UI can mark it.
  *
  * **Locale overlays.** The canonical file carries the locales it was authored
- * with inline (en-US/ja-JP today); any other supported locale arrives as an
+ * with inline; any other supported locale arrives as an
  * overlay file mirroring the canonical filename —
  * `data/ingredients/<locale>/<id>.yaml` with just the localizable fields
  * (`names`, `aliases`, `aisle`) — merged here at load. Folder-of-small-files

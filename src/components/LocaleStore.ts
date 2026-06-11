@@ -40,7 +40,7 @@ export function initLocale(): void {
 
 /**
  * The initial UI locale. The inline script in RecipeLayout has already
- * resolved it (stored choice → browser language → English) and written it to
+ * resolved it (stored choice → browser language → the canonical locale) and written it to
  * `<html data-locale>` before first paint, so just trust that — exactly how
  * ThemeToggle reads `data-theme`.
  */

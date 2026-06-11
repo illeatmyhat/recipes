@@ -1,20 +1,20 @@
 /**
  * Recipe catalog localization (build time).
  *
- * A recipe's MDX frontmatter holds the **canonical** (EN) text; the JA (and
- * any future locale) strings live in a per-locale sidecar catalog
+ * A recipe's MDX frontmatter holds the **canonical** text; each catalog
+ * locale's strings live in a per-locale sidecar catalog
  * `src/content/recipes/<slug>.<locale>.yaml`, a flat map keyed by dotted paths
  * (e.g. `roles.protein.why`, `roles.protein.fills.tofu.alias`). `hydrateRecipe`
  * merges canonical + catalog into the `Localized` shape the engine consumes.
  *
  * Completeness is a build ERROR (decided 2026-06-10): a recipe declaring a
  * locale must translate every key — an untranslated string blocks deploy
- * rather than silently shipping English. (Staleness stays a warning; it needs
- * human review.) Touches the filesystem — build time only.
+ * rather than silently shipping the canonical text. (Staleness stays a
+ * warning; it needs human review.) Touches the filesystem — build time only.
  *
  * Scope note: this localizes the **frontmatter** content. The method *body*
- * moves to canonical-EN + catalog with the `<Step id>` components (#3); the
- * ingredient DB stays inline bilingual reference data for now.
+ * is canonical prose + catalog step templates (the `<Step id>` components);
+ * the ingredient DB carries its own inline + overlay localization (db.ts).
  */
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -44,11 +44,11 @@ function loadCatalog(slug: string, locale: Locale): Record<string, string> {
   try {
     result = (load(readFileSync(file, 'utf8')) ?? {}) as Record<string, string>;
   } catch (err) {
-    // Only a MISSING catalog degrades to EN; a present-but-broken one (YAML
+    // Only a MISSING catalog degrades to the canonical text; a present-but-broken one (YAML
     // syntax error) must fail the build — silently dropping a whole locale is
     // worse than a red build.
     if ((err as { code?: string }).code !== 'ENOENT') throw err;
-    console.warn(`recipe i18n: recipe "${slug}" has no ${slug}.${locale}.yaml — all ${locale} text falls back to EN.`);
+    console.warn(`recipe i18n: recipe "${slug}" has no ${slug}.${locale}.yaml — all ${locale} text falls back to the canonical text.`);
     result = {};
   }
   catalogCache.set(key, result);
@@ -57,7 +57,7 @@ function loadCatalog(slug: string, locale: Locale): Record<string, string> {
 
 /**
  * The raw flat catalog for one recipe+locale. Used by the method `<Step>`
- * components, whose JA surface (`steps.<id>` templates) lives in the catalog
+ * components, whose step-template surfaces (`steps.<id>`) live in the catalog
  * but outside the frontmatter that {@link hydrateRecipe} covers.
  */
 export function recipeCatalog(slug: string, locale: Locale): Record<string, string> {
@@ -90,14 +90,14 @@ interface CatalogSlot {
 /** A single hydration pass over one recipe: per-locale catalogs + missing keys. */
 interface Ctx {
   cats: CatalogSlot[];
-  /** When present, every visited path's canonical EN is recorded here (staleness lint). */
+  /** When present, every visited path's canonical text is recorded here (staleness lint). */
   sources?: Record<string, string>;
 }
 
 /** Build a Localized from the canonical string + each catalog's entry at `path`. */
-function loc(en: string, path: string, ctx: Ctx): Localized {
-  if (ctx.sources) ctx.sources[path] = en;
-  const out = localizeAll(en);
+function loc(canonical: string, path: string, ctx: Ctx): Localized {
+  if (ctx.sources) ctx.sources[path] = canonical;
+  const out = localizeAll(canonical);
   for (const c of ctx.cats) {
     const value = c.cat[path];
     if (value === undefined) c.missing.push(path);
@@ -107,8 +107,8 @@ function loc(en: string, path: string, ctx: Ctx): Localized {
 }
 
 /** Localize an optional field only when the canonical value is present. */
-function locOpt(en: string | undefined, path: string, ctx: Ctx): Localized | undefined {
-  return en === undefined ? undefined : loc(en, path, ctx);
+function locOpt(canonical: string | undefined, path: string, ctx: Ctx): Localized | undefined {
+  return canonical === undefined ? undefined : loc(canonical, path, ctx);
 }
 
 function hydrateFill(fill: FillT<string>, roleId: string, ctx: Ctx): FillT<Localized> {

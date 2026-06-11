@@ -85,7 +85,15 @@ export interface NutritionFacts {
 /** The keys of {@link NutritionFacts}, useful for iteration. */
 export type NutrientKey = keyof NutritionFacts;
 
-/** Per-market sourcing guidance for an ingredient. */
+/**
+ * Per-market sourcing guidance for an ingredient.
+ *
+ * KNOWN INSTANCE LEAK: the `us`/`ja` market keys and `note_en`/`note_ja`
+ * fields predate the configurable locale set. The data is dormant (no
+ * surface renders it); Q9 (issue #6) restructures it into per-locale
+ * market-authored content together with the Shop-stage "where to buy"
+ * surface. Don't extend this shape — fix it there.
+ */
 export interface Availability {
   brands: string[];
   note_en: string;

@@ -1,6 +1,6 @@
 # Machine-written — do not edit. Refresh: REFRESH_CATALOG_HASHES=1 npm run build
-# Per translated key in weight-loss-stew.ja-JP.yaml: sha-256[0:8] of the EN source it
-# was translated from. The build warns when the EN changes underneath (staleness).
+# Per translated key in weight-loss-stew.ja-JP.yaml: sha-256[0:8] of the canonical source it
+# was translated from. The build warns when the canonical text changes underneath (staleness).
 constraints.0.error: "d4f737ab"
 constraints.1.warn: "8f610946"
 customize_title: "66d1c838"

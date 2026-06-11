@@ -4,7 +4,7 @@
  *
  * The method's `<Step>`/`<Ref>` markup only materializes as DOM when Astro
  * renders the page, but the Cook stage needs the step list (ids, titles,
- * guards, reads) as DATA at SSR time and in the browser. So the canonical EN
+ * guards, reads) as DATA at SSR time and in the browser. So the canonical
  * body is parsed here at build time — exactly the "MDX walking only to
  * extract step ids and refs" the design doc planned for the catalog lints —
  * and `buildBundle` merges in each step's catalog-template reads
@@ -31,7 +31,7 @@ export function readKey(read: StepRead): string {
   return read.fill === undefined ? read.role : `${read.role}:${read.fill}`;
 }
 
-/** An extracted step: the metadata plus the raw EN body (staleness-lint source). */
+/** An extracted step: the metadata plus the raw canonical body (staleness-lint source). */
 export interface ExtractedStep extends StepMetaT<string> {
   body: string;
 }

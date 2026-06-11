@@ -33,7 +33,7 @@ function recipeBody(slug: string): string {
 
 /** Build the serializable bundle for one recipe from its canonical frontmatter. */
 export function buildBundle(fm: CanonicalRecipeFrontmatter): RecipeBundle {
-  // Canonical EN source per catalog path — fed by hydration (frontmatter) and
+  // Canonical source text per catalog path — fed by hydration (frontmatter) and
   // step extraction (method body) below, then handed to the staleness lint.
   const sources: Record<string, string> = {};
   const recipe = hydrateRecipe(fm, sources);
