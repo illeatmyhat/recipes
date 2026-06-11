@@ -13,8 +13,13 @@
  * Surrounding grammar (articles, connectives) belongs to the step template and
  * the list-join, never the name.
  */
-import type { Locale, Localized } from '../types';
+import { LOCALES, type Locale, type Localized } from '../types';
 import type { Fill } from './types';
+
+/** The same string in every locale — the fallback shape for unlocalized values. */
+export function localizeAll(value: string): Localized {
+  return Object.fromEntries(LOCALES.map((l) => [l, value])) as Localized;
+}
 
 /**
  * Humanize an ingredient id for fallback display: `smoked_paprika` →
@@ -49,11 +54,16 @@ export function proseName(fill: Fill | undefined, dbNames: Localized, loc: Local
  * surrounding connective can collapse rather than dangle ("…and ." / "…と").
  */
 export const joinNames: Record<Locale, (xs: string[]) => string> = {
-  en: (xs) => {
+  'en-US': (xs) => {
     if (xs.length === 0) return '';
     if (xs.length === 1) return xs[0] as string;
     if (xs.length === 2) return `${xs[0]} and ${xs[1]}`;
     return `${xs.slice(0, -1).join(', ')}, and ${xs[xs.length - 1]}`;
   },
-  ja: (xs) => xs.join('と'),
+  'ja-JP': (xs) => xs.join('と'),
+  // 顿号-separated list with 和 before the last item: A、B和C.
+  'zh-CN': (xs) => {
+    if (xs.length <= 1) return xs[0] ?? '';
+    return `${xs.slice(0, -1).join('、')}和${xs[xs.length - 1]}`;
+  },
 };

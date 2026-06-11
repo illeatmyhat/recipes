@@ -14,7 +14,7 @@
 import { writable, derived, type Readable } from 'svelte/store';
 import { resolve } from '../lib/v3/resolve';
 import { emptyNutrition } from '../lib/nutrition';
-import { humanizeId } from '../lib/v3/names';
+import { humanizeId, localizeAll } from '../lib/v3/names';
 import { initLocale } from './RecipeStore';
 import type {
   KnobValue,
@@ -41,13 +41,12 @@ export function getBundle(): RecipeBundle | null {
 
 /** A defensive zero-nutrition stand-in (the bundle should carry every fill id). */
 function placeholder(id: string): LoadedIngredient {
-  const name = humanizeId(id);
   return {
     data: {
       id,
       fdc_id: 0,
-      names: { en: name, ja: name },
-      aliases: { en: [], ja: [] },
+      names: localizeAll(humanizeId(id)),
+      aliases: { 'en-US': [], 'ja-JP': [], 'zh-CN': [] },
       availability: {
         us: { brands: [], note_en: '' },
         ja: { brands: [], note_en: '' },

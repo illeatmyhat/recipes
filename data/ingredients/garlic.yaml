@@ -1,13 +1,13 @@
 id: garlic
 fdc_id: 169230
 names:
-  en: Garlic
-  ja: にんにく
+  en-US: Garlic
+  ja-JP: にんにく
 aliases:
-  en:
+  en-US:
     - Fresh garlic
     - Garlic cloves
-  ja:
+  ja-JP:
     - ニンニク
     - ガーリック
 availability:
@@ -34,5 +34,5 @@ nutrition:
     iron: 1.7
 density_g_per_ml: null
 aisle:
-  en: produce
-  ja: produce
+  en-US: produce
+  ja-JP: produce

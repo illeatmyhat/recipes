@@ -18,6 +18,7 @@
   import NutritionPanelV3 from './NutritionPanelV3.svelte';
   import MethodController from './MethodController.svelte';
   import { UI } from '../lib/i18n';
+  import { LOCALES } from '../lib/types';
   import type { RecipeBundle } from '../lib/v3/types';
 
   let { bundle, children }: { bundle: RecipeBundle; children?: Snippet } = $props();
@@ -43,7 +44,7 @@
 
     <section class="method" aria-labelledby="method-heading">
       <h2 id="method-heading">
-        <span class="lang-en">{UI.method.en}</span><span class="lang-ja">{UI.method.ja}</span>
+        {#each LOCALES as loc (loc)}<span class={`lang-${loc}`}>{UI.method[loc]}</span>{/each}
       </h2>
       <div class="method-body" id="method-body">{@render children?.()}</div>
       <MethodController />

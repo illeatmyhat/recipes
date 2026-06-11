@@ -1,12 +1,12 @@
 id: carrots
 fdc_id: 170393
 names:
-  en: Carrots
-  ja: にんじん
+  en-US: Carrots
+  ja-JP: にんじん
 aliases:
-  en:
+  en-US:
     - Carrot
-  ja:
+  ja-JP:
     - ニンジン
     - 人参
 availability:
@@ -33,5 +33,5 @@ nutrition:
     iron: 0.3
 density_g_per_ml: null
 aisle:
-  en: produce
-  ja: produce
+  en-US: produce
+  ja-JP: produce

@@ -16,7 +16,7 @@
   import { params, resolved, resolveBundle, initV3, setFill, toggleFill, setKnob } from './RecipeStoreV3';
   import { t } from '../lib/i18n';
   import type { Knob, KnobValue, Params, RecipeBundle, RoleT } from '../lib/v3/types';
-  import type { Localized } from '../lib/types';
+  import { LOCALES, type Localized } from '../lib/types';
 
   let { bundle }: { bundle: RecipeBundle } = $props();
 
@@ -82,7 +82,7 @@
     const notice = result.notices.find((n) => n.kind === 'constraint-error');
     return notice && 'text' in notice
       ? notice.text
-      : { en: t('optionBlocked', 'en'), ja: t('optionBlocked', 'ja') };
+      : (Object.fromEntries(LOCALES.map((l) => [l, t('optionBlocked', l)])) as Localized);
   }
 
   // min-resist: don't allow a multi role to drop below its floor.

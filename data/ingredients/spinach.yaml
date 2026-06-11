@@ -1,13 +1,13 @@
 id: spinach
 fdc_id: 168462
 names:
-  en: Spinach
-  ja: ほうれん草
+  en-US: Spinach
+  ja-JP: ほうれん草
 aliases:
-  en:
+  en-US:
     - Fresh spinach
     - Baby spinach
-  ja:
+  ja-JP:
     - ホウレンソウ
     - ベビースピナッチ
 availability:
@@ -34,5 +34,5 @@ nutrition:
     iron: 2.71
 density_g_per_ml: null
 aisle:
-  en: produce
-  ja: produce
+  en-US: produce
+  ja-JP: produce

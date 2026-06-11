@@ -1,13 +1,13 @@
 id: lentils
 fdc_id: 172420
 names:
-  en: Dried lentils
-  ja: レンズ豆（乾燥）
+  en-US: Dried lentils
+  ja-JP: レンズ豆（乾燥）
 aliases:
-  en:
+  en-US:
     - Brown lentils
     - Green lentils
-  ja:
+  ja-JP:
     - レンティル
     - 乾燥レンズ豆
 availability:
@@ -34,5 +34,5 @@ nutrition:
     iron: 6.51
 density_g_per_ml: null
 aisle:
-  en: dry_goods
-  ja: dry_goods
+  en-US: dry_goods
+  ja-JP: dry_goods

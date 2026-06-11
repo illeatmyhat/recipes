@@ -1,21 +1,26 @@
 id: kiwi
 fdc_id: 168153
 names:
-  en: Kiwifruit, green, raw
-  ja: キウイフルーツ（生）
+  en-US: Kiwifruit, green, raw
+  ja-JP: キウイフルーツ（生）
 aliases:
-  en:
+  en-US:
     - Green kiwi
     - Kiwi fruit
-  ja:
+  ja-JP:
     - キウイ
     - グリーンキウイ
 availability:
   us:
-    brands: ["Zespri", "Sunkist", "365 Whole Foods"]
+    brands:
+      - Zespri
+      - Sunkist
+      - 365 Whole Foods
     note_en: Sold year-round in the produce section, individually or by the bag.
   ja:
-    brands: ["ゼスプリ", "国産キウイ"]
+    brands:
+      - ゼスプリ
+      - 国産キウイ
     note_en: Widely available at supermarkets; Zespri is the dominant brand.
     note_ja: スーパーで通年入手可能。
 nutrition:
@@ -34,5 +39,5 @@ nutrition:
     iron: 0.31
 density_g_per_ml: null
 aisle:
-  en: produce
-  ja: produce
+  en-US: produce
+  ja-JP: produce

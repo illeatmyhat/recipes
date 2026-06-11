@@ -11,7 +11,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { load } from 'js-yaml';
 import { emptyNutrition } from '../nutrition';
-import { humanizeId } from './names';
+import { humanizeId, localizeAll } from './names';
 import type { IngredientData } from '../types';
 import type { IngredientLookup, LoadedIngredient } from './types';
 
@@ -19,12 +19,11 @@ const INGREDIENT_DIR = join(process.cwd(), 'data', 'ingredients');
 const cache = new Map<string, LoadedIngredient>();
 
 function placeholderIngredient(id: string): IngredientData {
-  const name = humanizeId(id);
   return {
     id,
     fdc_id: 0,
-    names: { en: name, ja: name },
-    aliases: { en: [], ja: [] },
+    names: localizeAll(humanizeId(id)),
+    aliases: { 'en-US': [], 'ja-JP': [], 'zh-CN': [] },
     availability: {
       us: { brands: [], note_en: 'Nutrition data pending.' },
       ja: { brands: [], note_en: 'Nutrition data pending.', note_ja: '栄養データは準備中です。' },

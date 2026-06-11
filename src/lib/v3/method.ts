@@ -12,13 +12,12 @@
  * No I/O and no DOM — safe in the browser and at build time alike.
  */
 import type { Locale, Localized } from '../types';
-import { humanizeId, joinNames, proseName } from './names';
+import { humanizeId, joinNames, localizeAll, proseName } from './names';
 import type { Fill, LoadedIngredient, RecipeV3 } from './types';
 
 /** Defensive names for an ingredient id missing from the bundle (should not happen). */
 function fallbackNames(id: string): Localized {
-  const name = humanizeId(id);
-  return { en: name, ja: name };
+  return localizeAll(humanizeId(id));
 }
 
 /**

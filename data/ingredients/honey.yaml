@@ -1,21 +1,26 @@
 id: honey
 fdc_id: 169640
 names:
-  en: Honey
-  ja: はちみつ
+  en-US: Honey
+  ja-JP: はちみつ
 aliases:
-  en:
+  en-US:
     - Pure honey
     - Raw honey
-  ja:
+  ja-JP:
     - 蜂蜜
     - 純粋はちみつ
 availability:
   us:
-    brands: ["Nature Nate's", "Local Hive", "365 Whole Foods"]
+    brands:
+      - Nature Nate's
+      - Local Hive
+      - 365 Whole Foods
     note_en: Sold raw or filtered; choose 100% pure honey.
   ja:
-    brands: ["サクラ印はちみつ", "国産はちみつ"]
+    brands:
+      - サクラ印はちみつ
+      - 国産はちみつ
     note_en: Widely sold at supermarkets; domestic and imported types available.
     note_ja: スーパーで一般的に入手可能。
 nutrition:
@@ -34,5 +39,5 @@ nutrition:
     iron: 0.42
 density_g_per_ml: null
 aisle:
-  en: condiments
-  ja: condiments
+  en-US: condiments
+  ja-JP: condiments

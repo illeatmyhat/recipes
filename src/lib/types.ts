@@ -4,7 +4,32 @@
  * boundary is described here.
  */
 
-export type Locale = 'en' | 'ja';
+/**
+ * Site locale configuration. This is *instance* configuration, not a model
+ * invariant — the long-term goal is an open-source recipe SSG, and an
+ * adopting site may support a different locale set and even a different
+ * canonical language. Keep locale assumptions routed through these constants
+ * rather than scattered literals.
+ *
+ * Locales are BCP-47 tags (the form `html lang`, `navigator.language`, and
+ * the Intl APIs speak — hyphens, not POSIX underscores). Region-qualified on
+ * purpose: a locale here covers language AND market (store geography, aisle
+ * sections), and bare `zh` would be ambiguous between scripts anyway.
+ */
+export const LOCALES = ['en-US', 'ja-JP', 'zh-CN'] as const;
+export type Locale = (typeof LOCALES)[number];
+
+/** The canonical authoring language: recipe MDX and the DB's inline text. */
+export const CANONICAL_LOCALE: Locale = 'en-US';
+
+/**
+ * The locales translated via sidecar catalogs and ingredient overlays —
+ * every supported locale except the canonical one. A recipe declaring one of
+ * these owes it a complete catalog (missing keys fail the build).
+ */
+export const CATALOG_LOCALES: readonly Locale[] = LOCALES.filter(
+  (l) => l !== CANONICAL_LOCALE,
+);
 
 /** Colour theme. Resolved from a stored choice or the OS preference. */
 export type Theme = 'light' | 'dark';

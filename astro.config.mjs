@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import svelte from '@astrojs/svelte';
+import yaml from '@rollup/plugin-yaml';
 
 // GitHub Pages: project site served at https://<owner>.github.io/<repo>/
 // Repo owner is the authenticated gh account `illeatmyhat`.
@@ -10,6 +11,8 @@ export default defineConfig({
   base: '/recipes',
   trailingSlash: 'ignore',
   integrations: [mdx(), svelte()],
+  // Site-level locale catalogs (src/locales/<locale>.yaml) import as JSON.
+  vite: { plugins: [yaml()] },
   // Built-in `astro:assets` uses sharp for WebP conversion + responsive srcset.
   image: {
     responsiveStyles: true,

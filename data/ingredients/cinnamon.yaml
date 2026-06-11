@@ -1,21 +1,26 @@
 id: cinnamon
 fdc_id: 171320
 names:
-  en: Cinnamon, ground
-  ja: シナモン（パウダー）
+  en-US: Cinnamon, ground
+  ja-JP: シナモン（パウダー）
 aliases:
-  en:
+  en-US:
     - Ground cinnamon
     - Cinnamon powder
-  ja:
+  ja-JP:
     - シナモンパウダー
     - 桂皮
 availability:
   us:
-    brands: ["McCormick", "Simply Organic", "365 Whole Foods"]
+    brands:
+      - McCormick
+      - Simply Organic
+      - 365 Whole Foods
     note_en: Sold ground in the spice aisle; Ceylon and cassia types are both common.
   ja:
-    brands: ["GABAN シナモンパウダー", "S&B シナモン"]
+    brands:
+      - GABAN シナモンパウダー
+      - S&B シナモン
     note_en: Sold ground at all supermarkets in the spice section.
     note_ja: スーパーの香辛料売り場で入手可能。
 nutrition:
@@ -34,5 +39,5 @@ nutrition:
     iron: 8.32
 density_g_per_ml: 0.53
 aisle:
-  en: spices
-  ja: spices
+  en-US: spices
+  ja-JP: spices

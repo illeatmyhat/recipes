@@ -1,12 +1,12 @@
 id: ginger
 fdc_id: 170926
 names:
-  en: Ground ginger
-  ja: ジンジャーパウダー
+  en-US: Ground ginger
+  ja-JP: ジンジャーパウダー
 aliases:
-  en:
+  en-US:
     - Ginger
-  ja:
+  ja-JP:
     - 生姜パウダー
     - ショウガ
 availability:
@@ -33,5 +33,5 @@ nutrition:
     iron: 19.8
 density_g_per_ml: null
 aisle:
-  en: spices
-  ja: spices
+  en-US: spices
+  ja-JP: spices

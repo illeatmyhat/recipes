@@ -1,21 +1,27 @@
 id: hemp_seeds
 fdc_id: 170148
 names:
-  en: Hemp seeds, hulled
-  ja: 麻の実（ヘンプシード）
+  en-US: Hemp seeds, hulled
+  ja-JP: 麻の実（ヘンプシード）
 aliases:
-  en:
+  en-US:
     - Hemp hearts
     - Hulled hemp seed
-  ja:
+  ja-JP:
     - ヘンプハーツ
     - 麻の実ナッツ
 availability:
   us:
-    brands: ["Manitoba Harvest", "Bob's Red Mill", "Nutiva"]
+    brands:
+      - Manitoba Harvest
+      - Bob's Red Mill
+      - Nutiva
     note_en: Usually labeled "hemp hearts"; keep refrigerated after opening.
   ja:
-    brands: ["ヘンプフーズジャパン", "Nutiva", "麻の実ナッツ"]
+    brands:
+      - ヘンプフーズジャパン
+      - Nutiva
+      - 麻の実ナッツ
     note_en: Sold as "asa no mi" at natural food stores, iHerb, and Amazon; food-grade is legal.
     note_ja: 麻の実として自然食品店・iHerb・Amazonで入手可能。食品用は合法。
 nutrition:
@@ -34,5 +40,5 @@ nutrition:
     iron: 7.95
 density_g_per_ml: null
 aisle:
-  en: dry_goods
-  ja: dry_goods
+  en-US: dry_goods
+  ja-JP: dry_goods

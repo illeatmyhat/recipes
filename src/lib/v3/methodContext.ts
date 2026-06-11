@@ -3,8 +3,8 @@
  *
  * `<Step>`/`<Ref>` render inside a recipe's MDX body, which Astro renders as a
  * slot — there is no way to hand them per-recipe props from the page. Instead
- * `RecipePageV3.astro` registers the current recipe's bundle + JA catalog on
- * `Astro.locals`, and the components read it back from their own
+ * `RecipePageV3.astro` registers the current recipe's bundle + per-locale
+ * catalogs on `Astro.locals`, and the components read it back from their own
  * `Astro.locals` while the slot renders.
  *
  * `Astro.locals` is one object per page render, shared by the page and every
@@ -14,12 +14,13 @@
  * nothing to clear. A `<Step>`/`<Ref>` rendered outside a v3 recipe page
  * still fails loudly via {@link getMethodContext}.
  */
+import type { Locale } from '../types';
 import type { RecipeBundle } from './types';
 
 export interface MethodContext {
   bundle: RecipeBundle;
-  /** The recipe's flat JA catalog (step templates live at `steps.<id>`). */
-  catalog: Record<string, string>;
+  /** The recipe's flat catalogs, one per non-canonical locale (step templates live at `steps.<id>`). */
+  catalogs: ReadonlyArray<{ locale: Locale; cat: Record<string, string> }>;
 }
 
 /** The slice of `Astro.locals` this module owns (see src/env.d.ts). */

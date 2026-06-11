@@ -1,21 +1,25 @@
 id: blackberries
 fdc_id: 173946
 names:
-  en: Blackberries, raw
-  ja: ブラックベリー（生）
+  en-US: Blackberries, raw
+  ja-JP: ブラックベリー（生）
 aliases:
-  en:
+  en-US:
     - Fresh blackberries
     - Bramble berries
-  ja:
+  ja-JP:
     - 黒いちご
     - 生ブラックベリー
 availability:
   us:
-    brands: ["Driscoll's", "365 Whole Foods", "Naturipe"]
+    brands:
+      - Driscoll's
+      - 365 Whole Foods
+      - Naturipe
     note_en: Sold fresh in clamshells; frozen also widely available.
   ja:
-    brands: ["冷凍ブラックベリー"]
+    brands:
+      - 冷凍ブラックベリー
     note_en: Fresh is rare; frozen is sold at supermarkets and import stores.
     note_ja: 生は入手困難、冷凍が中心。
 nutrition:
@@ -34,5 +38,5 @@ nutrition:
     iron: 0.62
 density_g_per_ml: null
 aisle:
-  en: produce
-  ja: produce
+  en-US: produce
+  ja-JP: produce

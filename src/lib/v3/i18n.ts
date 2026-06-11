@@ -19,7 +19,8 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { load } from 'js-yaml';
-import type { Locale, Localized } from '../types';
+import { CATALOG_LOCALES, type Locale, type Localized } from '../types';
+import { localizeAll } from './names';
 import type {
   CanonicalRecipeFrontmatterV3,
   ConstraintT,
@@ -64,31 +65,45 @@ export function recipeCatalog(slug: string, locale: Locale): Record<string, stri
 }
 
 /**
- * A recipe's {@link Localized} title: the canonical EN string from the
- * frontmatter plus the JA from its catalog (EN fallback). Used by the index.
+ * A recipe's {@link Localized} title: the canonical string from the
+ * frontmatter plus each catalog locale's translation (canonical fallback).
+ * Used by the index.
  */
 export function recipeTitle(data: { slug: string; title: string }): Localized {
-  const ja = loadCatalog(data.slug, 'ja').title;
-  return { en: data.title, ja: ja ?? data.title };
+  const out = localizeAll(data.title);
+  for (const locale of CATALOG_LOCALES) {
+    const title = loadCatalog(data.slug, locale).title;
+    if (title !== undefined) out[locale] = title;
+  }
+  return out;
 }
 
-/** A single hydration pass over one recipe: catalog + a running list of missing keys. */
-interface Ctx {
+/** One catalog locale's state during a hydration pass. */
+interface CatalogSlot {
+  locale: Locale;
   cat: Record<string, string>;
+  /** The recipe declares this locale, so a missing key is a build error. */
+  required: boolean;
   missing: string[];
+}
+
+/** A single hydration pass over one recipe: per-locale catalogs + missing keys. */
+interface Ctx {
+  cats: CatalogSlot[];
   /** When present, every visited path's canonical EN is recorded here (staleness lint). */
   sources?: Record<string, string>;
 }
 
-/** Build a Localized from canonical EN + the catalog entry at `path`. */
+/** Build a Localized from the canonical string + each catalog's entry at `path`. */
 function loc(en: string, path: string, ctx: Ctx): Localized {
   if (ctx.sources) ctx.sources[path] = en;
-  const ja = ctx.cat[path];
-  if (ja === undefined) {
-    ctx.missing.push(path);
-    return { en, ja: en };
+  const out = localizeAll(en);
+  for (const c of ctx.cats) {
+    const value = c.cat[path];
+    if (value === undefined) c.missing.push(path);
+    else out[c.locale] = value;
   }
-  return { en, ja };
+  return out;
 }
 
 /** Localize an optional field only when the canonical value is present. */
@@ -162,17 +177,26 @@ function hydrateConstraint(c: ConstraintT<string>, i: number, ctx: Ctx): Constra
 }
 
 /**
- * Merge a canonical (EN) v3 frontmatter with its per-locale catalog(s) into the
- * `Localized` frontmatter the resolver consumes. Currently localizes to JA; the
- * `Localized` shape is `{ en, ja }` (extend when a third locale lands).
- * Pass `sources` to also collect every visited path's canonical EN string
+ * Merge a canonical v3 frontmatter with its per-locale catalogs into the
+ * `Localized` frontmatter the resolver consumes — one catalog per
+ * `CATALOG_LOCALES` entry, each falling back to the canonical text when a
+ * key is absent (an error when the recipe declares that locale).
+ * Pass `sources` to also collect every visited path's canonical string
  * (feeds the staleness lint — see staleness.ts).
  */
 export function hydrateRecipe(
   fm: CanonicalRecipeFrontmatterV3,
   sources?: Record<string, string>,
 ): RecipeFrontmatterV3 {
-  const ctx: Ctx = { cat: loadCatalog(fm.slug, 'ja'), missing: [], sources };
+  const ctx: Ctx = {
+    cats: CATALOG_LOCALES.map((locale) => ({
+      locale,
+      cat: loadCatalog(fm.slug, locale),
+      required: fm.locales.includes(locale),
+      missing: [],
+    })),
+    sources,
+  };
 
   const knobs: Record<string, KnobT<Localized>> = {};
   for (const [id, knob] of Object.entries(fm.knobs ?? {})) {
@@ -195,13 +219,15 @@ export function hydrateRecipe(
     customize_title: locOpt(fm.customize_title, 'customize_title', ctx),
   };
 
-  // Completeness gate: only recipes that declare the locale owe it a full
-  // catalog (an EN-only recipe is legitimate and skips this entirely).
-  if (ctx.missing.length > 0 && fm.locales.includes('ja')) {
-    throw new Error(
-      `v3 i18n: recipe "${fm.slug}" declares ja but is missing ${ctx.missing.length} ` +
-        `catalog key(s) in ${fm.slug}.ja.yaml: ${ctx.missing.join(', ')}`,
-    );
+  // Completeness gate: only recipes that declare a locale owe it a full
+  // catalog (a canonical-only recipe is legitimate and skips this entirely).
+  for (const c of ctx.cats) {
+    if (c.required && c.missing.length > 0) {
+      throw new Error(
+        `v3 i18n: recipe "${fm.slug}" declares ${c.locale} but is missing ${c.missing.length} ` +
+          `catalog key(s) in ${fm.slug}.${c.locale}.yaml: ${c.missing.join(', ')}`,
+      );
+    }
   }
   return hydrated;
 }

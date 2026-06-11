@@ -1,21 +1,27 @@
 id: strawberries
 fdc_id: 167762
 names:
-  en: Strawberries, raw
-  ja: いちご（生）
+  en-US: Strawberries, raw
+  ja-JP: いちご（生）
 aliases:
-  en:
+  en-US:
     - Fresh strawberries
     - Raw strawberry
-  ja:
+  ja-JP:
     - 生いちご
     - ストロベリー
 availability:
   us:
-    brands: ["Driscoll's", "Wish Farms", "California Giant"]
+    brands:
+      - Driscoll's
+      - Wish Farms
+      - California Giant
     note_en: Fresh in produce; frozen unsweetened works for smoothies and baking.
   ja:
-    brands: ["とちおとめ", "あまおう", "紅ほっぺ"]
+    brands:
+      - とちおとめ
+      - あまおう
+      - 紅ほっぺ
     note_en: Fresh peaks in winter and spring; frozen sold year-round.
     note_ja: 生は冬〜春が旬、冷凍は通年入手可能。
 nutrition:
@@ -34,5 +40,5 @@ nutrition:
     iron: 0.41
 density_g_per_ml: null
 aisle:
-  en: produce
-  ja: produce
+  en-US: produce
+  ja-JP: produce

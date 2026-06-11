@@ -1,13 +1,13 @@
 id: chicken_breast
 fdc_id: 171077
 names:
-  en: Chicken, broiler or fryers, breast, skinless, boneless, meat only, raw
-  ja: 鶏むね肉（皮なし）
+  en-US: Chicken, broiler or fryers, breast, skinless, boneless, meat only, raw
+  ja-JP: 鶏むね肉（皮なし）
 aliases:
-  en:
+  en-US:
     - Skinless boneless chicken breast
     - Chicken breast fillet
-  ja:
+  ja-JP:
     - 鶏胸肉
     - とりむね
 availability:
@@ -34,5 +34,5 @@ nutrition:
     iron: 0.37
 density_g_per_ml: null
 aisle:
-  en: meat_seafood
-  ja: meat_seafood
+  en-US: meat_seafood
+  ja-JP: meat_seafood

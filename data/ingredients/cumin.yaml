@@ -1,13 +1,13 @@
 id: cumin
 fdc_id: 170923
 names:
-  en: Ground cumin
-  ja: クミン
+  en-US: Ground cumin
+  ja-JP: クミン
 aliases:
-  en:
+  en-US:
     - Cumin
     - Cumin seed
-  ja:
+  ja-JP:
     - クミンパウダー
     - クミンシード
 availability:
@@ -34,5 +34,5 @@ nutrition:
     iron: 66.36
 density_g_per_ml: null
 aisle:
-  en: spices
-  ja: spices
+  en-US: spices
+  ja-JP: spices

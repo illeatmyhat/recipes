@@ -1,11 +1,11 @@
 ---
 /**
- * Renders a localized string as two siblings — one per locale — letting the
- * `.lang-*` CSS rules in global.css show the right one. This keeps static
- * (JS-disabled) content fully localized and instantly reactive once the
- * locale store flips `<html data-locale>`.
+ * Renders a localized string as sibling spans — one per supported locale —
+ * letting the `.lang-*` CSS rules in global.css show the right one. This
+ * keeps static (JS-disabled) content fully localized and instantly reactive
+ * once the locale store flips `<html data-locale>`.
  */
-import type { Localized } from '../lib/types';
+import { LOCALES, type Localized } from '../lib/types';
 
 interface Props {
   text: Localized;
@@ -18,5 +18,5 @@ const { text, as: Tag = 'span', class: className } = Astro.props;
 ---
 
 <Tag class:list={['bilingual', className]}>
-  <span class="lang-en">{text.en}</span><span class="lang-ja">{text.ja}</span>
+  {LOCALES.map((loc) => <span class={`lang-${loc}`}>{text[loc]}</span>)}
 </Tag>

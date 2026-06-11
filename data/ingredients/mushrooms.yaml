@@ -1,13 +1,13 @@
 id: mushrooms
 fdc_id: 169251
 names:
-  en: White mushrooms
-  ja: マッシュルーム
+  en-US: White mushrooms
+  ja-JP: マッシュルーム
 aliases:
-  en:
+  en-US:
     - Button mushrooms
     - Cremini mushrooms
-  ja:
+  ja-JP:
     - ホワイトマッシュルーム
     - ブラウンマッシュルーム
 availability:
@@ -34,5 +34,5 @@ nutrition:
     iron: 0.5
 density_g_per_ml: null
 aisle:
-  en: produce
-  ja: produce
+  en-US: produce
+  ja-JP: produce

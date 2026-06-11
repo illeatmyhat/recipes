@@ -1,23 +1,25 @@
 id: soy_sauce
 fdc_id: 172473
 names:
-  en: Low-sodium soy sauce
-  ja: 減塩しょうゆ
+  en-US: Low-sodium soy sauce
+  ja-JP: 減塩しょうゆ
 aliases:
-  en:
+  en-US:
     - Soy sauce
     - Shoyu
     - Reduced-sodium soy sauce
-  ja:
+  ja-JP:
     - しょうゆ
     - 醤油
     - 減塩醤油
 availability:
   us:
-    brands: ["Kikkoman Less Sodium"]
+    brands:
+      - Kikkoman Less Sodium
     note_en: Use a low-sodium / "less sodium" soy sauce so you control the salt.
   ja:
-    brands: ["キッコーマン 減塩しょうゆ"]
+    brands:
+      - キッコーマン 減塩しょうゆ
     note_en: Low-sodium soy sauce, so the salt can be controlled separately.
     note_ja: 減塩タイプのしょうゆ。塩分を自分で調整できる。
 nutrition:
@@ -36,5 +38,5 @@ nutrition:
     iron: 1.35
 density_g_per_ml: 1.15
 aisle:
-  en: international
-  ja: condiments
+  en-US: international
+  ja-JP: condiments

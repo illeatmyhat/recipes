@@ -1,21 +1,25 @@
 id: ground_flaxseed
 fdc_id: 169414
 names:
-  en: Flaxseed, ground
-  ja: 亜麻仁（フラックスシード）粉末
+  en-US: Flaxseed, ground
+  ja-JP: 亜麻仁（フラックスシード）粉末
 aliases:
-  en:
+  en-US:
     - Flaxseed meal
     - Ground linseed
-  ja:
+  ja-JP:
     - フラックスシード
     - 亜麻仁粉
 availability:
   us:
-    brands: ["Bob's Red Mill", "Spectrum"]
+    brands:
+      - Bob's Red Mill
+      - Spectrum
     note_en: Sold as whole seed or pre-ground meal; refrigerate ground flax.
   ja:
-    brands: ["日本製粉 アマニ", "カルディ アマニ"]
+    brands:
+      - 日本製粉 アマニ
+      - カルディ アマニ
     note_en: Available at Kaldi and natural food stores as flaxseed powder.
     note_ja: 亜麻仁（粉末）としてカルディ・自然食品店で入手可能。
 nutrition:
@@ -34,5 +38,5 @@ nutrition:
     iron: 5.73
 density_g_per_ml: null
 aisle:
-  en: dry_goods
-  ja: dry_goods
+  en-US: dry_goods
+  ja-JP: dry_goods

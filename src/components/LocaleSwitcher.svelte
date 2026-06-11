@@ -9,8 +9,9 @@
   import type { Locale } from '../lib/types';
 
   const OPTIONS: ReadonlyArray<{ code: Locale; flag: string; label: string }> = [
-    { code: 'en', flag: '🇺🇸', label: 'English' },
-    { code: 'ja', flag: '🇯🇵', label: '日本語' },
+    { code: 'en-US', flag: '🇺🇸', label: 'English' },
+    { code: 'ja-JP', flag: '🇯🇵', label: '日本語' },
+    { code: 'zh-CN', flag: '🇨🇳', label: '中文' },
   ];
 
   // Locale switching needs no recipe data, so this works on any page (the

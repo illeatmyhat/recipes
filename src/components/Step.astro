@@ -2,25 +2,29 @@
 /**
  * `<Step id when? title?>` — one method step in a v3 recipe's MDX body.
  *
- * The body (the slot) is the canonical EN prose, with `<Ref/>` components for
- * ingredient reads; the JA surface is the catalog template `steps.<id>`
- * (placeholders `{role}` / `{role:fill}`), rendered to the same `data-ref`
- * markup. SSR evaluates `when` at the default parameter point and fills every
- * ref, so the default method is fully readable with JS off; the
+ * The body (the slot) is the canonical prose, with `<Ref/>` components for
+ * ingredient reads; each catalog locale's surface is its template
+ * `steps.<id>` (placeholders `{role}` / `{role:fill}`), rendered to the same
+ * `data-ref` markup. SSR evaluates `when` at the default parameter point and
+ * fills every ref, so the default method is fully readable with JS off; the
  * MethodController island re-evaluates `data-when` and re-fills role refs as
  * params change.
  *
  * Build-time lints:
  * - `when` must parse (guard grammar, src/lib/v3/guards.ts);
  * - boundness: a step reading a `min: 0` role must carry a `when` that proves
- *   it bound — a positive `has(role, …)` conjunct (docs/recipe-model.md);
+ *   it bound — a positive `has(role, …)` or `count(role) > 0` conjunct
+ *   (docs/recipe-model.md);
  * - unknown role/fill reads throw (via refText);
- * - missing `steps.<id>` catalog keys fail the build when the recipe declares
- *   ja, mirroring the frontmatter completeness gate in src/lib/v3/i18n.ts.
+ * - missing `steps.<id>` catalog keys fail the build for every locale the
+ *   recipe declares, mirroring the frontmatter completeness gate in
+ *   src/lib/v3/i18n.ts; an undeclared locale falls back to the canonical
+ *   surface.
  */
 import { collectPositiveHas, evalGuard, parseGuard } from '../lib/v3/guards';
 import { htmlRefReads, renderStepTemplate, templateReads } from '../lib/v3/method';
 import { getMethodContext } from '../lib/v3/methodContext';
+import { CANONICAL_LOCALE, type Locale } from '../lib/types';
 
 interface Props {
   id: string;
@@ -29,41 +33,52 @@ interface Props {
 }
 
 const { id, when, title } = Astro.props;
-const { bundle, catalog } = getMethodContext(Astro.locals);
+const { bundle, catalogs } = getMethodContext(Astro.locals);
 const { recipe, ingredients, defaults } = bundle;
 
 // Astro's runtime returns undefined for a childless slot despite the
 // Promise<string> typing — normalize, and reject an empty step outright (the
-// canonical EN prose lives in the MDX body, never in a catalog).
-const enHtml = ((await Astro.slots.render('default')) ?? '').trim();
-if (enHtml === '') {
-  throw new Error(`v3 method: step "${id}" has no body — write the canonical EN prose as its children.`);
+// canonical prose lives in the MDX body, never in a catalog).
+const canonicalHtml = ((await Astro.slots.render('default')) ?? '').trim();
+if (canonicalHtml === '') {
+  throw new Error(`v3 method: step "${id}" has no body — write the canonical prose as its children.`);
 }
 
-// JA surface from the catalog (template + title). A recipe that declares ja
-// owes every step a template — missing keys fail the build (same completeness
-// gate as the frontmatter, src/lib/v3/i18n.ts); an EN-only recipe falls back.
-const jaTemplate = catalog[`steps.${id}`];
-const jaTitle = catalog[`steps.${id}.title`];
-const missing: string[] = [];
-if (jaTemplate === undefined) missing.push(`steps.${id}`);
-if (title !== undefined && jaTitle === undefined) missing.push(`steps.${id}.title`);
-if (missing.length > 0 && recipe.locales.includes('ja')) {
-  throw new Error(
-    `v3 method: recipe "${recipe.slug}" declares ja but is missing catalog ` +
-      `key(s): ${missing.join(', ')}`,
-  );
+// One surface per catalog locale: template + title from its catalog.
+interface Surface {
+  locale: Locale;
+  html: string;
+  title: string | undefined;
 }
-const jaHtml =
-  jaTemplate === undefined
-    ? enHtml
-    : `<p>${renderStepTemplate(jaTemplate, recipe, ingredients, defaults.selection, 'ja')}</p>`;
+const surfaces: Surface[] = catalogs.map(({ locale, cat }) => {
+  const template = cat[`steps.${id}`];
+  const locTitle = cat[`steps.${id}.title`];
+  const missing: string[] = [];
+  if (template === undefined) missing.push(`steps.${id}`);
+  if (title !== undefined && locTitle === undefined) missing.push(`steps.${id}.title`);
+  if (missing.length > 0 && recipe.locales.includes(locale)) {
+    throw new Error(
+      `v3 method: recipe "${recipe.slug}" declares ${locale} but is missing catalog ` +
+        `key(s): ${missing.join(', ')}`,
+    );
+  }
+  return {
+    locale,
+    html:
+      template === undefined
+        ? canonicalHtml
+        : `<p>${renderStepTemplate(template, recipe, ingredients, defaults.selection, locale)}</p>`,
+    title: locTitle,
+  };
+});
 
-// What this step reads — the union of both surfaces' refs. Drives the
+// What this step reads — the union of every surface's refs. Drives the
 // boundness lint here and the Cook stage's by-step mise en place (data-reads).
-const reads = new Set<string>(htmlRefReads(enHtml));
-if (jaTemplate !== undefined) {
-  for (const r of templateReads(jaTemplate)) reads.add(r.role);
+const reads = new Set<string>(htmlRefReads(canonicalHtml));
+for (const { cat } of catalogs) {
+  const template = cat[`steps.${id}`];
+  if (template === undefined) continue;
+  for (const r of templateReads(template)) reads.add(r.role);
 }
 
 const bound = when === undefined ? new Set<string>() : collectPositiveHas(parseGuard(when));
@@ -75,7 +90,7 @@ for (const r of reads) {
   if (role.range.min === 0 && !bound.has(r)) {
     throw new Error(
       `v3 method: step "${id}" reads min:0 role "${r}" without a positive ` +
-        `has(${r}, …) guard — an unchosen role would leave the prose dangling.`,
+        `has(${r}, …) or count(${r}) > 0 guard — an unchosen role would leave the prose dangling.`,
     );
   }
 }
@@ -102,11 +117,13 @@ const visible = when === undefined ? true : evalGuard(when, defaults);
   {
     title !== undefined && (
       <strong>
-        <span class="lang-en">{title}</span>
-        <span class="lang-ja">{jaTitle ?? title}</span>
+        <span class={`lang-${CANONICAL_LOCALE}`}>{title}</span>
+        {surfaces.map((s) => (
+          <span class={`lang-${s.locale}`}>{s.title ?? title}</span>
+        ))}
       </strong>
     )
   }
-  <div class="lang-en" set:html={enHtml} />
-  <div class="lang-ja" set:html={jaHtml} />
+  <div class={`lang-${CANONICAL_LOCALE}`} set:html={canonicalHtml} />
+  {surfaces.map((s) => <div class={`lang-${s.locale}`} set:html={s.html} />)}
 </li>

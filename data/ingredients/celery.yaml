@@ -1,12 +1,12 @@
 id: celery
 fdc_id: 169988
 names:
-  en: Celery
-  ja: セロリ
+  en-US: Celery
+  ja-JP: セロリ
 aliases:
-  en:
+  en-US:
     - Celery stalks
-  ja:
+  ja-JP:
     - セロリー
 availability:
   us:
@@ -32,5 +32,5 @@ nutrition:
     iron: 0.2
 density_g_per_ml: null
 aisle:
-  en: produce
-  ja: produce
+  en-US: produce
+  ja-JP: produce

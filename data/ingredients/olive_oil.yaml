@@ -1,13 +1,13 @@
 id: olive_oil
 fdc_id: 171413
 names:
-  en: Olive oil
-  ja: オリーブオイル
+  en-US: Olive oil
+  ja-JP: オリーブオイル
 aliases:
-  en:
+  en-US:
     - Extra virgin olive oil
     - Cooking olive oil
-  ja:
+  ja-JP:
     - エキストラバージンオリーブオイル
     - オリーブ油
 availability:
@@ -34,5 +34,5 @@ nutrition:
     iron: 0.56
 density_g_per_ml: 0.91
 aisle:
-  en: oils
-  ja: oils
+  en-US: oils
+  ja-JP: oils

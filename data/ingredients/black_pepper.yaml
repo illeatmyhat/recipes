@@ -1,13 +1,13 @@
 id: black_pepper
 fdc_id: 170931
 names:
-  en: Black pepper
-  ja: 黒こしょう
+  en-US: Black pepper
+  ja-JP: 黒こしょう
 aliases:
-  en:
+  en-US:
     - Ground black pepper
     - Pepper
-  ja:
+  ja-JP:
     - ブラックペッパー
     - こしょう
 availability:
@@ -34,5 +34,5 @@ nutrition:
     iron: 9.71
 density_g_per_ml: null
 aisle:
-  en: spices
-  ja: spices
+  en-US: spices
+  ja-JP: spices

@@ -1,21 +1,26 @@
 id: pumpkin_seeds
 fdc_id: 170556
 names:
-  en: Pumpkin and squash seed kernels, dried
-  ja: かぼちゃの種（パンプキンシード）
+  en-US: Pumpkin and squash seed kernels, dried
+  ja-JP: かぼちゃの種（パンプキンシード）
 aliases:
-  en:
+  en-US:
     - Pepitas
     - Pumpkin seed kernels
-  ja:
+  ja-JP:
     - パンプキンシード
     - ペピータ
 availability:
   us:
-    brands: ["Bob's Red Mill", "365 Whole Foods", "Go Raw"]
+    brands:
+      - Bob's Red Mill
+      - 365 Whole Foods
+      - Go Raw
     note_en: Sold raw or roasted, in bulk and bagged; "pepitas" are the hulled kernels.
   ja:
-    brands: ["カルディ パンプキンシード", "素焼きかぼちゃの種"]
+    brands:
+      - カルディ パンプキンシード
+      - 素焼きかぼちゃの種
     note_en: Available at import food stores and natural food shops.
     note_ja: 輸入食品店・自然食品店で入手可能。
 nutrition:
@@ -34,5 +39,5 @@ nutrition:
     iron: 8.82
 density_g_per_ml: null
 aisle:
-  en: dry_goods
-  ja: dry_goods
+  en-US: dry_goods
+  ja-JP: dry_goods

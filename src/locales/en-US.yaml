@@ -1,0 +1,73 @@
+# Site-level locale catalog (en-US) — every UI-chrome string, flat dotted
+# keys, one file per supported locale (src/lib/i18n.ts loads and validates
+# them: the key sets must match across locales or the build fails).
+# Recipe CONTENT is localized separately, per recipe (<slug>.<locale>.yaml).
+ui.siteTitle: Recipes
+ui.siteTagline: Build-time nutrition, scaled to any serving.
+ui.recipeKicker: Recipe
+
+ui.servings: Servings
+ui.serving: serving
+ui.servingsPlural: servings
+ui.perServing: Per serving
+ui.wholeRecipe: Whole recipe
+ui.totalWord: total
+ui.scaleToggle: Toggle between per-serving and whole-recipe nutrition
+ui.decrease: Decrease servings
+ui.increase: Increase servings
+
+ui.nutritionFacts: Nutrition Facts
+ui.calories: Calories
+ui.dailyValue: '% Daily Value*'
+ui.dvShort: of Daily Value
+ui.dvFootnote: '* The % Daily Value tells you how much a nutrient in a serving contributes to a daily diet. 2,000 calories a day is used for general nutrition advice.'
+ui.dataDisclaimer: Nutritional values are estimates based on the unprocessed form of each ingredient and are provided for informational purposes only; they do not constitute medical or dietary advice. Individuals with specific health conditions should consult a qualified healthcare professional.
+ui.breakdownHint: Tap any nutrient to see how each ingredient contributes.
+ui.highlights: Highlights
+
+ui.method: Method
+ui.language: Language
+
+ui.theme: Theme
+ui.light: Light
+ui.dark: Dark
+ui.themeToggle: Switch between light and dark theme
+
+ui.customizeStage: Customize
+ui.shopStage: Shop
+ui.cookStage: Cook
+ui.stages: Recipe stages
+ui.adjust: Adjust
+ui.aboveMax: Over the suggested maximum of {n} — it still works, but each pick matters less.
+ui.optionBlocked: Not possible with the current choices.
+ui.miseEnPlace: Mise en place
+ui.miseHint: What to have ready for each step — the method is below.
+ui.shopHint: One line per item — tick them off as you go.
+ui.swap: Swap
+ui.required: Required
+ui.pickUpTo: up to
+
+nutrients.calories: Calories
+nutrients.fat: Total Fat
+nutrients.saturated_fat: Saturated Fat
+nutrients.trans_fat: Trans Fat
+nutrients.cholesterol: Cholesterol
+nutrients.sodium: Sodium
+nutrients.carbohydrates: Total Carbohydrate
+nutrients.fiber: Dietary Fiber
+nutrients.sugars: Total Sugars
+nutrients.protein: Protein
+nutrients.calcium: Calcium
+nutrients.iron: Iron
+
+sections.produce: Produce
+sections.meat_seafood: Meat & seafood
+sections.tofu_soy: Tofu & soy
+sections.dairy_eggs: Dairy & eggs
+sections.dry_goods: Dry goods
+sections.canned: Canned goods
+sections.condiments: Condiments & sauces
+sections.spices: Spices
+sections.oils: Oils & vinegars
+sections.international: International
+sections.other: Other

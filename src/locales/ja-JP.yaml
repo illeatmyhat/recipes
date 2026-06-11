@@ -1,0 +1,71 @@
+# Site-level locale catalog (ja-JP). Key set must match en-US.yaml exactly —
+# a missing key fails the build (src/lib/i18n.ts).
+ui.siteTitle: レシピ
+ui.siteTagline: 栄養成分はビルド時に算出。何食分にもスケールします。
+ui.recipeKicker: レシピ
+
+ui.servings: 食数
+ui.serving: 食
+ui.servingsPlural: 食
+ui.perServing: 1食あたり
+ui.wholeRecipe: 全量
+ui.totalWord: 合計
+ui.scaleToggle: 1食あたりと合計の表示を切り替え
+ui.decrease: 食数を減らす
+ui.increase: 食数を増やす
+
+ui.nutritionFacts: 栄養成分表示
+ui.calories: エネルギー
+ui.dailyValue: 1日の目安に対する割合*
+ui.dvShort: 1日の目安
+ui.dvFootnote: '* ％1日の摂取目安量は、1食分の栄養素が1日の食事に占める割合を示します。一般的な栄養アドバイスには1日2,000kcalが用いられます。'
+ui.dataDisclaimer: 栄養成分値は各材料の未加工の状態に基づく参考目的の推定値であり、医療または栄養指導の代わりになるものではありません。特定の健康状態をお持ちの方は、専門の医療機関にご相談ください。
+ui.breakdownHint: 栄養素をタップすると、材料ごとの内訳が表示されます。
+ui.highlights: 栄養ハイライト
+
+ui.method: 作り方
+ui.language: 言語
+
+ui.theme: テーマ
+ui.light: ライト
+ui.dark: ダーク
+ui.themeToggle: ライト・ダークテーマを切り替え
+
+ui.customizeStage: カスタマイズ
+ui.shopStage: 買い物
+ui.cookStage: 作る
+ui.stages: レシピの段階
+ui.adjust: 調整
+ui.aboveMax: 目安の上限（{n}）を超えています。作れますが、1つあたりの存在感は薄くなります。
+ui.optionBlocked: 現在の選択では選べません。
+ui.miseEnPlace: 下ごしらえ
+ui.miseHint: 各ステップに用意するもの。作り方は下にあります。
+ui.shopHint: 材料ごとに1行 — 買い物しながらチェック。
+ui.swap: 変更
+ui.required: 必須
+ui.pickUpTo: 最大
+
+nutrients.calories: エネルギー
+nutrients.fat: 脂質
+nutrients.saturated_fat: 飽和脂肪酸
+nutrients.trans_fat: トランス脂肪酸
+nutrients.cholesterol: コレステロール
+nutrients.sodium: ナトリウム
+nutrients.carbohydrates: 炭水化物
+nutrients.fiber: 食物繊維
+nutrients.sugars: 糖類
+nutrients.protein: たんぱく質
+nutrients.calcium: カルシウム
+nutrients.iron: 鉄分
+
+sections.produce: 青果
+sections.meat_seafood: 精肉・鮮魚
+sections.tofu_soy: 豆腐・大豆製品
+sections.dairy_eggs: 乳製品・卵
+sections.dry_goods: 乾物・豆・シリアル
+sections.canned: 缶詰
+sections.condiments: 調味料
+sections.spices: スパイス
+sections.oils: 油・酢
+sections.international: 輸入食品
+sections.other: その他

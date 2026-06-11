@@ -13,6 +13,8 @@ import { getCollection, render } from 'astro:content';
 import RecipeLayout from '../../layouts/RecipeLayout.astro';
 import RecipePageV3 from '../../components/RecipePageV3.astro';
 import { buildBundle } from '../../lib/v3/bundle';
+import { t } from '../../lib/i18n';
+import { CANONICAL_LOCALE, LOCALES, type Localized } from '../../lib/types';
 
 export const getStaticPaths = (async () => {
   const recipes = await getCollection('recipes');
@@ -27,10 +29,12 @@ const { Content } = await render(entry);
 
 const bundle = buildBundle(entry.data);
 const title = bundle.recipe.title;
-const pageTitle = { en: `${title.en} — Recipes`, ja: `${title.ja} — レシピ` };
+const pageTitle = Object.fromEntries(
+  LOCALES.map((l) => [l, `${title[l]} — ${t('siteTitle', l)}`]),
+) as Localized;
 ---
 
-<RecipeLayout title={pageTitle} description={title.en}>
+<RecipeLayout title={pageTitle} description={title[CANONICAL_LOCALE]}>
   <RecipePageV3 bundle={bundle} heroImage={entry.data.hero_image}>
     <Content />
   </RecipePageV3>

@@ -12,6 +12,7 @@
   import { params, resolved, resolveBundle, initV3 } from './RecipeStoreV3';
   import { evalGuard } from '../lib/v3/guards';
   import { t } from '../lib/i18n';
+  import { localizeAll } from '../lib/v3/names';
   import type { Params, RecipeBundle, ResolvedV3 } from '../lib/v3/types';
   import type { Localized } from '../lib/types';
 
@@ -61,7 +62,7 @@
       out.push({
         stepId: step.id,
         number,
-        title: step.title ?? { en: step.id.replace(/_/g, ' '), ja: step.id.replace(/_/g, ' ') },
+        title: step.title ?? localizeAll(step.id.replace(/_/g, ' ')),
         rows,
       });
     }

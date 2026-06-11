@@ -90,7 +90,7 @@ const recipes = defineCollection({
       slug: z.string(),
       hero_image: image(),
       customize_title: z.string().optional(),
-      locales: z.array(z.enum(['en', 'ja'])).nonempty(),
+      locales: z.array(z.enum(['en-US', 'ja-JP', 'zh-CN'])).nonempty(),
       pattern: z.string(),
       servings,
       knobs: z.record(z.string(), knob).optional(),

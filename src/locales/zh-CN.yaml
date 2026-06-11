@@ -1,0 +1,71 @@
+# Site-level locale catalog (zh-CN). Key set must match en-US.yaml exactly —
+# a missing key fails the build (src/lib/i18n.ts).
+ui.siteTitle: 食谱
+ui.siteTagline: 营养成分在构建时计算，可按任意份数缩放。
+ui.recipeKicker: 食谱
+
+ui.servings: 份数
+ui.serving: 份
+ui.servingsPlural: 份
+ui.perServing: 每份
+ui.wholeRecipe: 总量
+ui.totalWord: 总计
+ui.scaleToggle: 在每份和总量显示之间切换
+ui.decrease: 减少份数
+ui.increase: 增加份数
+
+ui.nutritionFacts: 营养成分表
+ui.calories: 热量
+ui.dailyValue: 占每日参考值百分比*
+ui.dvShort: 每日参考值
+ui.dvFootnote: '* 每日参考值百分比表示一份食物中的营养素占每日饮食的比例。一般营养建议以每日2,000千卡为基准。'
+ui.dataDisclaimer: 营养成分值为基于各食材未加工状态的估算值，仅供参考，不构成医疗或膳食建议。有特定健康状况者请咨询专业医疗人员。
+ui.breakdownHint: 点击任一营养素，查看各食材的贡献。
+ui.highlights: 营养亮点
+
+ui.method: 做法
+ui.language: 语言
+
+ui.theme: 主题
+ui.light: 浅色
+ui.dark: 深色
+ui.themeToggle: 在浅色和深色主题之间切换
+
+ui.customizeStage: 定制
+ui.shopStage: 采购
+ui.cookStage: 烹饪
+ui.stages: 食谱阶段
+ui.adjust: 调整
+ui.aboveMax: 超过建议上限（{n}）— 仍然可行，但每样的存在感会变弱。
+ui.optionBlocked: 当前选择下不可选。
+ui.miseEnPlace: 备料
+ui.miseHint: 每一步需要准备的食材，做法见下方。
+ui.shopHint: 每样食材一行 — 边买边勾选。
+ui.swap: 更换
+ui.required: 必选
+ui.pickUpTo: 最多
+
+nutrients.calories: 热量
+nutrients.fat: 脂肪
+nutrients.saturated_fat: 饱和脂肪
+nutrients.trans_fat: 反式脂肪
+nutrients.cholesterol: 胆固醇
+nutrients.sodium: 钠
+nutrients.carbohydrates: 碳水化合物
+nutrients.fiber: 膳食纤维
+nutrients.sugars: 糖
+nutrients.protein: 蛋白质
+nutrients.calcium: 钙
+nutrients.iron: 铁
+
+sections.produce: 蔬果
+sections.meat_seafood: 肉类与海鲜
+sections.tofu_soy: 豆制品
+sections.dairy_eggs: 乳制品与蛋
+sections.dry_goods: 干货与谷物
+sections.canned: 罐头
+sections.condiments: 调味品
+sections.spices: 香辛料
+sections.oils: 食用油与醋
+sections.international: 进口食品
+sections.other: 其他

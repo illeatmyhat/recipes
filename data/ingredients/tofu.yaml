@@ -1,13 +1,13 @@
 id: tofu
 fdc_id: 172476
 names:
-  en: Tofu
-  ja: 豆腐
+  en-US: Tofu
+  ja-JP: 豆腐
 aliases:
-  en:
+  en-US:
     - Firm tofu
     - Bean curd
-  ja:
+  ja-JP:
     - 木綿豆腐
     - とうふ
 availability:
@@ -34,5 +34,5 @@ nutrition:
     iron: 5.36
 density_g_per_ml: null
 aisle:
-  en: dairy_eggs
-  ja: tofu_soy
+  en-US: dairy_eggs
+  ja-JP: tofu_soy

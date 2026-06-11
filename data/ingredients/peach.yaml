@@ -1,21 +1,27 @@
 id: peach
 fdc_id: 169928
 names:
-  en: Peaches, raw
-  ja: もも（生）
+  en-US: Peaches, raw
+  ja-JP: もも（生）
 aliases:
-  en:
+  en-US:
     - Fresh peach
     - Yellow peach
-  ja:
+  ja-JP:
     - 桃
     - ピーチ
 availability:
   us:
-    brands: ["Sun World", "365 Whole Foods", "local orchard"]
+    brands:
+      - Sun World
+      - 365 Whole Foods
+      - local orchard
     note_en: Seasonal summer fruit; sold loose in the produce section.
   ja:
-    brands: ["白桃", "黄桃", "あかつき"]
+    brands:
+      - 白桃
+      - 黄桃
+      - あかつき
     note_en: Prized summer fruit; sold at supermarkets and fruit shops in season.
     note_ja: 夏の果物として旬にスーパー・果物店で入手可能。
 nutrition:
@@ -34,5 +40,5 @@ nutrition:
     iron: 0.25
 density_g_per_ml: null
 aisle:
-  en: produce
-  ja: produce
+  en-US: produce
+  ja-JP: produce

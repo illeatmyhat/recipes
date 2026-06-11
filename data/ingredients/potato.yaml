@@ -1,12 +1,12 @@
 id: potato
 fdc_id: 170026
 names:
-  en: Potato
-  ja: じゃがいも
+  en-US: Potato
+  ja-JP: じゃがいも
 aliases:
-  en:
+  en-US:
     - Potatoes
-  ja:
+  ja-JP:
     - ジャガイモ
     - 馬鈴薯
 availability:
@@ -33,5 +33,5 @@ nutrition:
     iron: 0.81
 density_g_per_ml: null
 aisle:
-  en: produce
-  ja: produce
+  en-US: produce
+  ja-JP: produce

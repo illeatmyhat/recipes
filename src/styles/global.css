@@ -130,15 +130,22 @@ h3 {
 }
 
 /* --- Locale-aware static content ----------------------------------------
-   English shows by default (and with JS disabled). When the locale store
-   sets <html data-locale="ja">, Japanese blocks reveal and English hides.
-   `revert` restores each element's natural display (span->inline, div->block). */
-.lang-ja {
+   The canonical locale (en-US) shows by default (and with JS disabled). When
+   the locale store sets <html data-locale="ja-JP"> (or "zh-CN"), that
+   locale's blocks reveal and the others hide. `revert` restores each
+   element's natural display (span->inline, div->block). One rule pair per
+   non-canonical locale — extend both groups when adding a locale. */
+.lang-ja-JP,
+.lang-zh-CN {
   display: none;
 }
-[data-locale='ja'] .lang-ja {
+[data-locale='ja-JP'] .lang-ja-JP,
+[data-locale='zh-CN'] .lang-zh-CN {
   display: revert;
 }
-[data-locale='ja'] .lang-en {
+[data-locale='ja-JP'] .lang-en-US,
+[data-locale='ja-JP'] .lang-zh-CN,
+[data-locale='zh-CN'] .lang-en-US,
+[data-locale='zh-CN'] .lang-ja-JP {
   display: none;
 }

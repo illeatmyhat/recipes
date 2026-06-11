@@ -4,13 +4,13 @@ id: smoked_paprika
 # is a processing/flavor difference, conveyed by the name and recipe note.
 fdc_id: 171329
 names:
-  en: Smoked paprika
-  ja: スモークパプリカ
+  en-US: Smoked paprika
+  ja-JP: スモークパプリカ
 aliases:
-  en:
+  en-US:
     - Pimentón
     - Paprika
-  ja:
+  ja-JP:
     - パプリカ
     - 燻製パプリカ
 availability:
@@ -37,5 +37,5 @@ nutrition:
     iron: 21.14
 density_g_per_ml: null
 aisle:
-  en: spices
-  ja: spices
+  en-US: spices
+  ja-JP: spices

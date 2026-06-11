@@ -1,13 +1,13 @@
 id: diced_tomatoes
 fdc_id: 170051
 names:
-  en: Canned diced tomatoes
-  ja: ダイストマト缶
+  en-US: Canned diced tomatoes
+  ja-JP: ダイストマト缶
 aliases:
-  en:
+  en-US:
     - Diced tomatoes
     - Canned tomatoes
-  ja:
+  ja-JP:
     - カットトマト
     - トマト缶
 availability:
@@ -34,5 +34,5 @@ nutrition:
     iron: 0.57
 density_g_per_ml: null
 aisle:
-  en: canned
-  ja: canned
+  en-US: canned
+  ja-JP: canned

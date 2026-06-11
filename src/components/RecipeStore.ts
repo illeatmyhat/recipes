@@ -7,10 +7,10 @@
  * the store is a true cross-island singleton.
  */
 import { writable } from 'svelte/store';
-import type { Locale } from '../lib/types';
+import { CANONICAL_LOCALE, LOCALES, type Locale } from '../lib/types';
 
-/** Active UI locale. SSR/static render uses `en`; hydration runs detection. */
-export const locale = writable<Locale>('en');
+/** Active UI locale. SSR/static render uses the canonical locale; hydration runs detection. */
+export const locale = writable<Locale>(CANONICAL_LOCALE);
 
 let localeInitialized = false;
 
@@ -32,8 +32,8 @@ export function initLocale(): void {
   // Mirror a language change made in another tab of this origin. `storage`
   // fires only in the *other* tabs, so this never echoes our own write.
   window.addEventListener('storage', (event) => {
-    if (event.key === 'locale' && (event.newValue === 'en' || event.newValue === 'ja')) {
-      locale.set(event.newValue);
+    if (event.key === 'locale' && (LOCALES as readonly string[]).includes(event.newValue ?? '')) {
+      locale.set(event.newValue as Locale);
     }
   });
 }
@@ -45,8 +45,9 @@ export function initLocale(): void {
  * ThemeToggle reads `data-theme`.
  */
 export function detectLocale(): Locale {
-  if (typeof document === 'undefined') return 'en';
-  return document.documentElement.dataset.locale === 'ja' ? 'ja' : 'en';
+  if (typeof document === 'undefined') return CANONICAL_LOCALE;
+  const value = document.documentElement.dataset.locale ?? '';
+  return (LOCALES as readonly string[]).includes(value) ? (value as Locale) : CANONICAL_LOCALE;
 }
 
 /** Reflect the locale onto `<html data-locale>` so CSS can localize static content. */
@@ -56,9 +57,13 @@ function applyLocaleToDocument(value: Locale): void {
   de.dataset.locale = value;
   de.lang = value;
   // The page <title> lives in <head> with no .lang-* siblings, so swap it
-  // directly from the localized strings the layout stamped onto <html>.
-  const title = value === 'ja' ? de.dataset.titleJa : de.dataset.titleEn;
-  if (title) document.title = title;
+  // directly from the JSON the layout stamped onto <html>.
+  try {
+    const title = (JSON.parse(de.dataset.titles ?? '{}') as Partial<Record<string, string>>)[value];
+    if (title) document.title = title;
+  } catch {
+    // Malformed stamp — keep the current title.
+  }
 }
 
 /** Switch the UI locale and remember the choice in localStorage. */

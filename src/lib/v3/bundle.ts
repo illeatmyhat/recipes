@@ -15,9 +15,11 @@ import { join } from 'node:path';
 import { hydrateRecipe, recipeCatalog } from './i18n';
 import { loadIngredient } from './db';
 import { templateReads } from './method';
+import { localizeAll } from './names';
 import { defaultParams } from './resolve';
 import { lintCatalogStaleness } from './staleness';
 import { extractSteps, readKey } from './steps';
+import { CATALOG_LOCALES } from '../types';
 import type { CanonicalRecipeFrontmatterV3, RecipeBundle, StepMeta, StepRead } from './types';
 
 const RECIPE_DIR = join(process.cwd(), 'src', 'content', 'recipes');
@@ -44,34 +46,40 @@ export function buildBundle(fm: CanonicalRecipeFrontmatterV3): RecipeBundle {
   const ingredients: Record<string, ReturnType<typeof loadIngredient>> = {};
   for (const id of ids) ingredients[id] = loadIngredient(id);
 
-  // Step metadata: EN reads from the body, union'd with the JA catalog
-  // template's placeholders; titles localized from `steps.<id>.title`.
-  const catalog = recipeCatalog(fm.slug, 'ja');
+  // Step metadata: canonical reads from the body, union'd with every catalog
+  // locale's template placeholders; titles localized from `steps.<id>.title`.
+  const catalogs = CATALOG_LOCALES.map((locale) => ({
+    locale,
+    cat: recipeCatalog(fm.slug, locale),
+  }));
   const steps: StepMeta[] = extractSteps(recipeBody(fm.slug)).map((s) => {
     sources[`steps.${s.id}`] = s.body;
     if (s.title !== undefined) sources[`steps.${s.id}.title`] = s.title;
     const reads: StepRead[] = [...s.reads];
     const keys = new Set(reads.map(readKey));
-    const template = catalog[`steps.${s.id}`];
-    if (template !== undefined) {
-      const jaKeys = new Set(templateReads(template).map(readKey));
-      for (const read of templateReads(template)) {
+    const canonicalKeys = new Set(s.reads.map(readKey));
+    for (const { locale, cat } of catalogs) {
+      const template = cat[`steps.${s.id}`];
+      if (template === undefined) continue;
+      const locReads = templateReads(template);
+      const locKeys = new Set(locReads.map(readKey));
+      for (const read of locReads) {
         if (!keys.has(readKey(read))) {
           keys.add(readKey(read));
           reads.push(read);
         }
       }
-      // Read-set parity lint (#4): a warning, never an error — Japanese
-      // legitimately drops arguments English requires. Flagged for review.
-      const enOnly = [...new Set(s.reads.map(readKey))].filter((k) => !jaKeys.has(k));
-      const jaOnly = [...jaKeys].filter((k) => !new Set(s.reads.map(readKey)).has(k));
-      if (enOnly.length > 0 || jaOnly.length > 0) {
+      // Read-set parity lint (#4): a warning, never an error — a locale
+      // legitimately drops arguments the canonical sentence carries.
+      const canonicalOnly = [...canonicalKeys].filter((k) => !locKeys.has(k));
+      const locOnly = [...locKeys].filter((k) => !canonicalKeys.has(k));
+      if (canonicalOnly.length > 0 || locOnly.length > 0) {
         const parts = [
-          enOnly.length > 0 ? `en-only: ${enOnly.join(', ')}` : '',
-          jaOnly.length > 0 ? `ja-only: ${jaOnly.join(', ')}` : '',
+          canonicalOnly.length > 0 ? `canonical-only: ${canonicalOnly.join(', ')}` : '',
+          locOnly.length > 0 ? `${locale}-only: ${locOnly.join(', ')}` : '',
         ].filter(Boolean);
         console.warn(
-          `v3 bundle: recipe "${fm.slug}" step "${s.id}" reads differ between locales (${parts.join('; ')}) — fine if intentional.`,
+          `v3 bundle: recipe "${fm.slug}" step "${s.id}" reads differ between canonical and ${locale} (${parts.join('; ')}) — fine if intentional.`,
         );
       }
     }
@@ -84,18 +92,20 @@ export function buildBundle(fm: CanonicalRecipeFrontmatterV3): RecipeBundle {
         throw new Error(`v3 bundle: step "${s.id}" reads unknown fill "${read.role}:${read.fill}".`);
       }
     }
-    return {
-      id: s.id,
-      when: s.when,
-      title:
-        s.title === undefined
-          ? undefined
-          : { en: s.title, ja: catalog[`steps.${s.id}.title`] ?? s.title },
-      reads,
-    };
+    let title;
+    if (s.title !== undefined) {
+      title = localizeAll(s.title);
+      for (const { locale, cat } of catalogs) {
+        const value = cat[`steps.${s.id}.title`];
+        if (value !== undefined) title[locale] = value;
+      }
+    }
+    return { id: s.id, when: s.when, title, reads };
   });
 
-  lintCatalogStaleness(fm.slug, 'ja', sources, catalog);
+  for (const { locale, cat } of catalogs) {
+    lintCatalogStaleness(fm.slug, locale, sources, cat);
+  }
 
   // A role no step reads never appears in the Cook stage — almost certainly
   // an authoring gap (the ingredient would be bought but never reached for).

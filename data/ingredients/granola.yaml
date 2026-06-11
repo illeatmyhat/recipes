@@ -1,21 +1,26 @@
 id: granola
 fdc_id: 171646
 names:
-  en: Granola, homemade
-  ja: グラノーラ
+  en-US: Granola, homemade
+  ja-JP: グラノーラ
 aliases:
-  en:
+  en-US:
     - Plain granola
     - Oat granola
-  ja:
+  ja-JP:
     - グラノラ
     - オーツグラノーラ
 availability:
   us:
-    brands: ["Nature Valley", "Bob's Red Mill", "365 Whole Foods"]
+    brands:
+      - Nature Valley
+      - Bob's Red Mill
+      - 365 Whole Foods
     note_en: Sold plain or with honey and nuts; sugar content varies by brand.
   ja:
-    brands: ["カルビー フルグラ", "日清シスコ ごろグラ"]
+    brands:
+      - カルビー フルグラ
+      - 日清シスコ ごろグラ
     note_en: Widely sold at supermarkets; fruit granola is the popular style.
     note_ja: スーパーで一般的に入手可能。
 nutrition:
@@ -34,5 +39,5 @@ nutrition:
     iron: 3.95
 density_g_per_ml: null
 aisle:
-  en: dry_goods
-  ja: dry_goods
+  en-US: dry_goods
+  ja-JP: dry_goods

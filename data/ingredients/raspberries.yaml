@@ -1,21 +1,26 @@
 id: raspberries
 fdc_id: 167755
 names:
-  en: Raspberries, raw
-  ja: ラズベリー（生）
+  en-US: Raspberries, raw
+  ja-JP: ラズベリー（生）
 aliases:
-  en:
+  en-US:
     - Red raspberries
     - Fresh raspberries
-  ja:
+  ja-JP:
     - 木いちご
     - フランボワーズ
 availability:
   us:
-    brands: ["Driscoll's", "365 Whole Foods", "Naturipe"]
+    brands:
+      - Driscoll's
+      - 365 Whole Foods
+      - Naturipe
     note_en: Sold fresh in clamshells; also widely available frozen.
   ja:
-    brands: ["冷凍ラズベリー", "輸入生ラズベリー"]
+    brands:
+      - 冷凍ラズベリー
+      - 輸入生ラズベリー
     note_en: Fresh is seasonal and pricey; frozen is common at supermarkets.
     note_ja: 生は高価で季節限定、冷凍が一般的。
 nutrition:
@@ -34,5 +39,5 @@ nutrition:
     iron: 0.69
 density_g_per_ml: null
 aisle:
-  en: produce
-  ja: produce
+  en-US: produce
+  ja-JP: produce

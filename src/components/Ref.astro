@@ -15,6 +15,7 @@
  */
 import { getMethodContext } from '../lib/v3/methodContext';
 import { refSpan, refText } from '../lib/v3/method';
+import { CANONICAL_LOCALE } from '../lib/types';
 
 interface Props {
   of: string;
@@ -29,9 +30,9 @@ const text = refText(
   bundle.defaults.selection,
   roleId,
   fill,
-  'en',
+  CANONICAL_LOCALE,
 );
 ---
 
 {/* refSpan is the single definition of the m-ref marker contract. */}
-<Fragment set:html={refSpan(roleId, fill, 'en', text)} />
+<Fragment set:html={refSpan(roleId, fill, CANONICAL_LOCALE, text)} />

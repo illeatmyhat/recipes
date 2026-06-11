@@ -7,7 +7,7 @@
  * English) with JavaScript disabled; the locale store flips it on hydration.
  */
 import '../styles/global.css';
-import type { Localized } from '../lib/types';
+import { CANONICAL_LOCALE, LOCALES, type Localized } from '../lib/types';
 
 interface Props {
   title: Localized;
@@ -19,14 +19,20 @@ const { title, description } = Astro.props;
 
 <!doctype html>
 <!-- The <title> can't carry .lang-* siblings the way body content can, so the
-     localized strings are stamped onto <html>; the inline script below and
-     RecipeStore's applyLocaleToDocument swap document.title to match. -->
-<html lang="en" data-locale="en" data-title-en={title.en} data-title-ja={title.ja}>
+     localized strings are stamped onto <html> as one JSON attribute; the
+     inline script below and RecipeStore's applyLocaleToDocument swap
+     document.title to match. -->
+<html
+  lang={CANONICAL_LOCALE}
+  data-locale={CANONICAL_LOCALE}
+  data-locales={JSON.stringify(LOCALES)}
+  data-titles={JSON.stringify(title)}
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title.en}</title>
+    <title>{title[CANONICAL_LOCALE]}</title>
     {description && <meta name="description" content={description} />}
     <link
       rel="icon"
@@ -52,26 +58,31 @@ const { title, description } = Astro.props;
     </script>
     <script is:inline>
       // Resolve the UI locale before first paint, the same way as the theme:
-      // a remembered choice in localStorage wins, then the browser language,
-      // then English. This sets <html data-locale> so the CSS-localized static
-      // content renders in the right language immediately.
+      // a remembered choice in localStorage wins, then the browser language
+      // (matched on its primary subtag — "ja" finds "ja-JP"), then the
+      // canonical locale (the initial data-locale value). The supported set
+      // rides in as data-locales JSON, so this script stays config-free.
       (() => {
+        const de = document.documentElement;
         let stored = null;
         try {
           stored = localStorage.getItem('locale');
         } catch {}
-        const locale =
-          stored === 'en' || stored === 'ja'
-            ? stored
-            : (navigator.language || '').toLowerCase().startsWith('ja')
-              ? 'ja'
-              : 'en';
-        const de = document.documentElement;
+        let locales = [];
+        try {
+          locales = JSON.parse(de.dataset.locales || '[]');
+        } catch {}
+        const sub = (navigator.language || '').toLowerCase().split('-')[0];
+        const locale = locales.includes(stored)
+          ? stored
+          : (locales.find((l) => l.toLowerCase().split('-')[0] === sub) ?? de.dataset.locale);
         de.dataset.locale = locale;
         de.lang = locale;
-        // Swap the tab title before paint too, from the strings stamped on <html>.
-        const title = locale === 'ja' ? de.dataset.titleJa : de.dataset.titleEn;
-        if (title) document.title = title;
+        // Swap the tab title before paint too, from the JSON stamped on <html>.
+        try {
+          const title = JSON.parse(de.dataset.titles || '{}')[locale];
+          if (title) document.title = title;
+        } catch {}
       })();
     </script>
   </head>

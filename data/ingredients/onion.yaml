@@ -1,13 +1,13 @@
 id: onion
 fdc_id: 170000
 names:
-  en: Onion
-  ja: 玉ねぎ
+  en-US: Onion
+  ja-JP: 玉ねぎ
 aliases:
-  en:
+  en-US:
     - Yellow onion
     - Brown onion
-  ja:
+  ja-JP:
     - たまねぎ
     - オニオン
 availability:
@@ -34,5 +34,5 @@ nutrition:
     iron: 0.21
 density_g_per_ml: null
 aisle:
-  en: produce
-  ja: produce
+  en-US: produce
+  ja-JP: produce
