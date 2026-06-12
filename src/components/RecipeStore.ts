@@ -15,17 +15,9 @@
 import { writable, derived, type Readable } from 'svelte/store';
 import { resolve } from '../lib/recipe/resolve';
 import { departsFromSource } from '../lib/recipe/provenance';
-import { emptyNutrition } from '../lib/nutrition';
-import { fallbackNames } from '../lib/recipe/names';
-import { perLocale } from '../lib/types';
+import { placeholderIngredient } from '../lib/recipe/placeholder';
 import { initLocale } from './LocaleStore';
-import type {
-  KnobValue,
-  LoadedIngredient,
-  Params,
-  RecipeBundle,
-  Resolved,
-} from '../lib/recipe/types';
+import type { KnobValue, Params, RecipeBundle, Resolved } from '../lib/recipe/types';
 
 /** The live parameter record. Seeded from the bundle's defaults by {@link initRecipe}. */
 export const params = writable<Params>({ servings: 1, knobs: {}, selection: {} });
@@ -42,24 +34,26 @@ export function getBundle(): RecipeBundle | null {
   return bundle;
 }
 
-/** A defensive zero-nutrition stand-in (the bundle should carry every fill id). */
-function placeholder(id: string): LoadedIngredient {
-  return {
-    data: {
-      id,
-      fdc_id: 0,
-      names: fallbackNames(id),
-      aliases: perLocale<string[]>(() => []),
-      nutrition: { per_100g: emptyNutrition() },
-      density_g_per_ml: 1,
-    },
-    placeholder: true,
-  };
+/** Resolve a bundle at a parameter point on the client (pure; no I/O). The
+ * defensive placeholder covers a fill id missing from the bundle — the same
+ * stand-in the build-time loader uses (src/lib/recipe/placeholder.ts). */
+export function resolveBundle(b: RecipeBundle, p: Params): Resolved {
+  return resolve(b.recipe, (id) => b.ingredients[id] ?? placeholderIngredient(id), p);
 }
 
-/** Resolve a bundle at a parameter point on the client (pure; no I/O). */
-export function resolveBundle(b: RecipeBundle, p: Params): Resolved {
-  return resolve(b.recipe, (id) => b.ingredients[id] ?? placeholder(id), p);
+// Every bundle-holding island needs the bundle resolved at its default point
+// for SSR / pre-hydration rendering — memoize it so one computation serves
+// all four instead of each island re-running the resolver at init.
+const defaultResolved = new WeakMap<RecipeBundle, Resolved>();
+
+/** The bundle's default-point resolution (memoized per bundle). */
+export function resolveDefaults(b: RecipeBundle): Resolved {
+  let r = defaultResolved.get(b);
+  if (!r) {
+    r = resolveBundle(b, b.defaults);
+    defaultResolved.set(b, r);
+  }
+  return r;
 }
 
 /**

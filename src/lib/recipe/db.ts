@@ -27,8 +27,8 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { load } from 'js-yaml';
-import { emptyNutrition, NUTRIENT_KEYS } from '../nutrition';
-import { fallbackNames } from './names';
+import { NUTRIENT_KEYS } from '../nutrition';
+import { placeholderIngredient } from './placeholder';
 import {
   LOCALES,
   perLocale,
@@ -154,17 +154,6 @@ function checkSharedFdc(id: string, core: IngredientCore): void {
   if (!prior) coresByFdc.set(core.fdc_id, { id, per100gJson });
 }
 
-function placeholderIngredient(id: string): IngredientData {
-  return {
-    id,
-    fdc_id: 0,
-    names: fallbackNames(id),
-    aliases: perLocale<string[]>(() => []),
-    nutrition: { per_100g: emptyNutrition() },
-    density_g_per_ml: 1,
-  };
-}
-
 /** Assemble an ingredient from its core + every locale's file, gating completeness. */
 function assemble(id: string, core: IngredientCore): IngredientData {
   const names = {} as Localized;
@@ -242,7 +231,7 @@ export const loadIngredient: IngredientLookup = (id: string): LoadedIngredient =
   // never degrade the whole ingredient to a placeholder.
   const result: LoadedIngredient = core
     ? { data: assemble(id, core), placeholder: false }
-    : { data: placeholderIngredient(id), placeholder: true };
+    : placeholderIngredient(id);
   cache.set(id, result);
   return result;
 };

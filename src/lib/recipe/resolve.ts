@@ -10,8 +10,8 @@
  *
  * Validated against the prototype (`docs/proto-recipe-model.mjs`).
  */
-import { scaleNutrition, sumNutrition } from '../nutrition';
-import type { IngredientData } from '../types';
+import { NUTRIENT_KEYS, scaleNutrition, sumNutrition } from '../nutrition';
+import type { IngredientData, Localized, NutritionFacts } from '../types';
 import { evalGuard } from './guards';
 import type {
   Amount,
@@ -143,6 +143,42 @@ export function resolve(recipe: Recipe, lookup: IngredientLookup, p: Params): Re
   }
 
   return { rows, nutrition: sumNutrition(rows), notices, blocked };
+}
+
+/** A per-ingredient line: resolved rows merged by ingredient id. */
+export interface MergedRow {
+  id: string;
+  names: Localized;
+  grams: number;
+  nutrition: NutritionFacts;
+  placeholder: boolean;
+}
+
+/**
+ * Merge resolved rows by ingredient id — grams and nutrition sum: two roles
+ * sharing a fill (marinade salt / seasoning salt) are one pile on the
+ * counter. The ONE merge rule for every per-ingredient surface (shopping
+ * line, mise-en-place bucket, nutrition segment), so the stages cannot
+ * drift on what a shared fill weighs. First-appearance order.
+ */
+export function mergeRowsById(rows: Iterable<ResolvedRow>): MergedRow[] {
+  const byId = new Map<string, MergedRow>();
+  for (const r of rows) {
+    const prev = byId.get(r.id);
+    if (prev) {
+      prev.grams += r.grams;
+      for (const k of NUTRIENT_KEYS) prev.nutrition[k] += r.nutrition[k];
+    } else {
+      byId.set(r.id, {
+        id: r.id,
+        names: r.names,
+        grams: r.grams,
+        nutrition: { ...r.nutrition },
+        placeholder: r.placeholder,
+      });
+    }
+  }
+  return [...byId.values()];
 }
 
 /** The default parameter point: servings/knob/role defaults. Renders statically (SSR). */

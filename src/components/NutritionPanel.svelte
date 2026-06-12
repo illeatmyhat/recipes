@@ -4,7 +4,8 @@
   // re-resolves and these numbers move in real time.
   import { onMount } from 'svelte';
   import { locale } from './LocaleStore';
-  import { params, resolved, resolveBundle, initRecipe } from './RecipeStore';
+  import { params, resolved, resolveDefaults, initRecipe } from './RecipeStore';
+  import { mergeRowsById } from '../lib/recipe/resolve';
   import {
     NUTRIENT_UNITS,
     scaleNutrition,
@@ -27,7 +28,7 @@
 
   // SSR (and pre-hydration) renders the default parameter point; after mount the
   // shared store drives everything.
-  const ssr = resolveBundle(bundle, bundle.defaults);
+  const ssr = resolveDefaults(bundle);
   const current = $derived(mounted ? ($resolved ?? ssr) : ssr);
   const servingCount = $derived(mounted ? $params.servings : bundle.defaults.servings);
 
@@ -57,31 +58,18 @@
     nutrition: NutritionFacts;
   }
 
-  // Ingredient-axis view: rows MERGE by ingredient id here — two roles may
-  // share a fill (marinade salt / seasoning salt), and the breakdown's
-  // segments are keyed by id, so each ingredient must appear once.
-  const activeIngredients = $derived.by<ActiveIngredient[]>(() => {
-    const byId = new Map<string, ActiveIngredient>();
-    for (const r of current.rows) {
-      const prev = byId.get(r.id);
-      if (prev) {
-        prev.grams += r.grams * factor;
-        prev.nutrition = sumNutrition([
-          { nutrition: prev.nutrition },
-          { nutrition: scaleNutrition(r.nutrition, factor) },
-        ]);
-      } else {
-        byId.set(r.id, {
-          id: r.id,
-          names: r.names,
-          colour: colourOf.get(r.id) ?? '#888888',
-          grams: r.grams * factor,
-          nutrition: scaleNutrition(r.nutrition, factor),
-        });
-      }
-    }
-    return [...byId.values()];
-  });
+  // Ingredient-axis view: rows MERGE by ingredient id (the shared engine
+  // rule — two roles may share a fill, and the breakdown's segments are
+  // keyed by id), then the whole/per-serving factor scales each merged line.
+  const activeIngredients = $derived.by<ActiveIngredient[]>(() =>
+    mergeRowsById(current.rows).map((m) => ({
+      id: m.id,
+      names: m.names,
+      colour: colourOf.get(m.id) ?? '#888888',
+      grams: m.grams * factor,
+      nutrition: scaleNutrition(m.nutrition, factor),
+    })),
+  );
 
   const totals = $derived(sumNutrition(activeIngredients));
   const totalGrams = $derived(totalWeight(activeIngredients));

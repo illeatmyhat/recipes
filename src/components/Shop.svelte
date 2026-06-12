@@ -16,7 +16,8 @@
   // lead-time signal).
   import { onMount } from 'svelte';
   import { locale } from './LocaleStore';
-  import { params, resolved, resolveBundle, initRecipe } from './RecipeStore';
+  import { resolved, resolveDefaults, initRecipe } from './RecipeStore';
+  import { mergeRowsById, type MergedRow } from '../lib/recipe/resolve';
   import { t, STORES, STORE_SECTIONS } from '../lib/i18n';
   import type { RecipeBundle } from '../lib/recipe/types';
   import type { AislePlacement, Locale, Localized, Store, StoreSection } from '../lib/types';
@@ -29,20 +30,14 @@
     mounted = true;
   });
 
-  const ssr = resolveBundle(bundle, bundle.defaults);
+  const ssr = resolveDefaults(bundle);
   const current = $derived(mounted ? ($resolved ?? ssr) : ssr);
   const L = (s: Localized): string => s[$locale];
 
-  interface Line {
-    id: string;
-    names: Localized;
-    grams: number;
-    placeholder: boolean;
-  }
   interface Section {
     id: StoreSection;
     label: Localized;
-    lines: Line[];
+    lines: MergedRow[];
   }
   interface Errand {
     id: Store;
@@ -58,20 +53,8 @@
   // viewer locale's store in errand order, then by section in store-walk
   // order within each store. Aisle-less foods are not bought — skipped.
   const errands = $derived.by<Errand[]>(() => {
-    const merged = new Map<string, Line>();
-    for (const r of current.rows) {
-      const existing = merged.get(r.id);
-      if (existing) existing.grams += r.grams;
-      else
-        merged.set(r.id, {
-          id: r.id,
-          names: r.names,
-          grams: r.grams,
-          placeholder: r.placeholder,
-        });
-    }
-    const byStore = new Map<Store, Map<StoreSection, Line[]>>();
-    for (const line of merged.values()) {
+    const byStore = new Map<Store, Map<StoreSection, MergedRow[]>>();
+    for (const line of mergeRowsById(current.rows)) {
       const placement =
         placementOf(line.id, $locale) ??
         // Missing ingredient data must not read as "deliberately not bought":

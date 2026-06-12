@@ -9,11 +9,12 @@
   // quantity, so nutrition is untouched).
   import { onMount } from 'svelte';
   import { locale } from './LocaleStore';
-  import { params, resolved, resolveBundle, initRecipe } from './RecipeStore';
+  import { params, resolved, resolveDefaults, initRecipe } from './RecipeStore';
   import { evalGuard } from '../lib/recipe/guards';
   import { t } from '../lib/i18n';
-  import { localizeAll } from '../lib/recipe/names';
-  import type { Params, RecipeBundle, Resolved } from '../lib/recipe/types';
+  import { humanizeId, localizeAll } from '../lib/recipe/names';
+  import { mergeRowsById, type MergedRow } from '../lib/recipe/resolve';
+  import type { Params, RecipeBundle, Resolved, ResolvedRow } from '../lib/recipe/types';
   import type { Localized } from '../lib/types';
 
   let { bundle }: { bundle: RecipeBundle } = $props();
@@ -24,21 +25,16 @@
     mounted = true;
   });
 
-  const ssr = resolveBundle(bundle, bundle.defaults);
+  const ssr = resolveDefaults(bundle);
   const current = $derived(mounted ? ($resolved ?? ssr) : ssr);
   const currentParams = $derived(mounted ? $params : bundle.defaults);
   const L = (s: Localized): string => s[$locale];
 
-  interface BucketRow {
-    id: string;
-    names: Localized;
-    grams: number;
-  }
   interface Bucket {
     stepId: string;
     number: number;
     title: Localized;
-    rows: BucketRow[];
+    rows: MergedRow[];
   }
 
   function bucketsFor(p: Params, res: Resolved): Bucket[] {
@@ -47,8 +43,10 @@
     for (const step of bundle.steps) {
       if (step.when !== undefined && !evalGuard(step.when, p)) continue;
       number += 1; // every visible step counts, so numbers match the method
-      const rows: BucketRow[] = [];
-      const byId = new Map<string, BucketRow>();
+      // Collect the step's read declarations (deduped — a step may read a
+      // role twice via role- and fill-level refs), then merge by ingredient:
+      // two roles sharing a fill are one pile on the counter.
+      const decls: ResolvedRow[] = [];
       const seen = new Set<string>(); // "role:id" declarations already counted
       for (const read of step.reads) {
         for (const r of res.rows) {
@@ -57,23 +55,15 @@
           const pair = `${r.role}:${r.id}`;
           if (seen.has(pair)) continue;
           seen.add(pair);
-          // A step may read two roles sharing a fill id — merge the grams
-          // (it's one pile on the counter) but never drop a declaration.
-          const prev = byId.get(r.id);
-          if (prev) {
-            prev.grams += r.grams;
-          } else {
-            const row = { id: r.id, names: r.names, grams: r.grams };
-            byId.set(r.id, row);
-            rows.push(row);
-          }
+          decls.push(r);
         }
       }
+      const rows = mergeRowsById(decls);
       if (rows.length === 0) continue; // nothing to gather for this step
       out.push({
         stepId: step.id,
         number,
-        title: step.title ?? localizeAll(step.id.replace(/_/g, ' ')),
+        title: step.title ?? localizeAll(humanizeId(step.id)),
         rows,
       });
     }

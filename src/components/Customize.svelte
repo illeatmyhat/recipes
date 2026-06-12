@@ -13,7 +13,7 @@
   // pane is never the error channel.
   import { onMount } from 'svelte';
   import { locale } from './LocaleStore';
-  import { params, resolved, resolveBundle, initRecipe, setFill, toggleFill, setKnob } from './RecipeStore';
+  import { params, resolved, resolveBundle, resolveDefaults, initRecipe, setFill, toggleFill, setKnob } from './RecipeStore';
   import { fmt, t, UI } from '../lib/i18n';
   import { proseName } from '../lib/recipe/names';
   import type { FillT, Knob, KnobValue, Params, RecipeBundle, RoleT } from '../lib/recipe/types';
@@ -29,7 +29,7 @@
 
   const currentP = $derived<Params>(mounted ? $params : bundle.defaults);
   const sel = $derived(currentP.selection);
-  const ssr = resolveBundle(bundle, bundle.defaults);
+  const ssr = resolveDefaults(bundle);
   const current = $derived(mounted ? ($resolved ?? ssr) : ssr);
 
   const L = (s: Localized): string => s[$locale];
