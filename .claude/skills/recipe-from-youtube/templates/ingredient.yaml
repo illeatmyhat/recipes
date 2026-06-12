@@ -40,12 +40,22 @@ density_g_per_ml: null
 #   aisle: <section id>            # that market's OWN store geography — they differ
 #                                  # (tofu: dairy_eggs in the US, tofu_soy in JP/CN;
 #                                  # soy sauce: international in the US, condiments in
-#                                  # JP/CN). Valid ids (StoreSection, src/lib/types.ts):
-#                                  # online, produce, meat_seafood, tofu_soy,
-#                                  # dairy_eggs, dry_goods, canned, condiments,
-#                                  # spices, oils, international, other.
-#                                  # `online` = not on this market's shelves, order
-#                                  # ahead — add an important note re: lead time.
+#                                  # JP/CN). A bare section means the PRIMARY
+#                                  # supermarket; the full errand form is
+#                                  #   aisle: { store: <store>, section: <section> }
+#                                  # Stores (STORE_IDS, src/lib/types.ts): primary
+#                                  # (everyday supermarket), specialty (the market's
+#                                  # second stop — Chinese grocery, Italian deli),
+#                                  # online (not on this market's shelves, order
+#                                  # ahead — add an important note re: lead time).
+#                                  # Sections (SECTION_IDS): produce, meat_seafood,
+#                                  # tofu_soy, dairy_eggs, dry_goods, canned,
+#                                  # condiments, spices, oils, international, other.
+#                                  # Both values are validated at build — a typo is
+#                                  # a red build. OMIT aisle entirely (in EVERY
+#                                  # locale) only for a not-bought ingredient (tap
+#                                  # water): it stays in Cook/nutrition but never
+#                                  # appears on the shopping list.
 #   availability:                  # OPTIONAL market guidance — original content for
 #     notes:                       # this market, never a translation of another
 #       - <plain shopping note>    # locale's note. Omit when nothing useful to say.
@@ -54,3 +64,5 @@ density_g_per_ml: null
 #                                  # (rolled vs quick oats) or scarce in this market
 #     brands:                      # ONLY when the form is easy to get wrong —
 #       - <brand>                  # don't invent brand names; omit over [].
+#                                  # Note texts and brands must be UNIQUE within a
+#                                  # file — duplicates fail the build.

@@ -12,9 +12,11 @@ authors against (pattern / roles / fills — it governs every choice below).
 
 ## Inputs you need
 
-- The **transcript** (preferred: ask the user to paste it). If given only a URL,
-  try to fetch captions with WebFetch; if that fails, ask the user to paste it —
-  don't invent steps.
+- The **transcript** (preferred: ask the user to paste it). If given only a
+  URL, try to fetch captions with WebFetch; if that fails, transcribe locally
+  with `scripts/transcribe.py` (yt-dlp audio grab + faster-whisper large-v3
+  on GPU — seed `--prompt` with the dish's proper nouns; setup notes in the
+  script header). Never invent steps.
 - A **hero photo** (a source image file or a reusably-licensed URL, e.g.
   Unsplash). If none is offered, ask for one before the final build.
 
@@ -36,14 +38,20 @@ Work the checklist top to bottom. Paths are relative to the project root.
      chicken instead of tofu") is a second **fill** of the same role. **If you
      cannot state why a role/knob/fill matters, you may not introduce it** —
      that's a quality filter, not bureaucracy.
-   - **Fidelity: a CHOICE exists only where the cook narrated one.** A
-     substitution, optional add-on, or knob must come from the source
-     ("you could use…", "what else can you add?", "thick or thin, up to
-     you"). Everything else is authored **fixed**: `min` = the fill count,
-     no advisory `max`, no fabricated toggles. Good cooking knowledge the
-     source didn't sanction goes in prose (`why`/`note`/tips) — it becomes
-     an interactive, provenance-labeled choice only once the editorial
-     label machinery exists (recipe-model.md, Q11).
+   - **Fidelity and provenance (Q11, live).** Name the source:
+     `source: { name: <attribution> }` in the frontmatter drives the
+     provenance badge ("As taught by …" → "Your variation (based on …)"
+     once the cook departs from the default point). A choice the source
+     narrated ("you could use…", "thick or thin, up to you") is plain
+     `provenance: source` (the default — omit the key). A choice YOU add
+     from good cooking knowledge is allowed, but it must wear
+     `provenance: editorial` (on the fill or knob) — it renders with an
+     "our addition" mark, and **an editorial fill can never be
+     `default: true`**: the default parameter point IS the source point,
+     that's what makes the badge truthful. Anything not worth an
+     interactive choice stays prose (`why`/`note`/tips). When nothing is a
+     choice at all, author fixed: `min` = the fill count, no advisory
+     `max`, no fabricated toggles.
    - **Knobs.** A narrated texture/style choice that adds no ingredient
      ("blend half for creaminess", "extra thick") is a knob (`bool` / `enum` /
      `scalar`) driving `scale` tables and step guards.
@@ -69,11 +77,22 @@ Work the checklist top to bottom. Paths are relative to the project root.
    optionally `availability`; shape documented in the template). Every
    supported locale needs its file with a name and an `aisle` (its OWN
    market's store geography — soy sauce: international in the US,
-   condiments in JP/CN) or the build fails. `availability` is optional
+   condiments in JP/CN) or the build fails. An aisle is a **store +
+   section** (Q15): a bare `aisle: <section>` is shorthand for the primary
+   supermarket; the full form `aisle: { store: <store>, section: <section> }`
+   files the errand under `online` (order-ahead, not on this market's
+   shelves — pair with an important lead-time note) or `specialty` (the
+   market's second stop). Store and section ids come from
+   `STORE_IDS`/`SECTION_IDS` in `src/lib/types.ts` and are **validated at
+   build** — a typo is a red build, not a missing row. An ingredient that
+   is genuinely not bought (tap water) gets NO aisle in any locale
+   (all-or-nothing across locales): it stays real in Cook and nutrition
+   but never appears on the shopping list. `availability` is optional
    market guidance authored in that market's language (never translated);
    `important: true` notes pin to the Shop row — reserve them for scarcity
    and wrong-form warnings. Only fill `brands` when buyers commonly get the
-   wrong form; don't invent brand names.
+   wrong form; don't invent brand names. Note texts and brands must be
+   unique within a file (build-gated).
 
 4. **Convert all amounts to metric** (`g`/`ml`; `ml` needs a non-null
    `density_g_per_ml`). See [reference/units.md](reference/units.md).
@@ -83,9 +102,14 @@ Work the checklist top to bottom. Paths are relative to the project root.
    step 6). Model rules that bite:
 
    - **Cardinality**: `min` is structural (below it the dish stops being the
-     dish), `max` is advisory (exceeding warns, never blocks). A role with
-     `min ≥ 1` + one fill renders as Base automatically — never author a
-     "base" flag.
+     dish), `max` is advisory (exceeding warns, never blocks). A role whose
+     `min` covers every fill renders as Base automatically (static, no
+     toggles) — never author a "base" flag, and every fill of such a role
+     **must** be `default: true` (schema-gated; corollary: an editorial
+     fill can never sit in a zero-freedom role).
+   - **Provenance**: `source: { name: … }` in the frontmatter;
+     `provenance: editorial` on every fill/knob the source didn't narrate;
+     editorial is never `default: true` (schema-gated — see step 1).
    - **Amounts by position**: role-level `amount` ⇒ substitutive (chosen
      fills partition it; a fill's own `amount` overrides its full-equivalent);
      fill-level amounts only ⇒ additive (each chosen fill adds its own).
@@ -111,7 +135,7 @@ Work the checklist top to bottom. Paths are relative to the project root.
 
 6. **Write one catalog per locale** (`<slug>.ja-JP.yaml`, `<slug>.zh-CN.yaml`)
    from `templates/recipe.locale.yaml`: one flat dotted key per localizable
-   string — `title`, `pattern`, `customize_title`, every
+   string — `title`, `pattern`, `customize_title`, `source.name`, every
    `roles.<r>.label/.why`, every authored fill `note`/`why`/`alias`, every
    knob `label`/`why`/`optionLabels.<v>`, every `constraints.<i>.warn/.error`,
    and per step `steps.<id>` (+ `steps.<id>.title`). Step templates are that
@@ -159,10 +183,17 @@ Work the checklist top to bottom. Paths are relative to the project root.
   with an overlay file per non-inline locale (see the template's footer note).
 - `scripts/fetch-usda.mjs` — SR-Legacy-only nutrition lookup (search + by-id).
 - `scripts/process-hero.mjs` — crop any photo to the 1280×720 16:9 hero.
+- `scripts/transcribe.py` — local GPU transcription when captions fail
+  (yt-dlp + faster-whisper large-v3; venv setup in the header).
 - `reference/sourcing.md` — USDA SR Legacy rules + fetch script usage.
 - `reference/units.md` — kitchen→metric conversions and densities.
 
 Live reference implementations: `src/content/recipes/weight-loss-stew.mdx`
-(constraints, bool+scalar knobs, water-sauté guarded steps) and
+(constraints, bool+scalar knobs, water-sauté guarded steps),
 `overnight-oats.mdx` (enum knob + scale, advisory max, additive multi-fill
-roles, fill-scoped reality steps).
+roles, fill-scoped reality steps), `carbonara.mdx` (the provenance
+showcase: `source:` + a certified anchor recipe, an all-editorial option
+ladder with an editorial bool knob guarding rescue steps, substitutive
+partition fills), and `dried-scallop-chicken-soup.mdx` (narrated-only
+choices, water as a real aisle-less ingredient, order-ahead/specialty
+aisle placements).

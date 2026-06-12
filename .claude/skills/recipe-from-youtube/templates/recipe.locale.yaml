@@ -12,6 +12,9 @@
 # (<slug>.<locale>.hashes.yaml is machine-written — commit it, never edit it.)
 title: <localized title>
 customize_title: <localized customize heading>
+# The attribution shown by the provenance badge — transliterate/translate the
+# way this locale's press would credit the source.
+source.name: <localized attribution>
 pattern: >-
   <A natural translation of the pattern — the recipe's "why it works".>
 

@@ -8,6 +8,12 @@ title: <English title>
 slug: <kebab-case-slug>            # MUST match the filename <slug>.mdx
 hero_image: ./images/<slug>.jpg    # produced by scripts/process-hero.mjs
 locales: [en-US, ja-JP, zh-CN]
+# source — the attribution behind the provenance badge ("As taught by <name>";
+# departing from the defaults flips it to "Your variation (based on <name>)").
+# Needs a `source.name` key in every catalog locale. Omit the block only when
+# the recipe truly has no source to credit.
+source:
+  name: <Cook, channel, or publication>
 # customize_title is OPTIONAL — set only when recipe-specific phrasing reads
 # better than the generic label. Delete the line if not used.
 customize_title: Customize your <dish>
@@ -77,6 +83,12 @@ roles:
       - id: <alternative-fill>
         amount: { value: 250, unit: g }
         why: <The tradeoff — pair a quirk with a guarded step in the method.>
+      # An option the SOURCE never narrated (your good-cooking-knowledge
+      # addition) must say so — it renders with an "our addition" mark and
+      # can NEVER be default: true (the default point is the source point).
+      - id: <editorial-fill>
+        provenance: editorial
+        why: <Why we offer it anyway, in the pattern's terms.>
   # ADDITIVE role: no role-level amount; each chosen fill adds its own.
   <additive_role>:
     label: <Label>
